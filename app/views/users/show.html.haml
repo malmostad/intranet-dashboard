@@ -1,0 +1,67 @@
+- title "Grundprofil för #{@user.displayname}"
+%section.box.show
+  %h1.box-title= h1
+  .box-content.form-horizontal.form-data
+    .control-group.readonly
+      .control-label Profilbild:
+      .controls.show_avatar
+        = link_to "Ändra", edit_avatar_path(@user), class: "change btn btn-small"
+        = image_tag "#{avatar_full_url(@user.username, :medium_quadrat)}?#{Time.now.to_i}", alt: "Profilbild"
+    .control-group.readonly
+      .control-label Användarnamn:
+      .controls= @user.username
+    .control-group.readonly
+      .control-label Förnamn:
+      .controls= @user.first_name
+    .control-group.readonly
+      .control-label Efternamn:
+      .controls= @user.last_name
+
+    .control-group.readonly
+      .control-label Grundprofil i Komin:
+      .controls
+        - if admin? || current_user.username == @user.username
+          = link_to "Ändra", edit_user_path(@user), class: "change btn btn-small"
+        = @user.roles.collect(&:name).to_sentence
+
+    - if admin?
+      %h2.form-group-title Övriga uppgifter
+      .control-group.readonly
+        .control-label Administratör:
+        .controls= @user.is_admin ? "Ja" : "Nej"
+      .control-group.readonly
+        .control-label Senast inloggad:
+        - if @user.latest_login.blank?
+          .controls –
+        - else
+          .controls= l @user.latest_login, format: :short
+      .control-group.readonly
+        .control-label Användaren skapades:
+        .controls= l @user.created_at, format: :short
+      .control-group.readonly
+        .control-label Visningsnamn:
+        .controls= @user.displayname
+      .control-group.readonly
+        .control-label E-postadress:
+        .controls= @user.email
+      .control-group.readonly
+        .control-label Telefon:
+        .controls= @user.phone
+      .control-group.readonly
+        .control-label Mobiltelefon:
+        .controls= @user.cell_phone
+      .control-group.readonly
+        .control-label Titel:
+        .controls= @user.title
+      .control-group.readonly
+        .control-label Förvaltning:
+        .controls= @user.company
+      .control-group.readonly
+        .control-label Chef:
+        .controls= @user.manager
+      .control-group.readonly
+        .control-label Chef till:
+        .controls= @user.directreports
+      .control-group.readonly
+        .control-label Om mig (lokal data):
+        .controls= @user.short_bio

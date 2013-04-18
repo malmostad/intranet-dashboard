@@ -1,0 +1,31 @@
+- title "Nyhetsflöden"
+%section.box.index
+  %h1.box-title= h1
+  .table-wrapper
+    %table
+      %thead
+        %tr
+          %th Titel
+          %th.url Url
+          %th.secondary Ägare
+          %th.secondary Fel på raken
+          %th.secondary Fel totalt
+          %th
+      %tbody
+        - @feeds.each do |feed|
+          %tr
+            %td.title= link_to feed.title, edit_feed_path(feed)
+            %td.url
+              %span= link_to feed.feed_url, feed.feed_url
+
+            - if feed.category == "my_own" && feed.users.present?
+              %td.secondary= link_to feed.users.first.username, user_path(feed.users.first.username)
+            - else
+              %td.secondary= Feed::CATEGORIES[feed.category]
+            %td.secondary{ class: feed.recent_failures > 0 ? "error" : "success" }= feed.recent_failures
+            %td.secondary= feed.total_failures
+            %td= link_to " #{t( 'actions.delete' )}", feed, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini icon-trash icon-large"
+
+        %tr
+          %td{ colspan: 3 }
+            .actions= link_to " #{t( "messages.new_post" )}", new_feed_path, class: "btn btn-primary icon-plus"

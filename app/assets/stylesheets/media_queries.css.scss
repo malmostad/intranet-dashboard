@@ -1,0 +1,361 @@
+@media ( min-width: 68em ) {
+  section.box#feeds-news .box-content li:first-child {
+    h2 {
+      font-size: emize(32);
+    }
+  }
+}
+
+@media ( max-width: 68em ) {
+  body.malmo-masthead-dashboard {
+    min-width: 0;
+  }
+  section.box#feeds-news .box-content  {
+    li.first-child  {
+      h2 {
+        font-size: emize(20);
+      }
+      p.summary {
+        font-size: emize(15);
+        line-height: emize(19, 15);;
+      }
+      img {
+        width: 68px;
+        margin-top: .3em;
+      }
+    }
+  }
+  section#feature {
+    h1 {
+      font-size: emize(28);
+    }
+    p.about {
+      font-size: emize(18);
+    }
+  }
+}
+
+@media ( max-width: 62em ) {
+  .column-1 {
+    @include columns(4);
+  }
+  .column-2 {
+    @include columns(8, true);
+  }
+  .column-3 {
+    clear: both;
+    @include columns(12);
+  }
+
+  section#feature {
+    h1 {
+      font-size: emize(26);
+      line-height: emize(28, 26);
+    }
+    p.about {
+      font-size: emize(18);
+      line-height: emize(26, 18);
+    }
+  }
+  section.box#shortcuts-tools,
+  section.box#shortcuts-i-want {
+    h1.box-title {
+      margin-bottom: 0;
+    }
+    .box-content {
+      margin: 0;
+      li {
+        margin: 0;
+        a {
+          display: block;
+          margin: 0;
+          padding: .7em;
+          border-bottom: 1px $borderColor solid;
+          &:focus, &:hover, &:active {
+            background-color: $backgroundLight;
+          }
+        }
+      }
+    }
+  }
+
+  .malmo-form .edit {
+    th.url, td.url {
+      display: none;
+    }
+  }
+}
+
+@media ( max-width: 51em ) {
+  .column-1 {
+    @include columns(4);
+  }
+  .column-2 {
+    @include columns(8, true);
+  }
+
+  body {
+    .wrapper {
+      margin: 0 1em;
+      padding-bottom: 1em;
+    }
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+    section.box {
+      margin: 0 0 1em;
+      h1 {
+        padding-left: .8em;
+      }
+      label.context-menu {
+        right: .6em;
+      }
+    }
+  }
+
+  section.box#colleagues ul.box-content li img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .login .column-1 {
+    @include columns(6);
+  }
+  .login .column-2 {
+    @include columns(6, true);
+  }
+  section#login {
+    border-left: none;
+    padding-top: 0;
+    margin-top: 0;
+  }
+
+  section#feature {
+    h1 {
+      margin: 0 0 .2em;
+      font-size: emize(26);
+    }
+    p.about {
+      font-size: emize(16);
+      line-height: emize(24, 16);
+    }
+  }
+
+  .malmo-form .edit {
+    section.index, section.show, section.form, nav.admin {
+      @include columns(12);
+    }
+    th.secondary, td.secondary {
+      display: none;
+    }
+  }
+}
+
+@media ( max-width: 52em ) {
+  section.site-search {
+    @include columns(8);
+  }
+  section.site-search-categories {
+    @include columns(4, true);
+  }
+}
+
+@media ( max-width: 46em ) {
+  section.site-search, section.site-search-categories {
+    @include columns(12);
+  }
+  section.site-search {
+    margin-bottom: 0;
+  }
+  section.site-search-categories {
+    .ess-cat-bd-category, .ess-cat-bd-heading, .ess-cat-bd-all {
+      font-size: emize(15);
+      margin-bottom: .5em;
+    }
+  }
+  section.site-search-categories .ess-cat-bd-heading {
+    margin-top: 1.5em;
+  }
+  .malmo-form.edit {
+    nav.admin {
+      clear: both;
+    }
+    h1, nav.admin h2 {
+      @include radius(0);
+    }
+    section.form, section.show, section.index, nav.admin {
+      width: 100%;
+      @include radius(0);
+    }
+    section.index, section.show, section.form {
+      @include radius(0);
+      border: none;
+      margin-bottom: 0;
+    }
+    div.field {
+      label {
+        clear: both;
+        width: 100%;
+        float: none;
+      }
+      .help {
+        margin-left: 0;
+      }
+    }
+    .avatar-help, .edit_avatar {
+      width: 100%;
+      clear: both;
+    }
+  }
+  .malmo-form {
+    .form-horizontal {
+      .controls, .actions, .readonly {
+        margin-left: 0;
+        clear: both;
+      }
+      .control-label {
+        width: auto;
+      }
+    }
+    .control-group.readonly {
+      margin-bottom: 1em;
+      .control-label, .controls {
+        padding: 0;
+      }
+    }
+  }
+}
+
+@media ( max-width: 44em ) {
+  body.site-search .wrapper {
+    font-size: emize(16, 16);
+    padding: 0 1em;
+  }
+
+  body {
+    margin-left: 0;
+    margin-right: 0;
+    background-color: white;
+    .wrapper {
+      // font-size: emize(18, 16);
+      margin: 0;
+    }
+
+    // One column layout
+    .column {
+      float: none;
+      margin-bottom: 0;
+      @include columns(12);
+      &.column-1, &.column-2, &.column-3 {
+        margin-right: 0;
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+
+    &.malmo-masthead-dashboard {
+      padding: 0;
+      margin: 0;
+      section.box {
+        border: none;
+        @include radius(0);
+        margin: 0 0 1em;
+        h1 {
+          padding-left: .8em;
+          @include radius(0);
+        }
+        label.context-menu {
+          right: .6em;
+        }
+      }
+
+      section.box#colleagues ul.box-content li img {
+        width: 46px;
+        height: 46px;
+      }
+
+      section.box.feeds {
+        .box-content li {
+          .summary {
+            display: none;
+          }
+          .text {
+            h2 {
+              margin: 0;
+              padding: 0;
+            }
+            p.meta {
+              font-size: emize(11);
+            }
+          }
+        }
+      }
+      section.box#feeds-news, section.box#feeds-dialog, section.box#my_own  {
+        .box-content li {
+          a {
+            @include clearfix();
+          }
+          img {
+            width: 46px;
+            height: 46px;
+          }
+        }
+      }
+
+      section.box#feeds-news .box-content li:first-child {
+        img {
+          width: 46px;
+          margin: 3px 10px 11px 0;
+        }
+        h2 {
+          font-size: emize(20);
+        }
+        p.summary {
+          font-size: emize(16);
+        }
+      }
+
+      section.box#feeds-feature {
+        a {
+          @include clearfix();
+        }
+        img {
+          @include columns(6);
+          max-width: 12em;
+          max-height: 12em;
+        }
+        .crop {
+          overflow: visible;
+          margin-bottom: 0;
+          border: none;
+        }
+        .text {
+          @include columns(6, true);
+          clear: none;
+          h2 {
+            font-family: $serif;
+            font-size: emize(20);
+          }
+        }
+        .more {
+          clear: both;
+        }
+      }
+    }
+  }
+  section#feature {
+    margin: 1em .7em 1em;
+  }
+}
+
+
+// Force a one column form
+@media ( max-width: 40em ) {
+  @include form-force-vertical;
+}
+
+@media ( max-width: 36em ) {
+  section.site-search #q {
+    max-width: 60%;
+  }
+}

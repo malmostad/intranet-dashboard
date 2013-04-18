@@ -1,0 +1,177 @@
+section.box#colleagues {
+  h1 {
+    margin-bottom: 0;
+  }
+  ul.box-content {
+    margin: 0;
+    li {
+      position: relative;
+      clear: both;
+      margin: .2em .6em 1em;
+      img {
+        float: left;
+        width: 46px;
+        height: 46px;
+        margin: .2em .6em 1em 0;
+        border: none;
+      }
+      .text {
+        overflow: hidden;
+        h2.name {
+          font-size: emize(13);
+          font-weight: normal;
+          line-height: emize(16, 13);
+          margin: 0;
+        }
+        p.status {
+          font-size: emize(13);
+          line-height: emize(16, 13);
+          margin-bottom: 0;
+          &.success {
+            padding: .1em .3em;
+            margin-bottom: .2em;
+            @include box-sizing(border-box);
+          }
+        }
+        p.updated_at {
+          font-family: $sansSerif;
+          font-size: emize(11);
+          color: $textColorDark;
+          line-height: emize(13, 11);
+          margin-bottom: 0;
+        }
+      }
+      a.delete {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        font-family: $sansSerif;
+        font-size: emize(13);
+        color: $menuColor;
+        span {
+          font-size: emize(13);
+          @include opacity(.2);
+        }
+      }
+      &:hover a.delete {
+        color: $dangerColor;
+        span {
+          @include opacity(1);
+        }
+      }
+      &.add {
+        margin-top: .7em;
+        .help {
+          margin-bottom: .4em;
+        }
+      }
+      &.waiting {
+        height: 4em;
+        background-color: white;
+        background-position: left 40%;
+      }
+      .warning {
+        padding: .5em .8em;
+        font-family: $sansSerif;
+      }
+    }
+    li#my-status {
+      position: relative;
+      .change-image {
+        position: absolute;
+        top: 0em;
+        left: 0;
+        @include box-sizing(border-box);
+        display: none;
+        @include opacity(1);
+        padding: .2em .2em .3em;
+        width: 46px;
+        text-align: center;
+        font-size: emize(11);
+        font-family: $sansSerif;
+        background: $backgroundDarker;
+        color: white;
+      }
+      .img:hover .change-image {
+        display: block;
+      }
+      h2 a {
+        color: $menuColor;
+      }
+    }
+    .no-colleagues {
+      font-size: emize(13);
+      line-height: emize(17, 13);
+      margin-bottom: 1em;
+      label.show {
+        font-size: emize(13, 13);
+      }
+    }
+  }
+
+  // Change status
+  #change-status-trigger, #add-colleague-trigger {
+    display: none;
+    font-size: emize(13);
+    font-family: $sansSerif;
+    &.show {
+      display: block;
+    }
+  }
+
+  #update-status-form, #add-colleague-form {
+    fieldset {
+      display: none;
+      clear: both;
+      padding: 0 0 .4em;
+      margin: 0;
+      &.show, .show {
+        display: block;
+      }
+      label {
+        display: none;
+        margin-bottom: 0.1em;
+        font-family: $sansSerif;
+      }
+      #status_message {
+        width: 93%;
+        margin-bottom: .3em;
+        resize: none;
+        height: 1.5em;
+        overflow: hidden;
+      }
+      #add_colleague {
+        width: 95%;
+        margin-bottom: .3em;
+      }
+      .controls {
+        display: none;
+      }
+    }
+  }
+  #update-status-form {
+    padding: .4em .4em 0;
+    margin-bottom: .3em;
+    background: $backgroundLight;
+    border-bottom: $border;
+    border-top: $border;
+    .count {
+      float: right;
+      padding: .1em;
+      width: 2.2em;
+      text-align: center;
+      font-family: $sansSerif;
+      font-size: emize(11);
+      @include radius(3px);
+    }
+    #cancel-trigger {
+      float: left;
+    }
+  }
+}
+
+// jQ UI theme overide
+.suggest_colleagues {
+  font-size: emize(11) !important;
+}

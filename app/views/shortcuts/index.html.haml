@@ -1,0 +1,19 @@
+- title "Genvägar"
+%section.box.index
+  %h1.box-title= h1
+  %table
+    %thead
+      %tr
+        %th Namn
+        %th.secondary Kategori
+        %th
+    %tbody
+      - @shortcuts.each do |shortcut|
+        %tr
+          %td= link_to shortcut.name, edit_shortcut_path(shortcut)
+          %td.secondary= Shortcut::CATEGORIES[shortcut.category]
+          %td= link_to " #{t( 'actions.delete' )}", shortcut, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini icon-trash icon-large"
+
+      %tr
+        %td{ colspan: 3 }
+          .actions= link_to " #{t( "messages.new_post" )}", new_shortcut_path, class: "btn btn-primary icon-plus"

@@ -1,0 +1,7 @@
+/* Sass imports merges in to malmo.css */
+@import 'variables', 'mixins', 'functions',
+        'grid',
+        'feeds', 'colleagues_status', 'shortcuts', 'search_person', 'site_search', 'login', 
+        'edit',
+        'media_queries',
+        'print';

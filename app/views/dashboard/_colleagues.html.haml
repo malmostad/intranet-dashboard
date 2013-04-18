@@ -1,0 +1,49 @@
+%section.box#colleagues
+  %h1.box-title Mina arbetskamrater
+  - has_status = current_user.status_message.present?
+  = form_tag(user_update_status_message_path, method: "put", id: "update-status-form") do
+    %fieldset.show{ class: has_status ? '' : 'no-status'}
+      = label_tag :status_message, "Vad gör du idag?"
+      = text_area_tag :status_message, nil, rows: 1, placeholder: "Vad gör du idag?"
+      .controls
+        = submit_tag "OK", { class: "btn btn-primary btn-small", disabled: true }
+        %p.count.ok 70
+  %ul.box-content
+    %li#my-status
+      .img
+        = link_to image_tag(avatar_full_url(current_user.username, :tiny_quadrat), alt: ""), edit_avatar_path(current_user.id)
+        = link_to "Byt bild", edit_avatar_path(current_user.id), class: "change-image"
+      .text
+        %h2.name= link_to current_user.displayname, user_path(current_user.username)
+        %p.status
+          = has_status ? current_user.status_message : "Jag har ingen status än!"
+        %p.updated_at
+          - if current_user.status_message_updated_at
+            = "#{distance_of_time_in_words_to_now( current_user.status_message_updated_at ).humanize()} sen"
+
+    - @colleagueships.each do |colleagueship|
+      %li
+        = image_tag avatar_full_url(colleagueship.colleague.username, :tiny_quadrat), alt: ""
+        .text
+          %h2.name= "#{colleagueship.colleague.displayname}"
+          %p.status= colleagueship.colleague.status_message ||= "Jag har ingen status än!"
+          - if colleagueship.colleague.status_message_updated_at
+            %p.updated_at= "#{distance_of_time_in_words_to_now( colleagueship.colleague.status_message_updated_at ).humanize()} sen"
+        %a.delete{ href: colleagueship_path(colleagueship.id), "data-method" => "delete", "data-remote" => "true", "rel" => "nofollow", title: "Ta bort #{colleagueship.colleague.first_name}" }
+          %span.icon-remove
+
+    %li.add
+      - unless @colleagueships.present?
+        %p.no-colleagues I den här boxen kan du lägga till arbetskamrater och se deras status.
+      = link_to "Lägg till en arbetskamrat", users_path, id: "add-colleague-trigger"
+      = form_tag(colleagueships_path, method: "post", id: "add-colleague-form") do
+        %fieldset.show{ class: @colleagueships.present? ? '' : "no-colleagues" }
+          = label_tag :add_colleague, "Lägg till en arbetskamrat:", class: "show"
+          = text_field_tag :add_colleague, nil, placeholder: "Sök arbetskamrat"
+
+  - if admin?
+    .dropdown.box-menu.pull-right
+      %a#colleagues-menu.dropdown-toggle{ "role" => "button", "data-toggle" => "dropdown", "href" => "#", "title" => "Anpassa denna box" }
+        %span.icon-caret-down.icon-large
+      %menu.dropdown-menu{ "aria-labelledby" => "colleagues-menu" }
+        %li= link_to "Administrera användare...", users_path

@@ -1,0 +1,20 @@
+section.box#search-person {
+  .box-content {
+    margin-top: 0;
+    padding: 0;
+    label, p {
+      font-family: $sansSerif;
+      font-size: emize(13);
+    }
+    label {
+      display: block;
+      margin-bottom: .1em;
+    }
+    input#query-person {
+      width: 68%;
+    }
+  }
+}
+.search_users .suggest-users p {
+  font-size: emize(13, 14);
+}

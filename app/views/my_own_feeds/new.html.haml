@@ -1,0 +1,6 @@
+- title "Nytt nyhetsflöde"
+%section.box.form
+  %h1.box-title= h1
+  .box-content
+    = form_for @feed, url: my_own_feeds_path, html: { class: "form-horizontal" } do |f|
+      = render 'form', f: f

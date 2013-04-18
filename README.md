@@ -1,4 +1,0 @@
-Dashboard
-=========
-
-Intranet dashboard

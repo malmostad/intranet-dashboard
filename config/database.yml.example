@@ -1,0 +1,19 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+  collation: utf8_swedish_ci
+  database: dashboard
+  username: username
+  password: your_secret
+  host: localhost
+  pool: 20
+
+local_test:
+  adapter: mysql2
+  encoding: utf8
+  collation: utf8_swedish_ci
+  database: dashboard_local_test
+  username: username
+  password: your_secret
+  host: localhost
+  pool: 20

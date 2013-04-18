@@ -1,0 +1,60 @@
+= form_for @feed, html: { class: "form-horizontal" } do |f|
+  .box-content
+    - if @feed.errors.any?
+      .warning= t 'messages.validation_errors'
+
+    .control-group
+      = f.label :feed_url, "RSS-adress:", class: "control-label"
+      .controls
+        = f.text_field :feed_url, class: 'input-wide'
+        - @feed.errors[:feed_url].each do |msg|
+          .help-inline.warning= "#{msg}"
+        .help-inline
+          = 'Du kan lägga till följande typer:'
+          %ul
+            %li= raw 'Ett RSS-flöde som startar med <strong>http://</strong>'
+            %li= raw 'Ett användarnamn för Komin-bloggen, t.ex. <strong>jesbyl</strong>'
+            / %li.instruction= raw "En Twitter-användare, t.ex. <strong>@malmostad</strong>"
+            / %li.instruction= raw 'En eller flera Twitter-hashtag(ar), t.ex. <strong>#malmö</strong>'
+
+    - if @feed.category != "my_own"
+      .control-group.readonly
+        .control-label Kategori:
+        .controls= select(:feed, :category,  Feed::CATEGORIES.except('my_own').map { |key, val| [val, key] } )
+    - elsif @feed.users.present?
+      .control-group.readonly
+        .control-label Prenumerant:
+        .controls
+          = link_to "#{@feed.users.first.first_name} #{@feed.users.first.last_name} (#{@feed.users.first.username})", user_path(@feed.users.first.username)
+
+    .control-group.readonly
+      .control-label Fel på raken:
+      .controls
+        = @feed.recent_failures
+    .control-group.readonly
+      .control-label Totalt antal fel:
+      .controls
+        = @feed.total_failures
+
+    - if @feed.category != "my_own"
+      %h2.form-group-title Obligatorisk för följande roller
+      - Role::CATEGORIES.each do |key, val|
+        .control-group
+          .control-label= "#{val}:"
+          = hidden_field_tag "feed[role_ids][]", nil
+          .controls
+            %label.checkbox
+              = check_box_tag("toggle-#{key}s")
+              Alla
+
+            .roles{ id: "check-#{key}s" }
+              - Role.where(category: key).each do |role|
+                - is_checked = !@feed.new_record? && @feed.role_ids.include?(role.id) ? true : false
+                %label.checkbox
+                  = check_box_tag "feed[role_ids][]", role.id, is_checked, id: dom_id(role)
+                  = role.name
+
+    .control-group
+      .controls
+        = f.submit "Spara och hämta", class: "btn btn-primary"
+        = link_to t('actions.cancel'), feeds_path, class: "btn"

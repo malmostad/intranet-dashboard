@@ -1,0 +1,33 @@
+- title "Välj flöden för Komin#{Feed::CATEGORIES[params[:category]]}"
+%section.box.form
+  %h1.box-title= h1
+  .box-content
+    %p.instruction
+      = "På den här sidan kryssar du i vilka fler flöden du vill visa i boxen Mina Komin#{Feed::CATEGORIES[params[:category]]}." 
+      = 'De flöden som inte går att kryssa ur är obligatoriska baserat på vad du  '
+      = link_to "valt i din grundprofil.", edit_user_path(@user)
+
+    = form_for @user, url: user_select_feeds_path, html: { class: "form-horizontal" } do |f|
+      - if @user.errors.any?
+        %ul.warning
+          - @user.errors.messages.each do |msg|
+            %li= msg[1].first
+
+      .control-group
+        = hidden_field_tag "user[id]", @user.id
+        .control-label= "Flöden:"
+        .controls
+          - @feeds.each do |feed|
+            - is_mandatory = @user.role_ids.select { |r| feed.role_ids.include?(r) }.present?
+            %label.checkbox
+              = check_box_tag("user[feed_ids][]",
+                  feed.id,
+                  ( is_mandatory or @user.feed_ids.include?(feed.id) ),
+                  id: "user_feed_ids_#{feed.id}",
+                  disabled: is_mandatory )
+              = feed.title
+
+      .control-group
+        .controls
+          = submit_tag t( "actions.save" ), class: "btn btn-primary"
+          = link_to t( 'actions.cancel' ), root_path, class: "btn"

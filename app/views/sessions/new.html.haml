@@ -1,0 +1,26 @@
+- title "Min sida - Logga in"
+.column.column-1
+  %section#login.box
+    %h1.box-title Logga in
+    .box-content
+      - if @login_failed.present?
+        %ul
+          %li.warning
+            = @login_failed
+      = form_tag login_path, class: 'login' do
+        %fieldset
+          = label_tag :username, 'Användarnamn:'
+          = text_field_tag :username, params[:username], class: "input-wide"
+          = label_tag :password, 'Lösenord:'
+          = password_field_tag :password, nil, class: "input-wide"
+          %label.checkbox
+            = check_box_tag :remember_me, 1, params[:remember_me], checked: true
+            = 'Kom ihåg mig (ej för delade datorer)'
+          = submit_tag "Logga in", class: "btn btn-primary"
+      %p.login-instructions Om du kryssar i ”Kom ihåg mig” är du inloggad i 30 dagar. Använd samma användarnamn och lösenord som du loggar in på din dator med.
+
+.column.column-2
+  %section#feature
+    .box-content
+      %h1 Min sida är en personlig startsida för dig
+      %p.about På sidan får du nyheter och diskussioner från vår kommun, din förvaltning och ditt arbetsfält. Dessutom får du snabb tillgång till de verktyg och system du behöver. Du kan också omvärldsbevaka andra webbplatsers nyheter direkt på sidan.

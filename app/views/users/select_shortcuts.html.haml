@@ -1,0 +1,31 @@
+- title "Välj genvägar till #{Shortcut::CATEGORIES[params[:category]]}"
+%section.box.form
+  %h1.box-title= h1
+  .box-content
+    %p.help
+      = "På den här sidan kryssar du i vilka fler länkar du vill visa i boxen #{Shortcut::CATEGORIES[params[:category]]}." 
+      = 'De länkar som inte går att kryssa ur är obligatoriska baserat på vad du  '
+      = link_to "valt i din grundprofil.", edit_user_path(@user)
+
+    = form_for @user, url: user_select_shortcuts_path, html: { class: "form-horizontal" } do |f|
+      - if @user.errors.any?
+        %ul.warning
+          - @user.errors.messages.each do |msg|
+            %li= msg[1].first
+      .control-group
+        .control-label= "#{Shortcut::CATEGORIES[params[:category]]}:"
+        .controls
+          = hidden_field_tag "user[id]", @user.id
+          - @shortcuts.each do |shortcut|
+            - is_mandatory = @user.role_ids.select { |r| shortcut.role_ids.include?(r) }.present?
+            %label.checkbox
+              = check_box_tag("user[shortcut_ids][]",
+                  shortcut.id,
+                  ( is_mandatory or @user.shortcut_ids.include?(shortcut.id) ),
+                  id: "user_shortcut_ids_#{shortcut.id}",
+                  disabled: is_mandatory )
+              = shortcut.name
+      .control-group
+        .controls
+          = submit_tag t( "actions.save" ), class: "btn btn-primary"
+          = link_to t( 'actions.cancel' ), root_path, class: "btn"

@@ -1,0 +1,143 @@
+section.box.feeds {
+  h1 {
+    margin-bottom: 0;
+  }
+  .box-content {
+    margin: 0;
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+    li {
+      margin: 0;
+      overflow: hidden;
+      a {
+        display: block;
+        @include box-sizing('border-box');
+        padding: 0.4em .7em 0;
+        border: solid white;
+        border-width: 1px 0;
+        margin: 0;
+        &:hover {
+          cursor: pointer;
+          background-color: $backgroundLight;
+          border-color: $borderColor;
+        }
+        p.summary, p.meta {
+          color: black;
+        }
+      }
+      img, span.icon-twitter, span.icon-rss {
+        float: left;
+        width: 46px;
+        margin: 3px 10px 11px 0;
+        border: none;
+      }
+      span.icon-twitter, span.icon-rss {
+        font-size: emize(46);
+        color: $backgroundDark;
+        overflow: hidden;
+      }
+      .text {
+        overflow: hidden;
+        margin-bottom: .5em;
+        h2 {
+          margin: 0 0 .1em;
+          padding: 0;
+          font-size: emize(20);
+          line-height: 1.2;
+          font-weight: normal;
+        }
+        p.summary, p.nomore {
+          font-size: emize(16);
+          line-height: emize(21, 16);
+          margin-bottom: .1em;
+        }
+        p.meta {
+          font-family: $sansSerif;
+          font-size: emize(13);
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          margin: 0;
+          color: $textColorDark;
+          span.comments {
+            display: block;
+            .icon-comment, .icon-comment-alt {
+              font-size: emize(15, 13);
+              color: $linkColor;
+            }
+          }
+        }
+      }
+    }
+    li.load-more {
+      padding: .2em .8em .8em;
+      .btn {
+        font-size: emize(13);
+      }
+    }
+  }
+}
+
+section.box#feeds-news {
+  .box-content {
+    li {
+      img {
+        width: 68px;
+        margin-top: .3em;
+      }
+    }
+    li:first-child {
+      a {
+        padding-bottom: 0.4em;
+      }
+      img {
+        width: 120px;
+        margin: .3em 1em 0 0;
+      }
+      h2 {
+        margin: 0;
+        padding: 0;
+        font-size: emize(28);
+        line-height: emize(28, 26);
+        font-weight: normal;
+      }
+      p.summary {
+        font-size: emize(20);
+        line-height: emize(26, 20);
+      }
+      p.meta {
+        font-size: emize(13);
+      }
+    }
+  }
+}
+
+section.box#feeds-feature {
+  .text {
+    clear: both;
+    h2 {
+      font-size: emize(20);
+    }
+  }
+  .crop {
+    max-height: 9em;
+    overflow: hidden;
+    margin-bottom: .5em;
+    border: $border;
+  }
+  img {
+    width: 100%;
+    height: auto;
+  }
+  .more {
+    margin: 0;
+  }
+  .more a {
+    font-family: $sansSerif;
+    font-size: emize(13);
+    padding-bottom: .4em;
+    border-bottom: 0;
+  }
+}

@@ -1,0 +1,156 @@
+body.site-search .wrapper {
+  max-width: 56em;
+  margin: 0 auto;
+  @include clearfix();
+}
+
+section.site-search {
+  margin: .45em 0 2em;
+  @include columns(9, false, 4%);
+}
+
+section.site-search-categories {
+  margin-top: 0;
+  @include columns(3, true, 4%);
+}
+
+section.site-search {
+  h1 {
+    display: none;
+  }
+  form label {
+    font-family: $serif;
+    font-size: emize(32);
+    margin-bottom: .4em;
+  }
+  #q {
+    width: 30em;
+    max-width: 75%;
+  }
+  .sort {
+    margin-bottom: 1.5em;
+    font-family: $sansSerif;
+    font-size: emize(13);
+  }
+  .sort li {
+    display: inline;
+    margin: 0;
+  }
+  .results {
+    ul {
+      margin: 0;
+    }
+    h2 {
+      margin-top: 0;
+    }
+    li {
+      margin: 0 0 1.5em;
+    }
+  }
+  .results {
+    ul, li {
+      list-style: none;
+      margin-left: 0;
+      padding-left: 0;
+    }
+    .extract {
+      margin-bottom: .3em;
+      .date, .file_info {
+        font-family: $sansSerif;
+        font-size: emize(13);
+      }
+      .date {
+        margin-left: .5em;
+      }
+    }
+    .category {
+      font-family: $sansSerif;
+      font-size: emize(13);
+      margin-bottom: .4em;
+    }
+    .breadcrumb {
+      margin: 0;
+      line-height: 1.1;
+      font-family: $sansSerif;
+      li {
+        display: inline;
+        font-size: emize(13);
+        line-height: 1.1;
+        a:after {
+          content: ("\f054");
+          font-family: $iconFont;
+          margin: 0 .5em 0 .7em;
+          font-size: emize(13);
+        }
+      }
+    }
+  }
+  .suggestions {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      display: inline;
+      margin-left: 0;
+    }
+  }
+  .summary {
+    margin-bottom: .5em;
+    font-family: $sansSerif;
+    font-size: emize(13);
+  }
+  .ess-bestbets {
+    .ess-header {
+      font-size: emize(22);
+      line-height: 1.1;
+      margin: 1em 0 .1em;
+    }
+    dd {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+section.site-search-categories {
+  h2 {
+    margin-top: 0;
+  }
+  font-family: $sansSerif;
+  div {
+    margin-bottom: 1em;
+  }
+  .ess-heading {
+    font-family: $sansSerif;
+    margin-bottom: .2em;
+    padding-bottom: .2em;
+    border-bottom: $border;
+    font-weight: bold;
+    font-size: emize(15);
+  }
+  .ess-cat-bd-heading {
+    margin-bottom: .2em;
+    font-weight: bold;
+    font-size: emize(13);
+  }
+  .ess-cat-bd-category, .ess-cat-bd-all {
+    margin-bottom: .2em;
+    font-size: emize(13);
+  }
+  strong {
+    font-weight: normal;
+  }
+  .ess-current, .ess-current strong {
+    font-weight: bold;
+  }
+}
+
+ul.ui-autocomplete {
+    width: 24.7em !important;
+  li {
+    font-size: emize(13);
+    .hits {
+      float: right;
+    }
+  }
+}

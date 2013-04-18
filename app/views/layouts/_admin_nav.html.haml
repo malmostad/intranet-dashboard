@@ -1,0 +1,7 @@
+%nav.box.admin
+  %h2.box-title Administrera
+  %ul{ class: controller.controller_name }
+    %li.users.first= link_to "Användare", users_path
+    %li.roles= link_to "Roller", roles_path
+    %li.feeds= link_to "Nyhetsflöden", feeds_path
+    %li.shortcuts.last= link_to "Genvägar", shortcuts_path

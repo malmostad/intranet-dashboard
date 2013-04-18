@@ -1,0 +1,22 @@
+body.malmo-masthead-dashboard {
+  padding: 0 .5em;
+  min-width: 56em;
+}
+
+.wrapper {
+  max-width: 75em;
+  margin: 1em auto;
+}
+
+.column {
+  margin-bottom: 1em;
+}
+.column-1 {
+  @include columns(3);
+}
+.column-2 {
+  @include columns(6);
+}
+.column-3 {
+  @include columns(3, true);
+}

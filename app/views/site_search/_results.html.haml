@@ -1,0 +1,15 @@
+- increase_numbering = @results.editors_choice.count
+- @results.entries.each do |entry|
+  %li{ "data-position" => entry.number + increase_numbering }
+    %h2= entry.title
+    %p.extract
+      = entry.summary
+      %span.date= entry.date
+      - # unless entry.content_type == "html"
+      - #   %span.file_info= "(#{entry.content_type} #{entry.file_size})"
+
+    %p.category= entry.category
+    - # %ul.breadcrumb= entry.breadcrumb
+
+- if @results.more_query.present?
+  %li#load-more-search-results= link_to "Visa fler träffar", "#{search_path}?#{@results.more_query}", class: "btn"

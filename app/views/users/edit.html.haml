@@ -1,0 +1,42 @@
+- title "Grundprofil för #{@user.displayname}"
+%section.box.form
+  %h1.box-title= h1
+  .box-content
+    = form_for @user, html: { class: "form-horizontal" } do |f|
+
+
+      - if !@user_roles.present?
+        %p.warning= "Välj en eller flera förvaltningar och arbetsfält nedan."
+      - elsif !@user_roles.include? 'department'
+        %p.warning= "Välj en eller flera förvaltningar nedan."
+      - elsif !@user_roles.include? 'working_field'
+        %p.warning= "Välj en eller flera arbetsfält nedan."
+
+      %p.help= "På den här sidan ställer du in din grundprofil – alltså vilken förvaltning du arbetar på och vilket arbetsfält du är verksam inom."
+      %p.help= "Din grundprofil styr vilka nyheter, diskussioner, verktyg & system och Jag vill som visas på Min sida. Grundprofilen styr också vad som visas i flikarna Min förvaltning och Mitt arbetsfält."
+
+      - if @user.errors.any?
+        .warning= t 'messages.validation_errors'
+
+      - if admin?
+        .control-group
+          .control-label Rättigheter:
+          .controls
+            %label.checkbox
+              = f.check_box :is_admin
+              Administratör
+
+      - Role::CATEGORIES.each do |key, val|
+        .control-group
+          .control-label= "#{val}:"
+          .controls
+            - @roles.select { |r| r.category == key }.each do |role|
+              %label.checkbox
+                = check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: dom_id(role)
+                = role.name
+
+      .control-group
+        .controls
+          = f.submit t( 'actions.save' ), class: "btn btn-primary"
+          = link_to t( 'actions.cancel' ), user_path(@user.username), class: "btn"
+

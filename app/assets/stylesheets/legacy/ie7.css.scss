@@ -1,0 +1,21 @@
+section.box#search-person {
+  .box-content {
+    input#query-person {
+      width: 62%;
+    }
+  }
+}
+
+section.box#colleagues {
+  padding-bottom: 1em;
+  #update-status-form {
+    fieldset {
+      .controls {
+        display: block;        
+      }
+    }
+    input {
+      float: left;
+    }
+  }
+}

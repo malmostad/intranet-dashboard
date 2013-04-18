@@ -1,0 +1,29 @@
+!!! 5
+%html
+  %head
+    %meta{ charset: 'utf-8' }
+    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1.0' }
+    %meta{ name: 'robots', content: 'noindex, nofollow' }
+    %title= page_title
+    /[if IE]
+      %meta{ "http-equiv" => "X-UA-Compatible", "content" => "IE=edge"}
+    /[if lte IE 8]
+      = javascript_include_tag "#{APP_CONFIG['assets_url_base']}html5shiv-printshiv.js"
+    = stylesheet_link_tag "#{APP_CONFIG['assets_url_stylesheet']}", media: 'all'
+    = stylesheet_link_tag "application", media: 'all'
+    /[if lte IE 9]
+      = stylesheet_link_tag "#{APP_CONFIG['assets_url_base']}legacy/ie9.css", media: 'all'
+      = stylesheet_link_tag "legacy/ie9", media: 'all'
+    /[if lte IE 7]
+      = stylesheet_link_tag "#{APP_CONFIG['assets_url_base']}legacy/ie7.css", media: 'all'
+      = stylesheet_link_tag "legacy/ie7", media: 'all'
+    = csrf_meta_tag
+  %body{ class: "#{@body_classes} malmo-form" }
+    .wrapper
+      - flash.each do |key, value|
+        %p{ class: "flash #{key}" }= value
+      = yield
+      - if @sub_layout == "admin"
+        = render "layouts/admin_nav"
+    = javascript_include_tag "#{APP_CONFIG['assets_url_javascript']}"
+    = javascript_include_tag "application"

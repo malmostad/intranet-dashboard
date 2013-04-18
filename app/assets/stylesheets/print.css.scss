@@ -1,0 +1,9 @@
+@media print {
+  #update-status-form, 
+  #search-person, 
+  #colleagues .add,
+  #shortcuts-tools,
+  #shortcuts-i-want {
+    display: none !important;
+  }
+}

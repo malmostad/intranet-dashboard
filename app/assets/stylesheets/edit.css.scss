@@ -1,0 +1,78 @@
+.edit {
+  section.form, section.index, section.show {
+    @include columns(9);
+    margin-bottom: 2em;
+  }
+
+  .avatar {
+    .control-group {
+      clear: both;
+    }
+  }
+  .edit_avatar {
+    width: 30%;
+    float: left;
+    img {
+      width: 90%;
+      max-width: 12em;
+      height: auto;
+    }
+  }
+  .avatar-help {
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    td, th {
+      &.url, &.title {
+        max-width: 16em;
+        span {
+          display: block;
+          max-width: 15em;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+
+
+  nav.admin {
+    @include columns(3, true);
+    margin-bottom: 2em;
+    background: $backgroundLight;
+    h2 {
+      @include radius(0);
+      margin: 0;
+    }
+    ul {
+      &.users .users a,
+      &.roles .roles a,
+      &.feeds .feeds a,
+      &.shortcuts .shortcuts a,
+      a:hover {
+        background: $backgroundLightHover;
+      }
+    }
+    li {
+      a {
+        display: block;
+        padding: .5em 1em .6em;
+        border-top: white 1px solid;
+        border-bottom: $border;
+        font-size: emize(13);
+        line-height: emize(17, 13);
+        font-family: $sansSerif;
+        color: $menuColor;
+        &:focus, &:hover {
+          background: $backgroundLightHover;
+        }
+      }
+    }
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}

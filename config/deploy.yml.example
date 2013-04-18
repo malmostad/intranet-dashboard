@@ -1,0 +1,2 @@
+server_address: server.example.org
+repository_root: git@github.com:malmostad/intranet-assets.git

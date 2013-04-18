@@ -1,0 +1,28 @@
+- entries.each do |entry|
+  %li
+    %a{ href: entry.full.url, rel: "external" }
+      - if entry.full.image_url.present?
+        = image_tag( entry.full.image_url, alt: '' )
+      - elsif tweet?(entry)
+        %span.icon-twitter
+      - elsif category == 'my_own'
+        %span.icon-rss
+      .text
+        %h2= sanitize( entry.full.title )
+        %p.summary{ class: category }= summary(entry.full.summary)
+        %p.meta
+          = "#{distance_of_time_in_words_to_now(entry.full.published).humanize()} sen från "
+          = entry.feed.title
+          - if entry.full.count_comments.to_i > 0
+            - c = entry.full.count_comments.to_i == 1 ? "kommentar" : "kommentarer"
+            %span.comments
+              = " #{entry.full.count_comments} #{c}"
+              %span.icon-comment-alt
+
+- if entries.size == @limit
+  %li.load-more
+    %input.btn.btn-mini{ type: "button", value: "Visa fler", "data-path" => more_feed_entries_path(category, entries.last.full.published.to_i)}
+- elsif entries.size < @limit
+  %li.load-more
+    .text
+      %p.nomore Det finns inget mer i denna kategori

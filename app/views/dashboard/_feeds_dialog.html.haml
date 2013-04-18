@@ -1,0 +1,18 @@
+%section.box.feeds#feeds-dialog
+  %h1.box-title Mina Komindiskussioner
+  .box-instructions{ class: @dialog_entries.present? ? "" : "show"}
+    %p= raw "Denna box visar blogg- och foruminlägg från Min förvaltning och Mitt arbetsfält, baserat på vad du valt i #{link_to "Min profil", edit_user_path(current_user)}."
+    %p Du kan dessutom lägga till fler diskussioner genom att klicka på pilen uppe till höger i denna box.
+  %ul.box-content
+    = render "feeds_entries", entries: @dialog_entries, category: 'dialog'
+
+  %a.toggle-instructions{ "role" => "button", href: "#",  title: "Visa instruktioner"} ?
+
+  .dropdown.box-menu.pull-right
+    %a#feeds-dialog-menu.dropdown-toggle{ "role" => "button", "data-toggle" => "dropdown", "href" => "#", "title" => "Anpassa denna box" }
+      %span.icon-caret-down.icon-large
+    %menu.dropdown-menu{ "aria-labelledby" => "feeds-dialog-menu" }
+      %li= link_to "Hantera dessa flöden...", user_select_feeds_path('dialog')
+      %li= link_to "Återställ dessa flöden", user_reset_feeds_path(:dialog), data: { confirm: 'Vill du återställa alla flöden för Mina Komindiskussioner?', method: :put }
+      - if admin?
+        %li= link_to "Administrera...", feeds_path

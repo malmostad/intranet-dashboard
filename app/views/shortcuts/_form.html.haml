@@ -1,0 +1,45 @@
+= form_for @shortcut, html: { class: "form-horizontal" } do |f|
+  .box-content
+    - if @shortcut.errors.any?
+      .warning= t 'messages.validation_errors'
+
+    .control-group
+      = f.label :name, "Namn:", class: "control-label"
+      .controls
+        = f.text_field :name, class: "input-wide"
+        - @shortcut.errors[:name].each do |msg|
+          .help-inline.warning= "#{msg}"
+
+    .control-group
+      = f.label :url, "Url:", class: "control-label"
+      .controls
+        = f.url_field :url, class: "input-wide", value: (@shortcut.new_record? and @shortcut.url.blank?) ? 'http://' : @shortcut.url
+        - @shortcut.errors[:url].each do |msg|
+          .help-inline.warning= "#{msg}"
+
+    .control-group
+      = label_tag 'shortcut_category', "Kategori:", class: "control-label"
+      .controls= select(:shortcut, :category,  Shortcut::CATEGORIES.map { |key, val| [val, key] } )
+
+    %h2.form-group-title Obligatorisk för följande roller
+    - Role::CATEGORIES.each do |key, val|
+      .control-group
+        .control-label="#{val}:"
+        = hidden_field_tag "shortcut[role_ids][]", nil
+        .controls
+          %label.checkbox
+            = check_box_tag("toggle-#{key}s")
+            Alla
+
+          .roles{ id: "check-#{key}s" }
+            - Role.where(category: key).each do |role|
+              %label.checkbox
+                - is_checked = !@shortcut.new_record? && @shortcut.role_ids.include?(role.id) ? true : false
+                = check_box_tag "shortcut[role_ids][]", role.id, is_checked, id: dom_id(role)
+                = role.name
+
+    .control-group
+      .controls
+        = f.submit t( 'actions.save' ), class: "btn btn-primary"
+        = link_to t('actions.cancel'), shortcuts_path, class: "btn"
+

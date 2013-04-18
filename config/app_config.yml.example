@@ -1,0 +1,69 @@
+defaults: &defaults
+  ldap:
+    host: "FILL IN"
+    port: "636"
+    base_dn: "FILL IN"
+  allow_stubs: false
+  site_search_query_url: "FILL IN"
+  site_search_autocomplete_url: "FILL IN"
+  site_search_autocomplete_url: "/search/autocomplete"
+  remember_me_days: 30
+  feed_worker_concurrency: 10
+  feed_worker_batch_pause: 1
+  feed_worker_cycle_pause: 10
+
+development:
+  <<: *defaults
+  ldap_stub: true
+  allow_stubs: true
+  title_suffix: "Komin (development)"
+  # Full base system path to avatar storage
+  avatar_base_path: "~/workspaces/intranet-dashboard/public/system/avatars/"
+  # Full base url to avatar service, omit protocol
+  avatar_base_url: "avatars.example.org/avatars/"
+  # Full url to default avatar service, omit protocol
+  avatar_default_url: "avatars.example.org/assets/avatar.jpg"
+  assets_url_base: "//www.local.example.org:3001/assets/"
+  assets_url_javascript: "//www.local.example.org:3001/assets/application.js"
+  assets_url_stylesheet: "//www.local.example.org:3001/assets/application.css"
+  feed_worker_concurrency: 2
+  feed_worker_batch_pause: 20
+  feed_worker_cycle_pause: 60
+
+local_test:
+  <<: *defaults
+  ldap_stub: true
+  allow_stubs: true
+  title_suffix: "Komin (local_test)"
+  avatar_base_path: "~/workspaces/intranet-dashboard/public/system/avatars/"
+  avatar_base_url: "www.local.example.org:3000/system/avatars/"
+  avatar_default_url: "www.local.example.org:3000/assets/avatar.jpg"
+  assets_url_base: "//www.local.example.org:3001/assets/"
+  assets_url_javascript: "//www.local.example.org:3001/assets/application.js"
+  assets_url_stylesheet: "//www.local.example.org:3001/assets/application.css"
+
+test:
+  <<: *defaults
+  title_suffix: "Komin (test)"
+  avatar_base_path: "/var/www/public/avatars-test/"
+  avatar_base_url: "avatars.example.org/avatars-test/"
+  avatar_default_url: "avatars.example.org/default_avatar.jpg"
+  assets_url_base: "//assets.example.org/assets-3.0-test/"
+  assets_url_javascript: "//assets.example.org/assets-3.0-test/application.js"
+  assets_url_stylesheet: "//assets.example.org/assets-3.0-test/application.css"
+  site_search_autocomplete_url: "/dashboard-test/search/autocomplete"
+  feed_worker_concurrency: 2
+  feed_worker_batch_pause: 20
+  feed_worker_cycle_pause: 60
+
+
+production:
+  <<: *defaults
+  title_suffix: "Komin"
+  avatar_base_path: "/var/www/public/avatars/"
+  avatar_base_url: "avatars.example.org/avatars/"
+  avatar_default_url: "avatars.example.org/default_avatar.jpg"
+  assets_url_base: "//assets.example.org/assets-3.0/"
+  assets_url_javascript: "//assets.example.org/assets-3.0/application.js"
+  assets_url_stylesheet: "//assets.example.org/assets-3.0/application.css"
+  site_search_autocomplete_url: "/dashboard/search/autocomplete"

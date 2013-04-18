@@ -1,0 +1,14 @@
+= form_tag(users_search_path, method: "get", id: "search-user", class: "form-horizontal") do
+  .control-group
+    = label_tag "term", "Sök användare: ", class: "control-label"
+    .controls
+      .input-append
+        = text_field_tag "term", params[:term]
+        = submit_tag "Sök", { class: "btn" }
+      - if params[:term].blank? || @users.blank?
+        .help-inline Sök på förnamn, efternamn, e-postadress eller användarnamn.
+  - if params[:term].blank?
+    .body-copy
+      %p.help
+        = "Trivia: Det är #{@total_users} användare som loggat in på Min sida varav #{@registered_last_week_users} nya har tillkommit senaste sju dagarna."
+        = "#{@last_week_users} användare har loggat in senaste sju dagarna. Totalt #{@has_status} har ett statusmeddelande."

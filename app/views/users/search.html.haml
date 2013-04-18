@@ -1,0 +1,23 @@
+- title "Användare"
+%section.box.index
+  %h1.box-title= h1
+  .box-content
+    - if @users.empty?
+      %p.warning Ingen användare matchade din sökning
+    = render "search_form"
+
+    - if @users.present?
+      %table
+        %thead
+          %tr
+            %th Användarnamn
+            %th Förnamn
+            %th Efternamn
+            %th.secondary E-post
+        %tbody
+          - @users.each do |user|
+            %tr
+              %td= link_to user.username, user_path(user.username)
+              %td= user.first_name
+              %td= user.last_name
+              %td.secondary= user.email
