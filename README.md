@@ -1,10 +1,10 @@
 # Intranet Dashboard
 
-The Intranet Dashboard, “Min sida”, is City of Malmö’s personalized intranet front. Information and tools on the dashboard are targeted for the employee based on roles and their own preferences. The dashboards core functions are:
+The Intranet Dashboard, “Min sida”, is City of Malmö’s personalized intranet front. Information and tools on the dashboard are targeted for the employee based on roles and her own preferences. The dashboards core functionality are:
 
 * Targeted and user selected news from the organization and external resources.
-* Searchable employee information with data retrieved from other systems and a self service interface where the employee can update the information.
-* Direct access to tools and applications based on the users roles and profile.
+* Searchable employee information with data compiled from other systems and a self service interface where the employee can update the information.
+* Direct access to tools and applications based on the user’s roles and profile.
 * Enterprise search for all intranet resources.
 * User managed portrait pictures. The system acts as an avatar service for other intranet systems.
 
