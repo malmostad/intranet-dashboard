@@ -11,8 +11,15 @@ class SessionsController < ApplicationController
 
       set_profile_cookie
       redirect_to root_url
+
+    elsif APP_CONFIG['auth_method'] == "saml"
+      # Use a SAML IdP
+      Authentication.authenticate
+
+    else
+      # Render the standard login form
+      render :new
     end
-    rescue # Login form
   end
 
   def create
@@ -20,7 +27,8 @@ class SessionsController < ApplicationController
     @user = Authentication.authenticate( params[:username], params[:password] )
     if @user
 
-      tracker = UserAgent.track( @user.id, cookies.signed[:user_agent], params[:remember_me], request.env['HTTP_USER_AGENT'] )
+      tracker = UserAgent.track( @user.id, cookies.signed[:user_agent], params[:remember_me],
+          request.env['HTTP_USER_AGENT'] )
       # Set/update a cookie that keep tracks of this, and only this, user agent
       cookies.permanent.signed[:user_agent] = {
         value:  { id: tracker[:id], token: tracker[:token] },
