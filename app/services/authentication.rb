@@ -7,7 +7,7 @@ class Authentication
 
   class Ldap
     def self.authenticate(username, password)
-      return stub_auth(username) if APP_CONFIG['ldap_stub']
+      # return stub_auth(username) if APP_CONFIG['ldap_stub']
       return false if username.strip.empty? || password.strip.empty?
 
       ldap = Net::LDAP.new(
@@ -26,15 +26,11 @@ class Authentication
 
       # Fetch user attributes
       ldap_user = ldap.search( base: APP_CONFIG['ldap']['base_dn'], filter: "cn=#{username}",
-          attributes: %w( cn givenname sn displayname mail telephonenumber mobile title company manager directreports ) )
+          attributes: %w(cn givenname sn displayname mail telephonenumber mobile title company manager directreports))
 
       if ldap_user.present? && bind_user.present?
         # Find local user or create a new one
         @user = User.where(username: username).first_or_initialize
-        Rails.logger.debug "=" * 72
-        Rails.logger.debug @user
-        Rails.logger.debug username
-        Rails.logger.debug "=" * 72
         sync_attributes(ldap_user.first)
         @user
       else
@@ -68,7 +64,7 @@ class Authentication
     # Stub auth w/out ldap
     # Returns an **existing** user by username
     def self.stub_auth(username)
-      u = User.find_by_username(username)
+      u = User.where(username: username).first
       u.touch
       u
       rescue

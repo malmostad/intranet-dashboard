@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
       redirect_to root_url
 
     elsif APP_CONFIG['auth_method'] == "saml"
-      redirect_to saml_new_path
+      redirect_to saml_new_path # SAML Auth has its own controller
     else
       # Render the standard login form
       render :new
@@ -22,21 +22,11 @@ class SessionsController < ApplicationController
   end
 
   def create
-    # Establish a user session if username/password is valid
-    @user = Authentication.authenticate( params[:username], params[:password] )
+    @user = Authentication.authenticate(params[:username], params[:password])
     if @user
-      tracker = UserAgent.track( @user.id, cookies.signed[:user_agent], params[:remember_me],
-          request.env['HTTP_USER_AGENT'] )
-      # Set/update a cookie that keep tracks of this, and only this, user agent
-      cookies.permanent.signed[:user_agent] = {
-        value:  { id: tracker[:id], token: tracker[:token] },
-        secure: !Rails.env.development?,
-        path: root_path
-      }
+      @user.update_attribute("latest_login", Time.now)
+      track_user_agent(@user)
       session[:user_id] = @user.id
-      @user.latest_login = Time.now
-      @user.save
-
       set_profile_cookie
       redirect_to root_url
     else
@@ -55,4 +45,15 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     redirect_to root_url, notice: "Nu är du utloggad"
   end
+
+  def track_user_agent(user)
+    tracker = UserAgent.track(user.id, cookies.signed[:user_agent], params[:remember_me], request.env['HTTP_USER_AGENT'] )
+    # Set/update a cookie that keep tracks of this, and only this, user agent
+    cookies.permanent.signed[:user_agent] = {
+      value:  { id: tracker[:id], token: tracker[:token] },
+      secure: !Rails.env.development?,
+      path: root_path
+    }
+  end
 end
+
