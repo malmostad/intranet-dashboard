@@ -20,12 +20,9 @@ class UserAgent < ActiveRecord::Base
     updated_at < Date.today - APP_CONFIG['remember_me_days'].days
   end
 
-  def self.track( user_id, tracker, remember_me, tag )
-    begin
-      user_agent = find_or_create_by_id( tracker[:id] )
-    rescue
-      user_agent = new
-    end
+  # Save UA remember me token
+  def self.track(user_id, tracker = {}, remember_me, tag)
+    user_agent = where(id: tracker[:id]).first_or_initialize
 
     # Create a new token every time it is set for the user agent
     token = Array.new(64).map { (65 + rand(58)).chr }.join
