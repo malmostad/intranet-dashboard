@@ -34,6 +34,10 @@ DashboardKomin::Application.routes.draw do
   # get  "/search" => "site_search#index"
   # get  "/search/autocomplete" => "site_search#autocomplete", as: "site_search_autocomplete"
 
+  get 'saml/new'
+  post 'saml/consume'
+  get 'saml/metadata'
+
   get  "/login" => "sessions#new"
   post "/login" => "sessions#create"
   get  "/logout" => "sessions#destroy"
