@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   before_filter :init_body_class
 
   # Set a permanent cookie w/data from the user profile. Used by the masthead in other webapps
+  # TODO: move to auth or user_attributes
   def set_profile_cookie
     departments = current_user.roles.map { |d| { name: d.name, homepage_url: d.homepage_url } if d.category == 'department' }.compact
     workingfields = current_user.roles.map { |w| { name: w.name, homepage_url: w.homepage_url } if w.category == 'working_field' }.compact
@@ -36,7 +37,7 @@ class ApplicationController < ActionController::Base
     rescue_from ActionController::RoutingError, with: :not_found
     rescue_from AbstractController::ActionNotFound, with: :not_found
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
-    rescue_from Exception, with: :error
+    rescue_from Exception, with: :error_page
   end
   def method_missing(method, *args)
     not_found
@@ -48,11 +49,12 @@ class ApplicationController < ActionController::Base
     render template: "404", status: 404
   end
 
-  def error(exception = "500")
+  def error_page(exception = "500", msg = "Prova att navigera med menyn ovan.")
     logger.error("Exception: #{exception}\n" +
                  "#{' ' * 32 }User id: #{user? ? session[:user_id] : 'anonymous'}\n" +
                  "#{' ' * 32 }Params: #{params}")
     reset_body_classes
+    @msg = msg
     render template: "500", status: 500
   end
 
