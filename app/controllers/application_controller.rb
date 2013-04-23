@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   before_filter :init_body_class
 
   # Set a permanent cookie w/data from the user profile. Used by the masthead in other webapps
-  # TODO: move to auth or user_attributes
   def set_profile_cookie
     departments = current_user.roles.map { |d| { name: d.name, homepage_url: d.homepage_url } if d.category == 'department' }.compact
     workingfields = current_user.roles.map { |w| { name: w.name, homepage_url: w.homepage_url } if w.category == 'working_field' }.compact
