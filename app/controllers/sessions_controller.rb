@@ -4,8 +4,9 @@ class SessionsController < ApplicationController
 
   def new
     # Establish a user session if the user_agent cookie satisfy the remember me criterias
-    @user_agent = UserAgent.find( cookies.signed[:user_agent][:id] )
-    if @user_agent.authenticate( cookies.signed[:user_agent][:token] )
+    @user_agent = UserAgent.where(id: cookies.signed[:user_agent][:id] ).first
+
+    if @user_agent.present? && @user_agent.authenticate( cookies.signed[:user_agent][:token] )
       session[:user_id] = @user_agent.user_id
       @user_agent.user.update_attribute("latest_login", Time.now)
 
@@ -13,9 +14,7 @@ class SessionsController < ApplicationController
       redirect_to root_url
 
     elsif APP_CONFIG['auth_method'] == "saml"
-      # Use a SAML IdP
-      Authentication.authenticate
-
+      redirect_to saml_new_path
     else
       # Render the standard login form
       render :new
@@ -26,7 +25,6 @@ class SessionsController < ApplicationController
     # Establish a user session if username/password is valid
     @user = Authentication.authenticate( params[:username], params[:password] )
     if @user
-
       tracker = UserAgent.track( @user.id, cookies.signed[:user_agent], params[:remember_me],
           request.env['HTTP_USER_AGENT'] )
       # Set/update a cookie that keep tracks of this, and only this, user agent

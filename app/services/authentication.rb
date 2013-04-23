@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 class Authentication
-  # Check credentials for a user with an ldap server
-  # Return a User object or false
   def self.authenticate(username, password)
     Ldap.authenticate(username, password)
   end
@@ -24,7 +22,7 @@ class Authentication
       )
 
       # Authenticate user
-      bind_user = ldap.bind_as(:base => APP_CONFIG["ldap"]["base_dn"], :filter => "cn=#{username}", :password => password )
+      bind_user = ldap.bind_as(base: APP_CONFIG["ldap"]["base_dn"], filter: "cn=#{username}", password: password )
 
       # Fetch user attributes
       ldap_user = ldap.search( base: APP_CONFIG['ldap']['base_dn'], filter: "cn=#{username}",
@@ -32,7 +30,11 @@ class Authentication
 
       if ldap_user.present? && bind_user.present?
         # Find local user or create a new one
-        @user = User.find_or_create_by_username(username)
+        @user = User.where(username: username).first_or_initialize
+        Rails.logger.debug "=" * 72
+        Rails.logger.debug @user
+        Rails.logger.debug username
+        Rails.logger.debug "=" * 72
         sync_attributes(ldap_user.first)
         @user
       else
