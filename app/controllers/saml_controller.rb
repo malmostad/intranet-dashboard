@@ -28,7 +28,7 @@ class SamlController < ApplicationController
 
   def metadata
     meta = Onelogin::Saml::Metadata.new
-    render :xml => meta.generate(saml_settings)
+    render xml: meta.generate(saml_settings)
   end
 
   private
