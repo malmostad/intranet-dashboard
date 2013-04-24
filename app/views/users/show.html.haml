@@ -31,10 +31,10 @@
         .controls= @user.is_admin ? "Ja" : "Nej"
       .control-group.readonly
         .control-label Senast inloggad:
-        - if @user.latest_login.blank?
+        - if @user.last_login.blank?
           .controls –
         - else
-          .controls= l @user.latest_login, format: :short
+          .controls= l @user.last_login, format: :short
       .control-group.readonly
         .control-label Användaren skapades:
         .controls= l @user.created_at, format: :short

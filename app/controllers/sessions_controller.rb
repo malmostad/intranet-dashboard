@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
 
     if @user_agent.present? && @user_agent.authenticate( cookies.signed[:user_agent][:token] )
       session[:user_id] = @user_agent.user_id
-      @user_agent.user.update_attribute("latest_login", Time.now)
+      @user_agent.user.update_attribute("last_login", Time.now)
 
       set_profile_cookie
       redirect_to root_url
@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
   def create
     @user = Authentication.authenticate(params[:username], params[:password])
     if @user
-      @user.update_attribute("latest_login", Time.now)
+      @user.update_attribute("last_login", Time.now)
       track_user_agent(@user)
       session[:user_id] = @user.id
       set_profile_cookie

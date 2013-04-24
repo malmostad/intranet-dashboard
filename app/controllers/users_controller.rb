@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
   def index
     @total_users = User.count
-    @last_week_users = User.where("latest_login > ?", Time.now - 1.week).count
+    @last_week_users = User.where("last_login > ?", Time.now - 1.week).count
     @registered_last_week_users = User.where("created_at > ?", Time.now - 1.week).count
     @has_status = User.where("status_message != ?", "").count
   end

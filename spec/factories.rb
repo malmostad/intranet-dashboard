@@ -7,7 +7,7 @@ FactoryGirl.define do
     last_name 'Last'
     sequence(:email) { |n| "user-#{n}@example.org" }
     sequence(:displayname) { |n| "First-#{n} Last-#{n}" }
-    latest_login Time.now
+    last_login Time.now
   end
 
   factory :admin_user, parent: :user do

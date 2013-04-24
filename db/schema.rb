@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130314134446) do
+ActiveRecord::Schema.define(:version => 20130424113855) do
 
   create_table "colleagueships", :force => true do |t|
     t.integer  "user_id"
@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(:version => 20130314134446) do
     t.string   "company"
     t.string   "manager"
     t.string   "directreports"
-    t.datetime "latest_login"
+    t.datetime "last_login"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
