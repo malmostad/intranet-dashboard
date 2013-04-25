@@ -31,6 +31,22 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  # Save user agent and set permanent cookie for "remember me"
+  def track_user_agent
+    # Existing tracker from the browser
+    tracker_id = cookies.signed[:user_agent] || nil
+
+    # Get or create tracker from the UserAgent model
+    tracker = UserAgent.track(current_user.id, tracker_id, params[:remember_me], request.env['HTTP_USER_AGENT'] )
+
+    # Set tracker in browser
+    cookies.permanent.signed[:user_agent] = {
+      value:  { id: tracker[:id], token: tracker[:token] },
+      secure: !Rails.env.development?,
+      path: root_path
+    }
+  end
+
   # Catch errors and record not founds
   unless Rails.env.development?
     rescue_from ActionController::RoutingError, with: :not_found
@@ -93,14 +109,6 @@ class ApplicationController < ActionController::Base
   def not_authorized(msg = "Du saknar behörighet för detta" )
     flash[:error] = msg
     redirect_to root_path
-  end
-
-  def allow_stubs?
-
-    unless APP_CONFIG['allow_stubs']
-      flash[:error] = 'Stubs are not activated'
-      redirect_to root_path
-    end
   end
 
   def init_body_class

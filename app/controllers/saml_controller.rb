@@ -7,22 +7,27 @@ class SamlController < ApplicationController
     redirect_to(request.create(saml_settings))
   end
 
-  # Parse the SAML response from the IdP and authenticate the user
+  # Validate the SAML response from the IdP
   def consume
     response = Onelogin::Saml::Response.new(params[:SAMLResponse])
     response.settings = saml_settings
 
     if response.is_valid?
-      @user = User.where(username: response.attributes[APP_CONFIG["saml"]["username_key"].to_sym]).first
-      if @user
-        session[:user_id] = @user.id
-        redirect_to root_url
-      else
-        # TODO: Skapa användaren
-        render text: "User not in dashboard"
-      end
+      username = response.attributes[APP_CONFIG["saml"]["username_key"].to_sym]
+
+      # Update user attributes from LDAP. Create user if it is her first login.
+      @user = Ldap.new.update_user_profile(username)
+      @user.update_attribute("last_login", Time.now)
+
+      # Set user cookies
+      session[:user_id] = @user.id
+      set_profile_cookie
+      track_user_agent
+
+      redirect_to root_url
     else
-      error_page("500", "Ett fel uppstod med Portwise.")
+      Rails.logger.warn "SAML response not valid for #{username}"
+      error_page("500", "Ett fel uppstod med Single Sign On-tjänsten.")
     end
   end
 

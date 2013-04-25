@@ -4,17 +4,18 @@ class SessionsController < ApplicationController
 
   def new
     # Establish a user session if the user_agent cookie satisfy the remember me criterias
-    @user_agent = UserAgent.where(id: cookies.signed[:user_agent][:id] ).first
+    @user_agent = cookies.signed[:user_agent].present? ? UserAgent.where(id: cookies.signed[:user_agent][:id]).first : false
 
-    if @user_agent.present? && @user_agent.authenticate( cookies.signed[:user_agent][:token] )
+    if @user_agent && @user_agent.authenticate(cookies.signed[:user_agent][:token])
       session[:user_id] = @user_agent.user_id
-      @user_agent.user.update_attribute("last_login", Time.now)
+      current_user.update_attribute("last_login", Time.now)
 
       set_profile_cookie
       redirect_to root_url
 
     elsif APP_CONFIG['auth_method'] == "saml"
-      redirect_to saml_new_path # SAML Auth has its own controller
+       # SAML Auth has its own controller
+      redirect_to saml_new_path
     else
       # Render the standard login form
       render :new
@@ -22,12 +23,18 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @user = Authentication.authenticate(params[:username], params[:password])
-    if @user
+    # Authenticate with LDAP
+    ldap = Ldap.new
+    if ldap.authenticate(params[:username], params[:password])
+      # Update user attributes from LDAP. Create user if it not exist.
+      @user = ldap.update_user_profile(params[:username])
       @user.update_attribute("last_login", Time.now)
-      track_user_agent(@user)
+
+      # Set user cookies
       session[:user_id] = @user.id
       set_profile_cookie
+      track_user_agent
+
       redirect_to root_url
     else
       @login_failed = "Fel användarnamn eller lösenord. Vänligen försök igen."
@@ -45,15 +52,4 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     redirect_to root_url, notice: "Nu är du utloggad"
   end
-
-  def track_user_agent(user)
-    tracker = UserAgent.track(user.id, cookies.signed[:user_agent], params[:remember_me], request.env['HTTP_USER_AGENT'] )
-    # Set/update a cookie that keep tracks of this, and only this, user agent
-    cookies.permanent.signed[:user_agent] = {
-      value:  { id: tracker[:id], token: tracker[:token] },
-      secure: !Rails.env.development?,
-      path: root_path
-    }
-  end
 end
-

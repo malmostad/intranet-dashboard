@@ -21,8 +21,8 @@ class UserAgent < ActiveRecord::Base
   end
 
   # Save UA remember me token
-  def self.track(user_id, tracker = {}, remember_me, tag)
-    user_agent = where(id: tracker[:id]).first_or_initialize
+  def self.track(user_id, tracker_id, remember_me, tag)
+    user_agent = where(id: tracker_id).first_or_initialize
 
     # Create a new token every time it is set for the user agent
     token = Array.new(64).map { (65 + rand(58)).chr }.join
