@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
 
   def error_page(exception = "500", msg = "Prova att navigera med menyn ovan.")
     logger.error("Exception: #{exception}\n" +
-                 "#{' ' * 32 }User id: #{user? ? session[:user_id] : 'anonymous'}\n" +
+                 "#{' ' * 32 }User id: #{session[:user_id] ? session[:user_id] : 'anonymous'}\n" +
                  "#{' ' * 32 }Params: #{params}")
     reset_body_classes
     @msg = msg
@@ -75,22 +75,22 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def user?
-    session[:user_id]
-  end
-
   def current_user
-    @current_user ||= User.find(session[:user_id]) if user?
+    begin
+      @current_user ||= User.find(session[:user_id])
+    rescue
+      false
+    end
   end
 
   def admin?
-    user? and current_user.is_admin
+    current_user && current_user.is_admin
   end
+  helper_method :admin?, :current_user
 
   def require_user
-    redirect_to login_path unless user?
+    redirect_to login_path unless current_user
   end
-  helper_method :user?, :admin?, :current_user
 
   def require_admin
     not_authorized unless admin?
@@ -103,7 +103,7 @@ class ApplicationController < ActionController::Base
   helper_method :editing_myself?
 
   def require_admin_or_myself
-    not_authorized unless admin? or editing_myself?
+    not_authorized unless admin? || editing_myself?
   end
 
   def not_authorized(msg = "Du saknar behörighet för detta" )
