@@ -19,8 +19,8 @@ gem 'cocaine', '0.5.1'
 
 gem 'daemons-rails'
 
-gem 'capistrano'
-gem 'capistrano-ext'
+gem 'capistrano', '2.15.3'
+gem 'capistrano-ext', '1.2.1'
 gem 'whenever', require: false
 
 group :development, :local_test do
