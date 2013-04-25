@@ -20,7 +20,7 @@ class Ldap
     if bind_user.present?
       true
     else
-      Rails.logger.warn "LDAP: #{username} failed to log in. #{ldap.get_operation_result}"
+      Rails.logger.warn "LDAP: #{username} failed to log in. #{@client.get_operation_result}"
       false
     end
   end
@@ -48,7 +48,7 @@ class Ldap
       user.save
       user
     else
-      Rails.logger.warn "LDAP: couldn't find #{username}. #{ldap.get_operation_result}"
+      Rails.logger.warn "LDAP: couldn't find #{username}. #{@client.get_operation_result}"
       return false
     end
   end
