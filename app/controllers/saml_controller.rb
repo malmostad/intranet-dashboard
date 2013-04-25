@@ -24,7 +24,7 @@ class SamlController < ApplicationController
       set_profile_cookie
       track_user_agent
 
-      redirect_to root_url
+      redirect_to root_path
     else
       Rails.logger.warn "SAML response not valid for #{username}"
       error_page("500", "Ett fel uppstod med Single Sign On-tjänsten.")

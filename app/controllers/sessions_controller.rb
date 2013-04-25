@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
       set_profile_cookie
       track_user_agent
 
-      redirect_to root_url
+      redirect_to root_path
     else
       @login_failed = "Fel användarnamn eller lösenord. Vänligen försök igen."
       render "new"
