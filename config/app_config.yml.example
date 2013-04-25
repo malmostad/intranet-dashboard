@@ -3,7 +3,6 @@ defaults: &defaults
     host: "FILL IN"
     port: "636"
     base_dn: "FILL IN"
-  allow_stubs: false
   site_search_query_url: "FILL IN"
   site_search_autocomplete_url: "FILL IN"
   site_search_autocomplete_url: "/search/autocomplete"
@@ -14,8 +13,6 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  ldap_stub: true
-  allow_stubs: true
   title_suffix: "Komin (development)"
   # Full base system path to avatar storage
   avatar_base_path: "~/workspaces/intranet-dashboard/public/system/avatars/"
@@ -32,8 +29,6 @@ development:
 
 local_test:
   <<: *defaults
-  ldap_stub: true
-  allow_stubs: true
   title_suffix: "Komin (local_test)"
   avatar_base_path: "~/workspaces/intranet-dashboard/public/system/avatars/"
   avatar_base_url: "www.local.example.org:3000/system/avatars/"
