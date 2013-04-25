@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   # Save user agent and set permanent cookie for "remember me"
   def track_user_agent
     # Existing tracker from the browser
-    tracker_id = cookies.signed[:user_agent] || nil
+    tracker_id = cookies.signed[:user_agent].present? ? cookies.signed[:user_agent][:id] : nil
 
     # Get or create tracker from the UserAgent model
     tracker = UserAgent.track(current_user.id, tracker_id, params[:remember_me], request.env['HTTP_USER_AGENT'] )
