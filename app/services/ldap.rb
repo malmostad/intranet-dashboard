@@ -47,8 +47,9 @@ class Ldap
       user.directreports = ldap_user["directreports"].map { |m| extract_cn(m) }.join(", ")
       user.phone         = phone ||= ldap_user['telephonenumber'].first
       user.cell_phone    = cell_phone ||= ldap_user['mobile'].first
+      changed = user.changed?
       user.save(validate: false)
-      user
+      { user: user, changed: changed }
     else
       Rails.logger.warn "LDAP: couldn't find #{username}. #{@client.get_operation_result}"
       return false
