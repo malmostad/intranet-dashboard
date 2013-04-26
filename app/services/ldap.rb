@@ -27,6 +27,7 @@ class Ldap
 
   # Update user attributes from the ldap user
   def update_user_profile(username)
+    Paperclip.options[:log] = false
     # Fetch user attributes
     ldap_user = @client.search(base: APP_CONFIG['ldap']['base_dn'], filter: "cn=#{username}",
         attributes: %w(cn givenname sn displayname mail telephonenumber mobile title company manager directreports)).first
@@ -45,7 +46,7 @@ class Ldap
       user.directreports = ldap_user["directreports"].map { |m| extract_cn(m) }.join(", ")
       user.phone         = phone ||= ldap_user['telephonenumber'].first
       user.cell_phone    = cell_phone ||= ldap_user['mobile'].first
-      user.save
+      user.save(validate: false)
       user
     else
       Rails.logger.warn "LDAP: couldn't find #{username}. #{@client.get_operation_result}"
