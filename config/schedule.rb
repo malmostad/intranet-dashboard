@@ -10,6 +10,10 @@ set :real_environment, environment == "staging" ? "test" : "production" # 'stagi
 job_type :rake, "cd :path && PATH=/usr/local/bin:$PATH RAILS_ENV=:real_environment bundle exec rake :task --silent :output"
 
 if environment == "staging"
+  # every :day, :at => '1:30am' do
+  #   rake "update_user_profiles"
+  # end
+
   every :day, :at => '2:13am' do
     rake "delete_old_feed_entries"
   end
@@ -20,6 +24,10 @@ if environment == "staging"
 end
 
 if environment == "production"
+  # every :day, :at => '0:30am' do
+  #   rake "update_user_profiles"
+  # end
+
   every :day, :at => '4:13am' do
     rake "delete_old_feed_entries"
   end

@@ -28,6 +28,7 @@ class Ldap
   # Update user attributes from the ldap user
   def update_user_profile(username)
     Paperclip.options[:log] = false
+
     # Fetch user attributes
     ldap_user = @client.search(base: APP_CONFIG['ldap']['base_dn'], filter: "cn=#{username}",
         attributes: %w(cn givenname sn displayname mail telephonenumber mobile title company manager directreports)).first
@@ -57,5 +58,18 @@ class Ldap
   # Extract username from a ldap cn record
   def extract_cn(dn)
     dn[/cn=(.+?),/i, 1] unless dn.blank?
+  end
+
+  def find_user(username)
+    ldap_user = @client.search(base: APP_CONFIG['ldap']['base_dn'], filter: "cn=#{username}").first
+    if ldap_user.present?
+      Rails.logger.debug ldap_user['dn'].first
+      Rails.logger.debug ldap_user['displayname'].first
+      Rails.logger.debug ldap_user["manager"].first
+      Rails.logger.debug ldap_user["mail"].first
+    else
+      Rails.logger.debug  "No user #{username}"
+    end
+    Rails.logger.debug  @client.get_operation_result
   end
 end
