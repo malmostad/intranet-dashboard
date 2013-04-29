@@ -85,7 +85,7 @@ The `whenever` gem is used to add database maintenance rake tasks to cron. Chang
 Syncing of LDAP attributes for all employees in the system is made with a worker and runs as a scheduled job defined in the `whenever` script `schedule.rb`.
 
 ## Avatar Service
-The system contains management of employee portraits and is used as an avatar service for other applications on the intranet with a REST API. Pre-defined image sizes are generated when an employee uploads a new picture.
+The system contains management of employee portraits and is used as an [avatar service for other applications on the intranet](https://github.com/malmostad/intranet-dashboard/wiki/Avatar-Service) with a REST API.
 
 ## Intranet Search Interface
 The system contains an integration with the Siteseeker search engine. The search contains results from all intranet systems.
