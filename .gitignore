@@ -1,8 +1,9 @@
 .DS_Store
+log
+tmp
+doc
 config/deploy.yml
 config/database.yml
 config/app_config.yml
 config/initializers/secret_token.rb
-log
-tmp
-doc
+spec/auth_credentials.yml

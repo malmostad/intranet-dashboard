@@ -6,8 +6,8 @@ def login(username, password)
 end
 
 def create_user_and_login
-  user = FactoryGirl.create(:user)
-  login(user.username, 'stub')
+  user = FactoryGirl.create(:user, username: AUTH_CREDENTIALS["username"])
+  login(user.username, AUTH_CREDENTIALS["password"])
   user
 end
 
