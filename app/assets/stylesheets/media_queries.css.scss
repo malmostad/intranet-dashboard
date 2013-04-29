@@ -79,7 +79,7 @@
     }
   }
 
-  .malmo-form .edit {
+  .malmo-form.edit {
     th.url, td.url {
       display: none;
     }
@@ -141,7 +141,7 @@
     }
   }
 
-  .malmo-form .edit {
+  .malmo-form.edit {
     section.index, section.show, section.form, nav.admin {
       @include columns(12);
     }
