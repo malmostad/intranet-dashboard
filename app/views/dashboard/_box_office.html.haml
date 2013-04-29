@@ -1,0 +1,58 @@
+.box#office
+  %h2 Office
+  - if current_user
+    .context-menu
+      %ul
+        %li{ "data-action" => 'toggle' } Dölj
+        %li Anpassa...
+        %li Lorem ipsum
+        %li{ "data-action" => 'reset' } Återställ inställningar
+    .box-content
+      %h3 Min inbox
+      %ul
+        - if @mailbox['summary']['total'] > 0
+          - @mailbox['messages'].each do |message|
+            %li
+              - status = message['read'] ? 'read' : 'unread'
+              %p{ :class => status }
+                = link_to message['subject'], "#{APP_CONFIG[:gmail_base_url]}#{message['gmail_uid']}"
+              %p
+                = message['from_name']
+                %span.date= Time.parse(message['date']).strftime("%Y-%m-%d %H.%M")
+        - else
+          %li Du har inga meddelanden i din inbox
+        %li.all= link_to "Alla mina mail", "https://mail.google.com/"
+
+    .box-content
+      %h3 Min kalender
+      %ul
+        - if @calendar['summary']['total'] > 0
+          - @calendar['entries'].each do |entry|
+            %li
+              %p= link_to entry['title'], entry['link']
+              %p= entry['location']
+              /%p= entry['organizer']
+              %span.date
+                = Time.parse(entry['start']).strftime("%Y-%m-%d %H.%M")
+                = "–"
+                = Time.parse(entry['end']).strftime("%Y-%m-%d %H.%M")
+        - else
+          %li Du har inga kalenderhändelser
+        %li.all= link_to "Alla mina kalenderhändelser", "https://calendar.google.com/"
+
+    .box-content
+      %h3 Mina dokument
+      %ul
+        - if @docs['summary']['total'] > 0
+          - @docs['entries'].each do |entry|
+            %li
+              %p= link_to entry['title'], entry['link']
+              %p
+                = entry['author']
+                %span.date= Time.parse(entry['updated']).strftime("%Y-%m-%d %H.%M")
+        - else
+          %li Du har inga dokument
+        %li.all= link_to "Alla mina dokument", "https://docs.google.com/"
+  - else
+    .box-content
+      = render 'sessions/form'

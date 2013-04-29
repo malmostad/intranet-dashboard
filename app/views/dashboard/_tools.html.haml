@@ -1,0 +1,19 @@
+.box#tools
+  %h2 Verktyg & system
+  - if current_user
+    .context-menu
+      %ul
+        %li{ "data-action" => 'toggle' } Dölj
+        %li Anpassa...
+        %li{ "data-action" => 'reset' } Återställ inställningar
+  .box-content
+    %ul
+      %li= link_to "Avtalskatalogen", "http://komin.malmo.se/avtalskatalog"
+      %li= link_to "Elit", "http://komin.malmo.se/elit"
+      %li= link_to "Flexite", "http://komin.malmo.se/flexite"
+      %li= link_to "HRutan", "http://komin.malmo.se/HRutan.html"
+      %li= link_to "IT-kompassen", "http://itkompassen/sites/ztp/default.aspx"
+      %li= link_to "Origo", "http://komin.malmo.se/origo"
+      %li= link_to "Raindance", "http://komin.malmo.se/raindance"
+      %li= link_to "Vikariebanken", "http://komin.malmo.se/vikariebanken"
+      %li.all= link_to "Fler verktyg & system", "http://komin.malmo.se/Startsidan-rutor/Verktyg--system.html"

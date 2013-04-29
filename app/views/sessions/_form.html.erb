@@ -1,0 +1,13 @@
+<%= form_tag login_path, :class => 'login' do %>
+  <p>Logga in för att se din e-post, kalender och dina dokument.</p>
+
+  <div class="field">
+    <%= label_tag :username, 'Användarnamn:' %><br/>
+    <%= text_field_tag :username, params[:username] %>
+  </div>
+  <div class="field">
+    <%= label_tag :password, 'Lösenord:' %><br/>
+    <%= password_field_tag :password %>
+  </div>
+  <div class="actions"><%= submit_tag "Logga in" %></div>
+<% end %>

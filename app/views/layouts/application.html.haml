@@ -1,0 +1,20 @@
+!!! 5
+%html
+  %head
+    %meta{ :charset => 'utf-8' }
+    %meta{ :name => 'viewport', :content => 'initial-scale=1.0', :width => 'device-width' }
+
+    %title= page_title
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "application"
+    = csrf_meta_tag
+  %body{ :class => "malmo#{@body_classes}" }
+    .wrapper.clearfix
+      = render 'layouts/masthead'
+      .content
+        - if flash[:notice]
+          %p.notice= flash[:notice]
+        - if flash[:error]
+          %p.error= flash[:error]
+        = yield
+    = debug(params) if Rails.env.development?

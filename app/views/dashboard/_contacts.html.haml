@@ -1,0 +1,16 @@
+.box#contacts
+  %h2 Mina kontakter
+  - if current_user
+    .context-menu
+      %ul
+        %li{ "data-action" => 'toggle' } Dölj
+        %li Anpassa...
+        %li Redigera favoriter
+        %li{ "data-action" => 'reset' } Återställ inställningar
+  .box-content
+    - if current_user
+      %p [Sök + favoriter + avdelningen]
+    - else
+      %p [Sök kontakter]
+      %p= link_to "Logga in för att se dina kontakter", login_path
+

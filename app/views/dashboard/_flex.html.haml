@@ -1,0 +1,25 @@
+.box#flex
+  %h2 Flexa
+  - if current_user
+    .context-menu
+      %ul
+        %li{ "data-action" => 'toggle' } Dölj
+        %li Anpassa...
+        %li{ "data-action" => 'reset' } Återställ inställningar
+  .box-content
+    - if current_user
+      %p
+        = "#{current_user[:first_name]} #{current_user[:last_name]}"
+        = link_to "(ändra)", change_user_path
+      %p.controls
+        %span{ "data-role" => 'button', "data-action" => "in" }= "In"
+        %span{ "data-role" => 'button', "data-action" => "break-out"  }= "Rast ut"
+        %span{ "data-role" => 'button', "data-action" => "break-in" }= "Rast in"
+        %span{ "data-role" => 'button', "data-action" => "out" }= "Ut"
+      .status
+        %p.action
+        %p.sum Flexsaldo: +4,23 timmar.
+      %p.hrutan= link_to "Till HRutan", 'https://komin.malmo.se/hrutan'
+    - else
+      %p= link_to "Logga in för att flexa", login_path
+

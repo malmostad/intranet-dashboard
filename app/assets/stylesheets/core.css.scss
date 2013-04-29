@@ -1,0 +1,498 @@
+// Sassy variables
+/* $sans: "Trebuchet MS", "Verdana", "Lucida Grande", "Lucida Sans Unicode", sans-serif;*/
+$sans: "Lucida Grande", "Lucida Sans Unicode", Verdana, sans-serif;
+$serif: Georgia, "DejaVu Serif", "Bitstream Vera Serif", serif;
+
+// Sassy mixins
+@mixin radius($values) {
+  -moz-border-radius: $values;
+  -webkit-border-radius: $values;
+  border-radius: $values;
+}
+
+@mixin transition($values) {
+  -webkit-transition: $values;
+  -moz-transition: $values;
+  -o-transition: $values;
+  transition: $values;
+}
+
+@mixin boxshadow($values) {
+  -moz-box-shadow: $values;
+  -webkit-box-shadow: $values;
+  box-shadow: $values;
+}
+
+body {
+  padding: 0 1em;
+  font-size: .625em;
+  background: #dcdcd2;
+}
+
+.malmo
+{ // Namespace "malmo"
+
+/* FIXME: Doesn't belong here */
+div.field {
+  clear: both;
+  margin-bottom: .2em;
+  float: left;
+  label {
+    float: left;
+    left: 0;
+    width: 8.5em;
+  }
+  input {
+    float: left;
+  }
+}
+div.actions {
+  clear: both;
+  margin: .5em 0 0;
+}
+p.notice {
+  font-family: $sans;
+  font-size: 1.4em;
+  padding: .3em .5em .4em;
+  @include radius(3px);
+  border: #ccc solid 1px;
+  background: #eaffe0;
+  border: #acdfa7 solid 1px;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+/* FIXME: temp hack to get admin views readable */
+&.admin .content {
+  font-size: 1.4em;
+  font-family: $sans;
+  margin-bottom: 2em;
+  div.field {
+    margin-bottom: 1em;
+    float: none;
+    label {
+      float: none;
+    }
+    input {
+      float: none;
+    }
+  }
+  div.actions {
+    clear: both;
+    margin: 0 0 1em 0;
+  }
+}
+
+
+a {
+  color: #006699;
+  color: #007133;
+  text-decoration: none;
+  &:hover {
+  }
+}
+
+.a11y {
+  position: absolute;
+  left: -300em;
+  width: 1em;
+  overflow: hidden;
+}
+
+// From jQuery UI
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }
+
+// Element selectors resets
+// TODO: Add more
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+p {
+  margin: 0 0 1em;
+}
+ul, ol, li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+  th {
+    text-align: left;
+  }
+  th, td {
+    padding: .2em .5em;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+  }
+}
+
+
+a.button {
+  display: inline-block;
+  vertical-align: top;
+  font-family: $sans;
+  font-size: 1.3em;
+  text-shadow: 1px 1px 1px #fff;
+  font-weight: bold;
+  line-height: 1.2em;
+  color: #555;
+  height: 17px;
+  padding: 1px 1.2em 0px;
+  border: 1px solid #999;
+  @include radius(2px);
+  /* Change at http://www.colorzilla.com/gradient-editor/#f5f6f6+0,dedfe5+40,dcdee5+49,e0e2e5+60,f2f2f2+100;Custom */
+  background: #f5f6f6; /* Old browsers */
+  background: -moz-linear-gradient(top,  #f5f6f6 0%, #dedfe5 40%, #dcdee5 49%, #e0e2e5 60%, #f2f2f2 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f6f6), color-stop(40%,#dedfe5), color-stop(49%,#dcdee5), color-stop(60%,#e0e2e5), color-stop(100%,#f2f2f2)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #f5f6f6 0%,#dedfe5 40%,#dcdee5 49%,#e0e2e5 60%,#f2f2f2 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #f5f6f6 0%,#dedfe5 40%,#dcdee5 49%,#e0e2e5 60%,#f2f2f2 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #f5f6f6 0%,#dedfe5 40%,#dcdee5 49%,#e0e2e5 60%,#f2f2f2 100%); /* IE10+ */
+  background: linear-gradient(top,  #f5f6f6 0%,#dedfe5 40%,#dcdee5 49%,#e0e2e5 60%,#f2f2f2 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f6f6', endColorstr='#f2f2f2',GradientType=0 ); /* IE6-9 */
+}
+
+input.text {
+  vertical-align: top;
+  height: 14px;
+  padding: 2px .4em;
+  border: 1px solid #999;
+  font-family: $sans;
+  line-height: 1.2em;
+  font-size: 1.3em;
+  @include transition(all 0.2s ease-in-out);
+  @include radius(2px);
+}
+
+
+.wrapper {
+  position: relative;
+  max-width: 120em;
+  min-width: 32em;
+  margin: 1.5em auto;
+  background: #fff;
+  @include radius(6px);
+}
+
+.content {
+  padding: 0 1.5em;
+}
+
+&.dashboard {
+
+  .column {
+    margin-bottom: 1em;
+  }
+  .column-1 {
+    float: left;
+    width: 24.5%;
+    min-width: 12em;
+    margin-right: 2.2%;
+  }
+  .column-2 {
+    float: left;
+    width: 47.5%;
+    min-width: 24em;
+  }
+  .column-3 {
+    width: 24%;
+    float: right;
+    min-width: 12em;
+  }
+
+  .box {
+    position: relative;
+    background: #fff;
+    @include radius(4px);
+    border: 1px #999 solid;
+    margin-bottom: 2em;
+    h2 {
+      font-size: 1.4em;
+      font-family: $sans;
+      font-weight: normal;
+      margin: 0 0 .6em;
+      padding: .3em .6em .4em;
+      background: #666;
+      color: #fff;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .box-content {
+      overflow: hidden;
+      margin: .5em .8em 1em;
+    }
+    &.closed {
+      .box-content {
+      }
+      h2 {
+        margin: 0;
+      }
+    }
+
+    h3 {
+      font-size: 2.0em;
+      font-family: $serif;
+      font-weight: normal;
+      margin: 0 0 .3em;
+      padding: 0 0 .1em;
+      border: 0 #999 solid;
+      border-bottom-width: 1px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      cursor: move;
+    }
+    span.menu-button {
+      float: right;
+      margin: -.1em -.2em;
+      padding: 0 .2em .1em;
+      font-size: 1.6em;
+      line-height: .8em;
+      opacity: .5;
+      border: solid transparent;
+      border-width: 1px;
+    }
+    span.menu-button.over,
+    span.menu-button.open {
+      opacity: .9;
+      cursor: pointer;
+      background: #888;
+      border-color: #999;
+      @include radius(3px);
+    }
+    span.menu-button.open {
+      background: #fff;
+      color: #888;
+      opacity: 1;
+    }
+    .context-menu {
+      display: none;
+      position: absolute;
+      right: .2em;
+      top: 1.8em;
+      z-index: 10;
+      background: #fff;
+      width: 14em;
+      font-size: 1.2em;
+      font-family: $sans;
+      border: 1px solid #999;
+      border-top: none;
+      @include radius(3px);
+      @include boxshadow(1px 1px 3px #bbb);
+      @include transition(all .2s ease-in-out);
+      li {
+        border-bottom: 1px solid #ccc;
+        padding: .6em 1em;
+        cursor: pointer;
+        &:hover {
+          background: #888;
+          color: #fff;
+        }
+      }
+    }
+    .context-menu.show {
+      display: block;
+    }
+  }
+
+  .box#feeds {
+    .box-content {
+      margin-bottom: 2em;
+       p, h4 {
+         font-size: 1.4em;
+       }
+       div.date {
+        font-family: $sans;
+        font-size: 1.2em;
+        color: #666;
+       }
+       h3 {
+        margin-bottom: .5em;
+      }
+       h4 {
+        line-height: 1.2em;
+        font-weight: bold;
+        border: none;
+        padding: 0;
+        margin: 0 0 .2em;
+      }
+      p {
+        font-family: $serif;
+        margin-bottom: 0.2em;
+        line-height: 1.4em;
+        color: #000;
+      }
+      li {
+        clear: both;
+        margin-bottom: 1.5em;
+      }
+    }
+    .box-content.with-image li .text {
+      clear: right;
+      margin-left: 10.5em;
+    }
+    .box-content.with-image li {
+      clear: left;
+      .image {
+        float: left;
+        margin: .3em 1em 1em 0;
+        max-height: 9em;
+        width: 9em;
+        overflow: hidden;
+        img {
+          width: 9em;
+        }
+      }
+    }
+  }
+
+  .box#flex h2,
+  .box#contacts h2,
+  .box#office h3,
+  .box#tools h2 {
+    cursor: move;
+  }
+
+  .box#flex,
+  .box#contacts,
+  .box#office,
+  .box#tools {
+    .box-content {
+      font-family: $sans;
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        li {
+          line-height: 1.4em;
+          margin-bottom: .2em;
+          font-size: 1.3em;
+          .date {
+            font-family: $sans;
+            color: #666;
+            white-space: nowrap;
+            font-size: .9em;
+          }
+        }
+        li.all {
+          text-align: right;
+          margin: .5em 0 0;
+        }
+      }
+      .unread {
+        font-weight: bold;
+      }
+      .login {
+        font-size: 1.3em;
+      }
+    }
+  }
+
+  .box#contacts .box-content {
+    min-height: 10em;
+    p {
+      font-size: 1.3em;
+      font-family: $sans
+    }
+
+  }
+
+  .box#office .box-content ul {
+    li {
+      margin-bottom: .5em;
+      font-family: $sans;
+      p {
+        margin: 0em;
+      }
+    }
+  }
+  .box#flex .box-content {
+    font-size: 1.3em;
+    p {
+      margin-bottom: 0;
+    }
+    p.hrutan {
+      margin-bottom: 0;
+      text-align: right;
+    }
+    div.status {
+      margin-bottom: .7em;
+      padding: .3em .5em .4em;
+      @include radius(3px);
+      border: #ccc solid 1px;
+      @include transition(all 0.5s ease-in);
+      &.success {
+        background: #eaffe0;
+        border: #acdfa7 solid 1px;
+      }
+      &.warning {
+        background: #fffae0;
+        border: #ffcc00 solid 1px;
+      }
+      &.error {
+        background: #ffeae0;
+        border: #f00 solid 1px;
+      }
+    }
+    p.controls {
+      margin: 1.2em 0;
+      span {
+        @include radius(3px);
+        border: 1px #ccc solid;
+        padding: .1em .5em;
+        margin-right: .3em;
+        color: #555;
+        background: #F5F5F5;
+        cursor: pointer;
+      }
+    }
+  }
+  .box#flex.loading {
+    p.controls span {
+      color: #ccc;
+      cursor: default;
+    }
+    div.status {
+      background: image-url('ajax-loader.gif') 100% 40% no-repeat;
+    }
+  }
+  .box#tools .box-content li {
+    margin: 0.2em;
+  }
+
+  @media ( max-width: 1170px ) {
+    .column {
+      width: 49%;
+      margin-right: 0;
+    }
+    .column-2 {
+      float: right;
+    }
+    .column-3 {
+      position: static;
+      width: 100%
+    }
+  }
+  @media ( max-width: 780px ) {
+    .column {
+      float: none;
+      width: 100%;
+    }
+  }
+}
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 200px !important; }
+.ui-sortable-placeholder * { visibility: hidden; }
+
+} // End namespace "malmo"

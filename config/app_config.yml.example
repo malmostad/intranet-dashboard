@@ -1,0 +1,8 @@
+defaults: &defaults
+  :gmail_base_url: "https://mail.google.com/mail/u/0/#inbox/"
+  :google_consumer_key: 'FILL IN'
+  :google_consumer_secret: 'FILL IN'
+  :title_suffix: "HR and Office PoC"
+
+"2_0":
+  <<: *defaults

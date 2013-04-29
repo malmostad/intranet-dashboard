@@ -1,0 +1,40 @@
+%div#masthead
+  .logo= link_to (image_tag asset_path 'komin-logo.png'), root_path
+  .search
+    %form{ :method => "get", :action => "http://komin.malmo.se/sok" }
+      %fieldset
+        = label_tag 'q', 'Sök:', :class => 'a11y', :for => 'masthead-q'
+        = text_field_tag :q, nil, :size => 25, :id => 'masthead-q', :class => "placeholder text"
+        = link_to "Sök", '', :class => 'button submit', "data-role" => 'button'
+        = submit_tag "Sök", :class => "a11y"
+        .type
+          %span.cancel= "Avbryt"
+          = radio_button_tag 'search-type', 'person'
+          = label_tag 'search-type_person', 'Efternamn'
+          = radio_button_tag 'search-type', 'intranet', :checked => "checked"
+          = label_tag 'search-type_intranet', 'Intranätet'
+
+  %ul.user
+    - if current_user
+      %li= "#{current_user[:first_name]} #{current_user[:last_name]}"
+      %li= link_to "Min profil", user_path(current_user)
+      %li= link_to "Logga ut", logout_path
+    - else
+      %li= link_to "Logga in", login_path
+
+  %ul.top-menu
+    %li.first.active= link_to "Min egen sida", root_path
+    %li= link_to "Mitt förvaltning", 'http://komin.malmo.se/stadskontoret'
+    %li= link_to "Mitt arbetsfält", 'http://komin.malmo.se/ekonomi'
+    %li= link_to "Vår kommun", 'http://komin.malmo.se/'
+    %li= link_to "HRutan", 'http://komin.malmo.se/'
+    %li= link_to "Forum", 'http://komin.malmo.se/forum'
+    %li.last= link_to "Blogg", 'http://komin.malmo.se/blogg'
+
+  %ul.menu-others
+    %li= link_to "malmo.se", 'http://www.malmo.se/'
+    %li= link_to "malmotown.com", 'http://www.malmotown.com/'
+    %li.help= link_to "Hjälp", 'http://komin.malmo.se/hjalp'
+    %li= link_to "A–Ö", 'http://komin.malmo.se/a-o'
+    %li= link_to "Karta", 'http://komin.malmo.se/karta'
+    %li= link_to "Styra telefonen", 'http://komin.malmo.se/telefon'

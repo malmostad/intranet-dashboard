@@ -1,0 +1,181 @@
+.malmo
+{ // Namespace "malmo"
+
+#masthead {
+  position: relative;
+  margin-top: 0em;
+  height: 8.5em;
+  margin-bottom: 3.5em;
+  @include radius(6px);
+  color: #666;
+  font-family: $sans;
+
+  .logo {
+    position: absolute;
+    top: 0.5em;
+    left: .5em;
+    font-size: 2.4em;
+    a {
+      text-decoration: none;
+      &:hover {
+        text-decoration: none;
+        background: none;
+        color: #000;
+      }
+    }
+  }
+  ul.top-menu {
+    position: absolute;
+    top: 4.8em;
+    width: 100%;
+    background: #444;
+    li {
+      float: left;
+      padding: .25em 0 .4em;
+      border-left: 1px solid #ccc;
+      font-size: 1.4em;
+      a {
+        padding: .2em 1em;
+        color: #fff;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+    li.active, li:hover {
+      /* http://www.colorzilla.com/gradient-editor/#b10000+0,c70000+38,d52b2b+100;Custom */
+      background: #b10000;
+      background: -moz-linear-gradient(top,  #b10000 0%, #c70000 38%, #d52b2b 100%);
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b10000), color-stop(38%,#c70000), color-stop(100%,#d52b2b));
+      background: -webkit-linear-gradient(top,  #b10000 0%,#c70000 38%,#d52b2b 100%);
+      background: -o-linear-gradient(top,  #b10000 0%,#c70000 38%,#d52b2b 100%);
+      background: -ms-linear-gradient(top,  #b10000 0%,#c70000 38%,#d52b2b 100%);
+      background: linear-gradient(top,  #b10000 0%,#c70000 38%,#d52b2b 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b10000', endColorstr='#d52b2b',GradientType=0 );
+    }
+    li.first {
+      margin-left: 1.25em;
+    }
+    li.last {
+      border-right: 1px solid #fff;
+    }
+  }
+
+  ul.menu-others {
+    position: absolute;
+    top: 2.7em;
+    right: 29.6em;
+    li {
+      float: left;
+      font-size: 1.2em;
+      margin-left: 1em;
+      a {
+        color: #000;
+      }
+    }
+    li.help {
+      margin-left: 3em;
+    }
+  }
+  @media ( max-width: 950px ) {
+    ul.menu-others {
+      top: 0.2em;
+      right: 1.7em;
+    }
+  }
+  @media ( max-width: 630px ) {
+    ul.menu-others {
+      display: none;
+    }
+  }
+
+  .user {
+    position: absolute;
+    right: 1.7em;
+    top: 7.6em;
+    list-style: none;
+    li {
+      font-size: 1.4em;
+      margin: 0 0 0 1em;
+      display: inline;
+    }
+    a {
+    }
+  }
+  .search {
+    position: absolute;
+    z-index: 10;
+    right: 1.6em;
+    top: 2.0em;
+    border: 1px solid #fff;
+    @include transition(all 0.1s ease-in-out);
+    @include radius(3px);
+    #masthead-q {
+      width: 14em;
+      &.placeholder {
+        color: #757575;
+      }
+    }
+    .type {
+      display: none;
+      margin-top: .5em;
+      #search-type_intranet {
+        margin-left: 1em;
+      }
+      .cancel {
+        float: right;
+        margin: 0.1em 0.1em 0 0;
+        font-size: 1.2em;
+        cursor: pointer;
+      }
+    }
+    &.show .type {
+      display: block;
+    }
+    &.show {
+      display: block;
+      min-height: 4em;
+      right: .3em;
+      padding: .7em .7em .7em 1em;
+      background: #fafafa;
+      border: 1px solid #a0a0a0;
+      @include boxshadow(2px 2px 2px #bbb);
+      @include transition(all 0.2s ease-in-out);
+      #masthead-q {
+        width: 25em;
+        margin-right: .5em;
+      }
+    }
+    label {
+      font-size: 1.2em;
+    }
+  }
+  @media ( max-width: 480px ) {
+    .search {
+      display: none;
+    }
+  }
+
+}
+  @media ( max-width: 790px ) {
+    #masthead {
+      top: 0.5em;
+      margin-bottom: 4.3em;
+      .user {
+        top: 10.2em;
+      }
+    }
+  }
+
+  @media ( max-width: 470px ) {
+    #masthead {
+      top: 0;
+      margin-bottom: 6.3em;
+      .user {
+        top: 12.5em;
+      }
+    }
+  }
+}
+
+

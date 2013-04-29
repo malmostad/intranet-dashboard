@@ -1,0 +1,30 @@
+.box#feeds
+  %h2 Nyheter
+  - if current_user
+    .context-menu
+      %ul
+        %li{ "data-action" => 'toggle' } Dölj
+        %li{ "data-action" => 'select-feeds' } Mina nyhetsflöden...
+        %li Anpassa...
+        %li{ "data-action" => 'reset' } Återställ inställningar
+  - @feeds.each do |feed|
+    %div{ :class => "box-content #{feed['has_image'] ? 'with-image' : ""}" }
+      %h3= feed['title']
+      %ul
+        - if feed['error']
+          %li.error
+            %p.msg
+              = feed['human_message']
+              = link_to 'källa', feed['url']
+        - else
+          - feed['items'][(0..9)].each do |item|
+            %li.clearfix
+              %a{ :href => item['link'] }
+                .image
+                  = image_tag( item['image'], :alt => item['title'] ) if feed['has_image'] && !item['image'].empty?
+                .text
+                  %h4= item['title']
+                  %p
+                    = truncate( strip_tags(item['description']), :separator => ' ', :length => 180, :omission => '…' )
+                  - # .content= raw sanitize(item['content'], tags_whitelist ) if item['content']
+                  .date= Time.parse(item['published']).strftime("%Y-%m-%d %H.%M")
