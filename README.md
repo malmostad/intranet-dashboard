@@ -92,4 +92,4 @@ The system contains an integration with the Siteseeker search engine. The search
 
 
 ## License
-Released under GPL version 3.
+Released under AGPL version 3.
