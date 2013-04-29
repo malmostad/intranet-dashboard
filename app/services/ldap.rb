@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 class Ldap
+  attr_reader :user_profile_changed
+
   def initialize
     @client = Net::LDAP.new(
       host: APP_CONFIG["ldap"]["host"],
@@ -47,9 +49,9 @@ class Ldap
       user.directreports = ldap_user["directreports"].map { |m| extract_cn(m) }.join(", ")
       user.phone         = phone ||= ldap_user['telephonenumber'].first
       user.cell_phone    = cell_phone ||= ldap_user['mobile'].first
-      changed = user.changed?
+      @user_profile_changed = user.changed?
       user.save(validate: false)
-      { user: user, changed: changed }
+      user
     else
       Rails.logger.warn "LDAP: couldn't find #{username}. #{@client.get_operation_result}"
       return false
