@@ -1,4 +1,4 @@
-DashboardKomin::Application.routes.draw do
+Dashboard::Application.routes.draw do
 
   root to: "dashboard#index"
 

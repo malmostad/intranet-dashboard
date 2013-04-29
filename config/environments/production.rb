@@ -1,4 +1,4 @@
-DashboardKomin::Application.configure do
+Dashboard::Application.configure do
 
   config.log_level = :warn
   config.action_controller.relative_url_root = "/dashboard"

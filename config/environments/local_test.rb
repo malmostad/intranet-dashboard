@@ -1,4 +1,4 @@
-DashboardKomin::Application.configure do
+Dashboard::Application.configure do
   config.cache_classes = false
   config.action_controller.perform_caching = false
   config.cache_store = :memory_store
