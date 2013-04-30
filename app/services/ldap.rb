@@ -66,6 +66,7 @@ class Ldap
   def find_user(username)
     ldap_user = @client.search(base: APP_CONFIG['ldap']['base_dn'], filter: "cn=#{username}").first
     if ldap_user.present?
+      Rails.logger.debug ldap_user.inspect
       Rails.logger.debug ldap_user['dn'].first
       Rails.logger.debug ldap_user['displayname'].first
       Rails.logger.debug ldap_user["manager"].first

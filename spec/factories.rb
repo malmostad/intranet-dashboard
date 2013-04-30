@@ -10,10 +10,6 @@ FactoryGirl.define do
     last_login Time.now
   end
 
-  factory :admin_user, parent: :user do
-    is_admin true
-  end
-
   factory :user_with_status_message, parent: :user do
     status_message 'It’s work, all that matters is work'
     status_message_updated_at Time.now

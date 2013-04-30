@@ -19,10 +19,12 @@ feature "Global assets javascript" do
   end
 
   scenario "should have a form for employee search", js: true do
+    find('#nav-search-trigger a').click
     page.should have_selector('#masthead-search-person')
   end
 
   scenario "should have a form for intranet search", js: true do
+    find('#nav-search-trigger a').click
     page.should have_selector('#masthead-search-intranet')
   end
 end

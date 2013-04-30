@@ -48,7 +48,7 @@ if APP_CONFIG["auth_method"] == "ldap"
     end
 
     scenario "should require admin role" do
-      user = FactoryGirl.create(:user)
+      user = FactoryGirl.create(:user, username: AUTH_CREDENTIALS["username"], is_admin: false)
       visit login_path
       fill_in 'username', with: user.username
       fill_in 'password', with: AUTH_CREDENTIALS["password"]
@@ -58,10 +58,10 @@ if APP_CONFIG["auth_method"] == "ldap"
     end
 
     scenario "should honor admin role" do
-      user = FactoryGirl.create(:admin_user)
+      user = FactoryGirl.create(:user, username: AUTH_CREDENTIALS["username"], is_admin: true)
       visit login_path
       fill_in 'username', with: user.username
-      fill_in 'username', with: AUTH_CREDENTIALS["password"]
+      fill_in 'password', with: AUTH_CREDENTIALS["password"]
       click_button 'Logga in'
       visit feeds_path
       page.should have_selector('h1', text: "Nyhetsflöden")

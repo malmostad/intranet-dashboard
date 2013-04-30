@@ -9,10 +9,10 @@ feature "Colleagueships" do
   end
 
   scenario "should be set" do
-    follower = FactoryGirl.create(:user)
+    follower = FactoryGirl.create(:user, username: AUTH_CREDENTIALS["username"])
     followed = FactoryGirl.create(:user)
     Colleagueship.create(user_id: follower.id, colleague_id: followed.id)
-    login(follower.username, 'stub')
+    login(follower.username, AUTH_CREDENTIALS["password"])
     visit root_path
     page.should_not have_selector('.no-colleagues')
     page.should have_xpath("//li[not(@id='my-status')][1]", text: followed.displayname)
