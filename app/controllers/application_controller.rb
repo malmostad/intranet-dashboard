@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
 
   def error_page(exception = "500", msg = "Prova att navigera med menyn ovan.")
     logger.error("Exception: #{exception}\n" +
-                 "#{' ' * 32 }User id: #{session[:user_id] ? session[:user_id] : 'anonymous'}\n" +
+                 "#{' ' * 32 }User id: #{session[:user_id] ? session[:user_id] : 'not logged in'}\n" +
                  "#{' ' * 32 }Params: #{params}")
     reset_body_classes
     @msg = msg
