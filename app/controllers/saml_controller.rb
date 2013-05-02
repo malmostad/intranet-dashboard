@@ -28,7 +28,7 @@ class SamlController < ApplicationController
 
       redirect_to root_path
     else
-      Rails.logger.warn "SAML response not valid for #{username}"
+      logger.warn "SAML response not valid for #{username}"
       error_page("500", "Ett fel uppstod med Single Sign On-tjänsten.")
     end
   end
