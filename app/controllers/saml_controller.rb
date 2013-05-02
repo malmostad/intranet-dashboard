@@ -49,6 +49,7 @@ class SamlController < ApplicationController
     s.idp_cert_fingerprint           = sc["idp_cert_fingerprint"]
     s.name_identifier_format         = sc["name_identifier_format"]
     s.authn_context                  = sc["authn_context"]
+    s.compress_request               = false
     s
   end
 end
