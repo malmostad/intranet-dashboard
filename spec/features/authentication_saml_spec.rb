@@ -22,7 +22,6 @@ if APP_CONFIG["auth_method"] == "saml"
     scenario "should sign in a user with correct credentials" do
       # user = FactoryGirl.create(:user, username: AUTH_CREDENTIALS["username"])
       visit root_url
-      puts page.find("h1").text
       # page.should have_selector('h1')
       # page.should have_field("username")
       # page.should have_field("password")
