@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-
 class User < ActiveRecord::Base
 
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :feeds
   has_and_belongs_to_many :shortcuts
   has_many :user_agents, dependent: :destroy
+
+  has_many :subordinates, class_name: "User", foreign_key: "manager_id"
+  belongs_to :manager, class_name: "User"
 
   has_many :colleagueships, dependent: :destroy
   has_many :colleagues, through: :colleagueships
