@@ -28,7 +28,7 @@
       %h2.form-group-title Övriga uppgifter
       .control-group.readonly
         .control-label Administratör:
-        .controls= @user.is_admin ? "Ja" : "Nej"
+        .controls= @user.admin? ? "Ja" : "Nej"
       .control-group.readonly
         .control-label Senast inloggad:
         - if @user.last_login.blank?
@@ -64,4 +64,4 @@
         .controls= @user.directreports
       .control-group.readonly
         .control-label Om mig (lokal data):
-        .controls= @user.short_bio
+        .controls= @user.professional_bio

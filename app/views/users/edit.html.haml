@@ -23,7 +23,7 @@
           .control-label Rättigheter:
           .controls
             %label.checkbox
-              = f.check_box :is_admin
+              = f.check_box :admin
               Administratör
 
       - Role::CATEGORIES.each do |key, val|

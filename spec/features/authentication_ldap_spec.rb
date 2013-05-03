@@ -48,7 +48,7 @@ if APP_CONFIG["auth_method"] == "ldap"
     end
 
     scenario "should require admin role" do
-      user = FactoryGirl.create(:user, username: AUTH_CREDENTIALS["username"], is_admin: false)
+      user = FactoryGirl.create(:user, username: AUTH_CREDENTIALS["username"], admin: false)
       visit login_path
       fill_in 'username', with: user.username
       fill_in 'password', with: AUTH_CREDENTIALS["password"]
@@ -58,7 +58,7 @@ if APP_CONFIG["auth_method"] == "ldap"
     end
 
     scenario "should honor admin role" do
-      user = FactoryGirl.create(:user, username: AUTH_CREDENTIALS["username"], is_admin: true)
+      user = FactoryGirl.create(:user, username: AUTH_CREDENTIALS["username"], admin: true)
       visit login_path
       fill_in 'username', with: user.username
       fill_in 'password', with: AUTH_CREDENTIALS["password"]

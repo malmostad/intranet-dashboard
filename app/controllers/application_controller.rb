@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin?
-    current_user && current_user.is_admin
+    current_user && current_user.admin?
   end
   helper_method :admin?, :current_user
 

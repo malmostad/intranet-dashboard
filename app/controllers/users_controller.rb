@@ -54,7 +54,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @roles = Role.all
     # Prevent and admin from un-admin herself
-    if admin? && editing_myself? && params[:user][:is_admin] == "0"
+    if admin? && editing_myself? && params[:user][:admin] == "0"
       flash.now[:warning] = "Du kan inte ta bort din egen administratörsrättighet!"
       render action: "edit"
     else

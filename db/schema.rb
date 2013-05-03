@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130429100828) do
+ActiveRecord::Schema.define(:version => 20130503142431) do
 
   create_table "colleagueships", :force => true do |t|
     t.integer  "user_id"
@@ -129,21 +129,25 @@ ActiveRecord::Schema.define(:version => 20130429100828) do
     t.string   "phone"
     t.string   "cell_phone"
     t.string   "title"
-    t.text     "short_bio"
+    t.text     "professional_bio"
     t.string   "status_message"
-    t.boolean  "is_admin",                  :default => false,              :null => false
+    t.boolean  "admin",                     :default => false,              :null => false
     t.datetime "created_at",                                                :null => false
     t.datetime "updated_at",                                                :null => false
     t.string   "displayname"
     t.string   "company"
-    t.string   "manager"
-    t.text     "directreports"
     t.datetime "last_login"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.datetime "status_message_updated_at"
+    t.boolean  "early_adopter"
+    t.string   "business_card_title"
+    t.string   "twitter"
+    t.string   "skype"
+    t.text     "private_bio"
+    t.integer  "manager_id"
   end
 
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
