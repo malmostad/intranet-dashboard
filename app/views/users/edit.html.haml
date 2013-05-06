@@ -3,8 +3,6 @@
   %h1.box-title= h1
   .box-content
     = form_for @user, html: { class: "form-horizontal" } do |f|
-
-
       - if !@user_roles.present?
         %p.warning= "Välj en eller flera förvaltningar och arbetsfält nedan."
       - elsif !@user_roles.include? 'department'
@@ -25,6 +23,9 @@
             %label.checkbox
               = f.check_box :admin
               Administratör
+            %label.checkbox
+              = f.check_box :early_adopter
+              Early Adopter
 
       - Role::CATEGORIES.each do |key, val|
         .control-group
