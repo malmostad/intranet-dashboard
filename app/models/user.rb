@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   has_many :inverse_colleagues, through: :inverse_colleagueships, source: :user
 
   attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar, :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts
-  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar, :role_ids, :admin, as: :admin
+  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar, :role_ids, :admin, :early_adopter, as: :admin
   attr_accessor :avatar
   attr_reader :avatar_remote_url
 
