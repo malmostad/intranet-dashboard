@@ -1,52 +1,56 @@
 // Time report simulation
 jQuery(document).ready(function($) {
-  var $timeReport = $( '#time-report' );
+  var $timeReport = $('#time-report');
 
   if ($timeReport.length) {
+    var $status = $timeReport.find(".status");
+
+    setTimeout(function() {
+      $status.text("Flexsaldo: +4,23 timmar.");
+    }, 1000);
+
     $timeReport.find("button").click(function() {
-      var $this = $(this);
-      $timeReport.addClass('loading');
-      $timeReport.find( "p.action" ).html("Flexar &hellip;" );
-      $timeReport.find( "div.status" ).removeClass('success warning error active');
-      $timeReport.find( "p.sum" ).hide();
+      var action = $(this).attr('data-action');
+
+      $status.addClass('loading')
+        .html("Flexar &hellip;" )
+        .removeClass('success warning error active');
+
+      $timeReport.find("button").addClass('disabled');
 
       setTimeout(function() {
-        $timeReport.removeClass('loading');
-
+        $status.removeClass('loading', 'default');
+        $timeReport.find("button").removeClass('disabled');
         var warning = Math.floor( Math.random() * 4) === 3 ? true : false;
         var error = Math.floor( Math.random() * 8) === 3 ? true : false;
-
         var response;
+
         if (error) {
-          response = 'HRutan gick inte att nå!<br/>Vänligen försök lite senare.';
-          $timeReport.find( "div.status" ).addClass('error');
-          $timeReport.find( "p.sum" ).text("Flexsaldo: +5,5 timmar.");
+          response = 'HRutan gick inte att nå.<br/>Vänligen försök lite senare.';
+          $status.addClass('error');
         } else {
-          switch ($this.attr('data-action')) {
+          switch (action) {
             case 'in':
-              response = warning ? 'Nu blev det fel!<br/> Du är redan inflexad.' : 'Nu har du flexat in.';
+              response = warning ? 'Nu blev det fel!<br/> Du är redan inflexad.' : 'Du har flexat in.';
               break;
             case 'break-out':
-              response = warning ?  'Nu blev det fel!<br/> Du är redan utrastad.' : "Nu har du rastat ut.";
+              response = warning ?  'Nu blev det fel!<br/> Du är redan utrastad.' : "Du har rastat ut.";
               break;
             case 'break-in':
-              response = warning ? 'Nu blev det fel!<br/> Du är redan inrastad.' : 'Nu har du rastat in.';
+              response = warning ? 'Nu blev det fel!<br/> Du är redan inrastad.' : 'Du har rastat in.';
               break;
             case 'out':
-              response = warning ? 'Nu blev det fel!<br/> Du är redan utflexad.' : 'Nu har du flexat ut.';
+              response = warning ? 'Nu blev det fel!<br/> Du är redan utflexad.' : 'Du har flexat ut.';
               break;
           }
-          $timeReport.find( "p.sum" ).show();
           if (warning) {
-            $timeReport.find( "div.status" ).addClass('warning');
-            $timeReport.find( "p.sum" ).text("Flexsaldo: +5,5 timmar.");
+            $status.addClass('warning');
           } else {
-            $timeReport.find( "div.status" ).addClass('success');
-            $timeReport.find( "p.sum" ).text("Nytt flexsaldo: +4,5 timmar.");
+            $status.addClass('success');
+            response += "<br/>Nytt flexsaldo: +4,5 timmar."
           }
         }
-
-        $timeReport.find( "p.action" ).html(response);
+        $status.html(response);
       }, 1500);
     });
   }
