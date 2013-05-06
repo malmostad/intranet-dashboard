@@ -10,5 +10,7 @@
 
 .column.column-3
   = render "search_person"
+  - if current_user.early_adopter?
+    = render "time_report"
   = render "shortcuts_tools_and_systems"
   = render "shortcuts_i_want"

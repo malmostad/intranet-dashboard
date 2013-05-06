@@ -1,0 +1,39 @@
+section.box#time-report {
+ .box-content {
+    font-family: $sansSerif;
+    p {
+      margin-bottom: 0;
+    }
+    div.status {
+      margin: .6em 0 .4em;
+      padding: .3em .5em .4em;
+      border: #ccc solid 1px;
+      @include radius(3px);
+      @include transition(background 0.5s ease-in-out);
+      font-size: emize(13);
+      background: 0% 50% no-repeat;
+      &.success {
+        background: #eaffe0;
+        border: #acdfa7 solid 1px;
+      }
+      &.warning {
+        background: #fffae0;
+        border: #ffcc00 solid 1px;
+      }
+      &.error {
+        background: #ffeae0;
+        border: #f00 solid 1px;
+      }
+    }
+    p.hrutan {
+      margin-bottom: 0;
+      text-align: right;
+      font-size: emize(13);
+    }
+  }
+  &.loading {
+    div.status {
+      background: image-url('load.gif') 100% 50% no-repeat;
+    }
+  }
+}
