@@ -30,6 +30,12 @@
         .control-label Administratör:
         .controls= @user.admin? ? "Ja" : "Nej"
       .control-group.readonly
+        .control-label Early adopter:
+        .controls= @user.early_adopter? ? "Ja" : "Nej"
+      .control-group.readonly
+        .control-label Status:
+        .controls= @user.status_message
+      .control-group.readonly
         .control-label Senast inloggad:
         - if @user.last_login.blank?
           .controls –
@@ -57,11 +63,17 @@
         .control-label Förvaltning:
         .controls= @user.company
       .control-group.readonly
-        .control-label Chef:
-        .controls= @user.manager
+        .control-label Rapporterar till:
+        - if @user.manager.present?
+          .controls= link_to @user.manager.displayname, user_path(@user.manager.username)
+        - else
+          .controls Personens chef har inte loggat in på min sida än
       .control-group.readonly
-        .control-label Chef till:
-        .controls= @user.directreports
+        .control-label Linjechef till:
+        .controls
+          %ul
+            - @user.subordinates.each do |subordinate|
+              %li= link_to subordinate.displayname, user_path(subordinate.username)
       .control-group.readonly
         .control-label Om mig (lokal data):
         .controls= @user.professional_bio

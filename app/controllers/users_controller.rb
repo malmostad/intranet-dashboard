@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.where(username: params[:username]).first
+    @user = User.where(username: params[:username]).includes(:subordinates).first
     if @user.blank?
       reset_body_classes
       sub_layout
