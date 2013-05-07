@@ -59,6 +59,15 @@
       .control-group.readonly
         .control-label Titel:
         .controls= @user.title
+
+      .control-group
+        .control-label Språk:
+        .controls= text_field_tag(:languages, nil, class: "input-wide" )
+
+      .control-group
+        .control-label Kompetensområden:
+        .controls= select_tag(:skills, options_for_select( ["Lean", "Personalomsorg", "Semesteransökan", "PowerPoint"] ), multiple: true, class: "input-wide")
+
       .control-group.readonly
         .control-label Förvaltning:
         .controls= @user.company
