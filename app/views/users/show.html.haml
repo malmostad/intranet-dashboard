@@ -67,7 +67,7 @@
         - if @user.manager.present?
           .controls= link_to @user.manager.displayname, user_path(@user.manager.username)
         - else
-          .controls Personens chef har inte loggat in på min sida än
+          .controls= "#{possessive(@user.displayname)} chef har inte loggat in på min sida än"
       .control-group.readonly
         .control-label Linjechef till:
         .controls

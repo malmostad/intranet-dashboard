@@ -21,7 +21,7 @@
 
 - if entries.size == @limit
   %li.load-more
-    %input.btn.btn-mini{ type: "button", value: "Visa fler", "data-path" => more_feed_entries_path(category, entries.last.full.published.to_i)}
+    %input.btn.btn-small{ type: "button", value: "Visa fler", "data-path" => more_feed_entries_path(category, entries.last.full.published.to_i)}
 - elsif entries.size < @limit
   %li.load-more
     .text
