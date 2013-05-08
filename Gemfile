@@ -28,7 +28,7 @@ group :development, :local_test do
   gem 'thin'
 end
 
-group :test, :local_test do
+group :test, :development, :local_test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'capybara'
