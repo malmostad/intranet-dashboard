@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130506142725) do
+ActiveRecord::Schema.define(:version => 20130508203257) do
 
   create_table "colleagueships", :force => true do |t|
     t.integer  "user_id"
@@ -60,6 +60,14 @@ ActiveRecord::Schema.define(:version => 20130506142725) do
   end
 
   add_index "feeds_users", ["feed_id", "user_id"], :name => "index_feeds_user", :unique => true
+
+  create_table "languages", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "languages", ["name"], :name => "index_languages_on_name"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -120,6 +128,16 @@ ActiveRecord::Schema.define(:version => 20130506142725) do
   end
 
   add_index "user_agents", ["id", "user_id"], :name => "index_user_agents_on_id_and_user_id", :unique => true
+
+  create_table "user_languages", :force => true do |t|
+    t.integer  "language_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "user_languages", ["language_id"], :name => "index_user_languages_on_language_id"
+  add_index "user_languages", ["user_id"], :name => "index_user_languages_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "username"

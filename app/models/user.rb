@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
-
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :feeds
   has_and_belongs_to_many :shortcuts
@@ -9,13 +8,16 @@ class User < ActiveRecord::Base
   has_many :subordinates, class_name: "User", foreign_key: "manager_id"
   belongs_to :manager, class_name: "User"
 
+  has_many :user_languages
+  has_many :languages, through: :user_languages
+
   has_many :colleagueships, dependent: :destroy
   has_many :colleagues, through: :colleagueships
   has_many :inverse_colleagueships, class_name: "Colleagueship", foreign_key: "colleague_id", dependent: :destroy
   has_many :inverse_colleagues, through: :inverse_colleagueships, source: :user
 
-  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar, :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts
-  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar, :role_ids, :admin, :early_adopter, as: :admin
+  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar, :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts, :language_list
+  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar, :role_ids, :admin, :early_adopter, :language_list, as: :admin
   attr_accessor :avatar
   attr_reader :avatar_remote_url
 
@@ -37,6 +39,16 @@ class User < ActiveRecord::Base
   validates_attachment_size :avatar,
     less_than: 4.megabyte,
     message: "Bilden får inte vara större än 4MB."
+
+  def language_list
+    languages.map(&:name).join(", ")
+  end
+
+  def language_list=(names)
+    self.languages = names.split(",").map do |n|
+      Language.where(name: n.strip).first_or_create!
+    end
+  end
 
   # Get users feeds in a given category
   # A user has feeds directly and through her roles

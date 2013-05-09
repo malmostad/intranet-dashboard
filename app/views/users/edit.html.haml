@@ -16,6 +16,10 @@
       - if @user.errors.any?
         .warning= t 'messages.validation_errors'
 
+      .control-group
+        .control-label= f.label :language_list, "Språkkunskaper:"
+        .controls= f.text_field :language_list
+
       - if admin?
         .control-group
           .control-label Rättigheter:

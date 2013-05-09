@@ -26,6 +26,12 @@
 
     - if admin?
       %h2.form-group-title Övriga uppgifter
+
+      .control-group.readonly
+        .control-label Språkkunskaper:
+        .controls= @user.language_list
+
+
       .control-group.readonly
         .control-label Administratör:
         .controls= @user.admin? ? "Ja" : "Nej"
