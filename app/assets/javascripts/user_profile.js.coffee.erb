@@ -1,0 +1,16 @@
+jQuery ->
+  $('#skills').select2()
+
+  $('#languages').select2
+    multiple: true,
+    minimumInputLength: 2,
+    tags: ["fox, barx"],
+    formatInputTooShort: (input, min) ->
+      "Lägg till ett språk"
+    ajax:
+      url: '<%= asset_path("/languages/search") %>',
+      dataType: 'json',
+      data: (term) ->
+          q: term
+      results: (data, page) ->
+        return { results: data }

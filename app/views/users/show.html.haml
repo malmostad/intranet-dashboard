@@ -68,7 +68,7 @@
 
       .control-group
         .control-label Språk:
-        .controls= text_field_tag(:languages, nil, class: "input-wide" )
+        .controls= text_field_tag(:languages, nil, value: @user.language_list, class: "input-wide" )
 
       .control-group
         .control-label Kompetensområden:

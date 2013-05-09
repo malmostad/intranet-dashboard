@@ -29,7 +29,9 @@ Dashboard::Application.routes.draw do
 
   delete "/my_own_feeds/delete_all" => "my_own_feeds#destroy_all"
 
-  resources :shortcuts, :roles, :feeds, :my_own_feeds, except: [:show]
+  resources :shortcuts, :roles, :languages, :feeds, :my_own_feeds, except: [:show]
+
+  get "/languages/search" => "languages#search", as: "languages_search"
 
   # get  "/search" => "site_search#index"
   # get  "/search/autocomplete" => "site_search#autocomplete", as: "site_search_autocomplete"
