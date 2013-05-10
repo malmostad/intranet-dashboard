@@ -1,16 +1,14 @@
 jQuery ->
-  $('#skills').select2()
+  tokenInputOptions = {
+    theme: 'malmo',
+    searchDelay: 0,
+    minChars: 2,
+    animateDropdown: false,
+  }
 
-  $('#languages').select2
-    multiple: true,
-    minimumInputLength: 2,
-    tags: ["fox, barx"],
-    formatInputTooShort: (input, min) ->
-      "Lägg till ett språk"
-    ajax:
-      url: '<%= asset_path("/languages/search") %>',
-      dataType: 'json',
-      data: (term) ->
-          q: term
-      results: (data, page) ->
-        return { results: data }
+  $('#user_language_list').tokenInput(
+    '<%= asset_path("/languages/search.json") %>', $.extend({
+      prePopulate: $('#user_language_list').data('load'),
+      hintText: "Lägg till språk"
+    }, tokenInputOptions)
+  )

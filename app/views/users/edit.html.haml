@@ -18,7 +18,8 @@
 
       .control-group
         .control-label= f.label :language_list, "Språkkunskaper:"
-        .controls= f.text_field :language_list
+        .controls= f.text_field(:language_list, class: "input-wide",
+            data: { load: @user.languages.map{ |l| { id: l.name, name: l.name }}})
 
       - if admin?
         .control-group

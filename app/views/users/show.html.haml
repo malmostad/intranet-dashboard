@@ -22,15 +22,14 @@
       .controls
         - if admin? || current_user.username == @user.username
           = link_to "Ändra", edit_user_path(@user), class: "change btn btn-small"
-        = @user.roles.collect(&:name).to_sentence
+        = @user.roles.map(&:name).to_sentence
 
     - if admin?
       %h2.form-group-title Övriga uppgifter
 
       .control-group.readonly
         .control-label Språkkunskaper:
-        .controls= @user.language_list
-
+        .controls= @user.languages.map(&:name).to_sentence.humanize
 
       .control-group.readonly
         .control-label Administratör:
@@ -65,14 +64,6 @@
       .control-group.readonly
         .control-label Titel:
         .controls= @user.title
-
-      .control-group
-        .control-label Språk:
-        .controls= text_field_tag(:languages, nil, value: @user.language_list, class: "input-wide" )
-
-      .control-group
-        .control-label Kompetensområden:
-        .controls= select_tag(:skills, options_for_select( ["Lean", "Personalomsorg", "Semesteransökan", "PowerPoint"] ), multiple: true, class: "input-wide")
 
       .control-group.readonly
         .control-label Förvaltning:
