@@ -40,12 +40,14 @@ class User < ActiveRecord::Base
     less_than: 4.megabyte,
     message: "Bilden får inte vara större än 4MB."
 
+  # language names as tokens
   def language_list
     languages.map(&:name).join(", ")
   end
 
   def language_list=(names)
     self.languages = names.split(",").map do |n|
+      logger.debug n
       Language.where(name: n.strip).first_or_create!
     end
   end

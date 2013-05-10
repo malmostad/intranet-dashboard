@@ -43,18 +43,16 @@ class LanguagesController < ApplicationController
     redirect_to languages_url, notice: "Språket togs bort"
   end
 
-
-  # Returns a hash in json or a @users array for html rendering
+  # Returns a json hash with languages
   def search
-    q = "%#{params[:q]}%"
-    if q.present?
-      @languages = Language.where("name like ?", q).order(:name).limit(20)
-    else
-      @languages = {}
-    end
-    @languages.map! { |l| {"id" => l.id, "text" => l.name} }
+    q = "#{params[:q]}%"
+    @languages = Language.where("name like ?", q).order(:name).limit(20)
+
     # Let user create new languages
-    @languages.unshift({ "id" => nil, "text" => params[:q] })
+    @languages.unshift Language.new(name: params[:q].downcase)
+
+    # We use the :name as :id too for language_list= assignement
+    @languages.map! { |l| { id: l.name, name: l.name } }
     render json: @languages
   end
 end
