@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
 
   has_many :user_languages
   has_many :languages, through: :user_languages
+  has_many :user_skills
+  has_many :skills, through: :user_skills
 
   has_many :colleagueships, dependent: :destroy
   has_many :colleagues, through: :colleagueships
@@ -47,8 +49,18 @@ class User < ActiveRecord::Base
 
   def language_list=(names)
     self.languages = names.split(",").map do |n|
-      logger.debug n
       Language.where(name: n.strip).first_or_create!
+    end
+  end
+
+  # Skill names as tokens
+  def skill_list
+    skills.map(&:name).join(", ")
+  end
+
+  def skill_list=(names)
+    self.skills = names.split(",").map do |n|
+      Skill.where(name: n.strip).first_or_create!
     end
   end
 

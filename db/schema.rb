@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130508203257) do
+ActiveRecord::Schema.define(:version => 20130510154530) do
 
   create_table "colleagueships", :force => true do |t|
     t.integer  "user_id"
@@ -118,6 +118,14 @@ ActiveRecord::Schema.define(:version => 20130508203257) do
 
   add_index "shortcuts_users", ["shortcut_id", "user_id"], :name => "index_shortcuts_user", :unique => true
 
+  create_table "skills", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "skills", ["name"], :name => "index_skills_on_name"
+
   create_table "user_agents", :force => true do |t|
     t.integer  "user_id"
     t.boolean  "remember_me",      :default => false
@@ -138,6 +146,16 @@ ActiveRecord::Schema.define(:version => 20130508203257) do
 
   add_index "user_languages", ["language_id"], :name => "index_user_languages_on_language_id"
   add_index "user_languages", ["user_id"], :name => "index_user_languages_on_user_id"
+
+  create_table "user_skills", :force => true do |t|
+    t.integer  "skill_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "user_skills", ["skill_id"], :name => "index_user_skills_on_skill_id"
+  add_index "user_skills", ["user_id"], :name => "index_user_skills_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "username"
