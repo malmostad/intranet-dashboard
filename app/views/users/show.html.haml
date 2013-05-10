@@ -28,6 +28,10 @@
       %h2.form-group-title Övriga uppgifter
 
       .control-group.readonly
+        .control-label Kunskapsområden:
+        .controls= @user.skills.map(&:name).to_sentence.humanize
+
+      .control-group.readonly
         .control-label Språkkunskaper:
         .controls= @user.languages.map(&:name).to_sentence.humanize
 

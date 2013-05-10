@@ -7,8 +7,15 @@ jQuery ->
   }
 
   $('#user_language_list').tokenInput(
-    '<%= asset_path("/languages/search.json") %>', $.extend({
+    '<%= asset_path("/languages/suggest.json") %>', $.extend({
       prePopulate: $('#user_language_list').data('load'),
       hintText: "Lägg till språk"
+    }, tokenInputOptions)
+  )
+
+  $('#user_skill_list').tokenInput(
+    '<%= asset_path("/skills/suggest.json") %>', $.extend({
+      prePopulate: $('#user_skill_list').data('load'),
+      hintText: "Lägg till kunskapsområde"
     }, tokenInputOptions)
   )

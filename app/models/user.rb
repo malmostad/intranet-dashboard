@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
+
+  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar, :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts, :language_list, :skill_list
+  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar, :role_ids, :admin, :early_adopter, :language_list, :skill_list, as: :admin
+  attr_accessor :avatar
+  attr_reader :avatar_remote_url
+
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :feeds
   has_and_belongs_to_many :shortcuts
@@ -17,11 +23,6 @@ class User < ActiveRecord::Base
   has_many :colleagues, through: :colleagueships
   has_many :inverse_colleagueships, class_name: "Colleagueship", foreign_key: "colleague_id", dependent: :destroy
   has_many :inverse_colleagues, through: :inverse_colleagueships, source: :user
-
-  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar, :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts, :language_list
-  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar, :role_ids, :admin, :early_adopter, :language_list, as: :admin
-  attr_accessor :avatar
-  attr_reader :avatar_remote_url
 
   before_validation do
     self.status_message = status_message.slice(0, 70) if status_message.present?

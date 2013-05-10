@@ -3,7 +3,8 @@ class LanguagesController < ApplicationController
 
   before_filter { add_body_class('edit') }
   before_filter { sub_layout("admin") if admin? }
-  before_filter :require_admin, except: :search
+  before_filter :require_user
+  before_filter :require_admin, except: :suggest
 
   def index
     @languages = Language.order(:name)
@@ -44,7 +45,7 @@ class LanguagesController < ApplicationController
   end
 
   # Returns a json hash with languages
-  def search
+  def suggest
     q = "#{params[:q]}%"
     @languages = Language.where("name like ?", q).order(:name).limit(20)
 

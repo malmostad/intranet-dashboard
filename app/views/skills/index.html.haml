@@ -1,0 +1,9 @@
+- title "Kunskapsområden"
+%section.box.index
+  %h1.box-title= h1
+  .box-content
+    = render "search_form"
+
+    - if params[:q].blank?
+      .body-copy
+        %p.help= raw "Lämna sökfältet tomt och klicka på <em>Sök</em> för att visa alla poster."

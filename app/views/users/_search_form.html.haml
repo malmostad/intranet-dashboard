@@ -4,7 +4,7 @@
     .controls
       .input-append
         = text_field_tag "term", params[:term]
-        = submit_tag "Sök", { class: "btn" }
+        = submit_tag "Sök", { class: "btn", name: nil }
       - if params[:term].blank? || @users.blank?
         .help-inline Sök på förnamn, efternamn, e-postadress eller användarnamn.
   - if params[:term].blank?
