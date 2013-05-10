@@ -23,9 +23,9 @@
 
     - @colleagueships.each do |colleagueship|
       %li
-        = image_tag avatar_full_url(colleagueship.colleague.username, :tiny_quadrat), alt: ""
+        = link_to image_tag(avatar_full_url(colleagueship.colleague.username, :tiny_quadrat), alt: ""), user_path(colleagueship.colleague.username)
         .text
-          %h2.name= "#{colleagueship.colleague.displayname}"
+          %h2.name= link_to "#{colleagueship.colleague.displayname}", user_path(colleagueship.colleague.username)
           %p.status= colleagueship.colleague.status_message ||= "Jag har ingen status än!"
           - if colleagueship.colleague.status_message_updated_at
             %p.updated_at= "#{distance_of_time_in_words_to_now( colleagueship.colleague.status_message_updated_at ).humanize()} sen"
