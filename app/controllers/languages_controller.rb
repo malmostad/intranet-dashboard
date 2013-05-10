@@ -6,7 +6,7 @@ class LanguagesController < ApplicationController
   before_filter :require_admin, except: :search
 
   def index
-    @languages = Language.all
+    @languages = Language.order(:name)
   end
 
   def new
