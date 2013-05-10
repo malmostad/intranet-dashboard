@@ -23,6 +23,10 @@ gem 'capistrano', '2.15.4'
 gem 'capistrano-ext'
 gem 'whenever', require: false
 
+group :development do
+  gem 'haml-rails'
+end
+
 group :development, :local_test do
   gem 'quiet_assets'
   gem 'thin'

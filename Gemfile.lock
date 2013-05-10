@@ -101,6 +101,11 @@ GEM
       rspec (~> 2.13)
     haml (4.0.2)
       tilt
+    haml-rails (0.4)
+      actionpack (>= 3.1, < 4.1)
+      activesupport (>= 3.1, < 4.1)
+      haml (>= 3.1, < 4.1)
+      railties (>= 3.1, < 4.1)
     highline (1.6.18)
     hike (1.2.2)
     http_parser.rb (0.5.3)
@@ -261,6 +266,7 @@ DEPENDENCIES
   feedzirra (= 0.2.0.rc2)
   guard-rspec
   haml (= 4.0.2)
+  haml-rails
   jquery-rails (= 2.2.1)
   launchy
   mysql2 (= 0.3.11)
