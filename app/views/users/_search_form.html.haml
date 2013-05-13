@@ -9,6 +9,9 @@
         .help-inline Sök på förnamn, efternamn, e-postadress eller användarnamn.
   - if params[:term].blank?
     .body-copy
-      %p.help
-        = "Trivia: Det är #{@total_users} användare som loggat in på Min sida varav #{@registered_last_week_users} nya har tillkommit senaste sju dagarna."
-        = "#{@last_week_users} användare har loggat in senaste sju dagarna. Totalt #{@has_status} har ett statusmeddelande."
+      %ul.help
+        %li= "#{@total_users} användare finns i kontaktboken."
+        %li= "#{@registered_last_week_users} användare har tillkommit senaste sju dagarna."
+        %li= "#{@last_week_users} användare har loggat in senaste sju dagarna."
+        %li= "#{@has_status} har ett statusmeddelande."
+        %li= "#{@has_avatar} har en profilbild."

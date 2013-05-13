@@ -12,6 +12,7 @@ class UsersController < ApplicationController
     @last_week_users = User.where("last_login > ?", Time.now - 1.week).count
     @registered_last_week_users = User.where("created_at > ?", Time.now - 1.week).count
     @has_status = User.where("status_message != ?", "").count
+    @has_avatar = User.where("avatar_updated_at != ?", "").count
   end
 
   # Search user on the fields username, email, first_name, last_name
