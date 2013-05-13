@@ -45,8 +45,7 @@ class SkillsController < ApplicationController
 
   # Used for autocomplete and search results in edit
   def search
-    term = "%#{params[:term]}%"
-    @skills = Skill.where("name like ?", term).order(:name).limit(50)
+    @skills = Skill.where("name like ?", "%#{params[:term]}%").order(:name).limit(50)
 
     respond_to do |format|
       format.html
@@ -58,12 +57,10 @@ class SkillsController < ApplicationController
 
   # Used in the user profile
   def suggest
-    q = "%#{params[:q]}%"
-
-    @skills = Skill.where("name like ?", q).order(:name).limit(50)
+    @skills = Skill.where("name like ?", "%#{params[:q]}%").order(:name).limit(50)
 
     # Let user add new skill
-    @skills.unshift Skill.new(name: params[:q].downcase)
+    @skills.unshift Skill.new(name: params[:q])
 
     # We use the :name as :id
     @skills.map! { |l| { id: l.name, name: l.name } }

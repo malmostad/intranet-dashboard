@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
 
-  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar, :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts, :language_list, :skill_list
-  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar, :role_ids, :admin, :early_adopter, :language_list, :skill_list, as: :admin
+  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
+      :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
+      :language_list, :skill_list, :responsibility_list
+  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
+      :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
+      :language_list, :skill_list, :responsibility_list,
+      :admin, :early_adopter, as: :admin
+
   attr_accessor :avatar
   attr_reader :avatar_remote_url
 
@@ -18,6 +24,8 @@ class User < ActiveRecord::Base
   has_many :languages, through: :user_languages
   has_many :user_skills
   has_many :skills, through: :user_skills
+  has_many :user_responsibilities
+  has_many :responsibilities, through: :user_responsibilities
 
   has_many :colleagueships, dependent: :destroy
   has_many :colleagues, through: :colleagueships
@@ -62,6 +70,17 @@ class User < ActiveRecord::Base
   def skill_list=(names)
     self.skills = names.split(",").map do |n|
       Skill.where(name: n.strip).first_or_create!
+    end
+  end
+
+  # Responsibility names as tokens
+  def responsibility_list
+    responsibilities.map(&:name).join(", ")
+  end
+
+  def responsibility_list=(names)
+    self.responsibilities = names.split(",").map do |n|
+      Responsibility.where(name: n.strip).first_or_create!
     end
   end
 

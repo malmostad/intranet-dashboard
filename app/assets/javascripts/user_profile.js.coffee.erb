@@ -19,3 +19,10 @@ jQuery ->
       hintText: "Lägg till kunskapsområde"
     }, tokenInputOptions)
   )
+
+  $('#user_responsibility_list').tokenInput(
+    '<%= asset_path("/responsibilities/suggest.json") %>', $.extend({
+      prePopulate: $('#user_responsibility_list').data('load'),
+      hintText: "Lägg till ansvarsområde"
+    }, tokenInputOptions)
+  )

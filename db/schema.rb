@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130510154530) do
+ActiveRecord::Schema.define(:version => 20130513093311) do
 
   create_table "colleagueships", :force => true do |t|
     t.integer  "user_id"
@@ -68,6 +68,14 @@ ActiveRecord::Schema.define(:version => 20130510154530) do
   end
 
   add_index "languages", ["name"], :name => "index_languages_on_name"
+
+  create_table "responsibilities", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "responsibilities", ["name"], :name => "index_responsibilities_on_name"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -146,6 +154,16 @@ ActiveRecord::Schema.define(:version => 20130510154530) do
 
   add_index "user_languages", ["language_id"], :name => "index_user_languages_on_language_id"
   add_index "user_languages", ["user_id"], :name => "index_user_languages_on_user_id"
+
+  create_table "user_responsibilities", :force => true do |t|
+    t.integer  "responsibility_id"
+    t.integer  "user_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "user_responsibilities", ["responsibility_id"], :name => "index_user_responsibilities_on_responsibility_id"
+  add_index "user_responsibilities", ["user_id"], :name => "index_user_responsibilities_on_user_id"
 
   create_table "user_skills", :force => true do |t|
     t.integer  "skill_id"

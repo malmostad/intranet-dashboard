@@ -1,6 +1,6 @@
 # Autocomplete search for skills
 jQuery ->
-  $("#search-skill #q").focus().autocomplete
+  $("#search-skill #term").focus().autocomplete
     source: '<%= asset_path("/skills/search") %>',
     minLength: 2,
     autoFocus: true,

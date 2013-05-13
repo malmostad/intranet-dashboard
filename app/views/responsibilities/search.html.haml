@@ -1,0 +1,24 @@
+- title "Ansvarsområden"
+%section.box.index
+  %h1.box-title= h1
+  .box-content
+    - if @responsibilities.empty?
+      %p.warning Inga ansvarsområden matchade din sökning
+
+    = render "search_form"
+
+  - if @responsibilities.present?
+    %table
+      %thead
+        %tr
+          %th Namn
+          %th
+      %tbody
+        - @responsibilities.each do |responsibility|
+          %tr
+            %td= link_to responsibility.name, edit_responsibility_path(responsibility)
+            %td.delete= link_to " #{t( 'actions.delete' )}", responsibility, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini icon-trash icon-large"
+
+        %tr
+          %td{ colspan: 2 }
+            .actions= link_to " #{t( "messages.new_post" )}", new_responsibility_path, class: "btn btn-primary icon-plus"

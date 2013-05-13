@@ -7,8 +7,4 @@ class Skill < ActiveRecord::Base
   validates :name,
     presence: { is: true, message: "Namnet måste fyllas i." },
     uniqueness: { is: true, message: "Det finns redan ett kunskapsområde med det namnet." }
-
-  before_save do
-    self.name.downcase!
-  end
 end

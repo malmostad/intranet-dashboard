@@ -29,7 +29,11 @@
 
       .control-group.readonly
         .control-label Kunskapsområden:
-        .controls= @user.skills.map(&:name).to_sentence.humanize
+        .controls= @user.skills.map(&:name).join(", ")
+
+      .control-group.readonly
+        .control-label Ansvarsområden:
+        .controls= @user.responsibilities.map(&:name).join(", ")
 
       .control-group.readonly
         .control-label Språkkunskaper:

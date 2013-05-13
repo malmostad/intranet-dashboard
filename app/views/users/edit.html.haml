@@ -22,6 +22,11 @@
             data: { load: @user.skills.map{ |l| { id: l.name, name: l.name }}})
 
       .control-group
+        = f.label :responsibility_list, "Ansvarsområden:", class: "control-label"
+        .controls= f.text_field(:responsibility_list, class: "input-wide",
+            data: { load: @user.responsibilities.map{ |l| { id: l.name, name: l.name }}})
+
+      .control-group
         = f.label :language_list, "Språkkunskaper:", class: "control-label"
         .controls= f.text_field(:language_list, class: "input-wide",
             data: { load: @user.languages.map{ |l| { id: l.name, name: l.name }}})
