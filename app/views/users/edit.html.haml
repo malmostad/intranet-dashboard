@@ -17,12 +17,12 @@
         .warning= t 'messages.validation_errors'
 
       .control-group
-        .control-label= f.label :skill_list, "Kunskapsområden:"
+        = f.label :skill_list, "Kunskapsområden:", class: "control-label"
         .controls= f.text_field(:skill_list, class: "input-wide",
             data: { load: @user.skills.map{ |l| { id: l.name, name: l.name }}})
 
       .control-group
-        .control-label= f.label :language_list, "Språkkunskaper:"
+        = f.label :language_list, "Språkkunskaper:", class: "control-label"
         .controls= f.text_field(:language_list, class: "input-wide",
             data: { load: @user.languages.map{ |l| { id: l.name, name: l.name }}})
 

@@ -4,5 +4,5 @@ jQuery ->
     source: '<%= asset_path("/skills/search") %>',
     minLength: 2,
     autoFocus: true,
-    select: ( event, ui ) ->
+    select: (event, ui) ->
       document.location = '<%= asset_path("/skills/") %>' + ui.item.id + '/edit'
