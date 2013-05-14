@@ -1,4 +1,4 @@
-section.box#search-person {
+section.box#search-employee {
   .box-content {
     margin-top: 0;
     padding: 0;
@@ -10,11 +10,8 @@ section.box#search-person {
       display: block;
       margin-bottom: .1em;
     }
-    input#query-person {
+    input#query-employee {
       width: 68%;
     }
   }
-}
-.search_users .suggest-users p {
-  font-size: emize(13, 14);
 }

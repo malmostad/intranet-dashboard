@@ -29,8 +29,12 @@ class UsersController < ApplicationController
       format.html
       format.json {
         render json: @users.map { |u|
-          email = (u.email.present? ? u.email : "ingen e-postaddress").downcase
-          { id: u.id, username: u.username, email: email, avatar_full_url: "#{avatar_full_url(u.username, :mini_quadrat)}", first_name: u.first_name, last_name: u.last_name }
+          email = (u.email.present? ? u.email : "").downcase
+          company = u.company.gsub(/^[\d\s]*/, "")
+          { id: u.id, username: u.username,
+            avatar_full_url: "#{avatar_full_url(u.username, :mini_quadrat)}",
+            first_name: u.first_name, last_name: u.last_name,
+            company: company, email: email, phone: (u.phone || ""), cell_phone: (u.cell_phone || "") }
         }
       }
     end

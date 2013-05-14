@@ -1,11 +1,12 @@
-%section.box#search-person
+%section.box#search-employee
   %h1.box-title Sök medarbetare
   .box-content
-    %form{ id: "search-person-form", method: :get, action: "http://srvwindccmg02.malmo.se/netwiseoffice/common/newframes.asp?callingButton=FirstSearch&oldsearch=lname" }
-      %label{ for: "query-person" } Sök på efternamn:
+    %form{ method: :get, action: users_search_path }
+      %label{ for: "query-employee" } Sök medarbetare:
       .input-append
-        %input#query-person{ type: "text", name: :query, placeholder: "Efternamn" }
-        %input.btn{ type: "submit", value: "Sök" }
+        %input#query-employee{ type: "text", name: :term, "data-path" => users_path,
+            placeholder: "För-, efternamn, e-post" }
+        %input.btn{ type: "submit", value: "Sök", name: nil }
   - if admin?
     .dropdown.box-menu.pull-right
       %a#search-person-menu.dropdown-toggle{ "role" => "button", "data-toggle" => "dropdown", "href" => "#", "title" => "Anpassa denna box" }
