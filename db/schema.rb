@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130513093311) do
+ActiveRecord::Schema.define(:version => 20130515160920) do
 
   create_table "colleagueships", :force => true do |t|
     t.integer  "user_id"
@@ -202,6 +202,8 @@ ActiveRecord::Schema.define(:version => 20130513093311) do
     t.string   "skype"
     t.text     "private_bio"
     t.integer  "manager_id"
+    t.string   "department"
+    t.string   "homepage"
   end
 
   add_index "users", ["manager_id"], :name => "index_users_on_manager_id"

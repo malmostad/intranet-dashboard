@@ -33,7 +33,7 @@ class Ldap
 
     # Fetch user attributes
     ldap_user = @client.search(base: APP_CONFIG['ldap']['base_dn'], filter: "cn=#{username}",
-        attributes: %w(cn givenname sn displayname mail telephonenumber mobile title company manager)).first
+        attributes: %w(cn givenname sn displayname mail telephonenumber mobile title company manager department)).first
 
     if ldap_user.present?
       # Find existing user or create a new
@@ -45,6 +45,7 @@ class Ldap
       user.title         = ldap_user['title'].first
       user.email         = ldap_user['mail'].first
       user.company       = ldap_user['company'].first
+      user.department    = ldap_user['department'].first
       user.manager       = User.where(username: extract_cn(ldap_user["manager"].first)).first
       user.phone         = phone ||= ldap_user['telephonenumber'].first
       user.cell_phone    = cell_phone ||= ldap_user['mobile'].first
@@ -66,10 +67,10 @@ class Ldap
     ldap_user = @client.search(base: APP_CONFIG['ldap']['base_dn'], filter: "cn=#{username}").first
     if ldap_user.present?
       Rails.logger.debug ldap_user.inspect
-      Rails.logger.debug ldap_user['dn'].first
-      Rails.logger.debug ldap_user['displayname'].first
-      Rails.logger.debug extract_cn(ldap_user["manager"].first)
-      # Rails.logger.debug ldap_user["mail"].first
+      # Rails.logger.debug ldap_user['dn'].first
+      # Rails.logger.debug ldap_user['displayname'].first
+      # Rails.logger.debug extract_cn(ldap_user["manager"].first)
+      Rails.logger.debug ldap_user["department"].first
     else
       Rails.logger.debug  "No user #{username}"
     end
