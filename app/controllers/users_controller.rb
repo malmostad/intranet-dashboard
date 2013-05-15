@@ -19,11 +19,7 @@ class UsersController < ApplicationController
   # Returns a hash in json or a @users array for html rendering
   def search
     term = "%#{params[:term]}%"
-    if term.present?
-      @users = User.search(term, 50)
-    else
-      @users = {}
-    end
+    @users = term.present? ? User.search(term, 50) : {}
 
     respond_to do |format|
       format.html

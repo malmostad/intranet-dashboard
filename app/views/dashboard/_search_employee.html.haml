@@ -4,8 +4,7 @@
     %form{ method: :get, action: users_search_path }
       %label{ for: "query-employee" } Sök medarbetare:
       .input-append
-        %input#query-employee{ type: "text", name: :term, "data-path" => users_path,
-            placeholder: "För-, efternamn, e-post" }
+        %input#query-employee{ type: "text", name: :term, "data-path" => users_path}
         %input.btn{ type: "submit", value: "Sök", name: nil }
   - if admin?
     .dropdown.box-menu.pull-right

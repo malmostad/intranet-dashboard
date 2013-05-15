@@ -15,3 +15,23 @@ section.box#search-employee {
     }
   }
 }
+
+ul.ui-autocomplete.search_users {
+  max-height: 30em;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .ui-menu-item > a.ui-corner-all {
+    padding: .5em 1em .7em .5em;
+    clear: left;
+    overflow: hidden;
+    white-space: nowrap;
+    img {
+      float: left;
+      height: 32px;
+      width: 32px;
+    }
+    p {
+      margin: 0 0 0 38px;
+    }
+  }
+}

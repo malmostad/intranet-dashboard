@@ -61,8 +61,8 @@ jQuery(document).ready(function($) {
       }
     })
     .data( "autocomplete" )._renderItem = function( ul, item ) {
-      ul.addClass('search_colleagues image-list');
-      return $( "<li class='suggest_colleagues'></li>" )
+      ul.addClass('search_users');
+      return $("<li>")
         .data( "item.autocomplete", item )
         .append( "<a><img src='" + item.avatar_full_url + "' />" +
            "<p>" + item.first_name + " " + item.last_name + 
