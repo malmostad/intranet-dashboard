@@ -38,6 +38,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.where(username: params[:username]).includes(:subordinates).first
+    @user_roles = user_roles
+    @roles = Role.all
     if @user.blank?
       reset_body_classes
       sub_layout
@@ -54,19 +56,24 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @roles = Role.all
-    # Prevent and admin from un-admin herself
+
+    # Prevent an admin from un-admin herself
     if admin? && editing_myself? && params[:user][:admin] == "0"
-      flash.now[:warning] = "Du kan inte ta bort din egen administratörsrättighet!"
-      render action: "edit"
-    else
-      # Pass empty role HBTM array if all roles are unchecked
-      params[:user] = { role_ids: [] } if params[:user][:role_ids].blank?
-      # some fields require admin rights for mass assignment
-      if @user.update_attributes(params[:user], as: ( :admin if admin? ))
-        set_profile_cookie
-        redirect_to user_path(@user.username), notice: "Användaren uppdaterades"
+      @user.errors.add(:admin, "Du kan inte ta bort din egen administratörsrättighet!")
+    end
+    # @user.errors.add(:admin, "Du kan inte ta bort din egen administratörsrättighet!")
+
+    respond_to do |format|
+      # Some fields require admin rights for mass assignment
+      if @user.errors.empty? && @user.update_attributes(params[:user], as: ( :admin if admin? ))
+        format.html {
+          set_profile_cookie
+          redirect_to user_path(@user.username), notice: "Användaren uppdaterades"
+        }
+        format.json { head :no_content }
       else
-        render action: "edit"
+        format.html { render action: 'edit' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end

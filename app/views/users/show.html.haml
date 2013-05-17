@@ -1,203 +1,217 @@
 - title "Grundprofil för #{@user.displayname}"
 %section.box.show.employee
   %h1.box-title= h1
-  .box-content.form-horizontal.form-data
+  .box-content.form-horizontal
+    = form_for @user, html: { id: "user-profile", class: "form-horizontal" } do |f|
 
-    %h2.form-group-title Sammanfattning
-    .control-group.readonly
-      .control-label Namn:
-      .controls
-        = link_to "Info", "#", class: "change"
-        = "#{@user.first_name} #{@user.last_name}"
-    .control-group.readonly
-      .control-label Visitkortstitel:
-      .controls
-        = link_to "Ändra", "#", class: "change btn btn-mini"
-        = @user.business_card_title
-    .control-group.readonly
-      .control-label HR-titel:
-      .controls
-        = link_to "Info", "#", class: "change"
-        = @user.title
-    .control-group.readonly
-      .control-label Enhet/arbetsplats:
-      .controls
-        = link_to "Info", "#", class: "change"
-        = 'AD-fält?'
-    .control-group.readonly
-      .control-label Avdelning:
-      .controls
-        = link_to "Info", "#", class: "change"
-        = @user.department
-    .control-group.readonly
-      .control-label Förvaltning:
-      .controls
-        = link_to "Info", "#", class: "change"
-        = @user.company.gsub(/^[\d\s]*/, "")
-    .control-group.readonly
-      .control-label Min status:
-      .controls
-        = link_to "Ändra", "#", class: "change btn btn-mini"
-        = @user.status_message
-    .control-group.readonly
-      .control-label Yrkesbio:
-      .controls
-        = link_to "Ändra", "#", class: "change btn btn-mini"
-        = @user.professional_bio
-    .control-group.readonly
-      .control-label Profilbild:
-      .controls
-        = image_tag "#{avatar_full_url(@user.username, :medium_quadrat)}?#{Time.now.to_i}", alt: "Profilbild"
-        = link_to "Ändra", edit_avatar_path(@user), class: "change btn btn-mini"
+      .control-group.readonly
+        .control-label Visitkortstitel:
+        .controls
+          = link_to "Ändra", "#", class: "change btn btn-mini"
+          = @user.business_card_title
+        .controls.edit= f.text_field :business_card_title
+        .controls
+          = f.submit "Spara", class: "btn btn-primary"
 
 
-    %h2.form-group-title Kontakt
-    .control-group.readonly
-      .control-label E-post:
-      .controls
-        = link_to "Info", "#", class: "change"
-        = @user.email
-    .control-group.readonly
-      .control-label Fast telefon:
-      .controls
-        = link_to "Info", "#", class: "change"
-        = @user.phone
-    .control-group.readonly
-      .control-label Mobiltelefon:
-      .controls
-        = link_to "Info", "#", class: "change"
-        = @user.cell_phone
-    .control-group.readonly
-      .control-label Twitter:
-      .controls
-        = link_to "Ändra", "#", class: "change btn btn-mini"
-        = @user.twitter
-    .control-group.readonly
-      .control-label Skype:
-      .controls
-        = link_to "Ändra", "#", class: "change btn btn-mini"
-        = @user.skype
+      %h2.form-group-title Sammanfattning
+      .control-group.readonly
+        .control-label Namn:
+        .controls
+          = link_to "Info", "#", class: "change"
+          = "#{@user.first_name} #{@user.last_name}"
+      .control-group.readonly
+        .control-label Visitkortstitel:
+        .controls
+          = link_to "Ändra", "#", class: "change btn btn-mini"
+          = @user.business_card_title
+      .control-group.readonly
+        .control-label HR-titel:
+        .controls
+          = link_to "Info", "#", class: "change"
+          = @user.title
+      .control-group.readonly
+        .control-label Enhet/arbetsplats:
+        .controls
+          = link_to "Info", "#", class: "change"
+          = 'AD-fält?'
+      .control-group.readonly
+        .control-label Avdelning:
+        .controls
+          = link_to "Info", "#", class: "change"
+          = @user.department
+      .control-group.readonly
+        .control-label Förvaltning:
+        .controls
+          = link_to "Info", "#", class: "change"
+          = @user.company.gsub(/^[\d\s]*/, "")
+      .control-group.readonly
+        .control-label Min status:
+        .controls
+          = link_to "Ändra", "#", class: "change btn btn-mini"
+          = @user.status_message
 
-    %h2.form-group-title Organisation
-    .control-group.readonly
-      .control-label HR-titel:
-      .controls
-        = link_to "Info", "#", class: "change"
-        = @user.title
-    .control-group.readonly
-      .control-label Enhet/arbetsplats:
-      .controls
-        = link_to "Info", "#", class: "change"
-        = 'AD-fält?'
-    .control-group.readonly
-      .control-label Avdelning:
-      .controls
-        = link_to "Info", "#", class: "change"
-        = @user.department
-    .control-group.readonly
-      .control-label Förvaltning:
-      .controls
-        = link_to "Info", "#", class: "change"
-        = @user.company.gsub(/^[\d\s]*/, "")
-    .control-group.readonly
-      .control-label Rapporterar till:
-      .controls
-        = link_to "Info", "#", class: "change"
-        - if @user.manager.present?
-          = link_to @user.manager.displayname, user_path(@user.manager.username)
+      .control-group.readonly
+        .control-label Profilbild:
+        .controls
+          = image_tag "#{avatar_full_url(@user.username, :medium_quadrat)}?#{Time.now.to_i}", alt: "Profilbild"
+          = link_to "Ändra", edit_avatar_path(@user), class: "change btn btn-mini"
+
+
+      %h2.form-group-title Kontakt
+      .control-group.readonly
+        .control-label E-post:
+        .controls
+          = link_to "Info", "#", class: "change"
+          = @user.email
+      .control-group.readonly
+        .control-label Fast telefon:
+        .controls
+          = link_to "Info", "#", class: "change"
+          = @user.phone
+      .control-group.readonly
+        .control-label Mobiltelefon:
+        .controls
+          = link_to "Info", "#", class: "change"
+          = @user.cell_phone
+      .control-group.readonly
+        .control-label Twitter:
+        .controls
+          = link_to "Ändra", "#", class: "change btn btn-mini"
+          = @user.twitter
+      .control-group.readonly
+        .control-label Skype:
+        .controls
+          = link_to "Ändra", "#", class: "change btn btn-mini"
+          = @user.skype
+
+      %h2.form-group-title Organisation
+      .control-group.readonly
+        .control-label HR-titel:
+        .controls
+          = link_to "Info", "#", class: "change"
+          = @user.title
+      .control-group.readonly
+        .control-label Enhet/arbetsplats:
+        .controls
+          = link_to "Info", "#", class: "change"
+          = 'AD-fält?'
+      .control-group.readonly
+        .control-label Avdelning:
+        .controls
+          = link_to "Info", "#", class: "change"
+          = @user.department
+      .control-group.readonly
+        .control-label Förvaltning:
+        .controls
+          = link_to "Info", "#", class: "change"
+          = @user.company.gsub(/^[\d\s]*/, "")
+      .control-group.readonly
+        .control-label Rapporterar till:
+        .controls
+          = link_to "Info", "#", class: "change"
+          - if @user.manager.present?
+            = link_to @user.manager.displayname, user_path(@user.manager.username)
+          - else
+            = "#{possessive(@user.displayname)} chef har inte loggat in på min sida än"
+      .control-group.readonly
+        .control-label Linjechef till:
+        .controls
+          = link_to "Info", "#", class: "change"
+          %ul
+            - @user.subordinates.each do |subordinate|
+              %li= link_to subordinate.displayname, user_path(subordinate.username)
+
+      %h2.form-group-title Adress
+      .control-group.readonly
+        .control-label Besöksadress:
+        .controls
+          = link_to "Info", "#", class: "change"
+          = "AD-fält?"
+      .control-group.readonly
+        .control-label Postadress:
+        .controls
+          = link_to "Info", "#", class: "change"
+          = "AD-fält?"
+
+      %h2.form-group-title Nyckelord
+      .control-group.readonly
+        .control-label Kunskapsområden:
+        .controls
+          = link_to "Ändra", "#", class: "change btn btn-mini"
+          = @user.skills.map(&:name).join(", ")
+      .control-group.readonly
+        .control-label Ansvarsområden:
+        .controls
+          = link_to "Ändra", "#", class: "change btn btn-mini"
+          = @user.responsibilities.map(&:name).join(", ")
+
+      %h2.form-group-title Övrigt
+      .control-group.readonly
+        .control-label Användarnamn:
+        .controls
+          = link_to "Info", "#", class: "change"
+          = @user.username
+
+      .control-group.readonly
+        .control-label Grundprofil i Komin:
+        .controls
+          - if admin? || current_user.username == @user.username
+            = link_to "Ändra", edit_user_path(@user), class: "change btn btn-mini"
+          = @user.roles.map(&:name).to_sentence
+
+      .control-group.readonly
+        .control-label Administratör:
+        .controls
+          - if admin?
+            = link_to "Ändra", "#", class: "change btn btn-mini"
+          = @user.admin? ? "Ja" : "Nej"
+      .control-group.readonly
+        .control-label Early adopter:
+        .controls
+          - if admin?
+            = link_to "Ändra", "#", class: "change btn btn-mini"
+          = @user.early_adopter? ? "Ja" : "Nej"
+      .control-group.readonly
+        .control-label Senast inloggad:
+        - if @user.last_login.blank?
+          .controls –
         - else
-          = "#{possessive(@user.displayname)} chef har inte loggat in på min sida än"
-    .control-group.readonly
-      .control-label Linjechef till:
-      .controls
-        = link_to "Info", "#", class: "change"
-        %ul
-          - @user.subordinates.each do |subordinate|
-            %li= link_to subordinate.displayname, user_path(subordinate.username)
+          .controls= l @user.last_login, format: :short
+      .control-group.readonly
+        .control-label Användaren skapades:
+        .controls= l @user.created_at, format: :short
 
-    %h2.form-group-title Adress
-    .control-group.readonly
-      .control-label Besöksadress:
-      .controls
-        = link_to "Info", "#", class: "change"
-        = "AD-fält?"
-    .control-group.readonly
-      .control-label Postadress:
-      .controls
-        = link_to "Info", "#", class: "change"
-        = "AD-fält?"
-
-    %h2.form-group-title Nyckelord
-    .control-group.readonly
-      .control-label Kunskapsområden:
-      .controls
-        = link_to "Ändra", "#", class: "change btn btn-mini"
-        = @user.skills.map(&:name).join(", ")
-    .control-group.readonly
-      .control-label Ansvarsområden:
-      .controls
-        = link_to "Ändra", "#", class: "change btn btn-mini"
-        = @user.responsibilities.map(&:name).join(", ")
-
-    %h2.form-group-title Övrigt
-    .control-group.readonly
-      .control-label Användarnamn:
-      .controls
-        = link_to "Info", "#", class: "change"
-        = @user.username
-
-    .control-group.readonly
-      .control-label Grundprofil i Komin:
-      .controls
-        - if admin? || current_user.username == @user.username
-          = link_to "Ändra", edit_user_path(@user), class: "change btn btn-mini"
-        = @user.roles.map(&:name).to_sentence
-
-    .control-group.readonly
-      .control-label Administratör:
-      .controls
-        - if admin?
+      %h2.form-group-title Personsligt
+      .control-group.readonly
+        .control-label Om mig, personlig bio:
+        .controls
           = link_to "Ändra", "#", class: "change btn btn-mini"
-        = @user.admin? ? "Ja" : "Nej"
-    .control-group.readonly
-      .control-label Early adopter:
-      .controls
-        - if admin?
+          = @user.private_bio
+
+      .control-group.readonly
+        .control-label Språkkunskaper:
+        .controls
           = link_to "Ändra", "#", class: "change btn btn-mini"
-        = @user.early_adopter? ? "Ja" : "Nej"
-    .control-group.readonly
-      .control-label Senast inloggad:
-      - if @user.last_login.blank?
-        .controls –
-      - else
-        .controls= l @user.last_login, format: :short
-    .control-group.readonly
-      .control-label Användaren skapades:
-      .controls= l @user.created_at, format: :short
+          = @user.languages.map(&:name).to_sentence.humanize
 
-    %h2.form-group-title Personsligt
-    .control-group.readonly
-      .control-label Om mig, personlig bio:
-      .controls
-        = link_to "Ändra", "#", class: "change btn btn-mini"
-        = @user.private_bio
-    .control-group.readonly
-      .control-label Språkkunskaper:
-      .controls
-        = link_to "Ändra", "#", class: "change btn btn-mini"
-        = @user.languages.map(&:name).to_sentence.humanize
-    .control-group.readonly
-      .control-label Privat hemsida:
-      .controls
-        = link_to "Ändra", "#", class: "change btn btn-mini"
-        = @user.homepage
+      .control-group.edit
+        = f.label :language_list, "Språkkunskaper:", class: "control-label"
+        .controls= f.text_field(:language_list, class: "input-wide",
+            data: { path: languages_suggest_path, load: @user.languages.map{ |l| { id: l.name, name: l.name }}})
 
-    %h2.form-group-title Kominaktiviteter
-    .control-group.readonly
-      .control-label Nyheter:
-      .controls= link_to "Visa nyheter", "http://webapps04.malmo.se/nyheter/author/#{@user.username}"
+      .control-group.readonly
+        .control-label Privat hemsida:
+        .controls
+          = link_to "Ändra", "#", class: "change btn btn-mini"
+          = @user.homepage
 
-    .control-group.readonly
-      .control-label Blogginlägg:
-      .controls= link_to "Visa blogginlägg", "http://webapps04.malmo.se/blogg/author/#{@user.username}"
+      %h2.form-group-title Kominaktiviteter
+      .control-group.readonly
+        .control-label Nyheter:
+        .controls= link_to "Visa nyheter", "http://webapps04.malmo.se/nyheter/author/#{@user.username}"
+
+      .control-group.readonly
+        .control-label Blogginlägg:
+        .controls= link_to "Visa blogginlägg", "http://webapps04.malmo.se/blogg/author/#{@user.username}"
 

@@ -19,17 +19,17 @@
       .control-group
         = f.label :skill_list, "Kunskapsområden:", class: "control-label"
         .controls= f.text_field(:skill_list, class: "input-wide",
-            data: { load: @user.skills.map{ |l| { id: l.name, name: l.name }}})
+            data: { path: skills_suggest_path, load: @user.skills.map{ |l| { id: l.name, name: l.name }}})
 
       .control-group
         = f.label :responsibility_list, "Ansvarsområden:", class: "control-label"
         .controls= f.text_field(:responsibility_list, class: "input-wide",
-            data: { load: @user.responsibilities.map{ |l| { id: l.name, name: l.name }}})
+            data: { path: responsibilities_suggest_path, load: @user.responsibilities.map{ |l| { id: l.name, name: l.name }}})
 
       .control-group
         = f.label :language_list, "Språkkunskaper:", class: "control-label"
         .controls= f.text_field(:language_list, class: "input-wide",
-            data: { load: @user.languages.map{ |l| { id: l.name, name: l.name }}})
+            data: { path: languages_suggest_path, load: @user.languages.map{ |l| { id: l.name, name: l.name }}})
 
       - if admin?
         .control-group
@@ -38,6 +38,9 @@
             %label.checkbox
               = f.check_box :admin
               Administratör
+            - @user.errors[:admin].each do |msg|
+              .help-inline.warning= "#{msg}"
+
             %label.checkbox
               = f.check_box :early_adopter
               Early Adopter

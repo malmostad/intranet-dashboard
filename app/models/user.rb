@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
 
-  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
+  attr_accessible :phone, :cell_phone, :professional_bio, :business_card_title, :status_message, :avatar,
       :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
       :language_list, :skill_list, :responsibility_list
-  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
+  attr_accessible :phone, :cell_phone, :professional_bio, :business_card_title, :status_message, :avatar,
       :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
       :language_list, :skill_list, :responsibility_list,
       :admin, :early_adopter, as: :admin
