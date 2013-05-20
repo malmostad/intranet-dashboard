@@ -1,0 +1,51 @@
+.show.user {
+  .controls.edit {
+    display: none;
+  }
+
+  .form-group-title:first-child {
+    margin-top: 0;
+  }
+  #languages {
+    width: 90% !important;
+  }
+
+  .control-group {
+    border-bottom: $border;
+  }
+  .controls li {
+    margin-bottom: .4em;
+  }
+  .control-group:hover {
+  }
+
+  // Pseudo labels
+  .control-group {
+    div.control-label {
+      font-size: emize(13);
+      line-height: 1.4em;
+    }
+  }
+
+  // Show views w/form layout
+  .control-group.readonly, .control-group.editable {
+    margin-bottom: 0;
+    .control-label {
+      margin-top: 0;
+      padding: .8em 0;
+    }
+    .controls {
+      font-size: emize(13);
+      line-height: 1.4em;
+      margin-top: 0;
+      padding: .8em 0;
+      .actions {
+        margin-left: 1em;
+        margin-right: .2em;
+        float: right;
+        display: inline-block;
+      }
+    }
+  }
+
+}
