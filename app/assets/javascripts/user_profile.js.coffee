@@ -1,6 +1,18 @@
 jQuery ->
-
   $form = $("#user-profile")
+
+  $form.find(".controls.read .change").click () ->
+    $group = $(@).parents(".control-group")
+    $group.find(".controls.edit, .controls.read").toggle()
+
+  $form.find(".controls.edit .submit").click () ->
+    $group = $(@).parents(".control-group")
+    $group.find(".controls.edit, .controls.read").toggle()
+
+  $form.find(".controls.edit .cancel").click () ->
+    $group = $(@).parents(".control-group")
+    $group.find(".controls.edit, .controls.read").toggle()
+
   $form.submit (event) ->
     event.preventDefault()
     $.ajax
@@ -13,6 +25,7 @@ jQuery ->
       error: (jqXHR, textStatus, errorThrown) ->
         console.log(jqXHR.responseText)
 
+  # Shared options for tokenInput
   tokenInputOptions = {
     theme: 'malmo'
     searchDelay: 0

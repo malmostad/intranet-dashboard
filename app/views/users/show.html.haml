@@ -1,17 +1,20 @@
 - title "Grundprofil för #{@user.displayname}"
-%section.box.show.employee
+%section.box.show.user
   %h1.box-title= h1
   .box-content.form-horizontal
     = form_for @user, html: { id: "user-profile", class: "form-horizontal" } do |f|
 
-      .control-group.readonly
+      .control-group.editable
         .control-label Visitkortstitel:
-        .controls
-          = link_to "Ändra", "#", class: "change btn btn-mini"
+        .controls.read
+          .actions
+            = link_to "Ändra", "#", class: "change btn btn-mini"
           = @user.business_card_title
-        .controls.edit= f.text_field :business_card_title
-        .controls
-          = f.submit "Spara", class: "btn btn-primary"
+        .controls.edit
+          = f.text_field :business_card_title
+          .actions
+            = f.submit "Spara", class: "submit btn btn-primary btn-mini"
+            = f.button "Avbryt", class: "cancel btn btn-mini"
 
 
       %h2.form-group-title Sammanfattning
