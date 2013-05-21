@@ -33,6 +33,7 @@
     .control-label {
       margin-top: 0;
       padding: .8em 0;
+      font-size: emize(13);
     }
     .controls {
       font-size: emize(13);
@@ -49,5 +50,44 @@
   }
   .change {
     float: right;
+  }
+}
+
+section.box#search-employee {
+  .box-content {
+    margin-top: 0;
+    padding: 0;
+    label, p {
+      font-family: $sansSerif;
+      font-size: emize(13);
+    }
+    label {
+      display: block;
+      margin-bottom: .1em;
+    }
+    input#query-employee {
+      width: 68%;
+    }
+  }
+}
+
+ul.ui-autocomplete.search_users {
+  max-height: 30em;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .ui-menu-item > a.ui-corner-all {
+    padding: .5em 1em .7em .5em;
+    clear: left;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: emize(11);
+    img {
+      float: left;
+      height: 32px;
+      width: 32px;
+    }
+    p {
+      margin: 0 0 0 38px;
+    }
   }
 }

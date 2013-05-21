@@ -1,4 +1,4 @@
-= form_tag(responsibilities_search_path, method: "get", id: "search-responsibility", class: "form-horizontal") do
+= form_tag(responsibilities_search_path, method: "get", id: "search-responsibility", class: "form-horizontal", "data-path" => responsibilities_path) do
   .control-group
     = label_tag "term", "Sök ansvarsområde: ", class: "control-label"
     .controls

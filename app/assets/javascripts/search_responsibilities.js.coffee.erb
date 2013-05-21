@@ -1,8 +1,0 @@
-# Autocomplete search for responsibilities
-jQuery ->
-  $("#search-responsibility #term").focus().autocomplete
-    source: '<%= asset_path("/responsibilities/search") %>',
-    minLength: 2,
-    autoFocus: true,
-    select: (event, ui) ->
-      document.location = '<%= asset_path("/responsibilities/") %>' + ui.item.id + '/edit'

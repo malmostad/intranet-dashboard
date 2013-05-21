@@ -1,4 +1,25 @@
-jQuery ->
+$ ->
+  # Search users
+  $queryEmployee = $("#query-employee")
+  if $queryEmployee.length
+    $queryEmployee
+      .autocomplete
+        source: $queryEmployee.parents("form").attr("action"),
+        minLength: 2,
+        select: (event, ui) ->
+          document.location = "#{$queryEmployee.data("path")}/#{ui.item.username}"
+      .data("ui-autocomplete")
+      ._renderItem = (ul, item) ->
+        ul.addClass('search_users')
+        $("<li>")
+          .data("item.autocomplete", item)
+          .append("<a><img src='#{item.avatar_full_url}'/>
+              <p>#{item.first_name} #{item.last_name}<br/>
+              #{item.company}</p></a>")
+          .appendTo(ul)
+
+
+  # Edit user form
   $form = $("#user-profile")
 
   $form.find(".controls.read .change").click () ->
@@ -54,3 +75,4 @@ jQuery ->
       hintText: "Lägg till ansvarsområde"
     }, tokenInputOptions)
   )
+
