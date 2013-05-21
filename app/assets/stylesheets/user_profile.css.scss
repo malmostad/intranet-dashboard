@@ -3,7 +3,7 @@
     display: none;
   }
 
-  .form-group-title:first-child {
+  .form-group-title.summary {
     margin-top: 0;
   }
   #languages {
@@ -47,5 +47,7 @@
       }
     }
   }
-
+  .change {
+    float: right;
+  }
 }
