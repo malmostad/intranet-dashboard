@@ -3,16 +3,16 @@ $ ->
   checkcheck = ($toggler, $roles) ->
     allchecked($toggler, $roles)
     $toggler.change ->
-      $roles.find(":checkbox").attr("checked", $(@).is(':checked') ? true : false)
+      $roles.find(":checkbox").prop("checked", $(@).prop('checked') ? true : false)
     $roles.change ->
       allchecked($toggler, $roles)
 
   # Check/uncheck the "All" checkbox depending on the role checkbox values
   allchecked = ($toggler, $roles) ->
     if $roles.find(":checkbox:checked").length == $roles.find(":checkbox").length
-      $toggler.attr("checked", true)
+      $toggler.prop('checked', true)
     else
-      $toggler.attr("checked", false)
+      $toggler.prop('checked', false)
 
   # Check all/none checkbox for role assignment
   $toggleDepartments = $("#toggle-departments")
