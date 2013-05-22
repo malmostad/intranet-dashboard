@@ -1,4 +1,7 @@
 $ ->
+  # Focus on login form
+  $('#username').focus();
+
   # Search users
   $queryEmployee = $("#query-employee")
   if $queryEmployee.length
