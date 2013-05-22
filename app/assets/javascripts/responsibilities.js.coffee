@@ -1,5 +1,5 @@
-# Autocomplete search for responsibilities
 $ ->
+  # Autocomplete search for responsibilities
   $("#search-responsibility #term").focus().autocomplete
     source: $("#search-responsibility").attr("action")
     minLength: 2
