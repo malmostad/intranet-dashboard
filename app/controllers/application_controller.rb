@@ -100,7 +100,6 @@ class ApplicationController < ActionController::Base
   def editing_myself?
     current_user.id.to_i === params[:id].to_i
   end
-  helper_method :editing_myself?
 
   def require_admin_or_myself
     not_authorized unless admin? || editing_myself?
