@@ -187,11 +187,6 @@
       width: 100%;
       @include radius(0);
     }
-    section.index, section.show, section.form {
-      @include radius(0);
-      border: none;
-      margin-bottom: 0;
-    }
     div.field {
       label {
         clear: both;
@@ -251,6 +246,12 @@
         margin-left: 0;
         width: 100%;
       }
+    }
+
+    section.index, section.show, section.form {
+      @include radius(0);
+      border: none;
+      margin-bottom: 0;
     }
 
     &.malmo-masthead-dashboard {

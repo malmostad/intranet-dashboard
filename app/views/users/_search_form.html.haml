@@ -3,10 +3,9 @@
     = label_tag "query-employee", "Sök användare: ", class: "control-label"
     .controls
       .input-append
-        = text_field_tag "query-employee", params[:term], name: "term", "data-path" => users_path
+        = text_field_tag "query-employee", params[:term], name: "term", "data-path" => users_path, class: "full-search"
         = submit_tag "Sök", { class: "btn", name: nil }
-      - if params[:term].blank? || @users.blank?
-        .help-inline Sök på förnamn, efternamn, e-postadress eller användarnamn.
+      .help-inline Sök på förnamn, efternamn, e-postadress eller användarnamn.
   - if params[:term].blank?
     .body-copy
       %ul.help

@@ -1,5 +1,5 @@
 - title "Användare"
-%section.box.index
+%section.box.index.users
   %h1.box-title= h1
   .box-content
     - if @users.empty?
@@ -7,17 +7,10 @@
     = render "search_form"
 
   - if @users.present?
-    %table
-      %thead
-        %tr
-          %th Användarnamn
-          %th Förnamn
-          %th Efternamn
-          %th.secondary E-post
-      %tbody
-        - @users.each do |user|
-          %tr
-            %td= link_to user.username, user_path(user.username)
-            %td= user.first_name
-            %td= user.last_name
-            %td.secondary= user.email
+    %ul
+      - @users.each do |user|
+        %li
+          %div.avatar= link_to image_tag("#{avatar_full_url(user.username, :medium_quadrat)}?#{Time.now.to_i}", alt: "Profilbild"), user_path(user.username)
+          %h2.name= link_to "#{user.first_name} #{user.last_name}", user_path(user.username)
+          %p.company= user.company.gsub(/^[\d\s]*/, "")
+          %p.email= user.email

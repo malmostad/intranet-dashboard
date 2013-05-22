@@ -1,3 +1,4 @@
+// View for user data
 .show.user {
   .controls.edit {
     display: none;
@@ -56,6 +57,56 @@
   }
 }
 
+// Results list for user search
+section.box.index.users {
+  form {
+    label {
+      display: none;
+    }
+    .controls {
+      margin-left: 0;
+      input#query-employee {
+        width: 35em;
+        max-width: 70% !important;
+      }
+      .help {
+        margin: .4em 0 0;
+      }
+    }
+  }
+  li {
+    @include clearfix();
+    clear: both;
+    display: block;
+    padding: 0.4em .7em;
+    border: solid white;
+    border-width: 1px 0;
+    margin: 0;
+    .avatar {
+      float: left;
+      width: 4em;
+      margin-right: 1em;
+      img {
+        max-width: 4em;
+        height: auto;
+      }
+    }
+    h2 {
+      font-weight: normal;
+      font-size: emize(16);
+      margin: 0 0 .1em;
+    }
+    p {
+      color: #000;
+      font-family: $sansSerif;
+      font-size: emize(13);
+      margin: 0;
+      line-height: 1.4;
+    }
+  }
+}
+
+// Search box for users
 section.box#search-employee {
   .box-content {
     margin-top: 0;
@@ -74,6 +125,7 @@ section.box#search-employee {
   }
 }
 
+// Autocomplete list for user search
 ul.ui-autocomplete.search_users {
   max-height: 30em;
   overflow-y: auto;
@@ -93,4 +145,8 @@ ul.ui-autocomplete.search_users {
       margin: 0 0 0 38px;
     }
   }
+}
+
+ul.ui-autocomplete.search_users.full-search p {
+  font-size: emize(13, 11);
 }

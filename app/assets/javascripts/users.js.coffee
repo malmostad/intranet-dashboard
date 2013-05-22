@@ -2,7 +2,7 @@ $ ->
   # Focus on login form
   $('#username').focus();
 
-  # Search users
+  # Autocomplete on user search
   $queryEmployee = $("#query-employee")
   if $queryEmployee.length
     $queryEmployee
@@ -14,6 +14,8 @@ $ ->
       .data("ui-autocomplete")
       ._renderItem = (ul, item) ->
         ul.addClass('search_users')
+        if $queryEmployee.hasClass("full-search")
+          ul.addClass('full-search')
         $("<li>")
           .data("item.autocomplete", item)
           .append("<a><img src='#{item.avatar_full_url}'/>
