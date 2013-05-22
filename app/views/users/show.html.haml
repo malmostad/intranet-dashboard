@@ -37,7 +37,7 @@
       .control-group.readonly
         .control-label Profilbild:
         .controls
-          = link_to "Ändra", edit_avatar_path(@user), class: "change btn btn-mini"
+          = link_to "Byt bild", edit_avatar_path(@user), class: "change btn btn-mini"
           = image_tag "#{avatar_full_url(@user.username, :medium_quadrat)}?#{Time.now.to_i}", alt: "Profilbild"
 
       %h2.form-group-title Kontakt
@@ -162,3 +162,5 @@
         .control-label Blogginlägg:
         .controls= link_to "Visa blogginlägg", "http://webapps04.malmo.se/blogg/author/#{@user.username}"
 
+      .control-group
+        .actions= link_to "Redigera profil", edit_user_path(@user), class: "btn btn-small"
