@@ -1,5 +1,5 @@
-# Autocomplete search for skills
 $ ->
+  # Autocomplete search for skills
   $("#search-skill #term").focus().autocomplete
     source: $("#search-skill").attr("action")
     minLength: 2

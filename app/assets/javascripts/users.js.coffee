@@ -7,8 +7,8 @@ $ ->
   if $queryEmployee.length
     $queryEmployee
       .autocomplete
-        source: $queryEmployee.parents("form").attr("action"),
-        minLength: 2,
+        source: $queryEmployee.parents("form").attr("action")
+        minLength: 2
         select: (event, ui) ->
           document.location = "#{$queryEmployee.data("path")}/#{ui.item.username}"
       .data("ui-autocomplete")
