@@ -65,9 +65,12 @@ section.box.index.users {
     }
     .controls {
       margin-left: 0;
+      .input-append {
+        width: 100%;
+      }
       input#query-employee {
         width: 35em;
-        max-width: 70% !important;
+        max-width: 80% !important;
       }
       .help {
         margin: .4em 0 0;

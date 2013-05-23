@@ -13,7 +13,7 @@
           .help-inline Sök på förnamn, efternamn, e-postadress eller användarnamn.
 
       - if params[:term].present? && @users.empty?
-        %p Ingen användare matchade din sökning
+        %p.warning Ingen användare matchade din sökning
 
   - if @users.any?
     %ul.results
