@@ -7,19 +7,12 @@ class UsersController < ApplicationController
   before_filter :require_admin_or_myself, only: [ :edit, :update ]
   before_filter :require_admin, only: :destroy
 
-  def index
-    @total_users = User.count
-    @last_week_users = User.where("last_login > ?", Time.now - 1.week).count
-    @registered_last_week_users = User.where("created_at > ?", Time.now - 1.week).count
-    @has_status = User.where("status_message != ?", "").count
-    @has_avatar = User.where("avatar_updated_at != ?", "").count
-  end
-
   # Search user on the fields username, email, first_name, last_name
   # Returns a hash in json or a @users array for html rendering
-  def search
-    term = "%#{params[:term]}%"
-    @users = term.present? ? User.search(term, 50) : {}
+  def index
+    @user_stats = user_stats if admin?
+
+    @users = params[:term].present? ? User.search("%#{params[:term]}%", 25) : {}
 
     respond_to do |format|
       format.html
@@ -162,6 +155,16 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def user_stats
+    user_stats = {}
+    user_stats["total_users"] = User.count
+    user_stats["last_week_users"] = User.where("last_login > ?", Time.now - 1.week).count
+    user_stats["registered_last_week_users"] = User.where("created_at > ?", Time.now - 1.week).count
+    user_stats["has_status"] = User.where("status_message != ?", "").count
+    user_stats["has_avatar"] = User.where("avatar_updated_at != ?", "").count
+    user_stats
+  end
 
   # Clear the users key/value ttl cache for feed entries
   def clear_feed_entries_cache(category)

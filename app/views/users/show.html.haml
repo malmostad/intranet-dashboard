@@ -28,7 +28,7 @@
 
       .control-group.readonly
         .control-label Förvaltning:
-        .controls= @user.company.gsub(/^[\d\s]*/, "")
+        .controls= company_short(@user)
 
       .control-group.readonly
         .control-label Min status:

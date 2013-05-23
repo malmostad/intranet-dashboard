@@ -1,5 +1,33 @@
 - title "Användare"
-%section.box.index
+%section.box.index.users
   %h1.box-title= h1
   .box-content
-    = render "search_form"
+
+    = form_tag(users_path, method: "get", class: "form-horizontal") do
+      .control-group
+        = label_tag "query-employee", "Sök användare: ", class: "control-label"
+        .controls
+          .input-append
+            = text_field_tag "query-employee", params[:term], name: "term", "data-path" => users_path, class: "full-search"
+            = submit_tag "Sök", { class: "btn", name: nil }
+          .help-inline Sök på förnamn, efternamn, e-postadress eller användarnamn.
+
+      - if params[:term].present? && @users.empty?
+        %p Ingen användare matchade din sökning
+
+  - if @users.any?
+    %ul.results
+      - @users.each do |user|
+        %li
+          %div.avatar= link_to image_tag("#{avatar_full_url(user.username, :medium_quadrat)}?#{Time.now.to_i}", alt: "Profilbild"), user_path(user.username)
+          %h2.name= link_to "#{user.first_name} #{user.last_name}", user_path(user.username)
+          %p.company= company_short(user)
+          %p.email= user.email
+
+  - if admin?
+    %ul.user-stats
+      %li= "#{@user_stats['total_users']} anställda finns i kontaktboken."
+      %li= "#{@user_stats['registered_last_week_users']} har tillkommit senaste sju dagarna."
+      %li= "#{@user_stats['last_week_users']} användare har loggat in senaste sju dagarna."
+      %li= "#{@user_stats['has_status']} har ett statusmeddelande."
+      %li= "#{@user_stats['has_avatar']} har en profilbild."

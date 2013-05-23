@@ -74,7 +74,7 @@ section.box.index.users {
       }
     }
   }
-  li {
+  ul.results li {
     @include clearfix();
     clear: both;
     display: block;
@@ -85,23 +85,36 @@ section.box.index.users {
     .avatar {
       float: left;
       width: 4em;
-      margin-right: 1em;
+      margin-right: 0em;
       img {
-        max-width: 4em;
+        width: 100%;
         height: auto;
       }
     }
     h2 {
       font-weight: normal;
       font-size: emize(16);
-      margin: 0 0 .1em;
+      margin: 0 0 .1em emize(16*5);
     }
     p {
       color: #000;
       font-family: $sansSerif;
       font-size: emize(13);
-      margin: 0;
+      margin: 0 0 0 emize(16*5, 13);
       line-height: 1.4;
+    }
+  }
+
+  ul.user-stats {
+    color: $textColorDark;
+    list-style: disc;
+    padding: .8em 0;
+    border-top: $border;
+    li {
+      margin-left: 2em;
+      font-family: $sansSerif;
+      font-size: emize(13);
+      line-height: 1.5;
     }
   }
 }
@@ -150,3 +163,5 @@ ul.ui-autocomplete.search_users {
 ul.ui-autocomplete.search_users.full-search p {
   font-size: emize(13, 11);
 }
+
+
