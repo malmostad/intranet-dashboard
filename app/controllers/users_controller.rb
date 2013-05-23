@@ -7,22 +7,24 @@ class UsersController < ApplicationController
   before_filter :require_admin_or_myself, only: [ :edit, :update ]
   before_filter :require_admin, only: :destroy
 
-  # Search user on the fields username, email, first_name, last_name
-  # Returns a hash in json or a @users array for html rendering
+  # Search users and return a hash in json or @users for html rendering
   def index
+    @limit = 25
     @user_stats = user_stats if admin?
-
-    @users = params[:term].present? ? User.search("%#{params[:term]}%", 25) : {}
+    @users = User.search(params, @limit)
 
     respond_to do |format|
-      format.html
+      format.html {
+        # Don't execute a db count
+        @has_more = @users.size == @limit
+      }
       format.json {
-        render json: @users.map { |u| {
-          username: u.username,
-          avatar_full_url: "#{avatar_full_url(u.username, :mini_quadrat)}",
-          first_name: u.first_name,
-          last_name: u.last_name,
-          company_short: u.company_short }
+        render json: @users.map { |u|
+          { username: u.username,
+            avatar_full_url: "#{avatar_full_url(u.username, :mini_quadrat)}",
+            first_name: u.first_name,
+            last_name: u.last_name,
+            company_short: u.company_short }
         }
       }
     end

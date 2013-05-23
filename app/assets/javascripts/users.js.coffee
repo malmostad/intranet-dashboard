@@ -23,6 +23,11 @@ $ ->
               #{item.company_short}</p></a>")
           .appendTo(ul)
 
+  # Search results, show more
+  $("section.index.users .load-more input").click () ->
+    $(@).val("Not implemented yet").prop("disabled", true)
+
+
   # Edit user form
   $form = $("#user-profile")
 

@@ -24,11 +24,15 @@
 
       .control-group.readonly
         .control-label Avdelning:
-        .controls= @user.department
+        .controls
+          - if @user.department.present?
+            = link_to @user.department, users_path(department: @user.department)
 
       .control-group.readonly
         .control-label Förvaltning:
-        .controls= @user.company_short
+        .controls
+          - if @user.company.present?
+            = link_to @user.company_short, users_path(company: @user.company)
 
       .control-group.readonly
         .control-label Min status:

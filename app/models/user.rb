@@ -124,16 +124,24 @@ class User < ActiveRecord::Base
     end
   end
 
-  # Search for users
-  def self.search(term, limit = 20)
-    where(
+  # Search for users by term or a distinct value
+  def self.search(q, limit = 25)
+    if q.present? && q[:term].present?
+      term = "#{q[:term].strip}%"
+      where(
         "username LIKE ? OR
         first_name LIKE ? OR
         last_name LIKE ? OR
         concat_ws(' ', first_name, last_name) LIKE ? OR
         email LIKE ?",
-      term, term, term, term, term)
-    .order(:first_name).limit(limit)
+      term, term, term, term, term).order(:first_name).limit(limit)
+    elsif q[:company].present?
+      where(company: q[:company]).order(:first_name).limit(limit)
+    elsif q[:department].present?
+      where(department: q[:department]).order(:first_name).limit(limit)
+    else
+      return {}
+    end
   end
 
   private

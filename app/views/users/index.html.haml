@@ -2,15 +2,19 @@
 %section.box.index.users
   %h1.box-title= h1
   .box-content
-
-    = form_tag(users_path, method: "get", class: "form-horizontal") do
-      .control-group
-        = label_tag "query-employee", "Sök användare: ", class: "control-label"
-        .controls
-          .input-append
-            = text_field_tag "query-employee", params[:term], name: "term", "data-path" => users_path, class: "full-search"
-            = submit_tag "Sök", { class: "btn", name: nil }
-          .help-inline Sök på förnamn, efternamn, e-postadress eller användarnamn.
+    - if params[:company].present?
+      %p= "Medarbetare på #{params[:company].gsub(/^[\d\s]*/, "")}"
+    - elsif params[:department].present?
+      %p= "Medarbetare på #{params[:department].gsub(/^[\d\s]*/, "")}"
+    - else
+      = form_tag(users_path, method: "get", class: "form-horizontal") do
+        .control-group
+          = label_tag "query-employee", "Sök användare: ", class: "control-label"
+          .controls
+            .input-append
+              = text_field_tag "query-employee", params[:term], name: "term", "data-path" => users_path, class: "full-search"
+              = submit_tag "Sök", { class: "btn", name: nil }
+            .help-inline Sök på förnamn, efternamn, e-postadress eller användarnamn.
 
       - if params[:term].present? && @users.empty?
         %p.warning Ingen användare matchade din sökning
@@ -23,6 +27,9 @@
           %h2.name= link_to "#{user.first_name} #{user.last_name}", user_path(user.username)
           %p.company= user.company_short
           %p.email= user.email
+      - if @has_more
+        %li.load-more
+          %input.btn.btn-small{ type: "button", value: "Visa fler", "data-path" => users_path(page: 1)}
 
   - if admin?
     %ul.user-stats
