@@ -9,8 +9,13 @@ class ColleagueshipsController < ApplicationController
       @colleagues = {}
     end
     render json: @colleagues.map { |c|
-      email = (c.email.present? ? c.email : "ingen e-postaddress").downcase
-      { id: c.id, username: c.username, email: email, avatar_full_url: "#{avatar_full_url(c.username, :mini_quadrat)}", first_name: c.first_name, last_name: c.last_name }
+      {
+        id: c.id,
+        username: c.username,
+        company_short: c.company_short,
+        avatar_full_url: "#{avatar_full_url(c.username, :mini_quadrat)}",
+        first_name: c.first_name, last_name: c.last_name
+      }
     }
   end
 

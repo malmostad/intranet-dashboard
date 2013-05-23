@@ -65,8 +65,8 @@ jQuery(document).ready(function($) {
       return $("<li>")
         .data( "item.autocomplete", item )
         .append( "<a><img src='" + item.avatar_full_url + "' />" +
-           "<p>" + item.first_name + " " + item.last_name + 
-            "<br/> (" + item.username + ")</p></a>" )
+           "<p>" + item.first_name + " " + item.last_name +
+            "<br/> " + item.company_short + "</p></a>" )
         .appendTo( ul );
     };
 

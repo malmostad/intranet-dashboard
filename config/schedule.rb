@@ -24,9 +24,9 @@ if environment == "staging"
 end
 
 if environment == "production"
-  # every :day, :at => '0:30am' do
-  #   rake "update_user_profiles"
-  # end
+  every :day, :at => '0:30am' do
+    rake "update_user_profiles"
+  end
 
   every :day, :at => '4:13am' do
     rake "delete_old_feed_entries"

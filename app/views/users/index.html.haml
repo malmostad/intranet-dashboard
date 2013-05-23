@@ -3,9 +3,9 @@
   %h1.box-title= h1
   .box-content
     - if params[:company].present?
-      %p= "Medarbetare på #{params[:company].gsub(/^[\d\s]*/, "")}"
+      %p= raw "Medarbetare på <em>#{params[:company].gsub(/^[\d\s]*/, "")}</em>"
     - elsif params[:department].present?
-      %p= "Medarbetare på #{params[:department].gsub(/^[\d\s]*/, "")}"
+      %p= raw "Medarbetare på <em>#{params[:department].gsub(/^[\d\s]*/, "")}</em>"
     - else
       = form_tag(users_path, method: "get", class: "form-horizontal") do
         .control-group
