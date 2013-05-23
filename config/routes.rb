@@ -10,7 +10,6 @@ Dashboard::Application.routes.draw do
   get "/users/select_shortcuts/:category" => "users#select_shortcuts", as: "user_select_shortcuts"
   put "/users/select_shortcuts/:category" => "users#update_shortcuts"
   put "/users/reset_shortcuts/:category" => "users#reset_shortcuts", as: "user_reset_shortcuts"
-  get "/users/search" => "users#search", as: "users_search"
   put "/users/update_status_message" => "users#update_status_message", as: "user_update_status_message"
 
   # Avatars belongs to users but has its own controller

@@ -20,9 +20,8 @@ $ ->
           .data("item.autocomplete", item)
           .append("<a><img src='#{item.avatar_full_url}'/>
               <p>#{item.first_name} #{item.last_name}<br/>
-              #{item.company}</p></a>")
+              #{item.company_short}</p></a>")
           .appendTo(ul)
-
 
   # Edit user form
   $form = $("#user-profile")

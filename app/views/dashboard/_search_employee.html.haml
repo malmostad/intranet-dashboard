@@ -1,7 +1,7 @@
 %section.box#search-employee
   %h1.box-title Sök medarbetare
   .box-content
-    %form{ method: :get, action: users_search_path }
+    %form{ method: :get, action: users_path }
       %label{ for: "query-employee" } Sök medarbetare:
       .input-append
         %input#query-employee{ type: "text", name: :term, "data-path" => users_path}

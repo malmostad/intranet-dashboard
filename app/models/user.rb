@@ -4,11 +4,11 @@ class User < ActiveRecord::Base
   attr_accessible :phone, :cell_phone, :professional_bio, :business_card_title, :status_message, :avatar,
       :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
       :language_list, :skill_list, :responsibility_list,
-      :private_bio, :twitter, :skype, :homepage
+      :private_bio, :twitter, :skype, :homepage, :company_short
   attr_accessible :phone, :cell_phone, :professional_bio, :business_card_title, :status_message, :avatar,
       :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
       :language_list, :skill_list, :responsibility_list,
-      :private_bio, :twitter, :skype, :homepage,
+      :private_bio, :twitter, :skype, :homepage, :company_short,
       :admin, :early_adopter, as: :admin
 
   attr_accessor :avatar
@@ -52,6 +52,10 @@ class User < ActiveRecord::Base
   validates_attachment_size :avatar,
     less_than: 4.megabyte,
     message: "Bilden får inte vara större än 4MB."
+
+  def company_short
+    company.gsub(/^[\d\s]*/, "") if company.present?
+  end
 
   # language names as tokens
   def language_list
