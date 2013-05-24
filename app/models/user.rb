@@ -45,6 +45,11 @@ class User < ActiveRecord::Base
   has_attached_file :avatar
   before_post_process :validate_avatar_file_size
 
+  before_validation do
+    self.homepage = "http://#{homepage}" unless homepage.empty? || homepage.match(/^https?:\/\//)
+    self.twitter = twitter.gsub(/^@/, "").downcase unless twitter.empty?
+  end
+
   validates_attachment_content_type :avatar,
     content_type: ['image/tiff', 'image/jpeg', 'image/pjpeg', 'image/jp2'],
     message: "Fel bildformat. Du kan ladda upp en jpeg- eller tiff-bild"

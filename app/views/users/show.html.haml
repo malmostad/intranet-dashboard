@@ -48,7 +48,9 @@
       %h2.form-group-title Kontakt
       .control-group.readonly
         .control-label E-post:
-        .controls= @user.email
+        .controls
+          - if @user.email.present?
+            = link_to @user.email.downcase, "mailto:#{@user.email.downcase}"
 
       .control-group.readonly
         .control-label Fast telefon:
@@ -60,11 +62,15 @@
 
       .control-group.readonly
         .control-label Twitter:
-        .controls= @user.twitter
+        .controls
+          - if @user.twitter.present?
+            = link_to "@#{@user.twitter}", "https://twitter.com/#{@user.twitter}"
 
       .control-group.readonly
         .control-label Skype:
-        .controls= @user.skype
+        .controls
+          - if @user.skype.present?
+            = link_to @user.skype, "skype:#{@user.skype}?call"
 
       %h2.form-group-title Organisation
 
@@ -78,11 +84,15 @@
 
       .control-group.readonly
         .control-label Avdelning:
-        .controls= @user.department
+        .controls
+          - if @user.department.present?
+            = link_to @user.department, users_path(department: @user.department)
 
       .control-group.readonly
         .control-label Förvaltning:
-        .controls= @user.company.gsub(/^[\d\s]*/, "")
+        .controls
+          - if @user.company.present?
+            = link_to @user.company_short, users_path(company: @user.company)
 
       .control-group.readonly
         .control-label Rapporterar till:
@@ -156,7 +166,7 @@
 
       .control-group.readonly
         .control-label Privat hemsida:
-        .controls= @user.homepage
+        .controls= link_to @user.homepage, @user.homepage
 
       %h2.form-group-title Kominaktiviteter
       .control-group.readonly

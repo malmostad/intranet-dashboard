@@ -34,16 +34,17 @@
         .controls= f.text_field(:responsibility_list, class: "input-wide",
             data: { path: responsibilities_suggest_path, load: @user.responsibilities.map{ |l| { id: l.name, name: l.name }}})
 
-
       .control-group
         = f.label :language_list, "Språkkunskaper:", class: "control-label"
         .controls= f.text_field(:language_list, class: "input-wide",
             data: { path: languages_suggest_path, load: @user.languages.map{ |l| { id: l.name, name: l.name }}})
 
-
       .control-group
         = f.label :twitter, "Twitter:", class: "control-label"
-        .controls= f.text_field :twitter, class: "input-wide"
+        .controls
+          .input-prepend
+            %span.add-on @
+            = f.text_field :twitter, class: "input-wide"
 
       .control-group
         = f.label :skype, "Skype:", class: "control-label"
