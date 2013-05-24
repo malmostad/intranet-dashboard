@@ -23,9 +23,14 @@ $ ->
               #{item.company_short}</p></a>")
           .appendTo(ul)
 
-  # Search results, show more
-  $("section.index.users .load-more input").click () ->
-    $(@).val("Not implemented yet").prop("disabled", true)
+
+  # Search results, load more
+  $("section.index.users").on "click", ".load-more input", (event) ->
+    event.preventDefault()
+    $trigger = $(@)
+    $trigger.val("Hämtar fler...").addClass('disabled')
+    $.get $trigger.attr('data-path'), (data) ->
+      $trigger.parent().replaceWith(data)
 
 
   # Edit user form

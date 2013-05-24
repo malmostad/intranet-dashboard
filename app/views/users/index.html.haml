@@ -19,17 +19,7 @@
       - if params[:term].present? && @users.empty?
         %p.warning Ingen användare matchade din sökning
 
-  - if @users.any?
-    %ul.results
-      - @users.each do |user|
-        %li
-          %div.avatar= link_to image_tag("#{avatar_full_url(user.username, :medium_quadrat)}?#{Time.now.to_i}", alt: "Profilbild"), user_path(user.username)
-          %h2.name= link_to "#{user.first_name} #{user.last_name}", user_path(user.username)
-          %p.company= user.company_short
-          %p.email= user.email
-      - if @has_more
-        %li.load-more
-          %input.btn.btn-small{ type: "button", value: "Visa fler", "data-path" => users_path(page: 1)}
+  = render "results"
 
   - if admin?
     %ul.user-stats

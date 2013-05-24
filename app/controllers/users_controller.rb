@@ -10,13 +10,20 @@ class UsersController < ApplicationController
   # Search users and return a hash in json or @users for html rendering
   def index
     @limit = 25
+    page = params[:page].present? ? params[:page].to_i : 0
+    @offset = page * @limit
     @user_stats = user_stats if admin?
-    @users = User.search(params, @limit)
+    @users = User.search(params, @limit, @offset)
 
     respond_to do |format|
       format.html {
         # Don't execute a db count
         @has_more = @users.size == @limit
+        if request.xhr?
+          render :_results, layout: false
+        else
+          render :index
+        end
       }
       format.json {
         render json: @users.map { |u|
