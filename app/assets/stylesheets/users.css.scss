@@ -55,6 +55,13 @@
   .actions.change-profile {
     margin-top: 1em;
   }
+  .colleagueship {
+    @include clearfix();
+    .follow, .following, .unfollow {
+      float: right;
+      width: 7em;
+    }
+  }
 }
 
 // Results list for user search

@@ -4,6 +4,13 @@
   .box-content.form-horizontal
     = form_for @user, html: { id: "user-profile", class: "form-horizontal" } do |f|
 
+      .colleagueship
+        - unless myself?
+          - if @user.inverse_colleagues.include? current_user
+            = button_tag "Följer", class: "following btn btn-small"
+          - else
+            = button_tag "Följ", class: "follow btn btn-small btn-primary"
+
       %h2.form-group-title.summary Sammanfattning
 
       .control-group.readonly
@@ -166,7 +173,8 @@
 
       .control-group.readonly
         .control-label Privat hemsida:
-        .controls= link_to @user.homepage, @user.homepage
+        - if @user.homepage.present?
+          .controls= link_to @user.homepage, @user.homepage
 
       %h2.form-group-title Kominaktiviteter
       .control-group.readonly

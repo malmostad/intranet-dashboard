@@ -24,6 +24,19 @@ $ ->
           .appendTo(ul)
 
 
+  # Follow colleague
+  $("section.show.user .colleagueship .follow").click () ->
+    alert "x"
+
+  # Unfollow colleague
+  $("section.show.user .colleagueship .following").hover(
+    ->
+      $(@).toggleClass("btn-danger").text("Sluta följ")
+    ->
+      $(@).toggleClass("btn-danger").text("Följer")
+  ).click () ->
+    alert "y"
+
   # Search results, load more
   $("section.index.users").on "click", ".load-more input", (event) ->
     event.preventDefault()
