@@ -41,6 +41,7 @@ class UsersController < ApplicationController
     @user = User.where(username: params[:username]).includes(:subordinates).first
     @user_roles = user_roles
     @roles = Role.all
+    @colleagueship = current_user.colleagueships.where(colleague_id: @user.id).first
     if @user.blank?
       reset_body_classes
       sub_layout

@@ -7,11 +7,9 @@
       - unless myself?
         .colleagueship
           - if @colleagueship.present?
-            = link_to "Sluta följ", colleagueship_path(@colleagueship.id),
-              data: { method: "delete", remote: "true" }, rel: "nofollow", class: "remove btn btn-small"
+            %button.btn.btn-mini.remove{ data: { "colleagueship-id" => @colleagueship.id, "path" => colleagueships_path, "user-id" => @user.id }} Följer
           - else
-            = link_to "Följ", colleagueships_path(colleague_id: @user.id),
-              data: { method: "post", remote: "true" }, rel: "nofollow", class: "add btn btn-small"
+            %button.btn.btn-primary.btn-mini.add{ data: { path: colleagueships_path, "user-id" => @user.id }} Följ
 
       %h2.form-group-title.summary Sammanfattning
 

@@ -57,7 +57,7 @@
   }
   .colleagueship {
     @include clearfix();
-    .follow, .following, .unfollow {
+    .add, .remove {
       float: right;
       width: 7em;
     }

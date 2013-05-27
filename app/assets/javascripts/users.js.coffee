@@ -23,19 +23,43 @@ $ ->
               #{item.company_short}</p></a>")
           .appendTo(ul)
 
-
   # Follow colleague
-  $("section.show.user .colleagueship .follow").click () ->
-    alert "x"
+  $("section.show.user .colleagueship").on "click",  ".add", (event) ->
+    $trigger = $(@)
+    event.preventDefault()
+    $.ajax
+      type: 'POST'
+      dataType: "json"
+      url: $trigger.attr("data-path")
+      data:
+        colleague_id: $trigger.attr("data-user-id")
+      success: (data, textStatus, jqXHR) ->
+        $trigger
+          .addClass("remove btn-danger")
+          .removeClass("add btn-primary")
+          .text("Följer")
+          .attr("data-colleagueship-id", data.colleagueship_id)
 
   # Unfollow colleague
-  $("section.show.user .colleagueship .following").hover(
-    ->
-      $(@).toggleClass("btn-danger").text("Sluta följ")
-    ->
-      $(@).toggleClass("btn-danger").text("Följer")
-  ).click () ->
-    alert "y"
+  $("section.show.user .colleagueship").on "click",  ".remove", (event) ->
+    $trigger = $(@)
+    event.preventDefault()
+    $.ajax
+      type: 'DELETE'
+      dataType: "json"
+      url: "#{$trigger.attr('data-path')}/#{$trigger.attr("data-colleagueship-id")}"
+      success: (data, textStatus, jqXHR) ->
+        $trigger
+          .addClass("add btn-primary")
+          .removeClass("btn-danger remove")
+          .text("Följ")
+          .attr("data-colleagueship-id", null)
+
+  # Unfollow colleague, visual cue
+  $("section.show.user .colleagueship").on "mouseover focus", ".remove", ->
+    $(@).addClass("btn-danger").text("Sluta följ")
+  $("section.show.user .colleagueship").on "mouseleave blur", ".remove", ->
+    $(@).removeClass("btn-danger").text("Följer")
 
   # Search results, load more
   $("section.index.users").on "click", ".load-more input", (event) ->
@@ -44,7 +68,6 @@ $ ->
     $trigger.val("Hämtar fler...").addClass('disabled')
     $.get $trigger.attr('data-path'), (data) ->
       $trigger.parent().replaceWith(data)
-
 
   # Edit user form
   $form = $("#user-profile")
