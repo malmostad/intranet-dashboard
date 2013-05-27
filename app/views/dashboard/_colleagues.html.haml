@@ -11,7 +11,7 @@
   %ul.box-content
     %li#my-status
       .img
-        = link_to image_tag(avatar_full_url(current_user.username, :tiny_quadrat), alt: ""), edit_avatar_path(current_user.id)
+        = link_to image_tag(current_user.avatar.url(:tiny_quadrat), alt: ""), edit_avatar_path(current_user.id)
         = link_to "Byt bild", edit_avatar_path(current_user.id), class: "change-image"
       .text
         %h2.name= link_to current_user.displayname, user_path(current_user.username)
@@ -23,7 +23,7 @@
 
     - @colleagueships.each do |colleagueship|
       %li
-        = link_to image_tag(avatar_full_url(colleagueship.colleague.username, :tiny_quadrat), alt: ""), user_path(colleagueship.colleague.username)
+        = link_to image_tag(colleagueship.colleague.avatar.url(:tiny_quadrat), alt: ""), user_path(colleagueship.colleague.username)
         .text
           %h2.name= link_to "#{colleagueship.colleague.displayname}", user_path(colleagueship.colleague.username)
           %p.status= colleagueship.colleague.status_message ||= "Jag har ingen status än!"

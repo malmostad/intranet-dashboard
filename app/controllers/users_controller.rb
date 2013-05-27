@@ -28,7 +28,7 @@ class UsersController < ApplicationController
       format.json {
         render json: @users.map { |u|
           { username: u.username,
-            avatar_full_url: "#{avatar_full_url(u.username, :mini_quadrat)}",
+            avatar_full_url: u.avatar.url(:mini_quadrat),
             first_name: u.first_name,
             last_name: u.last_name,
             company_short: u.company_short }

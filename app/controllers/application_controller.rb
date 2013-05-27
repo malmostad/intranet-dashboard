@@ -130,9 +130,4 @@ class ApplicationController < ActionController::Base
   def sub_layout(name = "")
     @sub_layout = name
   end
-
-  def avatar_full_url(username, style = :medium_quadrat)
-    "#{request.protocol}#{File.join(APP_CONFIG['avatar_base_url'], username, style.to_s)}.jpg"
-  end
-  helper_method :avatar_full_url
 end

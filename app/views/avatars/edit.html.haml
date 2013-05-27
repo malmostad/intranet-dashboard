@@ -4,7 +4,7 @@
   .box-content
     = form_for @user, url: avatar_path(params[:id]), html: { multipart: true, class: "form-horizontal" } do |f|
       .edit_avatar
-        = image_tag avatar_full_url(@user.username, :medium_quadrat), alt: "Profilbild"
+        = image_tag @user.avatar.url(:medium_quadrat), alt: "Profilbild"
       .avatar-help.help
         %p Här laddar du upp en bild på dig själv. Bilden visas i Komin bredvid blogginlägg, nyheter, kommentarer och bredvid din status.
         %p Bilden ska vara en välliknande porträttbild av dig själv.

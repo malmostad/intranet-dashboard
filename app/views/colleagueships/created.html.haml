@@ -1,5 +1,5 @@
 %li
-  = link_to image_tag(avatar_full_url(@colleagueship.colleague.username, :tiny_quadrat), alt: ""), user_path(@colleagueship.colleague.username)
+  = link_to image_tag(@colleagueship.colleague.avatar.url(:tiny_quadrat), alt: ""), user_path(@colleagueship.colleague.username)
   .text
     %h2.name= link_to "#{@colleagueship.colleague.first_name} #{@colleagueship.colleague.last_name}", user_path(@colleagueship.colleague.username)
     %p.status= @colleagueship.colleague.status_message ||= "Jag har ingen status än!"

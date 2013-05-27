@@ -50,7 +50,7 @@
         .controls
           - if admin_or_myself?
             = link_to "Byt bild", edit_avatar_path(@user), class: "change btn btn-mini"
-          = image_tag "#{avatar_full_url(@user.username, :medium_quadrat)}?#{Time.now.to_i}", alt: "Profilbild"
+          = image_tag @user.avatar.url(:medium), alt: "Profilbild"
 
       %h2.form-group-title Kontakt
       .control-group.readonly

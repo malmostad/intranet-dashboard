@@ -13,7 +13,7 @@ class ColleagueshipsController < ApplicationController
         id: c.id,
         username: c.username,
         company_short: c.company_short,
-        avatar_full_url: "#{avatar_full_url(c.username, :mini_quadrat)}",
+        avatar_full_url: c.avatar.url(:mini_quadrat),
         first_name: c.first_name, last_name: c.last_name
       }
     }
