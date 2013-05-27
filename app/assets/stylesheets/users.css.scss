@@ -11,9 +11,6 @@
     width: 90% !important;
   }
 
-  .control-group {
-    border-bottom: $border;
-  }
   .controls li {
     margin-bottom: .4em;
   }
@@ -60,6 +57,11 @@
     .add, .remove {
       float: right;
       width: 7em;
+    }
+  }
+  &.edit-controls {
+    .control-group {
+      border-bottom: $border;
     }
   }
 }
