@@ -4,12 +4,14 @@
   .box-content.form-horizontal
     = form_for @user, html: { id: "user-profile", class: "form-horizontal" } do |f|
 
-      .colleagueship
-        - unless myself?
-          - if @user.inverse_colleagues.include? current_user
-            = button_tag "Följer", class: "following btn btn-small"
+      - unless myself?
+        .colleagueship
+          - if @colleagueship.present?
+            = link_to "Sluta följ", colleagueship_path(@colleagueship.id),
+              data: { method: "delete", remote: "true" }, rel: "nofollow", class: "remove btn btn-small"
           - else
-            = button_tag "Följ", class: "follow btn btn-small btn-primary"
+            = link_to "Följ", colleagueships_path(colleague_id: @user.id),
+              data: { method: "post", remote: "true" }, rel: "nofollow", class: "add btn btn-small"
 
       %h2.form-group-title.summary Sammanfattning
 
