@@ -1,14 +1,41 @@
+# Edit in place for user profile
 $ ->
-  # Edit in place
+  $submitBtn = $("<input type='submit' class='btn btn-small btn-primary save' value='Spara'>")
+  $cancelBtn = $("<button class='btn btn-small cancel'>Avbryt</button>")
+
   $form = $("#user-edit-in-place")
-  $form.find(".controls[data-edit]").append $("<button class='btn btn-mini change'>Ändra</button>").click (event) ->
+  $form.find(".editable").on "click", ".change", (event) ->
     event.preventDefault()
     $trigger = $(@)
     $block = $trigger.closest(".controls")
-    $.get "/users/112/edit?mode=edit_in_place", (data) ->
-      $block.html($(data).find("#user_business_card_title"))
-      $("#user_business_card_title").focus()
-      $block.append $("<input type='submit' class='btn btn-small btn-primary save' value='Spara'>").click (event) ->
+
+    $.ajax
+      url: "#{$form.attr('data-tmpl-path')}?mode=in_place"
+      method: "GET"
+      cache: false
+    .done (data) ->
+      $default = $block.html()
+      $formPart = $(data).find("##{$trigger.attr('data-edit-id')}").closest(".controls").html()
+      $block.html($formPart)
+
+      $block.find("input, select, textarea").focus()
+
+      $actions = $("<div>").addClass("actions").appendTo($block)
+      $actions.append $submitBtn.clone().click (event) ->
+        event.preventDefault()
         console.log "save"
-      $block.append $("<button class='btn btn-small cancel'>Avbryt</button>").click (event) ->
+
+      $actions.append $cancelBtn.clone().click (event) ->
+        event.preventDefault()
+        $block.html $default
         console.log "cancel"
+
+    $form.submit (event) ->
+      event.preventDefault()
+      console.log "submitting"
+      $.ajax
+        url: $form.attr("action")
+        method: "PUT"
+        data: $form.serialize()
+        done: (data) ->
+          console.log data

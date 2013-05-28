@@ -18,6 +18,10 @@
         .controls= f.text_field :business_card_title, class: "input-wide"
 
       .control-group
+        = f.label :status_message, "Statusmeddelande:", class: "control-label"
+        .controls= f.text_field :status_message, class: "input-wide"
+
+      .control-group
         = f.label :private_bio, "Om mig, personlig bio:", class: "control-label"
         .controls= f.text_area :private_bio, class: "input-wide", rows: 7
 

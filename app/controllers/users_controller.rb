@@ -53,7 +53,7 @@ class UsersController < ApplicationController
     @user = User.where(id: params[:id]).includes(:roles).first
     @user_roles = user_roles
     @roles = Role.all
-    if params["mode"] == "edit_in_place"
+    if params["mode"] == "in_place"
       render layout: false
     end
   end
