@@ -10,9 +10,6 @@
       - elsif !@user_roles.include? 'working_field'
         %p.warning= "Välj en eller flera arbetsfält nedan."
 
-      %p.help= "På den här sidan ställer du in din grundprofil – alltså vilken förvaltning du arbetar på och vilket arbetsfält du är verksam inom."
-      %p.help= "Din grundprofil styr vilka nyheter, diskussioner, verktyg & system och Jag vill som visas på Min sida. Grundprofilen styr också vad som visas i flikarna Min förvaltning och Mitt arbetsfält."
-
       - if @user.errors.any?
         .warning= t 'messages.validation_errors'
 
