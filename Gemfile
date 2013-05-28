@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.13'
 gem 'jquery-rails', '2.2.1'
-gem 'haml', '4.0.2'
+gem 'haml', '4.0.3'
 
 gem 'nokogiri', '1.5.6'
 gem 'feedzirra', '0.2.0.rc2' #, '0.1.3' #, :git => 'https://github.com/pauldix/feedzirra.git'
@@ -11,10 +11,10 @@ gem 'net-ldap', '0.3.1'
 gem 'ruby-saml', '0.7.0' # 0.7.2 is broken
 gem 'bcrypt-ruby', '3.0.1'
 
-gem 'dalli', '2.6.2'
+gem 'dalli', '2.6.4'
 gem 'mysql2', '0.3.11'
 
-gem 'paperclip', '3.4.1'
+gem 'paperclip', '3.4.2'
 gem 'cocaine', '0.5.1'
 
 gem 'daemons-rails'
