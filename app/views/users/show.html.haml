@@ -20,9 +20,9 @@
 
       .control-group.editable
         .control-label Visitkortstitel:
-        .controls
+        .controls#business_card_title
           = @user.business_card_title
-          %button.btn.btn-mini.change{ "data-edit-id" => "user_business_card_title" } Ändra
+          %button.btn.btn-mini.change Ändra
 
       .control-group.readonly
         .control-label HR-titel:

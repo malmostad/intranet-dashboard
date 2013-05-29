@@ -43,6 +43,7 @@ class ApplicationController < ActionController::Base
     cookies.permanent.signed[:user_agent] = {
       value:  { id: tracker[:id], token: tracker[:token] },
       secure: !Rails.env.development?,
+      httponly: true,
       path: root_path
     }
   end

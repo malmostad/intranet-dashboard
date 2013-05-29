@@ -42,10 +42,16 @@ class UsersController < ApplicationController
     @user_roles = user_roles
     @roles = Role.all
     @colleagueship = current_user.colleagueships.where(colleague_id: @user.id).first
+
     if @user.blank?
       reset_body_classes
       sub_layout
       render template: "404", status: 404
+
+    elsif request.xhr?
+      render layout: false
+    else
+      render layout: true
     end
   end
 
@@ -53,7 +59,7 @@ class UsersController < ApplicationController
     @user = User.where(id: params[:id]).includes(:roles).first
     @user_roles = user_roles
     @roles = Role.all
-    if params["mode"] == "in_place"
+    if request.xhr?
       render layout: false
     end
   end
@@ -71,8 +77,8 @@ class UsersController < ApplicationController
     respond_to do |format|
       # Some fields require admin rights for mass assignment
       if @user.errors.empty? && @user.update_attributes(params[:user], as: ( :admin if admin? ))
+        set_profile_cookie
         format.html {
-          set_profile_cookie
           redirect_to user_path(@user.username), notice: "Användaren uppdaterades"
         }
         format.json { head :no_content }
