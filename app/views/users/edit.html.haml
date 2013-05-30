@@ -1,4 +1,4 @@
-- title "Grundprofil för #{@user.displayname}"
+- title "#{@user.displayname}"
 %section.box.form
   %h1.box-title= h1
   .box-content
@@ -15,7 +15,10 @@
 
       .control-group
         = f.label :business_card_title, "Visitkortstitel:", class: "control-label"
-        .controls#business_card_title= f.text_field :business_card_title, class: "input-wide"
+        .controls#business_card_title
+          = f.text_field :business_card_title, class: "input-wide"
+          - @user.errors[:business_card_title].each do |msg|
+            .help-inline.warning= "#{msg}"
 
       .control-group
         = f.label :status_message, "Statusmeddelande:", class: "control-label"

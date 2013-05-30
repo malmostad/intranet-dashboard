@@ -40,6 +40,7 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :username
   validates :username, presence: { allow_blank: false }
+  validates :business_card_title, presence: { allow_blank: false, message: "Fältet får inte vara tomt" }
 
   # Paperclip image, options is in the Paperclip initializer
   has_attached_file :avatar
