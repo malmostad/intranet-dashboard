@@ -46,7 +46,7 @@
 
       .control-group.editable
         .control-label Min status:
-        .controls
+        .controls#status_message
           = @user.status_message
           %button.btn.btn-mini.change{ "data-edit-id" => "user_status_message" } Ändra
 
@@ -60,9 +60,7 @@
       %h2.form-group-title Kontakt
       .control-group.readonly
         .control-label E-post:
-        .controls
-          - if @user.email.present?
-            = link_to @user.email.downcase, "mailto:#{@user.email.downcase}"
+        .controls= @user.email
 
       .control-group.readonly
         .control-label Fast telefon:
@@ -74,16 +72,15 @@
 
       .control-group.editable
         .control-label Twitter:
-        .controls
+        .controls#twitter
           - if @user.twitter.present?
             = link_to "@#{@user.twitter}", "https://twitter.com/#{@user.twitter}"
           %button.btn.btn-mini.change{ "data-edit-id" => "user_status_twitter" } Ändra
 
       .control-group.editable
         .control-label Skype:
-        .controls
-          - if @user.skype.present?
-            = link_to @user.skype, "skype:#{@user.skype}?call"
+        .controls#skype
+          = @user.skype
           %button.btn.btn-mini.change{ "data-edit-id" => "user_status_skype" } Ändra
 
       %h2.form-group-title Organisation
@@ -133,15 +130,16 @@
         .controls= "AD-fält?"
 
       %h2.form-group-title Nyckelord
+
       .control-group.editable
         .control-label Kunskapsområden:
-        .controls
+        .controls#skill_list
           = @user.skills.map(&:name).join(", ")
           %button.btn.btn-mini.change{ "data-edit-id" => "user_skills" } Ändra
 
       .control-group.editable
         .control-label Ansvarsområden:
-        .controls
+        .controls#responsibility_list
           = @user.responsibilities.map(&:name).join(", ")
           %button.btn.btn-mini.change{ "data-edit-id" => "user_responsibilities" } Ändra
 
@@ -152,20 +150,20 @@
 
       .control-group.editable
         .control-label Grundprofil i Komin:
-        .controls
+        .controls#roles
           = @user.roles.map(&:name).to_sentence
           %button.btn.btn-mini.change{ "data-edit-id" => "user_roles" } Ändra
 
-      .control-group.readonly
+      .control-group.editable
         .control-label Administratör:
-        .controls
+        .controls#admin
           = @user.admin? ? "Ja" : "Nej"
           - if admin?
             %button.btn.btn-mini.change{ "data-edit-id" => "user_admin" } Ändra
 
-      .control-group.readonly
+      .control-group.editable
         .control-label Early adopter:
-        .controls
+        .controls#early_adopter
           = @user.early_adopter? ? "Ja" : "Nej"
           - if admin?
             %button.btn.btn-mini.change{ "data-edit-id" => "user_early_adopter" } Ändra
@@ -184,20 +182,20 @@
       %h2.form-group-title Personsligt
       .control-group.editable
         .control-label Om mig, personlig bio:
-        .controls
+        .controls#private_bio
           = simple_format @user.private_bio
           %button.btn.btn-mini.change{ "data-edit-id" => "user_private_bio" } Ändra
 
       .control-group.editable
         .control-label Språkkunskaper:
-        .controls
+        .controls#language_list
           = @user.languages.map(&:name).to_sentence.humanize
           %button.btn.btn-mini.change{ "data-edit-id" => "user_languages" } Ändra
 
       .control-group.editable
         .control-label Privat hemsida:
         - if @user.homepage.present?
-          .controls
+          .controls#homepage
             = link_to @user.homepage, @user.homepage
             %button.btn.btn-mini.change{ "data-edit-id" => "user_homepage" } Ändra
 

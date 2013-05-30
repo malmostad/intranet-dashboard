@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   def show
     @user = User.where(username: params[:username]).includes(:subordinates).first
     @user_roles = user_roles
-    @roles = Role.all
+    @roles = Role.order(:name)
     @colleagueship = current_user.colleagueships.where(colleague_id: @user.id).first
 
     if @user.blank?
@@ -169,7 +169,7 @@ class UsersController < ApplicationController
   end
 
   def user_roles
-    current_user.roles.map { |r| r.category == "department" ? 'department': 'working_field' }.compact
+    current_user.roles.order(:name).map { |r| r.category == "department" ? 'department': 'working_field' }.compact
   end
 
   private

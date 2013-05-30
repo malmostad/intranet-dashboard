@@ -6,7 +6,7 @@ $ ->
   $form = $("#user-edit-in-place")
   $form.find(".editable").on "click", ".change", (event) ->
     event.preventDefault()
-    $form.find(".editable .change").hide()
+    $form.find(".controls .change").hide()
     $block = $(@).closest(".controls")
 
     # Get (the full) form template and inject the form fields from data-edit-id
@@ -18,6 +18,7 @@ $ ->
       $default = $block.html()
       $formPart = $(data).find("##{$block.attr('id')}").html()
       $block.html($formPart)
+      attachTokenInput()
 
       # Set focus on first form field
       $block.find("input, select, textarea").focus()
@@ -47,3 +48,4 @@ $ ->
       cancelEdit = () ->
           $block.html $default
           $form.find(".editable .change").show()
+

@@ -19,61 +19,64 @@
 
       .control-group
         = f.label :status_message, "Statusmeddelande:", class: "control-label"
-        .controls= f.text_field :status_message, class: "input-wide"
+        .controls#status_message= f.text_field :status_message, class: "input-wide"
 
       .control-group
         = f.label :private_bio, "Om mig, personlig bio:", class: "control-label"
-        .controls= f.text_area :private_bio, class: "input-wide", rows: 7
+        .controls#private_bio= f.text_area :private_bio, class: "input-wide", rows: 7
 
       .control-group
         = f.label :skill_list, "Kunskapsområden:", class: "control-label"
-        .controls= f.text_field(:skill_list, class: "input-wide",
+        .controls#skill_list= f.text_field(:skill_list, class: "input-wide",
             data: { path: skills_suggest_path, load: @user.skills.map{ |l| { id: l.name, name: l.name }}})
 
       .control-group
         = f.label :responsibility_list, "Ansvarsområden:", class: "control-label"
-        .controls= f.text_field(:responsibility_list, class: "input-wide",
+        .controls#responsibility_list= f.text_field(:responsibility_list, class: "input-wide",
             data: { path: responsibilities_suggest_path, load: @user.responsibilities.map{ |l| { id: l.name, name: l.name }}})
 
       .control-group
         = f.label :language_list, "Språkkunskaper:", class: "control-label"
-        .controls= f.text_field(:language_list, class: "input-wide",
+        .controls#language_list= f.text_field(:language_list, class: "input-wide",
             data: { path: languages_suggest_path, load: @user.languages.map{ |l| { id: l.name, name: l.name }}})
 
       .control-group
         = f.label :twitter, "Twitter:", class: "control-label"
-        .controls
+        .controls#twitter
           .input-prepend
             %span.add-on @
             = f.text_field :twitter, class: "input-wide"
 
       .control-group
         = f.label :skype, "Skype:", class: "control-label"
-        .controls= f.text_field :skype, class: "input-wide"
+        .controls#skype= f.text_field :skype, class: "input-wide"
 
       .control-group
         = f.label :homepage, "Privat hemsida:", class: "control-label"
-        .controls= f.text_field :homepage, class: "input-wide"
+        .controls#homepage= f.text_field :homepage, class: "input-wide"
 
       - Role::CATEGORIES.each do |key, val|
         .control-group
           .control-label= "#{val}:"
-          .controls
+          .controls#roles
             - @roles.select { |r| r.category == key }.each do |role|
               %label.checkbox
                 = check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: dom_id(role)
                 = role.name
 
       - if admin?
-        .control-group
-          .control-label Rättigheter:
-          .controls
+        .control-group.editable
+          .control-label Administratör:
+          .controls#admin
             %label.checkbox
               = f.check_box :admin
-              Administratör
+              Ja
             - @user.errors[:admin].each do |msg|
               .help-inline.warning= "#{msg}"
 
+        .control-group.editable
+          .control-label Early adopter:
+          .controls#early_adopter
             %label.checkbox
               = f.check_box :early_adopter
               Early Adopter

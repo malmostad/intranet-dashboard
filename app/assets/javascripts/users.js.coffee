@@ -69,6 +69,10 @@ $ ->
     $.get $trigger.attr('data-path'), (data) ->
       $trigger.parent().replaceWith(data)
 
+  attachTokenInput()
+
+# Tokenized input fields
+window.attachTokenInput = () ->
   # Shared options for tokenInput
   tokenInputOptions = {
     theme: 'malmo'
