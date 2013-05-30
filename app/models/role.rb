@@ -8,6 +8,8 @@ class Role < ActiveRecord::Base
     "working_field" => "Arbetsfält"
   }
 
+  default_scope order("name ASC")
+
   has_and_belongs_to_many :users
   has_and_belongs_to_many :shortcuts
   has_and_belongs_to_many :feeds
