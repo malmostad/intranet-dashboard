@@ -3,15 +3,15 @@
   %h1.box-title= h1
   .box-content
     = form_for @user, html: { class: "form-horizontal" } do |f|
+      - if @user.errors.any?
+        .warning= t 'messages.validation_errors'
+
       - if !@user_roles.present?
         %p.warning= "Välj en eller flera förvaltningar och arbetsfält nedan."
       - elsif !@user_roles.include? 'department'
         %p.warning= "Välj en eller flera förvaltningar nedan."
       - elsif !@user_roles.include? 'working_field'
         %p.warning= "Välj en eller flera arbetsfält nedan."
-
-      - if @user.errors.any?
-        .warning= t 'messages.validation_errors'
 
       .control-group
         = f.label :business_card_title, "Visitkortstitel:", class: "control-label"
@@ -67,8 +67,6 @@
               %label.checkbox
                 = check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: dom_id(role)
                 = role.name
-            - if !@user_roles.include? 'department'
-              %p.warning= "Välj en eller flera förvaltningar"
 
           .role
             %label Arbetsfält:
@@ -76,8 +74,13 @@
               %label.checkbox
                 = check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: dom_id(role)
                 = role.name
-            - if !@user_roles.include? 'working_field'
-              %p.warning= "Välj en eller flera arbetsfält"
+
+          - if !@user_roles.present?
+            %p.warning= "Välj en eller flera förvaltningar och arbetsfält."
+          - elsif !@user_roles.include? 'department'
+            %p.warning= "Välj en eller flera förvaltningar."
+          - elsif !@user_roles.include? 'working_field'
+            %p.warning= "Välj en eller flera arbetsfält."
 
       - if admin?
         .control-group.editable

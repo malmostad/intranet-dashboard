@@ -169,7 +169,7 @@ class UsersController < ApplicationController
   end
 
   def user_roles
-    current_user.roles.order(:name).map { |r| r.category == "department" ? 'department': 'working_field' }.compact
+    @user.roles.order(:name).map { |r| r.category == "department" ? 'department': 'working_field' }.compact
   end
 
   private
