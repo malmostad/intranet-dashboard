@@ -16,7 +16,9 @@
 
       .control-group.readonly
         .control-label Namn:
-        .controls= "#{@user.first_name} #{@user.last_name}"
+        .controls
+          = "#{@user.first_name} #{@user.last_name}"
+          %button.btn.btn-mini.info Info
 
       .control-group.editable
         .control-label Visitkortstitel:
@@ -26,23 +28,29 @@
 
       .control-group.readonly
         .control-label HR-titel:
-        .controls= @user.title
+        .controls
+          = @user.title
+          %button.btn.btn-mini.info Info
 
       .control-group.readonly
         .control-label Enhet/arbetsplats:
-        .controls= 'AD-fält?'
+        .controls
+          = 'AD-fält?'
+          %button.btn.btn-mini.info Info
 
       .control-group.readonly
         .control-label Avdelning:
         .controls
           - if @user.department.present?
             = link_to @user.department, users_path(department: @user.department)
+          %button.btn.btn-mini.info Info
 
       .control-group.readonly
         .control-label Förvaltning:
         .controls
           - if @user.company.present?
             = link_to @user.company_short, users_path(company: @user.company)
+          %button.btn.btn-mini.info Info
 
       .control-group.editable
         .control-label Min status:
@@ -50,25 +58,31 @@
           = @user.status_message
           %button.btn.btn-mini.change{ "data-edit-id" => "user_status_message" } Ändra
 
-      .control-group.readonly
+      .control-group.editable
         .control-label Profilbild:
         .controls
           - if admin_or_myself?
-            = link_to "Ändra", edit_avatar_path(@user), class: "change btn btn-mini"
+            = link_to "Ändra", edit_avatar_path(@user), class: "change-avatar btn btn-mini"
           = image_tag @user.avatar.url(:medium), alt: "Profilbild"
 
       %h2.form-group-title Kontakt
       .control-group.readonly
         .control-label E-post:
-        .controls= @user.email
+        .controls
+          = @user.email
+          %button.btn.btn-mini.info Info
 
       .control-group.readonly
         .control-label Fast telefon:
-        .controls= @user.phone
+        .controls
+          = @user.phone
+          %button.btn.btn-mini.info Info
 
       .control-group.readonly
         .control-label Mobiltelefon:
-        .controls= @user.cell_phone
+        .controls
+          = @user.cell_phone
+          %button.btn.btn-mini.info Info
 
       .control-group.editable
         .control-label Twitter:
@@ -87,23 +101,29 @@
 
       .control-group.readonly
         .control-label HR-titel:
-        .controls= @user.title
+        .controls
+          = @user.title
+          %button.btn.btn-mini.info Info
 
       .control-group.readonly
         .control-label Enhet/arbetsplats:
-        .controls= 'AD-fält?'
+        .controls
+          = 'AD-fält?'
+          %button.btn.btn-mini.info Info
 
       .control-group.readonly
         .control-label Avdelning:
         .controls
           - if @user.department.present?
             = link_to @user.department, users_path(department: @user.department)
+          %button.btn.btn-mini.info Info
 
       .control-group.readonly
         .control-label Förvaltning:
         .controls
           - if @user.company.present?
             = link_to @user.company_short, users_path(company: @user.company)
+          %button.btn.btn-mini.info Info
 
       .control-group.readonly
         .control-label Rapporterar till:
@@ -112,6 +132,7 @@
             = link_to @user.manager.displayname, user_path(@user.manager.username)
           - else
             = "#{possessive(@user.displayname)} chef har inte loggat in på min sida än"
+          %button.btn.btn-mini.info Info
 
       .control-group.readonly
         .control-label Linjechef till:
@@ -119,15 +140,20 @@
           %ul
             - @user.subordinates.each do |subordinate|
               %li= link_to subordinate.displayname, user_path(subordinate.username)
+          %button.btn.btn-mini.info Info
 
       %h2.form-group-title Adress
       .control-group.readonly
         .control-label Besöksadress:
-        .controls= "AD-fält?"
+        .controls
+          = "AD-fält?"
+          %button.btn.btn-mini.info Info
 
       .control-group.readonly
         .control-label Postadress:
-        .controls= "AD-fält?"
+        .controls
+          = "AD-fält?"
+          %button.btn.btn-mini.info Info
 
       %h2.form-group-title Nyckelord
 
@@ -146,7 +172,9 @@
       %h2.form-group-title Övrigt
       .control-group.readonly
         .control-label Användarnamn:
-        .controls= @user.username
+        .controls
+          = @user.username
+          %button.btn.btn-mini.info Info
 
       .control-group.editable
         .control-label Grundprofil i Komin:
@@ -198,7 +226,6 @@
           .controls#homepage
             = link_to @user.homepage, @user.homepage
             %button.btn.btn-mini.change{ "data-edit-id" => "user_homepage" } Ändra
-
 
       %h2.form-group-title Kominaktiviteter
       .control-group.readonly

@@ -46,8 +46,14 @@
       }
     }
   }
-  .change {
+  .change, .info {
     float: right;
+    width: 6em;
+  }
+  .change-avatar {
+    float: right;
+    width: 4.8em;
+    margin: 0;
   }
   .actions.change-profile {
     margin-top: 1em;

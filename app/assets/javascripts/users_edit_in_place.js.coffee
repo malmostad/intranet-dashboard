@@ -49,3 +49,8 @@ $ ->
           $block.html $default
           $form.find(".editable .change").show()
 
+
+  $form.find(".controls").on "click", ".info", (event) ->
+    event.preventDefault()
+    $(@).prop("disabled", true)
+    alert "Not implemented yet"
