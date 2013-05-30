@@ -14,8 +14,6 @@
   .controls li {
     margin-bottom: .4em;
   }
-  .control-group:hover {
-  }
 
   // Pseudo labels
   .control-group {
@@ -69,6 +67,15 @@
     .control-group {
       // border-bottom: $border;
     }
+  }
+}
+.controls .role {
+  margin-bottom: 1em;
+  h3 {
+    margin: 0 0 .4em;
+    line-height: 1.6;
+    font-weight: normal;
+    font-size: 13px; // TODO: set with emize so it works both in form and inline form
   }
 }
 

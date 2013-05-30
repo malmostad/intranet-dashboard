@@ -58,14 +58,26 @@
         = f.label :homepage, "Privat hemsida:", class: "control-label"
         .controls#homepage= f.text_field :homepage, class: "input-wide"
 
-      - Role::CATEGORIES.each do |key, val|
-        .control-group
-          .control-label= "#{val}:"
-          .controls#roles
-            - @roles.select { |r| r.category == key }.each do |role|
+      .control-group
+        .control-label= "Grundprofil i Komin:"
+        .controls#roles
+          .role
+            %label Förvaltningar
+            - @roles.select { |r| r.category == "department" }.each do |role|
               %label.checkbox
                 = check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: dom_id(role)
                 = role.name
+            - if !@user_roles.include? 'department'
+              %p.warning= "Välj en eller flera förvaltningar"
+
+          .role
+            %label Arbetsfält:
+            - @roles.select { |r| r.category == "working_field" }.each do |role|
+              %label.checkbox
+                = check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: dom_id(role)
+                = role.name
+            - if !@user_roles.include? 'working_field'
+              %p.warning= "Välj en eller flera arbetsfält"
 
       - if admin?
         .control-group.editable
@@ -82,7 +94,7 @@
           .controls#early_adopter
             %label.checkbox
               = f.check_box :early_adopter
-              Early Adopter
+              Ja
 
       .control-group
         .controls

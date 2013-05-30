@@ -58,7 +58,7 @@ class UsersController < ApplicationController
   def edit
     @user = User.where(id: params[:id]).includes(:roles).first
     @user_roles = user_roles
-    @roles = Role.all
+    @roles = Role.order(:name)
     if request.xhr?
       render layout: false
     end
