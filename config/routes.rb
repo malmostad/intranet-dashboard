@@ -47,6 +47,9 @@ Dashboard::Application.routes.draw do
   post "/login" => "sessions#create"
   get  "/logout" => "sessions#destroy"
 
+  post "/cmg" => "cmg#index"
+  get "/cmg" => "cmg#index"
+
   # Catch everything else. "a" is the path in Rails 3's routing
   match '*a', to: 'application#not_found', format: false
 end
