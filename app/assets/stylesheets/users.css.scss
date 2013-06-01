@@ -14,8 +14,6 @@
   .controls li {
     margin-bottom: .4em;
   }
-  .control-group:hover {
-  }
 
   // Pseudo labels
   .control-group {
@@ -35,16 +33,25 @@
     }
     .controls {
       font-size: emize(13);
+      > * {
+        font-size: emize(13, 13);
+      }
       line-height: 1.4em;
       margin-top: 0;
       padding: .8em 0;
       .actions {
-        margin: .8em 0 0;
+        margin: .6em 0 0;
       }
     }
   }
-  .change {
+  .change, .info {
     float: right;
+    width: 6em;
+  }
+  .change-avatar {
+    float: right;
+    width: 4.8em;
+    margin: 0;
   }
   .actions.change-profile {
     margin-top: 1em;
@@ -58,8 +65,17 @@
   }
   &.edit-controls {
     .control-group {
-      border-bottom: $border;
+      // border-bottom: $border;
     }
+  }
+}
+.controls .role {
+  margin-bottom: 1em;
+  h3 {
+    margin: 0 0 .4em;
+    line-height: 1.6;
+    font-weight: normal;
+    font-size: 13px; // TODO: set with emize so it works both in form and inline form
   }
 }
 
