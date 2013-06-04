@@ -10,8 +10,8 @@
       - @languages.each do |language|
         %tr
           %td= link_to language.name, edit_language_path(language)
-          %td.delete= link_to " #{t( 'actions.delete' )}", language, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini icon-trash icon-large"
+          %td.delete= link_to delete_icon_text, language, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini"
 
       %tr
-        %td{ colspan: 2 }
-          .actions= link_to " #{t( "messages.new_post" )}", new_language_path, class: "btn btn-primary icon-plus"
+        %td{ colspan: 1 }
+          .actions= link_to add_icon_text, new_language_path, class: "btn btn-primary"

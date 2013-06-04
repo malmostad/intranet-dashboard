@@ -17,8 +17,8 @@
         - @skills.each do |skill|
           %tr
             %td= link_to skill.name, edit_skill_path(skill)
-            %td.delete= link_to " #{t( 'actions.delete' )}", skill, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini icon-trash icon-large"
+            %td.delete= link_to delete_icon_text, skill, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini"
 
         %tr
           %td{ colspan: 2 }
-            .actions= link_to " #{t( "messages.new_post" )}", new_skill_path, class: "btn btn-primary icon-plus"
+            .actions= link_to add_icon_text, new_skill_path, class: "btn btn-primary"

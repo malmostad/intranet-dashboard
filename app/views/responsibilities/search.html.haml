@@ -17,8 +17,8 @@
         - @responsibilities.each do |responsibility|
           %tr
             %td= link_to responsibility.name, edit_responsibility_path(responsibility)
-            %td.delete= link_to " #{t( 'actions.delete' )}", responsibility, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini icon-trash icon-large"
+            %td.delete= link_to delete_icon_text, responsibility, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini"
 
         %tr
           %td{ colspan: 2 }
-            .actions= link_to " #{t( "messages.new_post" )}", new_responsibility_path, class: "btn btn-primary icon-plus"
+            .actions= link_to add_icon_text, new_responsibility_path, class: "btn btn-primary"

@@ -28,4 +28,12 @@ module ApplicationHelper
     { tags: %w(a i em li ul ol h1 h2 h3 blockquote br sub sup p img),
       attributes: %w(href src) }
   end
+
+  def delete_icon_text
+    raw "#{content_tag(:span, nil, class: 'icon-trash icon-large')} Radera"
+  end
+
+  def add_icon_text
+    raw "#{content_tag(:span, nil, class: 'icon-plus')} Lägg till"
+  end
 end

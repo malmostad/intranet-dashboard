@@ -12,10 +12,10 @@
         %tr
           %td= link_to role.name, edit_role_path(role)
           %td= Role::CATEGORIES[role.category]
-          %td= link_to " #{t( 'actions.delete' )}", role, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini icon-trash icon-large"
+          %td= link_to delete_icon_text, role, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini"
 
       %tr
         %td{ colspan: 3 }
-          .actions= link_to " #{t( "messages.new_post" )}", new_role_path, class: "btn btn-primary icon-plus"
+          .actions= link_to add_icon_text, new_role_path, class: "btn btn-primary"
 
 
