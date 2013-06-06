@@ -1,11 +1,12 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.2.13'
-gem 'jquery-rails', '2.2.1'
+gem 'jquery-rails', '3.0.0'
 gem 'haml', '4.0.3'
 
 gem 'nokogiri', '1.5.6'
 gem 'feedzirra', '0.2.0.rc2' #, '0.1.3' #, :git => 'https://github.com/pauldix/feedzirra.git'
+gem 'savon'
 
 gem 'net-ldap', '0.3.1'
 gem 'ruby-saml', '0.7.0' # 0.7.2 is broken
