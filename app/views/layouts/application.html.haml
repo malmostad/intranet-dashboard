@@ -9,7 +9,7 @@
       %meta{ "http-equiv" => "X-UA-Compatible", "content" => "IE=edge"}
     /[if lte IE 8]
       = javascript_include_tag "#{APP_CONFIG['assets_url_base']}html5shiv-printshiv.js"
-    = stylesheet_link_tag "#{APP_CONFIG['assets_url_base']}/malmo.css", media: 'all'
+    = stylesheet_link_tag "#{APP_CONFIG['assets_url_base']}malmo.css", media: 'all'
     = stylesheet_link_tag "application", media: 'all'
     /[if lte IE 9]
       = stylesheet_link_tag "#{APP_CONFIG['assets_url_base']}legacy/ie9.css", media: 'all'
@@ -25,5 +25,5 @@
       = yield
       - if @sub_layout == "admin"
         = render "layouts/admin_nav"
-    = javascript_include_tag "#{APP_CONFIG['assets_url_base']}/malmo.js"
+    = javascript_include_tag "#{APP_CONFIG['assets_url_base']}malmo.js"
     = javascript_include_tag "application"
