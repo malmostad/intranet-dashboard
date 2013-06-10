@@ -13,7 +13,6 @@
       - elsif !@user_roles.include? 'working_field'
         %p.warning= "Välj en eller flera arbetsfält nedan."
 
-
       .control-group
         = f.label :private_bio, "Om mig:", class: "control-label"
         .controls#professional_bio= f.text_area :professional_bio, class: "input-wide", rows: 7

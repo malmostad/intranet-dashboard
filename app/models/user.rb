@@ -44,8 +44,8 @@ class User < ActiveRecord::Base
   before_post_process :validate_avatar_file_size
 
   before_validation do
-    self.homepage = "http://#{homepage}" unless homepage.empty? || homepage.match(/^https?:\/\//)
-    self.twitter = twitter.gsub(/^@/, "").downcase unless twitter.empty?
+    self.homepage = "http://#{homepage}" unless homepage.blank? || homepage.match(/^https?:\/\//)
+    self.twitter = twitter.gsub(/^@/, "").downcase unless twitter.blank?
   end
 
   validates_attachment_content_type :avatar,
