@@ -13,13 +13,14 @@
       - elsif !@user_roles.include? 'working_field'
         %p.warning= "Välj en eller flera arbetsfält nedan."
 
+
+      .control-group
+        = f.label :private_bio, "Om mig:", class: "control-label"
+        .controls#professional_bio= f.text_area :professional_bio, class: "input-wide", rows: 7
+
       .control-group
         = f.label :status_message, "Statusmeddelande:", class: "control-label"
         .controls#status_message= f.text_field :status_message, class: "input-wide"
-
-      .control-group
-        = f.label :private_bio, "Om mig, personlig bio:", class: "control-label"
-        .controls#private_bio= f.text_area :private_bio, class: "input-wide", rows: 7
 
       .control-group
         = f.label :skill_list, "Kunskapsområden:", class: "control-label"
@@ -45,6 +46,10 @@
       .control-group
         = f.label :homepage, "Privat hemsida:", class: "control-label"
         .controls#homepage= f.text_field :homepage, class: "input-wide"
+
+      .control-group
+        = f.label :private_bio, "Om mig, personlig bio:", class: "control-label"
+        .controls#private_bio= f.text_area :private_bio, class: "input-wide", rows: 7
 
       .control-group
         .control-label= "Grundprofil i Komin:"

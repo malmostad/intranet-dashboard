@@ -26,11 +26,11 @@
           %button.btn.btn-mini.info Info
           = @user.title
 
-      .control-group.readonly
-        .control-label Enhet/arbetsplats:
-        .controls
-          %button.btn.btn-mini.info Info
-          = 'AD-fält?'
+      .control-group.editable
+        .control-label Om mig:
+        .controls#private_bio
+          %button.btn.btn-mini.change{ "data-edit-id" => "user_professional_bio" } Ändra
+          = simple_format @user.professional_bio
 
       .control-group.readonly
         .control-label Avdelning:
