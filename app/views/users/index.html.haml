@@ -5,7 +5,7 @@
     - if params[:company].present?
       %p= raw "Medarbetare på <em>#{params[:company].gsub(/^[\d\s]*/, "")}</em>"
     - elsif params[:department].present?
-      %p= raw "Medarbetare på <em>#{params[:department].gsub(/^[\d\s]*/, "")}</em>"
+      %p= raw "Medarbetare på <em>#{params[:department]}</em>"
     - else
       = form_tag(users_path, method: "get", class: "form-horizontal") do
         .control-group
