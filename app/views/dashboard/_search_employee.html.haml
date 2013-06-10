@@ -1,14 +1,14 @@
 %section.box#search-employee
-  %h1.box-title Sök medarbetare
+  %h1.box-title Sök i Kontaktboken
   .box-content
     %form{ method: :get, action: users_path }
       %label{ for: "query-employee" } Sök medarbetare:
       .input-append
-        %input#query-employee{ type: "text", name: :term, "data-path" => users_path}
+        %input#query-employee{ type: "text", name: :term, placeholder: "För- och/eller efternamn", "data-path" => users_path}
         %input.btn{ type: "submit", value: "Sök", name: nil }
   - if admin?
     .dropdown.box-menu.pull-right
-      %a#search-person-menu.dropdown-toggle{ "role" => "button", "data-toggle" => "dropdown", "href" => "#", "title" => "Anpassa denna box" }
+      %a#search-employee-menu.dropdown-toggle{ "role" => "button", "data-toggle" => "dropdown", "href" => "#", "title" => "Anpassa denna box" }
         %span.icon-caret-down.icon-large
-      %menu.dropdown-menu{ "aria-labelledby" => "search-person-menu" }
+      %menu.dropdown-menu{ "aria-labelledby" => "search-employee-menu" }
         %li= link_to "Administrera...", users_path

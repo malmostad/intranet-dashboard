@@ -145,19 +145,19 @@ section.box.index.users {
 }
 
 // Search box for users
+section.box#search-aastra,
 section.box#search-employee {
   .box-content {
     margin-top: 0;
     padding: 0;
-    label, p {
+    p {
       font-family: $sansSerif;
       font-size: emize(13);
     }
     label {
-      display: block;
-      margin-bottom: .1em;
+      display: none;
     }
-    input#query-employee {
+    input[type=text] {
       width: 68%;
     }
   }

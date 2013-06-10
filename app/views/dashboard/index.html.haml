@@ -9,7 +9,10 @@
   = render "feeds_my_own"
 
 .column.column-3
-  = render "search_employee"
+  - if current_user.early_adopter?
+    = render "search_employee"
+  - else
+    = render "search_aastra"
   - if current_user.early_adopter?
     = render "time_report"
   = render "shortcuts_tools_and_systems"
