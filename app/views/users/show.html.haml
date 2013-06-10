@@ -20,12 +20,6 @@
           %button.btn.btn-mini.info Info
           = "#{@user.first_name} #{@user.last_name}"
 
-      .control-group.editable
-        .control-label Visitkortstitel:
-        .controls#business_card_title
-          %button.btn.btn-mini.change Ändra
-          = @user.business_card_title
-
       .control-group.readonly
         .control-label HR-titel:
         .controls
@@ -162,12 +156,6 @@
         .controls#skill_list
           %button.btn.btn-mini.change{ "data-edit-id" => "user_skills" } Ändra
           = @user.skills.map(&:name).join(", ")
-
-      .control-group.editable
-        .control-label Ansvarsområden:
-        .controls#responsibility_list
-          %button.btn.btn-mini.change{ "data-edit-id" => "user_responsibilities" } Ändra
-          = @user.responsibilities.map(&:name).join(", ")
 
       %h2.form-group-title Övrigt
       .control-group.readonly

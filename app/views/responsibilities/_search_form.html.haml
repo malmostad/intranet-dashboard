@@ -1,7 +1,0 @@
-= form_tag(responsibilities_search_path, method: "get", id: "search-responsibility", class: "form-horizontal", "data-path" => responsibilities_path) do
-  .control-group
-    = label_tag "term", "Sök ansvarsområde: ", class: "control-label"
-    .controls
-      .input-append
-        = text_field_tag "term", params[:term]
-        = submit_tag "Sök", { class: "btn", name: nil }

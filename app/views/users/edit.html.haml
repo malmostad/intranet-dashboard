@@ -14,13 +14,6 @@
         %p.warning= "Välj en eller flera arbetsfält nedan."
 
       .control-group
-        = f.label :business_card_title, "Visitkortstitel:", class: "control-label"
-        .controls#business_card_title
-          = f.text_field :business_card_title, class: "input-wide"
-          - @user.errors[:business_card_title].each do |msg|
-            .help-inline.warning= "#{msg}"
-
-      .control-group
         = f.label :status_message, "Statusmeddelande:", class: "control-label"
         .controls#status_message= f.text_field :status_message, class: "input-wide"
 
@@ -32,11 +25,6 @@
         = f.label :skill_list, "Kunskapsområden:", class: "control-label"
         .controls#skill_list= f.text_field(:skill_list, class: "input-wide",
             data: { path: skills_suggest_path, load: @user.skills.map{ |l| { id: l.name, name: l.name }}})
-
-      .control-group
-        = f.label :responsibility_list, "Ansvarsområden:", class: "control-label"
-        .controls#responsibility_list= f.text_field(:responsibility_list, class: "input-wide",
-            data: { path: responsibilities_suggest_path, load: @user.responsibilities.map{ |l| { id: l.name, name: l.name }}})
 
       .control-group
         = f.label :language_list, "Språkkunskaper:", class: "control-label"

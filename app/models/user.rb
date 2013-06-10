@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
 
-  attr_accessible :phone, :cell_phone, :professional_bio, :business_card_title, :status_message, :avatar,
+  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
       :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
-      :language_list, :skill_list, :responsibility_list,
+      :language_list, :skill_list,
       :private_bio, :twitter, :skype, :homepage, :company_short
-  attr_accessible :phone, :cell_phone, :professional_bio, :business_card_title, :status_message, :avatar,
+  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
       :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
-      :language_list, :skill_list, :responsibility_list,
+      :language_list, :skill_list,
       :private_bio, :twitter, :skype, :homepage, :company_short,
       :admin, :early_adopter, as: :admin
 
@@ -26,8 +26,6 @@ class User < ActiveRecord::Base
   has_many :languages, through: :user_languages
   has_many :user_skills
   has_many :skills, through: :user_skills
-  has_many :user_responsibilities
-  has_many :responsibilities, through: :user_responsibilities
 
   has_many :colleagueships, dependent: :destroy
   has_many :colleagues, through: :colleagueships
@@ -40,7 +38,6 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :username
   validates :username, presence: { allow_blank: false }
-  validates :business_card_title, presence: { allow_blank: false, message: "Fältet får inte vara tomt" }
 
   # Paperclip image, options is in the Paperclip initializer
   has_attached_file :avatar
@@ -82,17 +79,6 @@ class User < ActiveRecord::Base
   def skill_list=(names)
     self.skills = names.split(",").map do |n|
       Skill.where(name: n.strip).first_or_create!
-    end
-  end
-
-  # Responsibility names as tokens
-  def responsibility_list
-    responsibilities.map(&:name).join(", ")
-  end
-
-  def responsibility_list=(names)
-    self.responsibilities = names.split(",").map do |n|
-      Responsibility.where(name: n.strip).first_or_create!
     end
   end
 

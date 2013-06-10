@@ -28,13 +28,11 @@ Dashboard::Application.routes.draw do
 
   delete "/my_own_feeds/delete_all" => "my_own_feeds#destroy_all"
 
-  resources :shortcuts, :roles, :languages, :skills, :responsibilities, :feeds, :my_own_feeds, except: [:show]
+  resources :shortcuts, :roles, :languages, :skills, :feeds, :my_own_feeds, except: [:show]
 
   get "/languages/suggest" => "languages#suggest", as: "languages_suggest"
   get "/skills/suggest" => "skills#suggest", as: "skills_suggest"
   get "/skills/search" => "skills#search", as: "skills_search"
-  get "/responsibilities/suggest" => "responsibilities#suggest", as: "responsibilities_suggest"
-  get "/responsibilities/search" => "responsibilities#search", as: "responsibilities_search"
 
   # get  "/search" => "site_search#index"
   # get  "/search/autocomplete" => "site_search#autocomplete", as: "site_search_autocomplete"

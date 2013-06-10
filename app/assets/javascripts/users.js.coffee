@@ -95,11 +95,3 @@ window.attachTokenInput = () ->
       hintText: "Lägg till kunskapsområde"
     }, tokenInputOptions)
   )
-
-  $('#user_responsibility_list').tokenInput(
-    $('#user_responsibility_list').data("path"), $.extend({
-      prePopulate: $('#user_responsibility_list').data('load')
-      hintText: "Lägg till ansvarsområde"
-    }, tokenInputOptions)
-  )
-
