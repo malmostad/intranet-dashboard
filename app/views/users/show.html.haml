@@ -2,12 +2,16 @@
 %section.box.show.user{ class: admin_or_myself? ? "edit-controls" : ""}
   %h1.box-title= h1
   .box-content.form-horizontal
-    - unless myself?
-      .colleagueship
-        - if @colleagueship.present?
-          %button.btn.btn-mini.remove{ data: { "colleagueship-id" => @colleagueship.id, "path" => colleagueships_path, "user-id" => @user.id }} Följer
-        - else
-          %button.btn.btn-primary.btn-mini.add{ data: { path: colleagueships_path, "user-id" => @user.id }} Följ
+    .actions.top
+      - unless myself?
+        .colleagueship
+          - if @colleagueship.present?
+            %button.btn.btn-mini.remove{ data: { "colleagueship-id" => @colleagueship.id, "path" => colleagueships_path, "user-id" => @user.id }} Följer
+          - else
+            %button.btn.btn-primary.btn-mini.add{ data: { path: colleagueships_path, "user-id" => @user.id }} Följ
+
+      - if admin_or_myself?
+        .change-profile= link_to "Redigera profil", edit_user_path(@user), class: "btn btn-small"
 
     = form_for @user, html: { id: "user-edit-in-place", class: "form-horizontal",
         data: { "tmpl-path" => edit_user_path(@user) }} do |f|
@@ -15,114 +19,75 @@
       %h2.form-group-title.summary Sammanfattning
 
       .control-group.readonly
+        .control-label Profilbild:
+        .controls
+          - if admin_or_myself?
+            = link_to "Byt bild", edit_avatar_path(@user), class: "change-avatar btn btn-mini"
+          = image_tag @user.avatar.url(:medium), alt: "Profilbild"
+
+      .control-group.readonly
         .control-label Namn:
         .controls
-          %button.btn.btn-mini.info Info
           = "#{@user.first_name} #{@user.last_name}"
 
       .control-group.readonly
         .control-label HR-titel:
         .controls
-          %button.btn.btn-mini.info Info
           = @user.title
 
-      .control-group.editable
-        .control-label Om mig:
-        .controls#private_bio
-          %button.btn.btn-mini.change{ "data-edit-id" => "user_professional_bio" } Ändra
-          = simple_format @user.professional_bio
-
       .control-group.readonly
-        .control-label Avdelning:
+        .control-label Om mig:
         .controls
-          %button.btn.btn-mini.info Info
-          - if @user.department.present?
-            = link_to @user.department, users_path(department: @user.department)
+          = simple_format @user.professional_bio
 
       .control-group.readonly
         .control-label Förvaltning:
         .controls
-          %button.btn.btn-mini.info Info
           - if @user.company.present?
             = link_to @user.company_short, users_path(company: @user.company)
 
-      .control-group.editable
+      .control-group.readonly
+        .control-label Avdelning:
+        .controls
+          - if @user.department.present?
+            = link_to @user.department, users_path(department: @user.department)
+
+      .control-group.readonly
         .control-label Min status:
         .controls#status_message
-          %button.btn.btn-mini.change{ "data-edit-id" => "user_status_message" } Ändra
           = @user.status_message
 
-      .control-group.editable
-        .control-label Profilbild:
+      .control-group.readonly
+        .control-label Grundprofil i Komin:
         .controls
-          - if admin_or_myself?
-            = link_to "Ändra", edit_avatar_path(@user), class: "change-avatar btn btn-mini"
-          = image_tag @user.avatar.url(:medium), alt: "Profilbild"
+          = @user.roles.map(&:name).to_sentence
 
       %h2.form-group-title Kontakt
       .control-group.readonly
         .control-label E-post:
         .controls
-          %button.btn.btn-mini.info Info
           = @user.email
 
       .control-group.readonly
         .control-label Fast telefon:
         .controls
-          %button.btn.btn-mini.info Info
           = @user.phone
 
       .control-group.readonly
         .control-label Mobiltelefon:
         .controls
-          %button.btn.btn-mini.info Info
           = @user.cell_phone
 
-      .control-group.editable
-        .control-label Twitter:
-        .controls#twitter
-          %button.btn.btn-mini.change{ "data-edit-id" => "user_status_twitter" } Ändra
-          - if @user.twitter.present?
-            = link_to "@#{@user.twitter}", "https://twitter.com/#{@user.twitter}"
-
-      .control-group.editable
+      .control-group.readonly
         .control-label Skype:
-        .controls#skype
-          %button.btn.btn-mini.change{ "data-edit-id" => "user_status_skype" } Ändra
+        .controls
           = @user.skype
 
       %h2.form-group-title Organisation
 
       .control-group.readonly
-        .control-label HR-titel:
-        .controls
-          %button.btn.btn-mini.info Info
-          = @user.title
-
-      .control-group.readonly
-        .control-label Enhet/arbetsplats:
-        .controls
-          %button.btn.btn-mini.info Info
-          = 'AD-fält?'
-
-      .control-group.readonly
-        .control-label Avdelning:
-        .controls
-          %button.btn.btn-mini.info Info
-          - if @user.department.present?
-            = link_to @user.department, users_path(department: @user.department)
-
-      .control-group.readonly
-        .control-label Förvaltning:
-        .controls
-          %button.btn.btn-mini.info Info
-          - if @user.company.present?
-            = link_to @user.company_short, users_path(company: @user.company)
-
-      .control-group.readonly
         .control-label Rapporterar till:
         .controls
-          %button.btn.btn-mini.info Info
           - if @user.manager.present?
             = link_to @user.manager.displayname, user_path(@user.manager.username)
           - else
@@ -131,90 +96,22 @@
       .control-group.readonly
         .control-label Linjechef till:
         .controls
-          %button.btn.btn-mini.info Info
           %ul
             - @user.subordinates.each do |subordinate|
               %li= link_to subordinate.displayname, user_path(subordinate.username)
 
-      %h2.form-group-title Adress
-      .control-group.readonly
-        .control-label Besöksadress:
-        .controls
-          %button.btn.btn-mini.info Info
-          = "AD-fält?"
+      %h2.form-group-title Kompetensprofil
 
       .control-group.readonly
-        .control-label Postadress:
-        .controls
-          %button.btn.btn-mini.info Info
-          = "AD-fält?"
-
-      %h2.form-group-title Nyckelord
-
-      .control-group.editable
         .control-label Kunskapsområden:
-        .controls#skill_list
-          %button.btn.btn-mini.change{ "data-edit-id" => "user_skills" } Ändra
+        .controls
           = @user.skills.map(&:name).join(", ")
 
-      %h2.form-group-title Övrigt
       .control-group.readonly
-        .control-label Användarnamn:
-        .controls
-          %button.btn.btn-mini.info Info
-          = @user.username
-
-      .control-group.editable
-        .control-label Grundprofil i Komin:
-        .controls#roles
-          %button.btn.btn-mini.change{ "data-edit-id" => "user_roles" } Ändra
-          = @user.roles.map(&:name).to_sentence
-
-      .control-group.editable
-        .control-label Administratör:
-        .controls#admin
-          - if admin?
-            %button.btn.btn-mini.change{ "data-edit-id" => "user_admin" } Ändra
-          = @user.admin? ? "Ja" : "Nej"
-
-      .control-group.editable
-        .control-label Early adopter:
-        .controls#early_adopter
-          - if admin?
-            %button.btn.btn-mini.change{ "data-edit-id" => "user_early_adopter" } Ändra
-          = @user.early_adopter? ? "Ja" : "Nej"
-
-      .control-group.readonly
-        .control-label Senast inloggad:
-        - if @user.last_login.blank?
-          .controls –
-        - else
-          .controls= l @user.last_login, format: :short
-
-      .control-group.readonly
-        .control-label Användaren skapades:
-        .controls= l @user.created_at, format: :short
-
-      %h2.form-group-title Personsligt
-
-      .control-group.editable
-        .control-label Om mig, personlig bio:
-        .controls#private_bio
-          %button.btn.btn-mini.change{ "data-edit-id" => "user_private_bio" } Ändra
-          = simple_format @user.private_bio
-
-      .control-group.editable
         .control-label Språkkunskaper:
         .controls#language_list
-          %button.btn.btn-mini.change{ "data-edit-id" => "user_languages" } Ändra
           = @user.languages.map(&:name).to_sentence.humanize
 
-      .control-group.editable
-        .control-label Privat hemsida:
-        - if @user.homepage.present?
-          .controls#homepage
-            %button.btn.btn-mini.change{ "data-edit-id" => "user_homepage" } Ändra
-            = link_to @user.homepage, @user.homepage
 
       %h2.form-group-title Kominaktiviteter
       .control-group.readonly
@@ -225,5 +122,56 @@
         .control-label Blogginlägg:
         .controls= link_to "Visa blogginlägg", "http://webapps04.malmo.se/blogg/author/#{@user.username}"
 
+
+      %h2.form-group-title Personsligt
+
+      .control-group.readonly
+        .control-label Om mig, personlig bio:
+        .controls
+          = simple_format @user.private_bio
+
+      .control-group.readonly
+        .control-label Twitter:
+        .controls
+          - if @user.twitter.present?
+            = link_to "@#{@user.twitter}", "https://twitter.com/#{@user.twitter}"
+
+      .control-group.readonly
+        .control-label Privat hemsida:
+        - if @user.homepage.present?
+          .controls
+            = link_to @user.homepage, @user.homepage
+
+
+      %h2.form-group-title Övrigt
+      .control-group.readonly
+        .control-label Användarnamn:
+        .controls
+          = @user.username
+
+      - if admin?
+        .control-group.readonly
+          .control-label Administratör:
+          .controls
+            = @user.admin? ? "Ja" : "Nej"
+
+      - if admin?
+        .control-group.readonly
+          .control-label Early adopter:
+          .controls
+            = @user.early_adopter? ? "Ja" : "Nej"
+
+      .control-group.readonly
+        .control-label Senast inloggad:
+        - if @user.last_login.blank?
+          .controls –
+        - else
+          .controls= l @user.last_login, format: :short
+
+      .control-group.readonly
+        .control-label Första inloggningen:
+        .controls= l @user.created_at, format: :short
+
       - if admin_or_myself?
         .actions.change-profile= link_to "Redigera profil", edit_user_path(@user), class: "btn btn-small"
+

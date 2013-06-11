@@ -24,7 +24,7 @@
   }
 
   // Show views w/form layout
-  .control-group.readonly, .control-group.editable {
+  .control-group.readonly {
     margin-bottom: 0;
     .control-label {
       margin-top: 0;
@@ -44,38 +44,37 @@
       }
     }
   }
-  .change, .info {
-    float: right;
-    width: 6em;
-  }
   .change-avatar {
     float: right;
     width: 4.8em;
     margin: 0;
   }
   .actions.change-profile {
-    margin-top: 1em;
+    float: left;
+    margin: 1em 0 0;
   }
-  .colleagueship {
+  .actions.top {
     @include clearfix();
-    .add, .remove {
+    margin-bottom: 1em;
+    .colleagueship {
       float: right;
-      width: 7em;
+      .add, .remove {
+        width: 7em;
+      }
     }
-  }
-  &.edit-controls {
-    .control-group {
-      // border-bottom: $border;
+    .change-profile {
+      float: left;
     }
   }
 }
+
 .controls .role {
   margin-bottom: 1em;
   h3 {
     margin: 0 0 .4em;
     line-height: 1.6;
     font-weight: normal;
-    font-size: 13px; // TODO: set with emize so it works both in form and inline form
+    font-size: emize(13);
   }
 }
 
