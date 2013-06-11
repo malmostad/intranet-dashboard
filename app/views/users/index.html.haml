@@ -1,11 +1,11 @@
 - title "Användare"
 %section.box.index.users
   %h1.box-title= h1
-  .box-content
+  .box-content.body-copy
     - if params[:company].present?
-      %p= raw "Medarbetare på <em>#{params[:company].gsub(/^[\d\s]*/, "")}</em>"
+      %h1= "Medarbetare på #{params[:company].gsub(/^[\d\s]*/, "")}"
     - elsif params[:department].present?
-      %p= raw "Medarbetare på <em>#{params[:department]}</em>"
+      %h1= "Medarbetare på #{params[:department]}"
     - else
       = form_tag(users_path, method: "get", class: "form-horizontal") do
         .control-group

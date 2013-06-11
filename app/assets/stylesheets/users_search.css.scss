@@ -25,27 +25,37 @@ section.box.index.users {
     padding: 0.4em .7em;
     border: solid white;
     border-width: 1px 0;
-    margin: 0;
+    margin: 0 0 1em;
     .avatar {
       float: left;
-      width: 4em;
-      margin-right: 0em;
+      width: 6em;
       img {
+        margin: .1em 0 0;
         width: 100%;
         height: auto;
       }
     }
+    .info {
+      margin: 0 0 .1em 7em;
+    }
     h2 {
       font-weight: normal;
       font-size: emize(16);
-      margin: 0 0 .1em emize(16*5);
+      margin: 0 0 .15em;
     }
     p {
-      color: #000;
       font-family: $sansSerif;
       font-size: emize(13);
-      margin: 0 0 0 emize(16*5, 13);
       line-height: 1.4;
+      margin: 0 0 .15em;
+      span {
+        // margin-right: .5em;
+      }
+    }
+    p.bio {
+      font-family: $serif;
+      font-size: emize(16);
+      margin: 0;
     }
   }
 
