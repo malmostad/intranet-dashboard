@@ -1,0 +1,109 @@
+// Results list for user search
+section.box.index.users {
+  form {
+    label {
+      display: none;
+    }
+    .controls {
+      margin-left: 0;
+      .input-append {
+        width: 100%;
+      }
+      input#query-employee {
+        width: 35em;
+        max-width: 80% !important;
+      }
+      .help {
+        margin: .4em 0 0;
+      }
+    }
+  }
+  ul.results li {
+    @include clearfix();
+    clear: both;
+    display: block;
+    padding: 0.4em .7em;
+    border: solid white;
+    border-width: 1px 0;
+    margin: 0;
+    .avatar {
+      float: left;
+      width: 4em;
+      margin-right: 0em;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+    h2 {
+      font-weight: normal;
+      font-size: emize(16);
+      margin: 0 0 .1em emize(16*5);
+    }
+    p {
+      color: #000;
+      font-family: $sansSerif;
+      font-size: emize(13);
+      margin: 0 0 0 emize(16*5, 13);
+      line-height: 1.4;
+    }
+  }
+
+  ul.user-stats {
+    color: $textColorDark;
+    list-style: disc;
+    padding: .8em 0;
+    border-top: $border;
+    li {
+      margin-left: 2em;
+      font-family: $sansSerif;
+      font-size: emize(13);
+      line-height: 1.5;
+    }
+  }
+}
+
+// Search box for users
+section.box#search-aastra,
+section.box#search-employee {
+  .box-content {
+    margin-top: 0;
+    padding: 0;
+    p {
+      font-family: $sansSerif;
+      font-size: emize(13);
+    }
+    label {
+      display: none;
+    }
+    input[type=text] {
+      width: 68%;
+    }
+  }
+}
+
+// Autocomplete list for user search
+ul.ui-autocomplete.search_users {
+  max-height: 30em;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .ui-menu-item > a.ui-corner-all {
+    padding: .5em 1em .7em .5em;
+    clear: left;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: emize(11);
+    img {
+      float: left;
+      height: 32px;
+      width: 32px;
+    }
+    p {
+      margin: 0 0 0 38px;
+    }
+  }
+}
+
+ul.ui-autocomplete.search_users.full-search p {
+  font-size: emize(13, 11);
+}

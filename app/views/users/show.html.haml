@@ -16,8 +16,6 @@
     = form_for @user, html: { id: "user-edit-in-place", class: "form-horizontal",
         data: { "tmpl-path" => edit_user_path(@user) }} do |f|
 
-      %h2.form-group-title.summary Sammanfattning
-
       .control-group.readonly
         .control-label Profilbild:
         .controls
@@ -53,7 +51,7 @@
             = link_to @user.department, users_path(department: @user.department)
 
       .control-group.readonly
-        .control-label Min status:
+        .control-label Statusmeddelande:
         .controls#status_message
           = @user.status_message
 

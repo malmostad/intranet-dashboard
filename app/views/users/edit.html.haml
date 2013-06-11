@@ -1,83 +1,133 @@
 - title "#{@user.displayname}"
-%section.box.form
+%section.box.form.edit-user
   %h1.box-title= h1
   .box-content
     = form_for @user, html: { class: "form-horizontal" } do |f|
       - if @user.errors.any?
         .warning= t 'messages.validation_errors'
 
-      - if !@user_roles.present?
+      - if @user_roles.empty?
         %p.warning= "Välj en eller flera förvaltningar och arbetsfält nedan."
       - elsif !@user_roles.include? 'department'
         %p.warning= "Välj en eller flera förvaltningar nedan."
       - elsif !@user_roles.include? 'working_field'
         %p.warning= "Välj en eller flera arbetsfält nedan."
 
+      .control-group.readonly
+        .control-label Namn:
+        .controls
+          = "#{@user.first_name} #{@user.last_name}"
+          .change-info
+            %p= "Ditt namn hämtas från HR-systemet. Ditt namn kan du ändra genom att kontakta din egen förvaltnings lokala HR-funktion. Det vanligaste är att du vill ändra för att ditt namn är felstavat eller för att du byter efternamn."
+            %p= "Kontaktuppgift till din lokala HR-finktion hittar du på Komin > Min förvaltning > Vår organisation."
+
+      .control-group.readonly
+        .control-label HR-titel:
+        .controls
+          = @user.title
+          .change-info
+            %p= "Din HR-titel hämtas från HR-systemet och kontaktboken visar den titel som är kopplad till din primära anställning. Din HR-titel är den titel du fick med när du anställdes i Malmö stad. Ändring av HR-titeln kan endast göras när du byter tjänst."
+            %p= "Om du upplever att du är anställd med fel titel, diskutera med din linjechef."
+
       .control-group
-        = f.label :private_bio, "Om mig:", class: "control-label"
-        .controls#professional_bio= f.text_area :professional_bio, class: "input-wide", rows: 7
+        = f.label :professional_bio, "Om mig:", class: "control-label"
+        .controls= f.text_area :professional_bio, class: "input-wide", rows: 7
+
+      .control-group.readonly
+        .control-label Förvaltning:
+        .controls
+          = @user.company_short
+          .change-info
+            %p= "Din förvaltning hämtas från HR-systemet och kontaktboken visar den förvaltningstillhörighet som är kopplad till din primära anställning."
+            %p= "Om du upplever att kontaktboken visar en annan förvaltning än den du är anställd i, kontakta kominteamet@malmo.se."
+
+      .control-group.readonly
+        .control-label Avdelning:
+        .controls
+          = @user.department
 
       .control-group
         = f.label :status_message, "Statusmeddelande:", class: "control-label"
-        .controls#status_message= f.text_field :status_message, class: "input-wide"
+        .controls= f.text_field :status_message, class: "input-wide"
+
+
+      %h2.form-group-title#roles Grundprofil i Komin:
+
+      .control-group
+        .control-label= "Förvaltningar:"
+        .controls
+          - if !@user_roles.include? 'department'
+            %p.warning= "Välj en eller flera förvaltningar."
+          - @roles.select { |r| r.category == "department" }.each do |role|
+            %label.checkbox
+              = check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: dom_id(role)
+              = role.name
+
+      .control-group
+        .control-label= "Arbetsfält:"
+        .controls
+          - if !@user_roles.include? 'working_field'
+            %p.warning= "Välj en eller flera arbetsfält."
+          - @roles.select { |r| r.category == "working_field" }.each do |role|
+            %label.checkbox
+              = check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: dom_id(role)
+              = role.name
+
+      %h2.form-group-title Kontakt
+
+      .control-group.readonly
+        .control-label E-post:
+        .controls
+          = @user.email
+
+      .control-group.readonly
+        .control-label Fast telefon:
+        .controls
+          = @user.phone
+
+      .control-group.readonly
+        .control-label Mobiltelefon:
+        .controls
+          = @user.cell_phone
+
+      .control-group
+        = f.label :skype, "Skype:", class: "control-label"
+        .controls= f.text_field :skype, class: "input-wide"
+
+      %h2.form-group-title Kompetensprofil
 
       .control-group
         = f.label :skill_list, "Kunskapsområden:", class: "control-label"
-        .controls#skill_list= f.text_field(:skill_list, class: "input-wide",
+        .controls= f.text_field(:skill_list, class: "input-wide",
             data: { path: skills_suggest_path, load: @user.skills.map{ |l| { id: l.name, name: l.name }}})
 
       .control-group
         = f.label :language_list, "Språkkunskaper:", class: "control-label"
-        .controls#language_list= f.text_field(:language_list, class: "input-wide",
+        .controls= f.text_field(:language_list, class: "input-wide",
             data: { path: languages_suggest_path, load: @user.languages.map{ |l| { id: l.name, name: l.name }}})
+
+
+      %h2.form-group-title Personsligt
+
+      .control-group
+        = f.label :private_bio, "Om mig, personlig bio:", class: "control-label"
+        .controls= f.text_area :private_bio, class: "input-wide", rows: 7
 
       .control-group
         = f.label :twitter, "Twitter:", class: "control-label"
-        .controls#twitter
+        .controls
           .input-prepend
             %span.add-on @
             = f.text_field :twitter, class: "input-wide"
 
       .control-group
-        = f.label :skype, "Skype:", class: "control-label"
-        .controls#skype= f.text_field :skype, class: "input-wide"
-
-      .control-group
         = f.label :homepage, "Privat hemsida:", class: "control-label"
-        .controls#homepage= f.text_field :homepage, class: "input-wide"
-
-      .control-group
-        = f.label :private_bio, "Om mig, personlig bio:", class: "control-label"
-        .controls#private_bio= f.text_area :private_bio, class: "input-wide", rows: 7
-
-      .control-group
-        .control-label= "Grundprofil i Komin:"
-        .controls#roles
-          .role
-            %label Förvaltningar
-            - @roles.select { |r| r.category == "department" }.each do |role|
-              %label.checkbox
-                = check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: dom_id(role)
-                = role.name
-
-          .role
-            %label Arbetsfält:
-            - @roles.select { |r| r.category == "working_field" }.each do |role|
-              %label.checkbox
-                = check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: dom_id(role)
-                = role.name
-
-          - if !@user_roles.present?
-            %p.warning= "Välj en eller flera förvaltningar och arbetsfält."
-          - elsif !@user_roles.include? 'department'
-            %p.warning= "Välj en eller flera förvaltningar."
-          - elsif !@user_roles.include? 'working_field'
-            %p.warning= "Välj en eller flera arbetsfält."
+        .controls= f.text_field :homepage, class: "input-wide"
 
       - if admin?
         .control-group.editable
           .control-label Administratör:
-          .controls#admin
+          .controls
             %label.checkbox
               = f.check_box :admin
               Ja
@@ -86,7 +136,7 @@
 
         .control-group.editable
           .control-label Early adopter:
-          .controls#early_adopter
+          .controls
             %label.checkbox
               = f.check_box :early_adopter
               Ja
