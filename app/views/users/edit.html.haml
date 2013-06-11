@@ -1,5 +1,5 @@
 - title "#{@user.displayname}"
-%section.box.form.edit-user
+%section.box.form#edit-user
   %h1.box-title= h1
   .box-content
     = form_for @user, html: { class: "form-horizontal" } do |f|
@@ -17,17 +17,21 @@
         .control-label Namn:
         .controls
           = "#{@user.first_name} #{@user.last_name}"
-          .change-info
-            %p= "Ditt namn hämtas från HR-systemet. Ditt namn kan du ändra genom att kontakta din egen förvaltnings lokala HR-funktion. Det vanligaste är att du vill ändra för att ditt namn är felstavat eller för att du byter efternamn."
-            %p= "Kontaktuppgift till din lokala HR-finktion hittar du på Komin > Min förvaltning > Vår organisation."
+          - if admin_or_myself?
+            = link_to "(Info)", "#", class: "show-change-info"
+            .change-info
+              %p= "Ditt namn hämtas från HR-systemet. Ditt namn kan du ändra genom att kontakta din egen förvaltnings lokala HR-funktion. Det vanligaste är att du vill ändra för att ditt namn är felstavat eller för att du byter efternamn."
+              %p= "Kontaktuppgift till din lokala HR-finktion hittar du på Komin > Min förvaltning > Vår organisation."
 
       .control-group.readonly
         .control-label HR-titel:
         .controls
           = @user.title
-          .change-info
-            %p= "Din HR-titel hämtas från HR-systemet och kontaktboken visar den titel som är kopplad till din primära anställning. Din HR-titel är den titel du fick med när du anställdes i Malmö stad. Ändring av HR-titeln kan endast göras när du byter tjänst."
-            %p= "Om du upplever att du är anställd med fel titel, diskutera med din linjechef."
+          - if admin_or_myself?
+            = link_to "(Info)", "#", class: "show-change-info"
+            .change-info
+              %p= "Din HR-titel hämtas från HR-systemet och kontaktboken visar den titel som är kopplad till din primära anställning. Din HR-titel är den titel du fick med när du anställdes i Malmö stad. Ändring av HR-titeln kan endast göras när du byter tjänst."
+              %p= "Om du upplever att du är anställd med fel titel, diskutera med din linjechef."
 
       .control-group
         = f.label :professional_bio, "Om mig:", class: "control-label"
@@ -37,9 +41,11 @@
         .control-label Förvaltning:
         .controls
           = @user.company_short
-          .change-info
-            %p= "Din förvaltning hämtas från HR-systemet och kontaktboken visar den förvaltningstillhörighet som är kopplad till din primära anställning."
-            %p= "Om du upplever att kontaktboken visar en annan förvaltning än den du är anställd i, kontakta kominteamet@malmo.se."
+          - if admin_or_myself?
+            = link_to "(Info)", "#", class: "show-change-info"
+            .change-info
+              %p= "Din förvaltning hämtas från HR-systemet och kontaktboken visar den förvaltningstillhörighet som är kopplad till din primära anställning."
+              %p= "Om du upplever att kontaktboken visar en annan förvaltning än den du är anställd i, kontakta kominteamet@malmo.se."
 
       .control-group.readonly
         .control-label Avdelning:

@@ -2,28 +2,37 @@ $ ->
   # Focus on login form
   $('#username').focus();
 
-  # Autocomplete on user search
-  $queryEmployee = $("#query-employee")
-  if $queryEmployee.length
-    $queryEmployee
-      .autocomplete
-        source: $queryEmployee.parents("form").attr("action")
-        minLength: 2
-        select: (event, ui) ->
-          document.location = "#{$queryEmployee.data("path")}/#{ui.item.username}"
-      .data("ui-autocomplete")
-      ._renderItem = (ul, item) ->
-        ul.addClass('search_users')
-        if $queryEmployee.hasClass("full-search")
-          ul.addClass('full-search')
-        $("<li>")
-          .data("item.autocomplete", item)
-          .append("<a><img src='#{item.avatar_full_url}'/>
-              <p>#{item.first_name} #{item.last_name}<br/>
-              #{item.company_short}</p></a>")
-          .appendTo(ul)
+  # Show info for non editable field
+  $("#edit-user .show-change-info").click (event) ->
+    event.preventDefault()
+    $(@).closest(".control-group").find(".change-info").slideToggle(100)
+    $(@).text( if $(@).text() is "(Info)" then "(Dölj)" else "(Info)" )
 
-  # Follow colleague
+  # Tokenized input fields
+  # Shared options for tokenInput
+  tokenInputOptions = {
+    theme: 'malmo'
+    searchDelay: 0
+    minChars: 2
+    allowTabOut: true
+    animateDropdown: false
+  }
+
+  $('#user_language_list').tokenInput(
+    $('#user_language_list').data("path"), $.extend({
+      prePopulate: $('#user_language_list').data('load')
+      hintText: "Lägg till språk"
+    }, tokenInputOptions)
+  )
+
+  $('#user_skill_list').tokenInput(
+    $('#user_skill_list').data("path"), $.extend({
+      prePopulate: $('#user_skill_list').data('load')
+      hintText: "Lägg till kunskapsområde"
+    }, tokenInputOptions)
+  )
+
+  # Follow colleague on profile page
   $("section.show.user .colleagueship").on "click",  ".add", (event) ->
     $trigger = $(@)
     event.preventDefault()
@@ -60,38 +69,3 @@ $ ->
     $(@).addClass("btn-danger").text("Sluta följ")
   $("section.show.user .colleagueship").on "mouseleave blur", ".remove", ->
     $(@).removeClass("btn-danger").text("Följer")
-
-  # Search results, load more
-  $("section.index.users").on "click", ".load-more input", (event) ->
-    event.preventDefault()
-    $trigger = $(@)
-    $trigger.val("Hämtar fler...").addClass('disabled')
-    $.get $trigger.attr('data-path'), (data) ->
-      $trigger.parent().replaceWith(data)
-
-  attachTokenInput()
-
-# Tokenized input fields
-window.attachTokenInput = () ->
-  # Shared options for tokenInput
-  tokenInputOptions = {
-    theme: 'malmo'
-    searchDelay: 0
-    minChars: 2
-    allowTabOut: true
-    animateDropdown: false
-  }
-
-  $('#user_language_list').tokenInput(
-    $('#user_language_list').data("path"), $.extend({
-      prePopulate: $('#user_language_list').data('load')
-      hintText: "Lägg till språk"
-    }, tokenInputOptions)
-  )
-
-  $('#user_skill_list').tokenInput(
-    $('#user_skill_list').data("path"), $.extend({
-      prePopulate: $('#user_skill_list').data('load')
-      hintText: "Lägg till kunskapsområde"
-    }, tokenInputOptions)
-  )
