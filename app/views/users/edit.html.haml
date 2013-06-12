@@ -121,6 +121,30 @@
           = f.text_field :skype, class: "input-wide"
           %p.help= "Om du vill kan du ange vilken Skypeadress du har."
 
+      %h2.form-group-title Arbetsplats
+      .control-group
+        = f.label :address, "Rumsnummer:", class: "control-label"
+        .controls
+          = f.text_field :room
+      .control-group
+        = f.label :address, "Gatuadress:", class: "control-label"
+        .controls
+          = f.text_field :address
+          = f.hidden_field :geo_position_x
+          = f.hidden_field :geo_position_y
+      .control-group
+        = f.label :post_code, "Postnummer:", class: "control-label"
+        .controls
+          = f.text_field :post_code, :readonly => true, :tabindex => -1, placeholder: "Hämtas automatiskt"
+      .control-group
+        = f.label :postal_town, "Postadress:", class: "control-label"
+        .controls
+          = f.text_field :postal_town, :readonly => true, :tabindex => -1, placeholder: "Hämtas automatiskt"
+      .control-group
+        = f.label :neighborhood, "Stadsområde:", class: "control-label"
+        .controls
+          = f.text_field :neighborhood, :readonly => true, :tabindex => -1, placeholder: "Hämtas automatiskt"
+
       %h2.form-group-title Kompetensprofil
 
       .control-group

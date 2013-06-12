@@ -9,9 +9,9 @@
             %button.btn.btn-mini.remove{ data: { "colleagueship-id" => @colleagueship.id, "path" => colleagueships_path, "user-id" => @user.id }} Följer
           - else
             %button.btn.btn-primary.btn-mini.add{ data: { path: colleagueships_path, "user-id" => @user.id }} Följ
-
       - if admin_or_myself?
         .change-profile= link_to "Redigera profil", edit_user_path(@user), class: "btn btn-small"
+
 
     %section.vcard
       .photo= image_tag @user.avatar.url(:large), alt: "Profilbild"
@@ -102,6 +102,21 @@
         .controls
           = link_to @user.homepage, @user.homepage
 
+
+    %h2.form-group-title Arbetsplats
+    .control-group.readonly
+      .control-label Rumsnummer:
+      .controls
+        = @user.room
+    .control-group.readonly
+      .control-label Gatuadress:
+      .controls
+        = @user.address
+        %br
+        = "#{@user.post_code} #{@user.postal_town}"
+      .control-label Stadsområde:
+      .controls
+        = @user.neighborhood
 
     %h2.form-group-title Övrigt
     .control-group.readonly

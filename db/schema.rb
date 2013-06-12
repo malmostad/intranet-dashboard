@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130610143342) do
+ActiveRecord::Schema.define(:version => 20130612202656) do
 
   create_table "colleagueships", :force => true do |t|
     t.integer  "user_id"
@@ -185,6 +185,13 @@ ActiveRecord::Schema.define(:version => 20130610143342) do
     t.integer  "manager_id"
     t.string   "department"
     t.string   "homepage"
+    t.string   "room"
+    t.string   "address"
+    t.string   "post_code"
+    t.string   "postal_town"
+    t.string   "neighborhood"
+    t.integer  "geo_position_x"
+    t.integer  "geo_position_y"
   end
 
   add_index "users", ["manager_id"], :name => "index_users_on_manager_id"
