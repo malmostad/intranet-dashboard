@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 class UsersController < ApplicationController
 
-  before_filter { add_body_class('edit') }
-  before_filter { sub_layout("admin") if admin? }
+  before_filter { add_body_class('employee') }
   before_filter :require_user
   before_filter :require_admin_or_myself, only: [ :edit, :update ]
   before_filter :require_admin, only: :destroy
