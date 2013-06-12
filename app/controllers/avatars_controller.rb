@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 class AvatarsController < ApplicationController
 
-  before_filter { add_body_class('edit') }
-  before_filter { sub_layout("admin") if admin? }
+  before_filter { add_body_class('employee') }
   before_filter :require_user, except: "show"
   before_filter :require_admin_or_myself, except: "show"
 

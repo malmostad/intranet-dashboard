@@ -1,16 +1,42 @@
+section.vcard {
+  .photo {
+    width: 12em;
+    float: left;
+    margin-top: .2em;
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+  .main-card {
+    @include clearfix();
+    margin: 0 0 0 13em;
+    .fn {
+      font-size: emize(26, 16);
+      font-family: $serif;
+      font-weight: normal;
+      margin: 0 0 .2em;
+    }
+    .professional-bio {
+      font-family: $serif;
+      margin-bottom: .5em;
+    }
+    .org, .phone, .email {
+      font-family: $sansSerif;
+      font-size: emize(13);
+      margin: 0;
+    }
+    .email {
+      margin: 0 0 1em;
+    }
+    .title {
+    }
+  }
+}
+
+
 // View for user data
 .show.user {
-  .controls.edit {
-    display: none;
-  }
-
-  .form-group-title.summary {
-    margin-top: 0;
-  }
-  #languages {
-    width: 90% !important;
-  }
-
   .controls li {
     margin-bottom: .4em;
   }

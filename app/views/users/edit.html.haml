@@ -50,6 +50,9 @@
         .control-label Avdelning:
         .controls
           = @user.department
+          = link_to "(Info)", "#", class: "show-change-info"
+          .change-info
+            %p= "Avdelningstillhörighet är under utveckling och kommer efter sommaren."
 
       .control-group
         = f.label :status_message, "Statusmeddelande:", class: "control-label"
@@ -94,6 +97,7 @@
         .control-label Fast telefon:
         .controls
           = @user.phone
+          = link_to "(Info)", "#", class: "show-change-info"
           .change-info
             %p
               = "Ditt fasta telefonnummer finns lagrat i Malmö stads centrala databas över alla anställda. Kontaktboken visar vilket nummer som är knutet till dig. Om det visas fel telefonnummer beställer du en ändring i "
@@ -113,7 +117,9 @@
 
       .control-group
         = f.label :skype, "Skype:", class: "control-label"
-        .controls= f.text_field :skype, class: "input-wide"
+        .controls
+          = f.text_field :skype, class: "input-wide"
+          %p.help= "Om du vill kan du ange vilken Skypeadress du har."
 
       %h2.form-group-title Kompetensprofil
 
