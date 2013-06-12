@@ -36,7 +36,7 @@ set :scm, :none
 set :repository, "."
 set :deploy_via, :copy # Use local copy, be sure to update to the stuff you want to deploy
 set :copy_exclude, ["spec", "log/*", "**/.git*", "**/.svn", "tmp/*", "doc", "**/.DS_Store",
-  "**/*.example", "config/database.yml*", "config/deploy.yml*", "config/app_config.yml*", "config/initializers/secret_token.rb",
+  "**/*.example", "config/database.yml*", "config/deploy.yml*", "config/app_config.yml*",
   ".bundle", ".rspec"]
 
 # set :scm, :git
@@ -58,7 +58,6 @@ namespace :deploy do
   task :symlink_config, roles: :app do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{shared_path}/config/app_config.yml #{release_path}/config/app_config.yml"
-    run "ln -nfs #{shared_path}/config/initializers/secret_token.rb #{release_path}/config/initializers/secret_token.rb"
   end
 
   desc 'Restart the application'

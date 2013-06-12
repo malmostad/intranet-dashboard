@@ -1,5 +1,6 @@
 defaults: &defaults
   auth_method: "ldap" # ldap or saml
+  secret_token: "FILL_IN"
   ldap:
     host: "ldap.example.org"
     port: "636"
