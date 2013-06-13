@@ -1,6 +1,7 @@
 // View for user data
 .show.user {
   section.vcard {
+    @include clearfix();
     .photo {
       @include columns(3);
       float: left;
@@ -91,26 +92,3 @@
   }
 }
 
-section#edit-user {
-  .control-group {
-    margin-bottom: .5em;
-  }
-  .change-info {
-    display: none;
-    padding: .6em .8em 0;
-    margin: .5em 0 1em;
-    @include radius(3px);
-    border: $border;
-    background: $backgroundLight;
-    font-family: $serif;
-    font-size: emize(14, 13);
-    line-height: 1.4;
-  }
-  .show-change-info {
-    margin-left: .4em;
-  }
-  p.help {
-    width: 90%;
-    margin-top: .4em;
-  }
-}

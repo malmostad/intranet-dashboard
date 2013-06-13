@@ -356,10 +356,13 @@
   }
 }
 
-
 // Force a one column form
 @media ( max-width: 40em ) {
   @include form-force-vertical;
+
+  section.box.index.users ul.results li p.note {
+    display: none;
+  }
 }
 
 @media ( max-width: 36em ) {

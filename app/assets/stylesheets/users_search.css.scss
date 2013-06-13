@@ -27,8 +27,7 @@ section.box.index.users {
     border-width: 1px 0;
     margin: 0 0 1em;
     .avatar {
-      float: left;
-      width: 6em;
+      @include columns(2);
       img {
         margin: .1em 0 0;
         width: 100%;
@@ -36,7 +35,8 @@ section.box.index.users {
       }
     }
     .info {
-      margin: 0 0 .1em 7em;
+      margin: 0 0 .1em;
+      @include columns(10, true);
     }
     h2 {
       font-weight: normal;
@@ -52,7 +52,7 @@ section.box.index.users {
         // margin-right: .5em;
       }
     }
-    p.bio {
+    p.note {
       font-family: $serif;
       font-size: emize(16);
       margin: 0;

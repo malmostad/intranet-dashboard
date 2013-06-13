@@ -77,7 +77,7 @@
             %p= link_to @user.manager.displayname, user_path(@user.manager.username)
             %p= @user.manager.title
         - else
-          = "#{possessive(@user.displayname)} chef har inte loggat in på min sida än"
+          %p= "#{possessive(@user.displayname)} chef har inte loggat in på min sida än"
 
       - if @user.subordinates.present?
         %section.org
@@ -100,3 +100,11 @@
           %p= "Early adopter: #{@user.early_adopter? ? 'Ja' : 'Nej'}"
           %p= "Första inloggningen: #{l @user.created_at, format: :short}"
         %p= "Senast inloggad: #{l @user.last_login, format: :short}"
+
+  - if admin_or_myself?
+    .dropdown.box-menu.pull-right
+      %a#user-menu.dropdown-toggle{ "role" => "button", "data-toggle" => "dropdown", "href" => "#", "title" => "Redigera profilen" }
+        %span.icon-caret-down.icon-large
+      %menu.dropdown-menu{ "aria-labelledby" => "feeds-dialog-menu" }
+        %li= link_to "Redigera profil...", edit_user_path(@user)
+        %li= link_to "Byt bild...", edit_avatar_path(@user)
