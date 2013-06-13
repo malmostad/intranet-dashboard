@@ -33,6 +33,58 @@ section.vcard {
     .title {
     }
   }
+
+  section.address {
+    @include columns(6);
+  }
+
+  section.org {
+    @include columns(6,true);
+    li {
+      @include clearfix();
+      margin-bottom: .2em;
+    }
+    .photo {
+      width: 3em;
+      float: left;
+      margin-top: .3em;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+    .text {
+      margin: 0 0 0 4.5em;
+      font-family: $sansSerif;
+      font-size: emize(13);
+      p {
+        margin: 0;
+      }
+    }
+  }
+  section.competence {
+    @include columns(6);
+  }
+  section.intranet-activities {
+    @include columns(6, true);
+  }
+
+  section.personal {
+    @include columns(6);
+  }
+  section.misc {
+    @include columns(6, true);
+  }
+
+  section.address,
+  section.competence,
+  section.intranet-activities,
+  section.personal,
+  section.misc {
+    p {
+      font-size: emize(13);
+    }
+  }
 }
 
 

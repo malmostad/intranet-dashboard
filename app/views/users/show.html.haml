@@ -2,15 +2,15 @@
 %section.box.show.user{ class: admin_or_myself? ? "edit-controls" : ""}
   %h1.box-title= h1
   .box-content.form-horizontal.form-data
-    .actions.top
-      - unless myself?
-        .colleagueship
-          - if @colleagueship.present?
-            %button.btn.btn-mini.remove{ data: { "colleagueship-id" => @colleagueship.id, "path" => colleagueships_path, "user-id" => @user.id }} Följer
-          - else
-            %button.btn.btn-primary.btn-mini.add{ data: { path: colleagueships_path, "user-id" => @user.id }} Följ
-      - if admin_or_myself?
-        .change-profile= link_to "Redigera profil", edit_user_path(@user), class: "btn btn-small"
+    / .actions.top
+    /   - unless myself?
+    /     .colleagueship
+    /       - if @colleagueship.present?
+    /         %button.btn.btn-mini.remove{ data: { "colleagueship-id" => @colleagueship.id, "path" => colleagueships_path, "user-id" => @user.id }} Följer
+    /       - else
+    /         %button.btn.btn-primary.btn-mini.add{ data: { path: colleagueships_path, "user-id" => @user.id }} Följ
+    /   - if admin_or_myself?
+    /     .change-profile= link_to "Redigera profil", edit_user_path(@user), class: "btn btn-small"
 
     %section.vcard
       .photo= image_tag @user.avatar.url(:large), alt: "Profilbild"
@@ -26,122 +26,75 @@
             %span.team= link_to @user.department, users_path(department: @user.department)
         %p.phone= [@user.phone, @user.cell_phone].reject(&:blank?).join(", ")
         %p.email= @user.email
-        %p.status_message= "Statusmeddelande: #{@user.status_message}"
+        %p.status_message= "Statusmeddelande: #{@user.status_message || "Jag har ingen status än"}"
 
-
-      %h2.form-group-title Arbetsplats
-      .control-group.readonly
-        .control-label Rumsnummer:
-        .controls
-          = @user.room
-      .control-group.readonly
-        .control-label Gatuadress:
-        .controls
-          = @user.address
+      %section.address
+        %h2.form-group-title Arbetsplats
+        %p.room= "Rumsnummer: #{@user.room}"
+        %p
+          = "Gatuadress:"
           %br
-          = "#{@user.post_code} #{@user.postal_town}"
+          - if @user.address.present?
+            %span.street-address= link_to @user.address, show_on_map(@user.address)
+            %br
+            %span.postal-code= "#{@user.post_code} "
+            %span.locality= "#{@user.postal_town}"
 
-    %h2.form-group-title Organisation
-
-    .control-group.readonly
-      .control-label Rapporterar till:
-      .controls
+      %section.org
+        %h2.form-group-title= "Rapporterar till:"
         - if @user.manager.present?
-          = link_to @user.manager.displayname, user_path(@user.manager.username)
+          .photo= link_to image_tag(@user.manager.avatar.url(:tiny_quadrat), alt: "Profilbild"), user_path(@user.manager.username)
+          .text
+            %p= link_to @user.manager.displayname, user_path(@user.manager.username)
+            %p= @user.manager.title
         - else
           = "#{possessive(@user.displayname)} chef har inte loggat in på min sida än"
 
-    .control-group.readonly
-      .control-label Linjechef till:
-      .controls
-        %ul
-          - @user.subordinates.each do |subordinate|
-            %li= link_to subordinate.displayname, user_path(subordinate.username)
+        - if @user.subordinates.present?
+          %h2.form-group-title= "Linjechef till:"
+          %ul
+            - @user.subordinates.each do |subordinate|
+              %li
+                .photo= link_to image_tag(subordinate.avatar.url(:tiny_quadrat), alt: "Profilbild"), user_path(subordinate.username)
+                .text
+                  %p= link_to subordinate.displayname, user_path(subordinate.username)
+                  %p= subordinate.title
 
-    %h2.form-group-title Kompetensprofil
+      %section.competence
+        %h2.form-group-title Kompetensprofil
+        %p= "Kunskapsområden: #{@user.skills.map(&:name).join(", ")}"
+        %p= "Språkkunskaper: #{@user.languages.map(&:name).to_sentence.humanize}"
 
-    .control-group.readonly
-      .control-label Kunskapsområden:
-      .controls
-        = @user.skills.map(&:name).join(", ")
+      %section.intranet-activities
+        %h2.form-group-title Kominaktiviteter
+        %p= link_to "Nyheter", "http://webapps04.malmo.se/nyheter/author/#{@user.username}"
+        %p= link_to "Blogginlägg", "http://webapps04.malmo.se/blogg/author/#{@user.username}"
 
-    .control-group.readonly
-      .control-label Språkkunskaper:
-      .controls#language_list
-        = @user.languages.map(&:name).to_sentence.humanize
+      %section.personal
+        %h2.form-group-title Personsligt
+        .note= simple_format @user.private_bio
+        %p.twitter
+          = "Twitter:"
+          - if @user.twitter.present?
+            = link_to "@#{@user.twitter}", "https://twitter.com/#{@user.twitter}"
+        %p.skype= "Skype: #{@user.skype}"
+        %p.homepage
+          = "Privat hemsida:"
+          - if @user.homepage.present?
+            = link_to @user.homepage, @user.homepage
 
+      %section.misc
+        %h2.form-group-title Övrigt
+        %p= "Grundprofil i Komin: #{@user.roles.map(&:name).to_sentence}"
+        %p= "Användarnamn: @user.username"
 
-    %h2.form-group-title Kominaktiviteter
-    .control-group.readonly
-      .control-label Nyheter:
-      .controls= link_to "Visa nyheter", "http://webapps04.malmo.se/nyheter/author/#{@user.username}"
-
-    .control-group.readonly
-      .control-label Blogginlägg:
-      .controls= link_to "Visa blogginlägg", "http://webapps04.malmo.se/blogg/author/#{@user.username}"
-
-
-    %h2.form-group-title Personsligt
-
-    .control-group.readonly
-      .control-label Om mig, personlig bio:
-      .controls
-        = simple_format @user.private_bio
-
-    .control-group.readonly
-      .control-label Twitter:
-      .controls
-        - if @user.twitter.present?
-          = link_to "@#{@user.twitter}", "https://twitter.com/#{@user.twitter}"
-
-    .control-group.readonly
-      .control-label Privat hemsida:
-      - if @user.homepage.present?
-        .controls
-          = link_to @user.homepage, @user.homepage
-
-    %h2.form-group-title Övrigt
-    .control-group.readonly
-      .control-label Grundprofil i Komin:
-      .controls
-        = @user.roles.map(&:name).to_sentence
-
-    .control-group.readonly
-      .control-label Användarnamn:
-      .controls
-        = @user.username
-
-    .control-group.readonly
-      .control-label Skype:
-      .controls
-        = @user.skype
-
-    - if admin?
-      .control-group.readonly
-        .control-label Administratör:
-        .controls
-          = @user.admin? ? "Ja" : "Nej"
-
-    - if admin?
-      .control-group.readonly
-        .control-label Early adopter:
-        .controls
-          = @user.early_adopter? ? "Ja" : "Nej"
-
-    .control-group.readonly
-      .control-label Senast inloggad:
-      - if @user.last_login.blank?
-        .controls –
-      - else
-        .controls= l @user.last_login, format: :short
-
-    .control-group.readonly
-      .control-label Första inloggningen:
-      .controls= l @user.created_at, format: :short
+        - if admin?
+          %p= "Administratör: #{@user.admin? ? 'Ja' : 'Nej'}"
+          %p= "Early adopter: #{@user.early_adopter? ? 'Ja' : 'Nej'}"
+          %p= "Första inloggningen: #{l @user.created_at, format: :short}"
+        %p= "Senast inloggad: #{l @user.last_login, format: :short}"
 
     - if admin_or_myself?
       .actions.change-profile
       = link_to "Redigera profil", edit_user_path(@user), class: "btn btn-small"
       = link_to "Byt bild", edit_avatar_path(@user), class: "change-avatar btn btn-mini"
-
-

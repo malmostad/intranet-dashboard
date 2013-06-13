@@ -36,4 +36,8 @@ module ApplicationHelper
   def add_icon_text
     raw "#{content_tag(:span, nil, class: 'icon-plus')} Lägg till"
   end
+
+  def show_on_map(address)
+    "https://komin.malmo.se/karta?#{{zoomlevel: 4, maptype: "karta", poi: address}.to_query}"
+  end
 end
