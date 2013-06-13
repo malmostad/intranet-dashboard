@@ -1,45 +1,52 @@
-section.vcard {
-  .photo {
-    width: 12em;
-    float: left;
-    margin-top: .3em;
-    img {
-      width: 100%;
-      height: auto;
+// View for user data
+.show.user {
+  section.vcard {
+    .photo {
+      @include columns(3);
+      float: left;
+      margin-top: .3em;
+      img {
+        width: 100%;
+        height: auto;
+      }
+      .btn {
+        margin-bottom: 1em;
+      }
+    }
+    .main-card {
+      @include columns(9, true);
+      margin: 0 0 2em;
+      .fn {
+        font-size: emize(26, 16);
+        font-family: $serif;
+        font-weight: normal;
+        margin: 0 0 .2em;
+      }
+      .professional-bio {
+        font-family: $serif;
+        margin-bottom: .5em;
+        line-height: 1.4;
+      }
+      .org, .phone, .email, .status_message {
+        font-family: $sansSerif;
+        font-size: emize(13);
+        margin: 0;
+      }
+      .email {
+        margin: 0 0 1em;
+      }
+      .title {
+      }
     }
   }
-  .main-card {
-    @include clearfix();
-    margin: 0 0 0 13em;
-    .fn {
-      font-size: emize(26, 16);
-      font-family: $serif;
-      font-weight: normal;
-      margin: 0 0 .2em;
-    }
-    .professional-bio {
-      font-family: $serif;
-      margin-bottom: .5em;
-      line-height: 1.4;
-    }
-    .org, .phone, .email, .status_message {
-      font-family: $sansSerif;
-      font-size: emize(13);
-      margin: 0;
-    }
-    .email {
-      margin: 0 0 1em;
-    }
-    .title {
-    }
-  }
-
-  section.address {
+  .employee-column-1 {
     @include columns(6);
+  }
+  .employee-column-2 {
+    @include columns(6, true);
   }
 
   section.org {
-    @include columns(6,true);
     li {
       @include clearfix();
       margin-bottom: .2em;
@@ -47,117 +54,40 @@ section.vcard {
     .photo {
       width: 3em;
       float: left;
-      margin-top: .3em;
+      margin-top: .2em;
       img {
         width: 100%;
         height: auto;
       }
     }
     .text {
-      margin: 0 0 0 4.5em;
-      font-family: $sansSerif;
-      font-size: emize(13);
+      margin: 0 0 0 3.5em;
       p {
         margin: 0;
       }
     }
   }
-  section.competence {
-    @include columns(6);
-  }
-  section.intranet-activities {
-    @include columns(6, true);
-  }
-
-  section.personal {
-    @include columns(6);
-  }
-  section.misc {
-    @include columns(6, true);
-  }
-
+  section.org,
   section.address,
   section.competence,
   section.intranet-activities,
   section.personal,
   section.misc {
+    @include clearfix();
+    margin: 0 0 1em;
     p {
       font-size: emize(13);
+      margin: 0 0 .5em;
     }
   }
-}
-
-
-// View for user data
-.show.user {
-  h2.form-group-title {
-    margin-bottom: 0;
-  }
-
-  .controls li {
-    margin-bottom: .4em;
-  }
-
-  // Pseudo labels
-  .control-group {
-    div.control-label {
-      font-size: emize(13);
-      line-height: 1.4em;
-    }
-  }
-
-  // Show views w/form layout
-  .control-group.readonly {
-    margin-bottom: 0;
-    .control-label {
-      margin-top: 0;
-      padding: .8em 0;
-      font-size: emize(13);
-    }
-    .controls {
-      font-size: emize(13);
-      > * {
-        font-size: emize(13, 13);
-      }
-      line-height: 1.4em;
-      margin-top: 0;
-      padding: .8em 0;
-      .actions {
-        margin: .6em 0 0;
-      }
-    }
-  }
-  .change-avatar {
+  .colleagueship {
     float: right;
-    width: 4.8em;
-    margin: 0;
-  }
-  .actions.change-profile {
-    float: left;
-    margin: 1em 0 0;
-  }
-  .actions.top {
-    @include clearfix();
-    margin-bottom: 1em;
-    .colleagueship {
-      float: right;
-      .add, .remove {
-        width: 7em;
-      }
-    }
-    .change-profile {
-      float: left;
+    button {
+      width: 7em;
     }
   }
-}
-
-.controls .role {
-  margin-bottom: 1em;
-  h3 {
-    margin: 0 0 .4em;
-    line-height: 1.6;
-    font-weight: normal;
-    font-size: emize(13);
+  h2.form-group-title {
+    margin: 0 0 .5em;
   }
 }
 

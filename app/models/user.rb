@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :shortcuts
   has_many :user_agents, dependent: :destroy
 
-  has_many :subordinates, class_name: "User", foreign_key: "manager_id"
+  has_many :subordinates, class_name: "User", foreign_key: :manager_id, order: :first_name
   belongs_to :manager, class_name: "User"
 
   has_many :user_languages

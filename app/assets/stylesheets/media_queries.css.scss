@@ -347,6 +347,13 @@
   section#feature {
     margin: 1em .7em 1em;
   }
+
+  .show.user {
+    .employee-column-1,
+    .employee-column-2 {
+      @include columns(12);
+    }
+  }
 }
 
 
