@@ -33,10 +33,14 @@
         font-size: emize(13);
         margin: 0;
       }
+      .title {
+        margin: 0 0 .5em;
+      }
+      .org {
+        margin: 0 0 .5em;
+      }
       .email {
         margin: 0 0 1em;
-      }
-      .title {
       }
     }
   }
@@ -89,6 +93,12 @@
   }
   h2.form-group-title {
     margin: 0 0 .5em;
+  }
+  section.personal .note p {
+    font-family: $serif;
+    font-size: emize(14);
+    margin-bottom: .5em;
+    line-height: 1.4;
   }
 }
 

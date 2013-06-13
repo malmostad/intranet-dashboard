@@ -18,8 +18,6 @@
               %button.btn.btn-primary.btn-mini.add{ data: { path: colleagueships_path, "user-id" => @user.id }} Följ
 
         %h2.fn= "#{@user.first_name} #{@user.last_name}"
-
-        = simple_format @user.professional_bio, class: "professional-bio"
         %p.org
           - if @user.title.present?
             %span.title= "#{@user.title}, "
@@ -27,6 +25,8 @@
             %span.department= link_to "#{@user.company_short}, ", users_path(company: @user.company)
           - if @user.department.present?
             %span.team= link_to @user.department, users_path(department: @user.department)
+
+        = simple_format @user.professional_bio, class: "professional-bio"
         %p.phone= [@user.phone, @user.cell_phone].reject(&:blank?).join(", ")
         %p.email= @user.email
         %p.status_message= "Statusmeddelande: #{@user.status_message || "Jag har ingen status än"}"
