@@ -2,7 +2,7 @@ section.vcard {
   .photo {
     width: 12em;
     float: left;
-    margin-top: .2em;
+    margin-top: .3em;
     img {
       width: 100%;
       height: auto;
@@ -20,8 +20,9 @@ section.vcard {
     .professional-bio {
       font-family: $serif;
       margin-bottom: .5em;
+      line-height: 1.4;
     }
-    .org, .phone, .email {
+    .org, .phone, .email, .status_message {
       font-family: $sansSerif;
       font-size: emize(13);
       margin: 0;
@@ -37,6 +38,10 @@ section.vcard {
 
 // View for user data
 .show.user {
+  h2.form-group-title {
+    margin-bottom: 0;
+  }
+
   .controls li {
     margin-bottom: .4em;
   }

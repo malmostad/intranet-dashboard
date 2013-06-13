@@ -5,13 +5,8 @@
     = form_for @user, html: { class: "form-horizontal" } do |f|
       - if @user.errors.any?
         .warning= t 'messages.validation_errors'
-
-      - if @user_roles.empty?
-        %p.warning= "Välj en eller flera förvaltningar och arbetsfält nedan."
-      - elsif !@user_roles.include? 'department'
-        %p.warning= "Välj en eller flera förvaltningar nedan."
-      - elsif !@user_roles.include? 'working_field'
-        %p.warning= "Välj en eller flera arbetsfält nedan."
+      - elsif @user.roles.empty?
+        %p.warning= "Välj en eller flera förvaltningar/arbetsfält nedan."
 
       .control-group.readonly
         .control-label Namn:
@@ -60,14 +55,14 @@
           = f.text_field :status_message, class: "input-wide"
           %p.help= raw "Skriv vad du arbetar med just nu. Kollegor som följer dig kan då se detta. Din status visas och kan också uppdateras direkt på ”Min sida”."
 
-      %h2.form-group-title#roles Grundprofil i Komin:
-
+      %h2.form-group-title Grundprofil i Komin:
       .control-group
         .control-label= "Förvaltningar:"
         .controls
           %p.help= "Här väljer du vilken/vilka förvaltningar/arbetsfält du vill se i Kominflikarna Min förvaltning, Mitt arbetsfält högst upp i Komin."
-          - if !@user_roles.include? 'department'
-            %p.warning= "Välj en eller flera förvaltningar."
+          - @user.errors[:roles].each do |msg|
+            .help-inline.warning= "#{msg}"
+          = f.hidden_field "role_ids[]", value: 0
           - @roles.select { |r| r.category == "department" }.each do |role|
             %label.checkbox
               = check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: dom_id(role)
@@ -76,8 +71,6 @@
       .control-group
         .control-label= "Arbetsfält:"
         .controls
-          - if !@user_roles.include? 'working_field'
-            %p.warning= "Välj en eller flera arbetsfält."
           - @roles.select { |r| r.category == "working_field" }.each do |role|
             %label.checkbox
               = check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: dom_id(role)
@@ -91,7 +84,7 @@
           = @user.email
           = link_to "(Info)", "#", class: "show-change-info"
           .change-info
-            %p= "Din e-postadress finns lagrad i Malmö stads centrala databas över alla anställda. Kontaktboken visar vilken epostadress som är knuten till dig. Om det visas fel epostadress, kontakta ITS, 040-342727."
+            %p= "Din e-postadress finns lagrad i Malmö stads centrala databas över alla anställda. Kontaktboken visar vilken e-postadress som är knuten till dig. Om det visas fel e-postadress, kontakta ITS, 040-342727."
 
       .control-group.readonly
         .control-label Fast telefon:
@@ -126,24 +119,17 @@
         = f.label :address, "Rumsnummer:", class: "control-label"
         .controls
           = f.text_field :room
+          %p.help= "Ange beteckningen på det rum där du huvudsakligen bedriver ditt arbete."
       .control-group
         = f.label :address, "Gatuadress:", class: "control-label"
         .controls
-          = f.text_field :address
+          = f.text_field :address, class: "input-wide"
+          %p.help= "Skriv de första tecknen i adressen och välj adress från förslagslistan."
           = f.hidden_field :geo_position_x
           = f.hidden_field :geo_position_y
-      .control-group
-        = f.label :post_code, "Postnummer:", class: "control-label"
-        .controls
-          = f.text_field :post_code, :readonly => true, :tabindex => -1, placeholder: "Hämtas automatiskt"
-      .control-group
-        = f.label :postal_town, "Postadress:", class: "control-label"
-        .controls
-          = f.text_field :postal_town, :readonly => true, :tabindex => -1, placeholder: "Hämtas automatiskt"
-      .control-group
-        = f.label :neighborhood, "Stadsområde:", class: "control-label"
-        .controls
-          = f.text_field :neighborhood, :readonly => true, :tabindex => -1, placeholder: "Hämtas automatiskt"
+          = f.hidden_field :post_code
+          = f.hidden_field :postal_town
+          = f.hidden_field :neighborhood
 
       %h2.form-group-title Kompetensprofil
 

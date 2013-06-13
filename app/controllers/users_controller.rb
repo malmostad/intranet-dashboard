@@ -38,8 +38,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.where(username: params[:username]).includes(:subordinates).first
-    @user_roles = user_roles
-    @roles = Role.order(:name)
     @colleagueship = current_user.colleagueships.where(colleague_id: @user.id).first
 
     if @user.blank?
@@ -71,7 +69,6 @@ class UsersController < ApplicationController
     if admin? && editing_myself? && params[:user][:admin] == "0"
       @user.errors.add(:admin, "Du kan inte ta bort din egen administratörsrättighet!")
     end
-    # @user.errors.add(:admin, "Du kan inte ta bort din egen administratörsrättighet!")
 
     respond_to do |format|
       # Some fields require admin rights for mass assignment

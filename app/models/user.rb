@@ -38,6 +38,8 @@ class User < ActiveRecord::Base
     self.status_message = status_message.slice(0, 70) if status_message.present?
   end
 
+  validates :roles, presence: { message: "Du måste välja minst en förvaltning och ett arbetsfält" }
+
   validates_uniqueness_of :username
   validates :username, presence: { allow_blank: false }
 

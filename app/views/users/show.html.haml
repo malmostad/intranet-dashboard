@@ -12,36 +12,34 @@
       - if admin_or_myself?
         .change-profile= link_to "Redigera profil", edit_user_path(@user), class: "btn btn-small"
 
-
     %section.vcard
       .photo= image_tag @user.avatar.url(:large), alt: "Profilbild"
       .main-card
         %h2.fn= "#{@user.first_name} #{@user.last_name}"
-        %p.org
-          %span.title= "#{@user.title}, "
-          %span.department= link_to "#{@user.company_short}, ", users_path(company: @user.company)
-          %span.team= link_to @user.department, users_path(department: @user.department)
-        %p.phone= [@user.phone, @user.cell_phone].flatten.join(", ")
-        %p.email= @user.email
         = simple_format @user.professional_bio, class: "professional-bio"
+        %p.org
+          - if @user.title.present?
+            %span.title= "#{@user.title}, "
+          - if @user.company.present?
+            %span.department= link_to "#{@user.company_short}, ", users_path(company: @user.company)
+          - if @user.department.present?
+            %span.team= link_to @user.department, users_path(department: @user.department)
+        %p.phone= [@user.phone, @user.cell_phone].reject(&:blank?).join(", ")
+        %p.email= @user.email
+        %p.status_message= "Statusmeddelande: #{@user.status_message}"
 
 
-
-
-
-
-
-
-    %p.status-message= @user.status_message
-    .control-group.readonly
-      .control-label Grundprofil i Komin:
-      .controls
-        = @user.roles.map(&:name).to_sentence
-
-    .control-group.readonly
-      .control-label Skype:
-      .controls
-        = @user.skype
+      %h2.form-group-title Arbetsplats
+      .control-group.readonly
+        .control-label Rumsnummer:
+        .controls
+          = @user.room
+      .control-group.readonly
+        .control-label Gatuadress:
+        .controls
+          = @user.address
+          %br
+          = "#{@user.post_code} #{@user.postal_town}"
 
     %h2.form-group-title Organisation
 
@@ -102,27 +100,21 @@
         .controls
           = link_to @user.homepage, @user.homepage
 
-
-    %h2.form-group-title Arbetsplats
-    .control-group.readonly
-      .control-label Rumsnummer:
-      .controls
-        = @user.room
-    .control-group.readonly
-      .control-label Gatuadress:
-      .controls
-        = @user.address
-        %br
-        = "#{@user.post_code} #{@user.postal_town}"
-      .control-label Stadsområde:
-      .controls
-        = @user.neighborhood
-
     %h2.form-group-title Övrigt
+    .control-group.readonly
+      .control-label Grundprofil i Komin:
+      .controls
+        = @user.roles.map(&:name).to_sentence
+
     .control-group.readonly
       .control-label Användarnamn:
       .controls
         = @user.username
+
+    .control-group.readonly
+      .control-label Skype:
+      .controls
+        = @user.skype
 
     - if admin?
       .control-group.readonly
