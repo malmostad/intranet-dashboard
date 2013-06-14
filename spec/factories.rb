@@ -5,6 +5,9 @@ FactoryGirl.define do
     sequence(:username) { |n| "user-#{n}" }
     first_name 'First'
     last_name 'Last'
+
+    role_ids Role.all.each.map(&:id)
+
     sequence(:email) { |n| "user-#{n}@example.org" }
     sequence(:displayname) { |n| "First-#{n} Last-#{n}" }
     last_login Time.now

@@ -7,7 +7,7 @@ class RolesController < ApplicationController
   before_filter :require_admin
 
   def index
-    @roles = Role.order(:name)
+    @roles = Role.order(:category, :name)
   end
 
   def new
