@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
-
 FactoryGirl.define do
+  factory :role do
+    sequence(:name) { |n| "Role-#{n}" }
+    homepage_url 'http://rspec.info/'
+    category Role::CATEGORIES.keys.first
+  end
+
   factory :user do
     sequence(:username) { |n| "user-#{n}" }
     first_name 'First'
     last_name 'Last'
-
-    role_ids Role.all.each.map(&:id)
-
+    roles 1.upto(2).map {|n| FactoryGirl.create(:role, category: Role::CATEGORIES.keys[n % Role::CATEGORIES.size]) }
     sequence(:email) { |n| "user-#{n}@example.org" }
     sequence(:displayname) { |n| "First-#{n} Last-#{n}" }
     last_login Time.now
@@ -19,12 +22,6 @@ FactoryGirl.define do
   end
 
   factory :add_collagues, parent: :user do
-  end
-
-  factory :role do
-    sequence(:name) { |n| "Role-#{n}" }
-    homepage_url 'http://rspec.info/'
-    category Role::CATEGORIES.keys.first
   end
 
   factory :feed do
