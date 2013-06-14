@@ -5,15 +5,15 @@
     %thead
       %tr
         %th Namn
-        %th Kategori
-        %th Vald
+        %th.secondary Kategori
+        %th.secondary Vald
         %th
     %tbody
       - @roles.each do |role|
         %tr
           %td= link_to role.name, edit_role_path(role)
-          %td= Role::CATEGORIES[role.category]
-          %td= role.users.count
+          %td.secondary= Role::CATEGORIES[role.category]
+          %td.secondary= role.users.count
           %td= link_to delete_icon_text, role, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini"
 
       %tr
