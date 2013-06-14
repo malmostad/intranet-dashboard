@@ -30,6 +30,8 @@
         = f.label :professional_bio, "Om mig:", class: "control-label"
         .controls
           = f.text_area :professional_bio, class: "input-wide", rows: 7
+          - @user.errors[:professional_bio].each do |msg|
+            .help-inline.warning= "#{msg}"
           %p.help= raw  "Skriv en kort beskrivning av vad du arbetar med i Malmö stad, vad du ansvarar för. <em>Observera</em>: personligt om dig (exempelvis ”två barn, gillar att resa”) skriver du in i fältet ”Personlig bio” längre ned på sidan, <em>inte</em> här."
 
       .control-group.readonly
@@ -152,6 +154,8 @@
         = f.label :private_bio, "Om mig, personlig bio:", class: "control-label"
         .controls
           = f.text_area :private_bio, class: "input-wide", rows: 7
+          - @user.errors[:professional_bio].each do |msg|
+            .help-inline.warning= "#{msg}"
           %p.help= raw "Om du vill kan du skriva en personlig presentation om dig. <em>Observera:</em> yrkespresentationen om dig (vad du arbetar med i Malmö stad, vad du ansvarar för) skriver du in i fältet ”Om mig” högre upp på sidan, <em>inte</em> här."
 
       .control-group

@@ -43,6 +43,11 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :username
   validates :username, presence: { allow_blank: false }
 
+  validates :professional_bio, :private_bio, length: {
+    maximum: 300,
+    too_long: "Max %{count} tecken"
+  }
+
   # Paperclip image, options is in the Paperclip initializer
   has_attached_file :avatar
   before_post_process :validate_avatar_file_size
