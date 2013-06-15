@@ -12,7 +12,7 @@ def create_user_and_login
 end
 
 def create_user_with_roles_with_feeds
-  1.upto(100) {|n| FactoryGirl.create(:role, category: Role::CATEGORIES.keys[n % Role::CATEGORIES.size]) }
+  1.upto(20) {|n| FactoryGirl.create(:role, category: Role::CATEGORIES.keys[n % Role::CATEGORIES.size]) }
   1.upto(20)  {|n|
     f = FactoryGirl.build(:feed,
       category: Feed::CATEGORIES.keys[n % Feed::CATEGORIES.size],
