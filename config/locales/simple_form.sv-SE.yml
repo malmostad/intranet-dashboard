@@ -4,7 +4,7 @@ sv-SE:
     "nej": 'Nej'
     required:
       text: 'obligatorisk'
-      mark: ''
+      mark: '*'
       # You can uncomment the line below if you need to overwrite the whole required html.
       # When using html, text and mark won't be used.
       # html: '<abbr title="required">*</abbr>'
@@ -12,19 +12,15 @@ sv-SE:
       default_message: "Vänligen korrigera nedanstående markerade uppgifter."
     labels:
       user:
-        professional_bio: "Om mig:"
-        status_message: "Statusmeddelande:"
-        skype: "Skype:"
-        room: "Rumsnummer:"
-        address: "Gatuadress:"
-        skill_list: "Kunskapsområden:"
-        language_list: "Språkkunskaper:"
-        private_bio: "Om mig, personlig bio:"
-        homepage: "Hemsida:"
-        twitter: "Twitter:"
-        admin: "Administratör:"
-        early_adopter: "Early adopter:"
-
+        professional_bio: "Om mig"
+        status_message: "Statusmeddelande"
+        room: "Rumsnummer"
+        address: "Gatuadress"
+        skill_list: "Kunskapsområden"
+        language_list: "Språkkunskaper"
+        private_bio: "Om mig, personlig bio"
+        homepage: "Hemsida"
+        admin: "Administratör"
     hints:
       user:
         professional_bio: "Skriv en kort beskrivning av vad du arbetar med i Malmö stad, vad du ansvarar för. <em>Observera</em>: personligt om dig skriver du in i fältet ”Personlig bio” längre ned"
