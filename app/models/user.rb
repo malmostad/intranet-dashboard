@@ -34,10 +34,6 @@ class User < ActiveRecord::Base
   has_many :inverse_colleagueships, class_name: "Colleagueship", foreign_key: "colleague_id", dependent: :destroy
   has_many :inverse_colleagues, through: :inverse_colleagueships, source: :user
 
-  before_validation do
-    self.status_message = status_message.slice(0, 70) if status_message.present?
-  end
-
   validates :roles, presence: { message: "Du måste välja minst en förvaltning och ett arbetsfält" }
 
   validates_uniqueness_of :username
@@ -45,6 +41,10 @@ class User < ActiveRecord::Base
 
   validates :professional_bio, :private_bio, length: {
     maximum: 300,
+    too_long: "Max %{count} tecken"
+  }
+  validates :status_message, length: {
+    maximum: 70,
     too_long: "Max %{count} tecken"
   }
 

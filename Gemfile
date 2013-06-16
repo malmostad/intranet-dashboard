@@ -16,6 +16,7 @@ gem 'mysql2', '0.3.11'
 
 gem 'paperclip', '3.4.2'
 gem 'cocaine', '0.5.1'
+gem 'simple_form', '2.1.0'
 
 gem 'daemons-rails'
 

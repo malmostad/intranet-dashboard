@@ -2,10 +2,10 @@
 %section.box.form#edit-user
   %h1.box-title= h1
   .box-content
-    = form_for @user, html: { class: "form-horizontal" } do |f|
-      - if @user.errors.any?
-        .warning= t 'messages.validation_errors'
-      - elsif @user.roles.empty?
+    = simple_form_for @user, html: { class: "form-horizontal" } do |f|
+      = f.error_notification class: "warning"
+
+      - if @user.roles.empty? # When user is directed here to select roles
         %p.warning= "Välj en eller flera förvaltningar/arbetsfält nedan."
 
       .control-group.readonly
@@ -26,13 +26,7 @@
             %p= "Din HR-titel hämtas från HR-systemet och kontaktboken visar den titel som är kopplad till din primära anställning. Din HR-titel är den titel du fick med när du anställdes i Malmö stad. Ändring av HR-titeln kan endast göras när du byter tjänst."
             %p= "Om du upplever att du är anställd med fel titel, diskutera med din linjechef."
 
-      .control-group
-        = f.label :professional_bio, "Om mig:", class: "control-label"
-        .controls
-          = f.text_area :professional_bio, class: "input-wide", rows: 7
-          - @user.errors[:professional_bio].each do |msg|
-            .help-inline.warning= "#{msg}"
-          %p.help= raw  "Skriv en kort beskrivning av vad du arbetar med i Malmö stad, vad du ansvarar för. <em>Observera</em>: personligt om dig (exempelvis ”två barn, gillar att resa”) skriver du in i fältet ”Personlig bio” längre ned på sidan, <em>inte</em> här."
+      = f.input :professional_bio, input_html: { class: 'input-wide', rows: 7 }
 
       .control-group.readonly
         .control-label Förvaltning:
@@ -51,35 +45,14 @@
           .change-info
             %p= "Avdelningstillhörighet är under utveckling och kommer efter sommaren."
 
-      .control-group
-        = f.label :status_message, "Statusmeddelande:", class: "control-label"
-        .controls
-          = f.text_field :status_message, class: "input-wide"
-          %p.help= raw "Skriv vad du arbetar med just nu. Kollegor som följer dig kan då se detta. Din status visas och kan också uppdateras direkt på ”Min sida”."
+      = f.input :status_message, input_html: { class: 'input-wide' }
 
       %h2.form-group-title Grundprofil i Komin:
-      .control-group
-        .control-label= "Förvaltningar:"
-        .controls
-          %p.help= "Här väljer du vilken/vilka förvaltningar/arbetsfält du vill se i Kominflikarna Min förvaltning, Mitt arbetsfält högst upp i Komin."
-          - @user.errors[:roles].each do |msg|
-            .help-inline.warning= "#{msg}"
-          = f.hidden_field "role_ids[]", value: 0
-          - @roles.select { |r| r.category == "department" }.each do |role|
-            %label.checkbox
-              = check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: dom_id(role)
-              = role.name
-
-      .control-group
-        .control-label= "Arbetsfält:"
-        .controls
-          - @roles.select { |r| r.category == "working_field" }.each do |role|
-            %label.checkbox
-              = check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: dom_id(role)
-              = role.name
+      = f.association :roles, as: :check_boxes, collection: @roles.select { |r| r.category == "department" }, label: "Förvaltningar:"
+      = f.association :roles, as: :check_boxes, collection: @roles.select { |r| r.category == "working_field" }, label: "Arbetsfält:",
+          hint: "Här väljer du vilken/vilka förvaltningar/arbetsfält du vill se i Kominflikarna Min förvaltning, Mitt arbetsfält högst upp i Komin."
 
       %h2.form-group-title Kontakt
-
       .control-group.readonly
         .control-label E-post:
         .controls
@@ -110,87 +83,39 @@
               = link_to "IT-kompassen.", "http://marval.malmo.se/MSMSelfService/Itservice/telefoni-forandring.aspx"
               = "Om du behöver hjälp, kontakta ITS, 040-342727."
 
-      .control-group
-        = f.label :skype, "Skype:", class: "control-label"
-        .controls
-          = f.text_field :skype, class: "input-wide"
-          %p.help= "Om du vill kan du ange vilken Skypeadress du har."
+      = f.input :skype
 
       %h2.form-group-title Arbetsplats
-      .control-group
-        = f.label :address, "Rumsnummer:", class: "control-label"
-        .controls
-          = f.text_field :room
-          %p.help= "Ange beteckningen på det rum där du huvudsakligen bedriver ditt arbete."
-      .control-group
-        = f.label :address, "Gatuadress:", class: "control-label"
-        .controls
-          = f.text_field :address, class: "input-wide"
-          %p.help= "Skriv de första tecknen i adressen och välj från förslagslistan."
-          = f.hidden_field :geo_position_x
-          = f.hidden_field :geo_position_y
-          = f.hidden_field :post_code
-          = f.hidden_field :postal_town
-          = f.hidden_field :neighborhood
+      = f.input :room
+      = f.input :address, input_html: { class: 'input-wide' }
+      = f.hidden_field :geo_position_x
+      = f.hidden_field :geo_position_y
+      = f.hidden_field :post_code
+      = f.hidden_field :postal_town
+      = f.hidden_field :neighborhood
 
       %h2.form-group-title Kompetensprofil
+      = f.input :skill_list,
+        input_html: { "data-path" => skills_suggest_path, "data-load" => @user.skills.map{ |l| { id: l.name, name: l.name }}.to_json, class: "input-wide" }
 
-      .control-group
-        = f.label :skill_list, "Kunskapsområden:", class: "control-label"
-        .controls
-          = f.text_field(:skill_list, class: "input-wide", data: { path: skills_suggest_path, load: @user.skills.map{ |l| { id: l.name, name: l.name }}})
-          %p.help= "Skriv in ord som beskriver saker du kan, har ansvar för och sådant som du ska förknippas med i Malmö stad. När en kollega söker efter ett ord du angett får de träff på dig."
-
-      .control-group
-        = f.label :language_list, "Språkkunskaper:", class: "control-label"
-        .controls
-          = f.text_field(:language_list, class: "input-wide", data: { path: languages_suggest_path, load: @user.languages.map{ |l| { id: l.name, name: l.name }}})
-          %p.help= "Om du vill kan du ange vilka språk du kan. Detta kan hjälpa till internt i organisationen när en kollega letar efter en viss kompetens till ett projekt/en aktivitet."
-
+      = f.input :language_list,
+        input_html: { "data-path" => languages_suggest_path, "data-load" => @user.languages.map{ |l| { id: l.name, name: l.name }}.to_json, class: "input-wide" }
 
       %h2.form-group-title Personsligt
+      = f.input :private_bio, input_html: { class: 'input-wide', rows: 7 }
 
-      .control-group
-        = f.label :private_bio, "Om mig, personlig bio:", class: "control-label"
-        .controls
-          = f.text_area :private_bio, class: "input-wide", rows: 7
-          - @user.errors[:professional_bio].each do |msg|
-            .help-inline.warning= "#{msg}"
-          %p.help= raw "Om du vill kan du skriva en personlig presentation om dig. <em>Observera:</em> yrkespresentationen om dig (vad du arbetar med i Malmö stad, vad du ansvarar för) skriver du in i fältet ”Om mig” högre upp på sidan, <em>inte</em> här."
+      = f.input :twitter, wrapper: :prepend do
+        %span.add-on @
+        = f.input_field :twitter
 
-      .control-group
-        = f.label :twitter, "Twitter:", class: "control-label"
-        .controls
-          .input-prepend
-            %span.add-on @
-            = f.text_field :twitter, class: "input-wide"
-          %p.help= "Om du vill kan du ange vilken Twitteradress du har."
-
-      .control-group
-        = f.label :homepage, "Privat hemsida:", class: "control-label"
-        .controls
-          = f.text_field :homepage, class: "input-wide"
-          %p.help= "Om du vill kan du ange vilken privat hemsida du har."
+      = f.input :homepage, input_html: { class: 'input-wide' }
 
       - if admin?
-        .control-group.editable
-          .control-label Administratör:
-          .controls
-            %label.checkbox
-              = f.check_box :admin
-              Ja
-            - @user.errors[:admin].each do |msg|
-              .help-inline.warning= "#{msg}"
-
-        .control-group.editable
-          .control-label Early adopter:
-          .controls
-            %label.checkbox
-              = f.check_box :early_adopter
-              Ja
+        %h2.form-group-title Rättigheter
+        = f.input :admin
+        = f.input :early_adopter
 
       .control-group
         .controls
-          = f.submit t( 'actions.save' ), class: "btn btn-primary"
-          = link_to t( 'actions.cancel' ), user_path(@user.username), class: "btn"
-
+          = f.button :submit, :class => 'btn-primary'
+          = link_to t('actions.cancel'), user_path(@user.username), class: "btn"

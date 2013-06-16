@@ -1,0 +1,39 @@
+sv-SE:
+  simple_form:
+    "ja": 'Ja'
+    "nej": 'Nej'
+    required:
+      text: 'obligatorisk'
+      mark: ''
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: "Vänligen korrigera nedanstående markerade uppgifter."
+    labels:
+      user:
+        professional_bio: "Om mig:"
+        status_message: "Statusmeddelande:"
+        skype: "Skype:"
+        room: "Rumsnummer:"
+        address: "Gatuadress:"
+        skill_list: "Kunskapsområden:"
+        language_list: "Språkkunskaper:"
+        private_bio: "Om mig, personlig bio:"
+        homepage: "Hemsida:"
+        twitter: "Twitter:"
+        admin: "Administratör:"
+        early_adopter: "Early adopter:"
+
+    hints:
+      user:
+        professional_bio: "Skriv en kort beskrivning av vad du arbetar med i Malmö stad, vad du ansvarar för. <em>Observera</em>: personligt om dig skriver du in i fältet ”Personlig bio” längre ned"
+        status_message: "Skriv vad du arbetar med just nu. Kollegor som följer dig kan då se detta. Din status visas och kan också uppdateras direkt på ”Min sida”."
+        skype: "Om du vill kan du ange vilken Skype-adress du har."
+        room: "Ange beteckningen på det rum där du huvudsakligen bedriver ditt arbete."
+        address: "Skriv de första tecknen i adressen och välj från förslagslistan."
+        skill_list: "Skriv in ord som beskriver saker du kan, har ansvar för och sådant som du ska förknippas med i Malmö stad. När en kollega söker efter ett ord du angett får de träff på dig."
+        language_list: "Ange vilka språk du kan. Detta kan hjälpa till internt i organisationen när en kollega letar efter en viss kompetens till ett projekt/en aktivitet."
+        private_bio: "Om du vill kan du skriva en personlig presentation om dig. <em>Observera:</em> yrkespresentationen om dig skriver du in i fältet ”Om mig” högre upp på sidan."
+        homepage: "Om du vill kan du ange vilken privat hemsida du har."
+        twitter: "Om du vill kan du ange vilken Twitteradress du har."
