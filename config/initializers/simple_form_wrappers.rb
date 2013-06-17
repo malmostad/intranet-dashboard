@@ -37,9 +37,14 @@ SimpleForm.setup do |config|
     end
   end
 
-  # Wrappers for forms and inputs using the Twitter Bootstrap toolkit.
-  # Check the Bootstrap docs (http://twitter.github.com/bootstrap)
-  # to learn about the different styles for forms and inputs,
-  # buttons and other elements.
+  # Control group for display of a record without controls. Hint is optional.
+  config.wrappers :readonly, :tag => 'div', :class => 'control-group readonly' do |b|
+    b.use :label
+    b.wrapper :tag => 'div', :class => 'controls' do |ba|
+      ba.use :input
+      ba.use :hint, :wrap_with => { :tag => 'div', :class => 'help change-info' }
+    end
+  end
+
   config.default_wrapper = :bootstrap
 end

@@ -8,42 +8,23 @@
       - if @user.roles.empty? # When user is directed here to select roles
         %p.warning= "Välj en eller flera förvaltningar/arbetsfält nedan."
 
-      .control-group.readonly
-        .control-label Namn:
-        .controls
-          = "#{@user.first_name} #{@user.last_name}"
-          = link_to "(Info)", "#", class: "show-change-info"
-          .change-info
-            %p= "Ditt namn hämtas från HR-systemet. Ditt namn kan du ändra genom att kontakta din egen förvaltnings lokala HR-funktion. Det vanligaste är att du vill ändra för att ditt namn är felstavat eller för att du byter efternamn."
-            %p= "Kontaktuppgift till din lokala HR-finktion hittar du på Komin > Min förvaltning > Vår organisation."
+      = f.input :displayname, wrapper: :readonly do
+        = @user.displayname
+        = link_to "(Info)", "#", class: "show-change-info"
 
-      .control-group.readonly
-        .control-label HR-titel:
-        .controls
-          = @user.title
-          = link_to "(Info)", "#", class: "show-change-info"
-          .change-info
-            %p= "Din HR-titel hämtas från HR-systemet och kontaktboken visar den titel som är kopplad till din primära anställning. Din HR-titel är den titel du fick med när du anställdes i Malmö stad. Ändring av HR-titeln kan endast göras när du byter tjänst."
-            %p= "Om du upplever att du är anställd med fel titel, diskutera med din linjechef."
+      = f.input :title, wrapper: :readonly do
+        = @user.title
+        = link_to "(Info)", "#", class: "show-change-info"
 
       = f.input :professional_bio, input_html: { class: 'input-wide', rows: 7 }
 
-      .control-group.readonly
-        .control-label Förvaltning:
-        .controls
-          = @user.company_short
-          = link_to "(Info)", "#", class: "show-change-info"
-          .change-info
-            %p= "Din förvaltning hämtas från HR-systemet och kontaktboken visar den förvaltningstillhörighet som är kopplad till din primära anställning."
-            %p= "Om du upplever att kontaktboken visar en annan förvaltning än den du är anställd i, kontakta kominteamet@malmo.se."
+      = f.input :company, wrapper: :readonly do
+        = @user.company_short
+        = link_to "(Info)", "#", class: "show-change-info"
 
-      .control-group.readonly
-        .control-label Avdelning:
-        .controls
-          = @user.department
-          = link_to "(Info)", "#", class: "show-change-info"
-          .change-info
-            %p= "Avdelningstillhörighet är under utveckling och kommer efter sommaren."
+      = f.input :department, wrapper: :readonly do
+        = @user.department
+        = link_to "(Info)", "#", class: "show-change-info"
 
       = f.input :status_message, input_html: { class: 'input-wide' }
 
@@ -53,35 +34,28 @@
           hint: "Här väljer du vilken/vilka förvaltningar/arbetsfält du vill se i Kominflikarna Min förvaltning, Mitt arbetsfält högst upp i Komin."
 
       %h2.form-group-title Kontakt
-      .control-group.readonly
-        .control-label E-post:
-        .controls
-          = @user.email
-          = link_to "(Info)", "#", class: "show-change-info"
-          .change-info
-            %p= "Din e-postadress finns lagrad i Malmö stads centrala databas över alla anställda. Kontaktboken visar vilken e-postadress som är knuten till dig. Om det visas fel e-postadress, kontakta ITS, 040-342727."
 
-      .control-group.readonly
-        .control-label Fast telefon:
-        .controls
-          = @user.phone
-          = link_to "(Info)", "#", class: "show-change-info"
-          .change-info
-            %p
-              = "Ditt fasta telefonnummer finns lagrat i Malmö stads centrala databas över alla anställda. Kontaktboken visar vilket nummer som är knutet till dig. Om det visas fel telefonnummer beställer du en ändring i "
-              = link_to "IT-kompassen.", "http://marval.malmo.se/MSMSelfService/Itservice/telefoni-forandring.aspx"
-              = "Om du behöver hjälp, kontakta ITS, 040-342727."
+      = f.input :email, wrapper: :readonly do
+        = @user.email
+        = link_to "(Info)", "#", class: "show-change-info"
 
-      .control-group.readonly
-        .control-label Mobiltelefon:
-        .controls
-          = @user.cell_phone
-          = link_to "(Info)", "#", class: "show-change-info"
-          .change-info
-            %p
-              = "Ditt mobilnummer finns lagrat i Malmö stads centrala databas över alla anställda. Kontaktboken visar vilket nummer som är knutet till dig. Om det visas fel telefonnummer beställer du en ändring i "
-              = link_to "IT-kompassen.", "http://marval.malmo.se/MSMSelfService/Itservice/telefoni-forandring.aspx"
-              = "Om du behöver hjälp, kontakta ITS, 040-342727."
+      = f.input :phone, wrapper: :readonly do
+        = @user.phone
+        = link_to "(Info)", "#", class: "show-change-info"
+        .change-info
+          %p
+            = "Ditt fasta telefonnummer finns lagrat i Malmö stads centrala databas över alla anställda. Kontaktboken visar vilket nummer som är knutet till dig. Om det visas fel telefonnummer beställer du en ändring i "
+            = link_to "IT-kompassen.", "http://marval.malmo.se/MSMSelfService/Itservice/telefoni-forandring.aspx"
+            = "Om du behöver hjälp, kontakta ITS, 040-342727."
+
+      = f.input :cell_phone, wrapper: :readonly do
+        = @user.cell_phone
+        = link_to "(Info)", "#", class: "show-change-info"
+        .change-info
+          %p
+            = "Ditt mobilnummer finns lagrat i Malmö stads centrala databas över alla anställda. Kontaktboken visar vilket nummer som är knutet till dig. Om det visas fel telefonnummer beställer du en ändring i "
+            = link_to "IT-kompassen.", "http://marval.malmo.se/MSMSelfService/Itservice/telefoni-forandring.aspx"
+            = "Om du behöver hjälp, kontakta ITS, 040-342727."
 
       = f.input :skype
 
