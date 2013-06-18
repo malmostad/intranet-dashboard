@@ -2,8 +2,8 @@
 require 'spec_helper'
 
 describe Colleagueship do
-  let(:follower) { FactoryGirl.create(:user) }
-  let(:followed) { FactoryGirl.create(:user) }
+  let(:follower) { create(:user) }
+  let(:followed) { create(:user) }
 
   it "should not be set" do
     follower.colleagueships.should be_blank

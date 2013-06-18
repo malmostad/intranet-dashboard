@@ -9,7 +9,7 @@ feature "Status message" do
   end
 
   scenario "should be set" do
-    user = FactoryGirl.create(:user_with_status_message)
+    user = create(:user_with_status_message)
     login(user.username, 'stub')
     visit root_path
     page.should_not have_selector('#my-status .status', text: "Jag har ingen status än!")

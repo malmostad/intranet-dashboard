@@ -23,6 +23,7 @@ RSpec.configure do |config|
   config.mock_with :rspec
   config.infer_base_class_for_anonymous_controllers = true
   config.include Capybara::DSL
+  config.include FactoryGirl::Syntax::Methods
 
   # For Phantomjs to work, we use database_cleaner instead of transactional rollback
   config.use_transactional_fixtures = false

@@ -11,7 +11,7 @@ if APP_CONFIG["auth_method"] == "ldap"
     end
 
     scenario "should require login for profile page" do
-      user = FactoryGirl.create(:user)
+      user = create(:user)
       visit user_path(user.username)
       current_path.should eq(login_path)
       page.should have_selector('h1', text: "Logga in")
@@ -48,7 +48,7 @@ if APP_CONFIG["auth_method"] == "ldap"
     end
 
     scenario "should require admin role" do
-      user = FactoryGirl.create(:user, username: AUTH_CREDENTIALS["username"], admin: false)
+      user = create(:user, username: AUTH_CREDENTIALS["username"], admin: false)
       visit login_path
       fill_in 'username', with: user.username
       fill_in 'password', with: AUTH_CREDENTIALS["password"]
@@ -58,7 +58,7 @@ if APP_CONFIG["auth_method"] == "ldap"
     end
 
     scenario "should honor admin role" do
-      user = FactoryGirl.create(:user, username: AUTH_CREDENTIALS["username"], admin: true)
+      user = create(:user, username: AUTH_CREDENTIALS["username"], admin: true)
       visit login_path
       fill_in 'username', with: user.username
       fill_in 'password', with: AUTH_CREDENTIALS["password"]

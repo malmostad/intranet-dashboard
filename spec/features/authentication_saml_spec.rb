@@ -9,7 +9,7 @@ if APP_CONFIG["auth_method"] == "saml"
     end
 
     scenario "should require login for profile page" do
-      user = FactoryGirl.create(:user)
+      user = create(:user)
       visit user_path(user.username)
       current_url.should match(/#{APP_CONFIG["saml"]["idp_sso_target_url"]}/)
     end
@@ -20,7 +20,7 @@ if APP_CONFIG["auth_method"] == "saml"
     end
 
     scenario "should sign in a user with correct credentials" do
-      # user = FactoryGirl.create(:user, username: AUTH_CREDENTIALS["username"])
+      # user = create(:user, username: AUTH_CREDENTIALS["username"])
       visit root_url
       # page.should have_selector('h1')
       # page.should have_field("username")
