@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
       :language_list, :skill_list,
       :private_bio, :twitter, :skype, :homepage, :company_short,
       :room, :address, :post_code, :postal_town, :neighborhood, :geo_position_x, :geo_position_y
+
   attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
       :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
       :language_list, :skill_list,
@@ -20,37 +21,27 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :feeds
   has_and_belongs_to_many :shortcuts
   has_many :user_agents, dependent: :destroy
-
   has_many :subordinates, class_name: "User", foreign_key: :manager_id, order: :first_name
   belongs_to :manager, class_name: "User"
-
   has_many :user_languages
   has_many :languages, through: :user_languages
   has_many :user_skills
   has_many :skills, through: :user_skills
-
   has_many :colleagueships, dependent: :destroy
   has_many :colleagues, through: :colleagueships
   has_many :inverse_colleagueships, class_name: "Colleagueship", foreign_key: "colleague_id", dependent: :destroy
   has_many :inverse_colleagues, through: :inverse_colleagueships, source: :user
 
-  validates :roles, presence: { message: "Du måste välja minst en förvaltning och ett arbetsfält" }
-
-  validates_uniqueness_of :username
-  validates :username, presence: { allow_blank: false }
-
-  validates :professional_bio, :private_bio, length: {
-    maximum: 300,
-    too_long: "Max %{count} tecken"
-  }
-  validates :status_message, length: {
-    maximum: 70,
-    too_long: "Max %{count} tecken"
-  }
-
   # Paperclip image, options is in the Paperclip initializer
   has_attached_file :avatar
   before_post_process :validate_avatar_file_size
+
+  validates_uniqueness_of :username
+  validates :roles, presence: { message: "Du måste välja minst en förvaltning och ett arbetsfält" }
+  validates_presence_of :username
+  validates_length_of :professional_bio, :private_bio, maximum: 400
+  validates_length_of :skype, :twitter, :room, :address, maximum: 64
+  validates_length_of :homepage, maximum: 255
 
   before_validation do
     self.homepage = "http://#{homepage}" unless homepage.blank? || homepage.match(/^https?:\/\//)
