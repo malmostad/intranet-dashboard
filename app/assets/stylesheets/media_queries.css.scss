@@ -25,12 +25,12 @@
       }
     }
   }
-  section#feature {
+  .login section#feature {
     h1 {
-      font-size: emize(28);
+      font-size: emize(34);
     }
     p.about {
-      font-size: emize(18);
+      font-size: emize(22);
     }
   }
 }
@@ -47,14 +47,12 @@
     @include columns(12);
   }
 
-  section#feature {
+  .login section#feature {
     h1 {
-      font-size: emize(26);
-      line-height: emize(28, 26);
+      font-size: emize(32);
     }
     p.about {
-      font-size: emize(18);
-      line-height: emize(26, 18);
+      font-size: emize(20);
     }
   }
   section.box#shortcuts-tools,
@@ -118,26 +116,15 @@
     height: 32px;
   }
 
-  .login .column-1 {
-    @include columns(6);
-  }
-  .login .column-2 {
-    @include columns(6, true);
-  }
-  section#login {
-    border-left: none;
-    padding-top: 0;
-    margin-top: 0;
-  }
-
-  section#feature {
-    h1 {
-      margin: 0 0 .2em;
-      font-size: emize(26);
+  .login {
+    .wrapper {
+      margin-top: 4em;
     }
-    p.about {
-      font-size: emize(16);
-      line-height: emize(24, 16);
+    .column-1 {
+      @include columns(6);
+    }
+    .column-2 {
+      @include columns(6, true);
     }
   }
 
@@ -344,8 +331,8 @@
       }
     }
   }
-  section#feature {
-    margin: 1em .7em 1em;
+  .login section#feature {
+    margin: 0 .7em 1em;
   }
 
   .show.user {

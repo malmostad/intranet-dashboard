@@ -1,57 +1,51 @@
-.login .column-1 {
-  @include columns(5);
-}
-.login .column-2 {
-  @include columns(7, true);
-}
+.login {
+   .wrapper {
+    margin-top: 6em;
+  }
 
-section#feature {
-  margin-top: 1.2em;
-  h1 {
-    font-size: emize(32);
-    line-height: emize(38, 32);
-    font-weight: normal;
-    margin: 0em 0 .1em;
+  .column-1 {
+    @include columns(4);
   }
-  p.about {
-    font-size: emize(20);
-    line-height: emize(28, 20);
-    font-style: italic;
-    margin-bottom: 1em;
+  .column-2 {
+    @include columns(8, true);
   }
-}
 
-section#login {
-  margin-top: 1.6em;
-  label {
-    font-size: emize(13);
-  }
-  input[type="text"],
-  input[type="password"] {
-    font-size: emize(15);
-  }
-  input.btn {
-    margin-top: 1em;
-    clear: both;
-  }
-  ul.warning {
-    margin: 0 0 1em;
-    padding: 0;
-    li {
-      font-family: $sansSerif;
+  section#feature {
+    h1 {
+      font-size: emize(42);
+      line-height: 1.2;
+      font-weight: normal;
+      margin: -.2em 0 .1em;
     }
+    p.about {
+      font-size: emize(22);
+      line-height: 1.5;
+      margin-bottom: 1em;
+    }
+
   }
-  .login-instructions {
-    margin-top: 2em;
-    padding-top: .5em;
-    border-top: $border;
-    font-style: normal;
-    font-size: emize(15);
-    line-height: emize(19, 15);
-    margin-bottom: .5em;
-  }
-  .login .warning {
-    width: 28.8em;
-    margin: 0 auto -3em;
+
+  section#login {
+    margin-bottom: 2em;
+    label {
+      font-size: emize(13);
+    }
+    input[type="text"],
+    input[type="password"] {
+      font-size: emize(15);
+    }
+    input.btn {
+      margin-top: 1em;
+      clear: both;
+    }
+    .login-instructions {
+      margin-top: 2em;
+      padding-top: .5em;
+      border-top: $border;
+      font-style: normal;
+      font-size: emize(15);
+      line-height: emize(19, 15);
+      margin-bottom: .5em;
+    }
   }
 }
