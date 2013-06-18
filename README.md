@@ -19,7 +19,7 @@ For more information about the Intranet Dashboard, contact kominteamet@malmo.se.
 * LDAP directory for employee attributes
 * ImageMagick
 * PhantomJS (for testing)
-* Asset files from an [asset host](https://github.com/malmostad/intranet-assets)
+* Asset from an [asset host](https://github.com/malmostad/intranet-assets)
 
 ## Development Setup
 Use `app_config.yml.example` and `database.yml.example` as templates for you own settings. Install the dependencies. Run the following to install the required Ruby Gems, create the database and start the application:
