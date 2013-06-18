@@ -6,6 +6,10 @@
       %h1= "Medarbetare på #{params[:company].gsub(/^[\d\s]*/, "")}"
     - elsif params[:department].present?
       %h1= "Medarbetare på #{params[:department]}"
+    - elsif params[:skill].present?
+      %h1= "Medarbetare som kan #{params[:skill]}"
+    - elsif params[:language].present?
+      %h1= "Medarbetare som kan #{params[:language]}"
     - else
       = form_tag(users_path, method: "get", class: "form-horizontal") do
         .control-group

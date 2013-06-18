@@ -46,8 +46,8 @@
 
       %section.competence
         %h2.form-group-title Kompetensprofil
-        %p= "Kunskapsområden: #{@user.skills.map(&:name).join(", ")}"
-        %p= "Språkkunskaper: #{@user.languages.map(&:name).to_sentence.humanize}"
+        %p= raw "Kunskapsområden: #{skill_link_list @user.skills}"
+        %p= raw "Språkkunskaper: #{language_link_list @user.languages}"
 
       %section.intranet-activities
         %h2.form-group-title Kominaktiviteter

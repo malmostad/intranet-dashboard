@@ -117,6 +117,9 @@ class User < ActiveRecord::Base
   end
 
   # Search for users by term or a distinct value
+  # TODO: Refactor out search.
+  #       Distinct values maybe as /user/skills/tyska etc.
+  #       Search with Ransack?
   def self.search(q, limit = 25, offset = 0)
     if q.present? && q[:term].present?
       term = "#{q[:term].strip}%"
@@ -131,6 +134,10 @@ class User < ActiveRecord::Base
       where(company: q[:company]).order(:first_name).limit(limit).offset(offset)
     elsif q[:department].present?
       where(department: q[:department]).order(:first_name).limit(limit).offset(offset)
+    elsif q[:skill].present?
+      where("skills.name" => q[:skill]).includes(:skills).order(:first_name).limit(limit).offset(offset)
+    elsif q[:language].present?
+      where("languages.name" => q[:language]).includes(:languages).order(:first_name).limit(limit).offset(offset)
     else
       return {}
     end
