@@ -18,20 +18,20 @@
             / %li.instruction= raw 'En eller flera Twitter-hashtag(ar), t.ex. <strong>#malmö</strong>'
 
     - if @feed.category != "my_own"
-      .control-group.readonly
+      .control-group.text-only
         .control-label Kategori:
         .controls= select(:feed, :category,  Feed::CATEGORIES.except('my_own').map { |key, val| [val, key] } )
     - elsif @feed.users.present?
-      .control-group.readonly
+      .control-group.text-only
         .control-label Prenumerant:
         .controls
           = link_to "#{@feed.users.first.first_name} #{@feed.users.first.last_name} (#{@feed.users.first.username})", user_path(@feed.users.first.username)
 
-    .control-group.readonly
+    .control-group.text-only
       .control-label Fel på raken:
       .controls
         = @feed.recent_failures
-    .control-group.readonly
+    .control-group.text-only
       .control-label Totalt antal fel:
       .controls
         = @feed.total_failures

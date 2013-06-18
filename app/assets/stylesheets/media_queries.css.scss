@@ -191,7 +191,7 @@
   }
   .malmo-form {
     .form-horizontal {
-      .controls, .actions, .readonly {
+      .controls, .actions, .text-only {
         margin-left: 0;
         clear: both;
       }
@@ -199,7 +199,7 @@
         width: auto;
       }
     }
-    .control-group.readonly {
+    .control-group.text-only {
       margin-bottom: 1em;
       .control-label, .controls {
         padding: 0;

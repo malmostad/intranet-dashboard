@@ -37,14 +37,13 @@ SimpleForm.setup do |config|
     end
   end
 
-  # Control group for display of a record without controls. Hint is optional.
-  config.wrappers :readonly, :tag => 'div', :class => 'control-group readonly' do |b|
+  # Control group for display of a record without controls
+  config.wrappers :text_only_more_info, :tag => 'div', :class => 'control-group text-only' do |b|
     b.use :label
     b.wrapper :tag => 'div', :class => 'controls' do |ba|
       ba.use :input
-      ba.use :hint, :wrap_with => { :tag => 'div', :class => 'help change-info' }
+      ba.use :hint, :wrap_with => { :tag => 'div', :class => 'help more-info' }
     end
   end
-
   config.default_wrapper = :bootstrap
 end

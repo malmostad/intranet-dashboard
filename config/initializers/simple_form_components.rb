@@ -20,11 +20,6 @@ module SimpleForm
     #   end
     # end
 
-    class TextOnlyInput < Base
-      def input
-        self.object.send(attribute_name.to_sym).html_safe
-      end
-    end
   end
 end
 

@@ -2,18 +2,21 @@ section#edit-user {
   .control-group {
     margin-bottom: .5em;
   }
-  .change-info {
+  .more-info {
     display: none;
-    padding: .6em .8em 0;
-    margin: .5em 0 1em;
+    padding: .4em .8em .5em;
+    margin: .5em 1px 1em 0;
     @include radius(3px);
     border: $border;
     background: $backgroundLight;
     font-family: $serif;
     font-size: emize(14, 13);
     line-height: 1.4;
+    p {
+      margin: .5em 0;
+    }
   }
-  .show-change-info {
+  .show-more-info {
     margin-left: .4em;
   }
   p.help {
