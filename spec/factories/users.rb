@@ -14,8 +14,5 @@ FactoryGirl.define do
     status_message 'It’s work, all that matters is work'
     status_message_updated_at Time.now
   end
-
-  factory :add_collagues, parent: :user do
-  end
 end
 

@@ -3,7 +3,7 @@ require 'spec_helper'
 
 feature "Status message" do
   scenario "should not be set" do
-    create_user_and_login
+    create_named_user_and_login
     visit root_path
     page.should have_selector('#my-status .status', text: "Jag har ingen status än!")
   end
@@ -16,7 +16,7 @@ feature "Status message" do
   end
 
   scenario "should be set interactively", js: true do
-    create_user_and_login
+    create_named_user_and_login
     visit root_path
     status = 'My new status message'
     find('#status_message').set status

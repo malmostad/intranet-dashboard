@@ -3,7 +3,7 @@ require 'spec_helper'
 
 feature "Colleagueships" do
   scenario "should not be set" do
-    create_user_and_login
+    create_named_user_and_login
     visit root_path
     page.should have_selector('.no-colleagues')
   end

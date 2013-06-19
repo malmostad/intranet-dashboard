@@ -42,7 +42,7 @@ if APP_CONFIG["auth_method"] == "ldap"
     end
 
     scenario "should sign in a user with correct credentials" do
-      create_user_and_login
+      create_named_user_and_login
       current_path.should eq(root_path)
       page.should have_selector('h1', text: "Mina Kominnyheter")
     end
