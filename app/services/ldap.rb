@@ -53,7 +53,7 @@ class Ldap
       user.save(validate: false)
       user
     else
-      Rails.logger.warn "LDAP: couldn't find #{username}. #{@client.get_operation_result}"
+      Rails.logger.info "LDAP: couldn't find #{username}. #{@client.get_operation_result}"
       return false
     end
   end

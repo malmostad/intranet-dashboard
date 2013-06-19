@@ -6,7 +6,8 @@ class Language < ActiveRecord::Base
 
   validates :name,
     presence: { is: true, message: "Namnet måste fyllas i." },
-    uniqueness: { is: true, message: "Det finns redan ett språk med det namnet." }
+    uniqueness: { is: true, message: "Det finns redan ett språk med det namnet." },
+    length: { maximum: 48 }
 
   before_save do
     self.name.downcase!

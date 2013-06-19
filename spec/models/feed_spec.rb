@@ -2,7 +2,6 @@
 require 'spec_helper'
 
 describe Feed do
-
   it "should be valid" do
     build(:feed).should be_valid
   end
