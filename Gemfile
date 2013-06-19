@@ -41,6 +41,7 @@ group :test, :development, :local_test do
   gem 'guard-rspec'
   gem 'rb-fsevent'
   gem 'launchy'
+  gem 'database_cleaner'
 end
 
 group :assets do

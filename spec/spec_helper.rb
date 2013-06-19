@@ -5,6 +5,7 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rails'
 require 'capybara/poltergeist'
+require 'database_cleaner'
 require 'yaml'
 
 AUTH_CREDENTIALS = YAML.load_file("#{Rails.root.to_s}/spec/auth_credentials.yml")
@@ -14,7 +15,7 @@ if APP_CONFIG["auth_method"] != "ldap"
 end
 
 Capybara.javascript_driver = :poltergeist
-# Capybara.default_wait_time = 5
+Capybara.default_wait_time = 5
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
@@ -24,5 +25,25 @@ RSpec.configure do |config|
   config.include Capybara::DSL
   config.include FactoryGirl::Syntax::Methods
   config.order = "random"
-  config.use_transactional_fixtures = true
+
+  config.use_transactional_fixtures = false
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, :js => true) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 end
