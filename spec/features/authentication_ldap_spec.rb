@@ -48,7 +48,7 @@ if APP_CONFIG["auth_method"] == "ldap"
     end
 
     scenario "should require admin role" do
-      user = create(:user, username: AUTH_CREDENTIALS["username"], admin: false)
+      user = create_named_user
       visit login_path
       fill_in 'username', with: user.username
       fill_in 'password', with: AUTH_CREDENTIALS["password"]
@@ -58,11 +58,9 @@ if APP_CONFIG["auth_method"] == "ldap"
     end
 
     scenario "should honor admin role" do
-      user = create(:user, username: AUTH_CREDENTIALS["username"], admin: true)
-      visit login_path
-      fill_in 'username', with: user.username
-      fill_in 'password', with: AUTH_CREDENTIALS["password"]
-      click_button 'Logga in'
+      user = create_named_user
+      user.admin = true
+      login(user.username, AUTH_CREDENTIALS["password"])
       visit feeds_path
       page.should have_selector('h1', text: "Nyhetsflöden")
     end

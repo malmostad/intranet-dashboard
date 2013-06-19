@@ -38,7 +38,6 @@ group :test, :development, :local_test do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'poltergeist'
-  gem 'database_cleaner'
   gem 'guard-rspec'
   gem 'rb-fsevent'
   gem 'launchy'

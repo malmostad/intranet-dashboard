@@ -9,7 +9,7 @@ feature "Colleagueships" do
   end
 
   scenario "should be set" do
-    follower = create(:user, username: AUTH_CREDENTIALS["username"])
+    follower = create_named_user
     followed = create(:user)
     Colleagueship.create(user_id: follower.id, colleague_id: followed.id)
     login(follower.username, AUTH_CREDENTIALS["password"])

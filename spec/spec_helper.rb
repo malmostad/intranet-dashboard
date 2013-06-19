@@ -5,7 +5,6 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rails'
 require 'capybara/poltergeist'
-require 'database_cleaner'
 require 'yaml'
 
 AUTH_CREDENTIALS = YAML.load_file("#{Rails.root.to_s}/spec/auth_credentials.yml")
@@ -24,16 +23,6 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = true
   config.include Capybara::DSL
   config.include FactoryGirl::Syntax::Methods
-
-  # For Phantomjs to work, we use database_cleaner instead of transactional rollback
-  config.use_transactional_fixtures = false
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
-  end
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
+  config.order = "random"
+  config.use_transactional_fixtures = true
 end
