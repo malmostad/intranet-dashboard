@@ -5,28 +5,16 @@ def login(username, password)
   click_button 'Logga in'
 end
 
-# *_named_user is used for LDAP auth with AUTH_CREDENTIALS
-
-def login_named_user
-  login(AUTH_CREDENTIALS["username"], AUTH_CREDENTIALS["password"])
-end
-
-def create_named_user
-  User.where(username: AUTH_CREDENTIALS["username"]).destroy_all
+# *_ldap_user is used for LDAP auth with AUTH_CREDENTIALS
+def create_ldap_user
   create(:user, username: AUTH_CREDENTIALS["username"])
 end
 
-def create_named_user_and_login
-  user = create_named_user
-  login(user.username, AUTH_CREDENTIALS["password"])
-  user
+def login_ldap_user
+  login(AUTH_CREDENTIALS["username"], AUTH_CREDENTIALS["password"])
 end
 
-def create_named_user_with_roles_with_feeds
-  1.upto(20) do |n|
-    create(:role, category: Role::CATEGORIES.keys[n % Role::CATEGORIES.size])
-  end
-
+def create_feeds_for_user(user)
   1.upto(20) do |n|
     f = build(:feed,
       category: Feed::CATEGORIES.keys[n % Feed::CATEGORIES.size],
@@ -38,9 +26,6 @@ def create_named_user_with_roles_with_feeds
     f.save(validate: false)
   end
 
-  Feed.all.each { |f| f.role_ids = Role.all.each.map(&:id) }
-
-  user = create_named_user
-  user.role_ids = Role.all.each.map(&:id)
+  Feed.all.each { |f| f.role_ids = user.roles.each.map(&:id) }
   user
 end

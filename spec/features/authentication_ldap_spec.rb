@@ -42,7 +42,7 @@ if APP_CONFIG["auth_method"] == "ldap"
     end
 
     scenario "should sign in a user with correct credentials" do
-      create_named_user_and_login
+      create_ldap_userlogin
       current_path.should eq(root_path)
       page.should have_selector('h1', text: "Mina Kominnyheter")
     end
@@ -59,7 +59,7 @@ if APP_CONFIG["auth_method"] == "ldap"
 
     scenario "should honor admin role" do
       user = create_named_user
-      user.admin = true
+      user.update_attribute(:admin, true)
       login(user.username, AUTH_CREDENTIALS["password"])
       visit feeds_path
       page.should have_selector('h1', text: "Nyhetsflöden")
