@@ -33,4 +33,11 @@ feature "Feeds" do
     sleep 1
     before.should < all("#feeds-news .box-content li").count
   end
+
+  context "editing" do
+    scenario "should be protected for regular users" do
+      visit skills_path
+      page.should have_selector('.error', text: "Du saknar behörighet")
+    end
+  end
 end
