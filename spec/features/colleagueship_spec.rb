@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 require 'spec_helper'
 
-feature "Colleagueships" do
-  scenario "should not be set" do
+describe "Colleagueships" do
+  it "should not be set" do
     create_ldap_user_and_login
     visit root_path
     page.should have_selector('.no-colleagues')
   end
 
-  scenario "should be set" do
+  it "should be set" do
     follower = create_named_user
     followed = create(:user)
     Colleagueship.create(user_id: follower.id, colleague_id: followed.id)

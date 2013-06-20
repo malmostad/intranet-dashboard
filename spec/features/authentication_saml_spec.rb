@@ -2,26 +2,26 @@
 require 'spec_helper'
 
 if APP_CONFIG["auth_method"] == "saml"
-  feature "SAML authentication" do
-    scenario "should redirect the user to the IdP login page" do
+  describe "SAML authentication" do
+    it "should redirect the user to the IdP login page" do
       visit root_path
       current_url.should match(/#{APP_CONFIG["saml"]["idp_sso_target_url"]}/)
     end
 
-    scenario "should require login for profile page" do
+    it "should require login for profile page" do
       user = create(:user)
       visit user_path(user.username)
       current_url.should match(/#{APP_CONFIG["saml"]["idp_sso_target_url"]}/)
     end
 
-    scenario "should require login for an admin page" do
+    it "should require login for an admin page" do
       visit roles_path
       current_url.should match(/#{APP_CONFIG["saml"]["idp_sso_target_url"]}/)
     end
 
-    scenario "should sign in a user with correct credentials" do
+    it "should sign in a user with correct credentials" do
       # user = create(:user, username: AUTH_CREDENTIALS["username"])
-      visit root_url
+      # visit root_url
       # page.should have_selector('h1')
       # page.should have_field("username")
       # page.should have_field("password")
