@@ -3,7 +3,8 @@ require 'spec_helper'
 
 describe "Global assets javascript" do
   before(:each) do
-    visit login_path
+    create_ldap_user
+    login_ldap_user
   end
 
   it "should have injected the masthead", js: true do

@@ -42,25 +42,23 @@ if APP_CONFIG["auth_method"] == "ldap"
     end
 
     it "should sign in a user with correct credentials" do
-      create_ldap_userlogin
+      create_ldap_user
+      login_ldap_user
       current_path.should eq(root_path)
       page.should have_selector('h1', text: "Mina Kominnyheter")
     end
 
     it "should require admin role" do
-      user = create_named_user
-      visit login_path
-      fill_in 'username', with: user.username
-      fill_in 'password', with: AUTH_CREDENTIALS["password"]
-      click_button 'Logga in'
+      create_ldap_user
+      login_ldap_user
       visit feeds_path
       page.should have_selector('.error', text: "Du saknar behörighet")
     end
 
     it "should honor admin role" do
-      user = create_named_user
+      user = create_ldap_user
       user.update_attribute(:admin, true)
-      login(user.username, AUTH_CREDENTIALS["password"])
+      login_ldap_user
       visit feeds_path
       page.should have_selector('h1', text: "Nyhetsflöden")
     end
