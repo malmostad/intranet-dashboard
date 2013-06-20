@@ -5,7 +5,7 @@ Dashboard::Application.configure do
 
   config.whiny_nils = true
   config.consider_all_requests_local = true
-  config.log_level = :debug
+  config.log_level = :info
   config.action_mailer.raise_delivery_errors = false
   config.active_support.deprecation = :log
 
