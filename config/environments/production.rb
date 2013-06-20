@@ -1,7 +1,6 @@
 Dashboard::Application.configure do
 
   config.log_level = :warn
-  config.action_controller.relative_url_root = "/dashboard"
   config.consider_all_requests_local = false
 
   config.cache_classes = true

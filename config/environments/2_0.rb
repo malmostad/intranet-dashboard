@@ -1,5 +1,4 @@
 Dashboard::Application.configure do
-  config.action_controller.relative_url_root = "/dashboard-2.0"
   config.cache_classes = true
 
   config.consider_all_requests_local       = false

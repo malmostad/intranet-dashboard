@@ -4,12 +4,6 @@ end
 
 Paperclip::Attachment.default_options.update({
   default_style: :medium_quadrat,
-
-  # Dynamic values, work on those if we get more than avatar uploads
-  # path: ":rails_root/public/system/:attachment/:username/:style.:extension",
-  # url:   "#{ActionController::Base.relative_url_root}/system/:attachment/:username/:style.:extension",
-  # default_url: "#{ActionController::Base.relative_url_root}/assets/avatar.png",
-
   path: "#{APP_CONFIG['avatar_base_path']}:username/:style.:extension",
   url: "http://#{APP_CONFIG['avatar_base_url']}:username/:style.:extension",
   default_url: "http://#{APP_CONFIG["avatar_default_url"]}",
