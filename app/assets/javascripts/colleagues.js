@@ -51,7 +51,7 @@ jQuery(document).ready(function($) {
     });
 
     $field.autocomplete({
-      source: "<%= asset_path("/colleagueships/search") %>",
+      source: $field.attr("data-path"),
       minLength: 2,
       autoFocus: true,
       select: function( event, ui ) {

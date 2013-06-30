@@ -39,7 +39,7 @@
       = form_tag(colleagueships_path, method: "post", id: "add-colleague-form") do
         %fieldset.show{ class: @colleagueships.present? ? '' : "no-colleagues" }
           = label_tag :add_colleague, "Lägg till en arbetskamrat:", class: "show"
-          = text_field_tag :add_colleague, nil, placeholder: "Sök arbetskamrat"
+          = text_field_tag :add_colleague, nil, placeholder: "Sök arbetskamrat", "data-path" => colleagueships_search_path
 
   - if admin?
     .dropdown.box-menu.pull-right
