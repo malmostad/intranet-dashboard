@@ -42,6 +42,8 @@ group :test, :development, :local_test do
   gem 'rb-fsevent'
   gem 'launchy'
   gem 'database_cleaner'
+  gem 'vcr'
+  gem 'webmock', '1.11.0'
 end
 
 group :assets do
