@@ -45,7 +45,7 @@ class Ldap
       user.title         = ldap_user['title'].first
       user.email         = ldap_user['mail'].first
       user.company       = ldap_user['company'].first
-      user.department    = ldap_user['extensionattribute1'].first
+      user.department    = ldap_user['division'].first
       user.manager       = User.where(username: extract_cn(ldap_user["manager"].first)).first
       user.phone         = phone ||= ldap_user['telephonenumber'].first
       user.cell_phone    = cell_phone ||= ldap_user['mobile'].first
