@@ -33,7 +33,7 @@ class Ldap
 
     # Fetch user attributes
     ldap_user = @client.search(base: APP_CONFIG['ldap']['base_dn'], filter: "cn=#{username}",
-        attributes: %w(cn givenname sn displayname mail telephonenumber mobile title company manager extensionattribute1)).first
+        attributes: %w(cn givenname sn displayname mail telephonenumber mobile title company manager extensionattribute1 division)).first
 
     if ldap_user.present?
       # Find existing user or create a new
@@ -66,11 +66,13 @@ class Ldap
   def find_user(username)
     ldap_user = @client.search(base: APP_CONFIG['ldap']['base_dn'], filter: "cn=#{username}").first
     if ldap_user.present?
-      Rails.logger.debug ldap_user.inspect
+      Rails.logger.info ldap_user.inspect
       # Rails.logger.debug ldap_user['dn'].first
       # Rails.logger.debug ldap_user['displayname'].first
       # Rails.logger.debug extract_cn(ldap_user["manager"].first)
-      Rails.logger.debug ldap_user["department"].first
+      Rails.logger.info ldap_user["department"].first
+      Rails.logger.info ldap_user['division'].first
+      puts ldap_user['division'].first
     else
       Rails.logger.debug  "No user #{username}"
     end
