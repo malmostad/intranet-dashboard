@@ -42,13 +42,18 @@
       = f.input :skype
 
       %h2.form-group-title Arbetsplats
-      = f.input :room, class: "fox", input_html: { class: 'barx' }, wrapper_html: { class: 'wrapx' }
+      = f.input :room
       = f.input :address, input_html: { class: 'input-wide' }
       = f.hidden_field :geo_position_x
       = f.hidden_field :geo_position_y
       = f.hidden_field :post_code
       = f.hidden_field :postal_town
       = f.hidden_field :neighborhood
+      - # .more-info
+      - #  %p
+      - #    = "Din besöksadress finns lagrad i Malmö stads centrala databas över alla anställda. Kontaktboken visar vilken adress som är knuten till dig. Om det visas fel besöksadress beställer du en ändring i "
+      - #    = link_to "IT-kompassen.", "http://marval.malmo.se/MSMSelfService/Itservice/telefoni-forandring.aspx"
+      - #    = "Om du behöver hjälp, kontakta ITS, 040-342727."
 
       %h2.form-group-title Kompetensprofil
       = f.input :skill_list,
@@ -75,3 +80,4 @@
         .controls
           = f.button :submit, :class => 'btn-primary'
           = link_to t('actions.cancel'), user_path(@user.username), class: "btn"
+          %p.help Tänk på att det du skriver i din profil – precis som nästan allt annat du gör i Malmö stad – blir offentlig handling. Skriv bara sådant du kan stå för.

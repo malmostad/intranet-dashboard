@@ -36,7 +36,7 @@
         %h2.form-group-title Arbetsplats
         %p.room= "Rumsnummer: #{@user.room}"
         %p
-          = "Gatuadress:"
+          = "Besöksadress:"
           %br
           - if @user.address.present?
             %span.street-address= link_to @user.address, show_on_map(@user.address)
@@ -55,7 +55,7 @@
         %p= link_to "Blogginlägg som #{@user.first_name} gjort", "https://webapps04.malmo.se/blogg/author/#{@user.username}"
 
       %section.personal
-        %h2.form-group-title Personsligt
+        %h2.form-group-title Personligt
         .note= simple_format @user.private_bio
         %p.twitter
           = "Twitter:"
@@ -81,7 +81,7 @@
 
       - if @user.subordinates.present?
         %section.org
-          %h2.form-group-title Linjechef till
+          %h2.form-group-title Linjechef till/ansvarar för
           %ul
             - @user.subordinates.each do |subordinate|
               %li
