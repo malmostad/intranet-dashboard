@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
       redirect_to root_url
 
     elsif APP_CONFIG['auth_method'] == "saml"
-       # SAML Auth has its own controller
+      # SAML Auth has its own controller
       redirect_to saml_new_path
     else
       # Render the standard login form
@@ -23,22 +23,28 @@ class SessionsController < ApplicationController
   end
 
   def create
+    # Stubbed authentication
+    if APP_CONFIG['stub_auth']
+      stub_auth(params[:username])
+
     # Authenticate with LDAP
-    ldap = Ldap.new
-    if ldap.authenticate(params[:username], params[:password])
-      # Update user attributes from LDAP. Create user if it not exist.
-      @user = ldap.update_user_profile(params[:username])
-      @user.update_attribute("last_login", Time.now)
-
-      # Set user cookies
-      session[:user_id] = @user.id
-      set_profile_cookie
-      track_user_agent
-
-      redirect_to root_path
     else
-      @login_failed = "Fel användarnamn eller lösenord. Vänligen försök igen."
-      render "new"
+      ldap = Ldap.new
+      if ldap.authenticate(params[:username], params[:password])
+        # Update user attributes from LDAP. Create user if it not exist.
+        @user = ldap.update_user_profile(params[:username])
+        @user.update_attribute("last_login", Time.now)
+
+        # Set user cookies
+        session[:user_id] = @user.id
+        set_profile_cookie
+        track_user_agent
+
+        redirect_to root_path
+      else
+        @login_failed = "Fel användarnamn eller lösenord. Vänligen försök igen."
+        render "new"
+      end
     end
   end
 
@@ -51,5 +57,17 @@ class SessionsController < ApplicationController
     end
     session[:user_id] = nil
     redirect_to root_url, notice: "Nu är du utloggad"
+  end
+
+  private
+
+  def stub_auth(username)
+    @user = User.where(username: username).first
+    if @user
+      session[:user_id] = @user.id
+      redirect_to root_url
+    else
+      render "new"
+    end
   end
 end

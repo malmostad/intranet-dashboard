@@ -55,7 +55,7 @@ describe Feed do
   end
 
   it "should have feed entries" do
-    expect { create(:feed) }.to change(FeedEntry, :count).by(30)
+    expect { create(:feed) }.to change(FeedEntry, :count).by_at_least(10)
   end
 
   it "should have a valid category" do
