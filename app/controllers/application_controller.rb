@@ -97,6 +97,10 @@ class ApplicationController < ActionController::Base
     not_authorized unless admin?
   end
 
+  def require_early_adopter
+    not_authorized unless current_user && current_user.early_adopter?
+  end
+
   # Use only when params[:id] is users id
   def editing_myself?
     current_user.id.to_i === params[:id].to_i

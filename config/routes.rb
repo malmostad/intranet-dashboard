@@ -34,8 +34,8 @@ Dashboard::Application.routes.draw do
   get "/skills/suggest" => "skills#suggest", as: "skills_suggest"
   get "/skills/search" => "skills#search", as: "skills_search"
 
-  # get  "/search" => "site_search#index"
-  # get  "/search/autocomplete" => "site_search#autocomplete", as: "site_search_autocomplete"
+  get  "/search" => "site_search#index"
+  get  "/search/autocomplete" => "site_search#autocomplete", as: "site_search_autocomplete"
 
   get 'saml/new'
   post 'saml/consume'

@@ -1,15 +1,15 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.2.13'
-gem 'jquery-rails', '3.0.0'
+gem 'jquery-rails', '3.0.2'
 gem 'haml', '4.0.3'
 
-gem 'nokogiri', '1.5.6'
+gem 'nokogiri', '1.5.10'
 gem 'feedzirra', '0.2.0.rc2' #, '0.1.3' #, :git => 'https://github.com/pauldix/feedzirra.git'
 
 gem 'net-ldap', '0.3.1'
 gem 'ruby-saml', '0.7.0' # 0.7.2 is broken
-gem 'bcrypt-ruby', '3.0.1'
+gem 'bcrypt-ruby', '3.1.0'
 
 gem 'dalli', '2.6.4'
 gem 'mysql2', '0.3.11'
@@ -20,7 +20,7 @@ gem 'simple_form', '2.1.0'
 
 gem 'daemons-rails'
 
-gem 'capistrano', '2.15.4'
+gem 'capistrano', '2.15.5'
 gem 'capistrano-ext'
 gem 'whenever', require: false
 
@@ -33,7 +33,7 @@ group :development, :local_test do
   gem 'thin'
 end
 
-group :test, :development, :local_test do
+group :local_test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'capybara'

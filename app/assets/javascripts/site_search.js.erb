@@ -14,12 +14,12 @@ jQuery(document).ready(function($) {
   }
 
   // Autocomplete
-  var $searchFields = $('#full-search #q');
-  if ( $searchFields.length ) {
-    $searchFields.autocomplete({
+  var $searchField = $('#full-search #q');
+  if ( $searchField.length ) {
+    $searchField.autocomplete({
       source: function(request, response) {
         $.ajax({
-          url: "<%= APP_CONFIG['site_search_autocomplete_url'] %>",
+          url: $searchField.attr("data-autocomplete-path"),
           data: {
             q: request.term,
             ilang: 'sv'
@@ -44,7 +44,7 @@ jQuery(document).ready(function($) {
         document.location = $("#full-search").attr('action') + '?q=' + unescape(ui.item.value);
       },
       open: function(event, ui) {
-        $searchFields.autocomplete("widget").css('width','282px');
+        $searchField.autocomplete("widget").css('width','282px');
       }
     })
     .data( "autocomplete" )._renderItem = function( ul, item ) {

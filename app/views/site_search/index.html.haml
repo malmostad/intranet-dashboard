@@ -5,7 +5,7 @@
     %fieldset
       = label_tag "q", "#{h1}: ", class: "control-label"
       .input-append
-        = text_field_tag :q, @terms, { placeholder: "Ett eller flera sökord" }
+        = text_field_tag :q, @terms, { placeholder: "Ett eller flera sökord", "data-autocomplete-path" => APP_CONFIG['site_search_autocomplete_url'] }
         = submit_tag "Sök", { class: "btn", name: nil }
 
   - if @results.present?

@@ -3,11 +3,12 @@ require 'open-uri'
 
 class SiteSearchController < ApplicationController
   before_filter { add_body_class "site-search" }
+  before_filter :require_early_adopter
 
   def index
     @terms = params[:q]
     if @terms.present?
-      @results = SiteSearch::Search.new(params.except(:action, :controller).to_query, APP_CONFIG['site_search_query_url'])
+      @results = SiteSearch::Search.new(params.except(:action, :controller).to_query)
     end
 
     if request.xhr?
