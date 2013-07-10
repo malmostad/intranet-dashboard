@@ -1,5 +1,6 @@
 # # -*- coding: utf-8 -*-
 require 'open-uri'
+require 'ostruct'
 
 # XPath selectors are efficient, CSS selectors are readable
 module SiteSearch
@@ -26,13 +27,12 @@ module SiteSearch
       end
     end
 
-    SortItem = Struct.new :text, :query, :current
     def sorting
       @results.css('div.ess-sortlinks').xpath("a | span[@class='ess-current']").map do |sort_by|
-        SortItem.new(
-          sort_by.text.strip,
-          URI::parse(sort_by.xpath("@href").text).query,
-          sort_by.xpath("@href").empty?
+        OpenStruct.new(
+          text: sort_by.text.strip,
+          query: URI::parse(sort_by.xpath("@href").text).query,
+          current: sort_by.xpath("@href").empty?
         )
       end
     end
@@ -66,12 +66,11 @@ module SiteSearch
       end
     end
 
-    CategoryGroups = Struct.new :title, :categories
     def category_groups
       @results.css("[id^=essi-bd-cg-]").map do |category_group|
-        CategoryGroups.new(
-          category_group.css(".ess-cat-bd-heading").text.strip.gsub(/:$/, ""),
-          category_group.css(".ess-cat-bd-category").map { |entry| Category.new(entry) }
+        OpenStruct.new(
+          title: category_group.css(".ess-cat-bd-heading").text.strip.gsub(/:$/, ""),
+          categories: category_group.css(".ess-cat-bd-category").map { |entry| Category.new(entry) }
         )
       end
     end
@@ -142,10 +141,9 @@ module SiteSearch
       @entry.xpath("following-sibling::dd[2]").css('.ess-date').text.strip
     end
 
-    EntryBreadcrumb = Struct.new :text, :url
     def breadcrumbs
       @entry.xpath("following-sibling::dd[1]/div[@class='ess-special']/ul/li[a]").map do |item|
-        EntryBreadcrumb.new(item.css("a").text.strip, item.css("a/@href").text)
+        OpenStruct.new(text: item.css("a").text.strip, url: item.css("a/@href").text)
       end
     end
 
