@@ -41,10 +41,6 @@ module SiteSearch
       @results.css('#essi-hitcount').text.to_i
     end
 
-    def paging
-      extract_links(@results.xpath("//*[@class='ess-respages']/*[@class='ess-page' or @class='ess-current']"))
-    end
-
     def more_query
       URI::parse(@results.xpath("//*[@class='ess-respages']/*[@class='ess-next']/@href").text).query
     end
@@ -60,7 +56,9 @@ module SiteSearch
     end
 
     def suggestions
-      extract_links(@results.xpath("//*[@class='ess-spelling']/ul/li/a"))
+      @results.css(".ess-spelling > a").map do |suggestion|
+        OpenStruct.new(text: suggestion.xpath("strong").text, url: rewrite_query(suggestion.xpath("@href").text))
+      end
     end
 
     def entries
@@ -80,21 +78,8 @@ module SiteSearch
 
   protected
 
-    def extract_links(node_set)
-      node_set.map do |entry|
-        { query: URI::parse(entry.xpath("@href").text).query, text: entry.text }
-      end
-    end
-
-    # Rewrite href's in each a element
-    def rewrite_urls(node_set)
-      node_set.map do |entry|
-        entry.css("a").each do |a|
-          a.set_attribute("href", "?#{URI::parse(a.xpath("@href").text).query}")
-        end
-        entry
-      end
-      node_set
+    def rewrite_query(url)
+      URI::parse(url).query
     end
 
     # Depollute some Siteseeker crap

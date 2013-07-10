@@ -9,9 +9,22 @@
         = submit_tag "Sök", { class: "btn", name: nil }
 
   - if @results.present?
-    %p.summary= "Din sökning gav #{@results.total} träffar"
+    %p.summary
+      = "Din sökning gav "
+      = pluralize(@results.total, "träff", "träffar")
     - if @results.error.present?
       .error= "Ett fel inträffade med Euroling Siteseeker (#{@results.error})"
+
+    - if @results.sorting.present?
+      .menu.sort
+        %li.label Sortera efter
+        - @results.sorting.each_with_index do |entry, i|
+          %li{ class: (entry.current ? "current" : nil) }
+            = succeed separator(i, @results.sorting.count) do
+              - if entry.query
+                = link_to entry.text.downcase, "#{search_path}?#{entry.query}"
+              - else
+                = entry.text.downcase
 
     - if @results.suggestions.present?
       %ul.suggestions
@@ -19,17 +32,7 @@
         - @results.suggestions.each_with_index do |entry, i|
           %li
             = succeed separator(i, @results.suggestions.count, true) do
-              = link_to entry.text, "#{search_path}?#{entry.query}"
-
-    .menu.sort
-      %li.label Sortera efter
-      - @results.sorting.each_with_index do |entry, i|
-        %li{ class: (entry.current ? "current" : nil) }
-          = succeed separator(i, @results.sorting.count) do
-            - if entry.query
-              = link_to entry.text.downcase, "#{search_path}?#{entry.query}"
-            - else
-              = entry.text.downcase
+              = link_to entry.text, "#{search_path}?#{entry.url}"
 
     %section.results
       %ul
