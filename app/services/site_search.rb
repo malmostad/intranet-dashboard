@@ -143,8 +143,8 @@ module SiteSearch
     end
 
     EntryBreadcrumb = Struct.new :text, :url
-    def breadcrumb
-      @entry.xpath("following-sibling::dd[1]/div[@class='ess-special']/ul/li").map do |item|
+    def breadcrumbs
+      @entry.xpath("following-sibling::dd[1]/div[@class='ess-special']/ul/li[a]").map do |item|
         EntryBreadcrumb.new(item.css("a").text.strip, item.css("a/@href").text)
       end
     end
@@ -173,7 +173,7 @@ module SiteSearch
   end
 end
 
-# results = SiteSearch::Search.new("semester", APP_CONFIG['site_search_base_url'])
+# results = SiteSearch::Search.new("semester")
 # puts results.error.class
 # puts results.sorting[1].text.class
 # puts results.sorting[1].query.class

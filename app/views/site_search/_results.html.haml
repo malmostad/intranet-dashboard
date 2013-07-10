@@ -1,15 +1,18 @@
-- increase_numbering = @results.editors_choice.count
+- increase_counter = @results.editors_choice.count
 - @results.entries.each do |entry|
-  %li{ "data-position" => entry.number + increase_numbering }
-    %h2= entry.title
+  %li{ "data-position" => entry.number + increase_counter }
+    %h2= link_to entry.title, entry.url
     %p.extract
       = entry.summary
       %span.date= entry.date
-      - # unless entry.content_type == "html"
-      - #   %span.file_info= "(#{entry.content_type} #{entry.file_size})"
+      - unless entry.content_type == "html"
+        %span.file_info= "(#{entry.content_type})"
 
     %p.category= entry.category
-    - # %ul.breadcrumb= entry.breadcrumb
+    - if entry.breadcrumbs.present?
+      %ul.breadcrumb
+        - entry.breadcrumbs.each do |breadcrumb|
+          %li= link_to breadcrumb.text, breadcrumb.url
 
 - if @results.more_query.present?
   %li#load-more-search-results= link_to "Visa fler träffar", "#{search_path}?#{@results.more_query}", class: "btn"

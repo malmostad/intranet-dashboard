@@ -2,7 +2,7 @@
 require 'spec_helper'
 require 'nokogiri'
 
-describe SiteSeeker do
+describe SiteSearch do
   describe "results" do
 
     # before(:each) do

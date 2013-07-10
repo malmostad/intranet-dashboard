@@ -58,9 +58,7 @@ section.site-search {
       .date, .file_info {
         font-family: $sansSerif;
         font-size: emize(13);
-      }
-      .date {
-        margin-left: .5em;
+        white-space: nowrap;
       }
     }
     .category {
@@ -77,11 +75,14 @@ section.site-search {
         font-size: emize(13);
         line-height: 1.1;
         a:after {
-          content: ("\f054");
+          content: "\f054";
           font-family: $iconFont;
           margin: 0 .5em 0 .7em;
           font-size: emize(13);
         }
+      }
+      li:last-child a:after {
+        content: "";
       }
     }
   }
