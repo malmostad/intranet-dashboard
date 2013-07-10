@@ -6,9 +6,9 @@ module SiteSearch
   class Search
     attr_reader :error
 
-    def initialize(query, base_search_url, options={})
+    def initialize(query, options={})
       @query = query
-      @base_search_url = "#{base_search_url}?oenc=UTF-8&"
+      @base_search_url = "#{APP_CONFIG['site_search_query_url']}?oenc=UTF-8&"
       @options = { read_timeout: 10 }.merge(options)
       search
     end
@@ -16,12 +16,12 @@ module SiteSearch
     # Send a GET request to the Siteseeker server and create a Nokogiri doc from the returned HTML
     def search
       begin
-        html = open("#{@base_search_url}#{@query}", read_timeout: @options[:read_timeout])
+        html = open("#{@base_search_url}#{@query}", read_timeout: @options[:read_timeout]).read
         document = Nokogiri::HTML(html, nil, "UTF-8")
         @results = clean_up(document).xpath("/html/body")
       rescue Exception => e
         Rails.logger.error "Siteseeker: #{e}"
-        @error = e 
+        @error = e
         @results = Nokogiri::HTML("<error>#{e}</error>")
       end
     end
