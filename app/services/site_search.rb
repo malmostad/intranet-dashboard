@@ -50,10 +50,13 @@ module SiteSearch
     end
 
     def editors_choice
-      ec = @results.xpath("//*[@class='ess-bestbets']")
-      { url: ec.xpath("dt/a/@href").text,
-        text: ec.xpath("dt/a").text,
-        description: ec.xpath("dd").text }
+      @results.xpath("//*[@class='ess-bestbets']").map do |ec|
+        OpenStruct.new(
+          text: ec.xpath("dt/a").text,
+          url: ec.xpath("dt/a/@href").text,
+          summary: ec.xpath("dd").text
+        )
+      end
     end
 
     def suggestions
@@ -73,12 +76,6 @@ module SiteSearch
           categories: category_group.css(".ess-cat-bd-category").map { |entry| Category.new(entry) }
         )
       end
-    end
-
-    def to_json
-      %w(sorting total title paging more_query categories editors_choice suggestions).map do |m|
-        { m => send(m), entries: entries }
-      end.to_json
     end
 
   protected

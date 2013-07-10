@@ -34,7 +34,9 @@
     %section.results
       %ul
         - @results.editors_choice.each_with_index do |entry, i|
-          %li{ class: "editors_choice", "data-entry" => i + 1 }= entry
+          %li{ class: "editors_choice", "data-entry" => i + 1 }
+            %h2= link_to entry.text, entry.url
+            %p.extract= entry.summary
         = render "results"
 
     - if @results.category_groups.present?
