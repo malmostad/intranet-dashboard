@@ -4,7 +4,7 @@ gem 'rails', '3.2.13'
 gem 'jquery-rails', '3.0.0'
 gem 'haml', '4.0.3'
 
-gem 'nokogiri', '1.5.6'
+gem 'nokogiri', '1.5.10'
 gem 'feedzirra', '0.2.0.rc2' #, '0.1.3' #, :git => 'https://github.com/pauldix/feedzirra.git'
 
 gem 'net-ldap', '0.3.1'
