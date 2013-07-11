@@ -78,6 +78,16 @@ module SiteSearch
       end
     end
 
+    def category_all
+      all = @results.css("p.ess-cat-bd-all")
+      OpenStruct.new(
+        title: all.css("strong").text,
+        query: rewrite_query(all.xpath("strong/a/@href").text),
+        hits: all.css(".ess-num").text.strip,
+        current?: !!all.xpath("@class").text.match("ess-current")
+      )
+    end
+
   protected
 
     def rewrite_query(url)
@@ -152,37 +162,9 @@ module SiteSearch
     def hits
       @category.css(".ess-num").text.strip
     end
+
+    def current?
+      !!@category.xpath("@class").text.match("ess-current")
+    end
   end
 end
-
-# results = SiteSearch::Search.new("semester")
-# puts results.error.class
-# puts results.sorting[1].text.class
-# puts results.sorting[1].query.class
-# puts results.sorting[1].current.class
-# puts results.sorting.class
-# puts results.total
-# puts results.paging.class
-# puts results.more_query.class
-# puts results.editors_choice.class
-# puts results.suggestions.class
-# puts "=" * 72
-# puts results.category_groups.class
-# puts results.category_groups.first.class
-# puts results.category_groups.first.title.class
-# puts results.category_groups.first.categories.first.title.class
-# puts results.category_groups.first.categories.first.query.class
-# puts results.category_groups.first.categories.first.hits.class
-# puts "=" * 72
-# puts results.entries
-# puts results.entries.first.title
-# puts results.entries.first.summary.class
-# puts results.entries.first.url.class
-# puts results.entries.first.number.class
-# puts results.entries.first.date.class
-# puts results.entries.first.content_type.class
-# puts results.entries.first.category.class
-# puts results.entries.first.breadcrumb.class
-# puts results.entries.first.breadcrumb.first.class
-# puts results.entries.first.breadcrumb.first.text.class
-# puts results.entries.first.breadcrumb.first.url.class

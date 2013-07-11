@@ -121,34 +121,14 @@ section.site-search {
 }
 
 section.site-search-categories {
-  h2 {
-    margin-top: 0;
-  }
+  font-size: emize(13);
   font-family: $sansSerif;
-  div {
-    margin-bottom: 1em;
-  }
-  .ess-heading {
-    font-family: $sansSerif;
+  li.group {
     margin-bottom: .2em;
     padding-bottom: .2em;
     border-bottom: $border;
-    font-weight: bold;
-    font-size: emize(15);
   }
-  .ess-cat-bd-heading {
-    margin-bottom: .2em;
-    font-weight: bold;
-    font-size: emize(13);
-  }
-  .ess-cat-bd-category, .ess-cat-bd-all {
-    margin-bottom: .2em;
-    font-size: emize(13);
-  }
-  strong {
-    font-weight: normal;
-  }
-  .ess-current, .ess-current strong {
+  li.current {
     font-weight: bold;
   }
 }
