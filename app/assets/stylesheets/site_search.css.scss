@@ -35,6 +35,9 @@ section.site-search {
   .sort li {
     display: inline;
     margin: 0;
+    .current {
+      font-weight: bold;
+    }
   }
   .results {
     ul {

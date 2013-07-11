@@ -11,7 +11,6 @@
     %p.category= entry.category
     - if entry.breadcrumbs.present?
       %ul.breadcrumb
-        - logger.debug entry.breadcrumbs.to_yaml
         - entry.breadcrumbs.each do |breadcrumb|
           %li= link_to breadcrumb.text, breadcrumb.url
 

@@ -29,12 +29,13 @@ module SiteSearch
 
     def sorting
       @results.css('div.ess-sortlinks').xpath("a | span[@class='ess-current']").map do |sort_by|
+        next if sort_by.text.downcase.strip == "kategori"
         OpenStruct.new(
           text: sort_by.text.strip,
           query: URI::parse(sort_by.xpath("@href").text).query,
           current: sort_by.xpath("@href").empty?
         )
-      end
+      end.compact
     end
 
     def total
@@ -63,8 +64,9 @@ module SiteSearch
 
     def entries
       @results.css("dl.ess-hits dt").map do |entry|
+        next unless entry.css('a').present?
         Entry.new(entry)
-      end
+      end.compact
     end
 
     def category_groups
@@ -104,7 +106,7 @@ module SiteSearch
     end
 
     def title
-      @entry.css('a').first.text.strip
+      @entry.css('a').first.text
     end
 
     def summary
@@ -112,7 +114,7 @@ module SiteSearch
     end
 
     def url
-      @entry.css("a").first['href']
+      @entry.css('a').first['href']
     end
 
     def content_type
