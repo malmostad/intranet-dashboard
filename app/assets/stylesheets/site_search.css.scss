@@ -56,9 +56,13 @@ section.site-search {
       margin-left: 0;
       padding-left: 0;
     }
+    .file_info {
+      font-family: $sansSerif;
+      font-size: emize(13, 22);
+    }
     .extract {
       margin-bottom: .3em;
-      .date, .file_info {
+      .date {
         font-family: $sansSerif;
         font-size: emize(13);
         white-space: nowrap;

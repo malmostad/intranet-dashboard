@@ -1,12 +1,13 @@
 - increase_counter = @results.editors_choice.count
 - @results.entries.each do |entry|
   %li{ "data-position" => entry.number + increase_counter }
-    %h2= link_to entry.title, entry.url
+    %h2
+      = link_to entry.title, entry.url
+      - unless entry.content_type == "html"
+        %span.file_info= "[#{entry.content_type}]"
     %p.extract
       = entry.summary
       %span.date= entry.date
-      - unless entry.content_type == "html"
-        %span.file_info= "(#{entry.content_type})"
 
     %p.category= entry.category
     - if entry.breadcrumbs.present?
