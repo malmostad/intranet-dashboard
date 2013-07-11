@@ -20,7 +20,7 @@ class SiteSearchController < ApplicationController
 
   def autocomplete
     begin
-      results = open("#{APP_CONFIG['site_search_autocomplete_url']}?q=#{params[:q]}&ilang=sv&callback=results", read_timeout: 5).first
+      results = open("#{APP_CONFIG['site_search_autocomplete_url']}?q=#{CGI.escape(params[:q])}&ilang=sv&callback=results", read_timeout: 5).first
     rescue Exception => e
       results = 'results({})'
     end
