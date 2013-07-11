@@ -1,20 +1,18 @@
-body.site-search .wrapper {
+section.site-search {
   max-width: 56em;
   margin: 0 auto;
   @include clearfix();
-}
 
-section.site-search {
-  margin: .45em 0 2em;
-  @include columns(9, false, 4%);
-}
+  .main {
+    margin: .45em 0 2em;
+    @include columns(8);
+  }
 
-section.site-search-categories {
-  margin-top: 0;
-  @include columns(3, true, 4%);
-}
+  section.categories {
+    @include columns(4, true);
+  }
 
-section.site-search {
+
   h1 {
     display: none;
   }
@@ -118,20 +116,29 @@ section.site-search {
       padding: 0;
     }
   }
+
+  section.categories {
+    font-size: emize(13);
+    font-family: $sansSerif;
+    ul {
+      list-style: none;
+      margin: 0 0 1em;
+      padding: 0;
+    }
+    li.group {
+      margin: 1.5em 0 .2em;
+      padding-bottom: .2em;
+      border-bottom: $border;
+    }
+    li:first-child {
+      margin-top: 0;
+    }
+    li.current {
+      font-weight: bold;
+    }
+  }
 }
 
-section.site-search-categories {
-  font-size: emize(13);
-  font-family: $sansSerif;
-  li.group {
-    margin-bottom: .2em;
-    padding-bottom: .2em;
-    border-bottom: $border;
-  }
-  li.current {
-    font-weight: bold;
-  }
-}
 
 ul.ui-autocomplete {
   li {
