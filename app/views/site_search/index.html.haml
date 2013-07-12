@@ -6,7 +6,7 @@
       %fieldset
         = label_tag "q", "#{h1}: ", class: "control-label"
         .input-append
-          = text_field_tag :q, @terms, { placeholder: "Ett eller flera sökord", "data-autocomplete-path" => site_search_autocomplete_path }
+          = text_field_tag :q, @terms, { placeholder: "Ange ett eller flera sökord", "data-autocomplete-path" => site_search_autocomplete_path }
           = submit_tag "Sök", { class: "btn", name: nil }
 
     - if @results.present?
@@ -43,7 +43,7 @@
               %p.extract= entry.summary
           = render "results"
 
-  - if @results.category_groups.present?
+  - if @results.present? && @results.category_groups.present?
     %section.categories
       %ul
         %li.group.all{ class: (@results.category_all.current? ? "current" : nil)}
