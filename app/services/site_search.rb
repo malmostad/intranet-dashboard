@@ -57,8 +57,8 @@ module SiteSearch
     end
 
     def suggestions
-      @results.css(".ess-spelling > a").map do |suggestion|
-        OpenStruct.new(text: suggestion.xpath("strong").text, url: rewrite_query(suggestion.xpath("@href").text))
+      @results.css(".ess-spelling a").map do |suggestion|
+        OpenStruct.new(text: suggestion.text, url: rewrite_query(suggestion.xpath("@href").text))
       end
     end
 
