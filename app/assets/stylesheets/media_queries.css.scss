@@ -138,31 +138,7 @@
   }
 }
 
-@media ( max-width: 52em ) {
-  section.site-search {
-    @include columns(8);
-  }
-  section.site-search-categories {
-    @include columns(4, true);
-  }
-}
-
 @media ( max-width: 46em ) {
-  section.site-search, section.site-search-categories {
-    @include columns(12);
-  }
-  section.site-search {
-    margin-bottom: 0;
-  }
-  section.site-search-categories {
-    .ess-cat-bd-category, .ess-cat-bd-heading, .ess-cat-bd-all {
-      font-size: emize(15);
-      margin-bottom: .5em;
-    }
-  }
-  section.site-search-categories .ess-cat-bd-heading {
-    margin-top: 1.5em;
-  }
   .malmo-form.edit {
     nav.admin {
       clear: both;
@@ -209,18 +185,15 @@
 }
 
 @media ( max-width: 44em ) {
-  body.site-search .wrapper {
-    font-size: emize(16, 16);
-    padding: 0 1em;
-  }
-
   body {
     margin-left: 0;
     margin-right: 0;
     background-color: white;
     .wrapper {
-      // font-size: emize(18, 16);
       margin: 0;
+    }
+    &.site-search .wrapper {
+      margin: 0 1.5em;
     }
 
     // One column layout
@@ -232,6 +205,21 @@
         margin-right: 0;
         margin-left: 0;
         width: 100%;
+      }
+    }
+
+    section.site-search {
+      .search-and-results {
+        @include columns(12);
+      }
+      section.categories {
+        @include columns(12);
+        li {
+          margin: 1em 0;
+        }
+        li.group {
+          margin-top: 2em;
+        }
       }
     }
 
@@ -349,11 +337,5 @@
 
   section.box.index.users ul.results li p.note {
     display: none;
-  }
-}
-
-@media ( max-width: 36em ) {
-  section.site-search #q {
-    max-width: 60%;
   }
 }

@@ -3,15 +3,14 @@ section.site-search {
   margin: 0 auto;
   @include clearfix();
 
-  .main {
+  .search-and-results {
     margin: .45em 0 2em;
-    @include columns(8);
+    @include columns(8, false, 4%);
   }
 
   section.categories {
-    @include columns(4, true);
+    @include columns(4, true, 4%);
   }
-
 
   h1 {
     display: none;
@@ -22,8 +21,7 @@ section.site-search {
     margin-bottom: .4em;
   }
   #q {
-    width: 30em;
-    max-width: 75%;
+    width: 80%;
   }
   .sort {
     margin-bottom: 1.5em;
@@ -45,7 +43,7 @@ section.site-search {
       margin-top: 0;
     }
     li {
-      margin: 0 0 1.5em;
+      margin: 0 0 2em;
     }
   }
   .results {
@@ -126,7 +124,7 @@ section.site-search {
       padding: 0;
     }
     li.group {
-      margin: 1.5em 0 .2em;
+      margin: 1.5em 0 .5em;
       padding-bottom: .2em;
       border-bottom: $border;
     }
@@ -135,6 +133,9 @@ section.site-search {
     }
     li.current {
       font-weight: bold;
+      span.hits {
+        font-weight: normal;
+      }
     }
   }
 }

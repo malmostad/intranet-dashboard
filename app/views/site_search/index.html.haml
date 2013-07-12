@@ -1,6 +1,6 @@
 - title "Sök på Komin"
 %section.site-search.body-copy
-  .main
+  .search-and-results
     %h1= h1
     = form_tag(search_path, method: "get", id: "full-search") do
       %fieldset
@@ -48,10 +48,10 @@
       %ul
         %li.group.all{ class: (@results.category_all.current? ? "current" : nil)}
           = link_to @results.category_all.title, "#{search_path}?#{@results.category_all.query}"
-          %span= @results.category_all.hits
+          %span.hits= "(#{@results.category_all.hits})"
         - @results.category_groups.each do |category_group|
           %li.group= category_group.title
           - category_group.categories.each do |category|
             %li{ class: (category.current? ? "current" : nil)}
               = link_to category.title, "#{search_path}?#{category.query}"
-              %span= category.hits
+              %span.hits= "(#{category.hits})"
