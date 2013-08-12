@@ -1,48 +1,57 @@
 - title "Sök på Komin"
 %section.site-search.body-copy
-  %h1= h1
-  = form_tag(search_path, method: "get", id: "full-search") do
-    %fieldset
-      = label_tag "q", "#{h1}: ", class: "control-label"
-      .input-append
-        = text_field_tag :q, @terms, { placeholder: "Ett eller flera sökord", "data-autocomplete-path" => APP_CONFIG['site_search_autocomplete_url'] }
-        = submit_tag "Sök", { class: "btn", name: nil }
+  .search-and-results
+    %h1= h1
+    = form_tag(search_path, method: "get", id: "full-search") do
+      %fieldset
+        = label_tag "q", "#{h1}: ", class: "control-label"
+        .input-append
+          = text_field_tag :q, @terms, { placeholder: "Ange ett eller flera sökord", "data-autocomplete-path" => site_search_autocomplete_path }
+          = submit_tag "Sök", { class: "btn", name: nil }
 
-  - if @results.present?
-    %p.summary= "Din sökning gav #{@results.total} träffar"
-    - if @results.error.present?
-      .error= "Ett fel inträffade med Euroling Siteseeker (#{@results.error})"
+    - if @results.present?
+      %p.summary
+        = "Din sökning gav "
+        = pluralize(@results.total, "träff", "träffar")
+      - if @results.error.present?
+        .error= "Ett fel inträffade med Euroling Siteseeker (#{@results.error})"
 
-    - if @results.suggestions.present?
-      %ul.suggestions
-        %li Kanske menade du
-        - @results.suggestions.each_with_index do |entry, i|
-          %li
-            = succeed separator(i, @results.suggestions.count, true) do
-              = link_to entry.text, "#{search_path}?#{entry.query}"
+      - if @results.sorting.present?
+        .menu.sort
+          %li.label Sortera efter
+          - @results.sorting.each_with_index do |entry, i|
+            %li
+              = succeed separator(i, @results.sorting.count) do
+                - if entry.query
+                  = link_to entry.text.downcase, "#{search_path}?#{entry.query}"
+                - else
+                  %span.current= entry.text.downcase
 
-    .menu.sort
-      %li.label Sortera efter
-      - @results.sorting.each_with_index do |entry, i|
-        %li{ class: (entry.current ? "current" : nil) }
-          = succeed separator(i, @results.sorting.count) do
-            - if entry.query
-              = link_to entry.text.downcase, "#{search_path}?#{entry.query}"
-            - else
-              = entry.text.downcase
+      - if @results.suggestions.present?
+        %ul.suggestions
+          %li Kanske menade du
+          - @results.suggestions.each_with_index do |entry, i|
+            %li
+              = succeed separator(i, @results.suggestions.count, true) do
+                = link_to entry.text, "#{search_path}?#{entry.url}"
 
-    %section.results
-      %ul
-        - @results.editors_choice.each_with_index do |entry, i|
-          %li{ class: "editors_choice", "data-entry" => i + 1 }= entry
-        = render "results"
-
-    - if @results.category_groups.present?
-      %section.site-search-categories
+      %section.results
         %ul
-          - @results.category_groups.each do |category_group|
-            %li= category_group.title
-            - # category_group.each do |category|
-            - #   %li
-            - #     = link_to category.title, category.query
-            - #     %span= category.hits
+          - @results.editors_choice.each_with_index do |entry, i|
+            %li{ class: "editors_choice", "data-entry" => i + 1 }
+              %h2= link_to entry.text, entry.url
+              %p.extract= entry.summary
+          = render "results"
+
+  - if @results.present? && @results.category_groups.present?
+    %section.categories
+      %ul
+        %li.group.all{ class: (@results.category_all.current? ? "current" : nil)}
+          = link_to @results.category_all.title, "#{search_path}?#{@results.category_all.query}"
+          %span.hits= "(#{@results.category_all.hits})"
+        - @results.category_groups.each do |category_group|
+          %li.group= category_group.title
+          - category_group.categories.each do |category|
+            %li{ class: (category.current? ? "current" : nil)}
+              = link_to category.title, "#{search_path}?#{category.query}"
+              %span.hits= "(#{category.hits})"

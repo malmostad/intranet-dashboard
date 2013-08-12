@@ -1,5 +1,6 @@
 # # -*- coding: utf-8 -*-
 require 'open-uri'
+require 'ostruct'
 
 # XPath selectors are efficient, CSS selectors are readable
 module SiteSearch
@@ -26,23 +27,19 @@ module SiteSearch
       end
     end
 
-    SortItem = Struct.new :text, :query, :current
     def sorting
       @results.css('div.ess-sortlinks').xpath("a | span[@class='ess-current']").map do |sort_by|
-        SortItem.new(
-          sort_by.text.strip,
-          URI::parse(sort_by.xpath("@href").text).query,
-          sort_by.xpath("@href").empty?
+        next if sort_by.text.downcase.strip == "kategori"
+        OpenStruct.new(
+          text: sort_by.text.strip,
+          query: URI::parse(sort_by.xpath("@href").text).query,
+          current: sort_by.xpath("@href").empty?
         )
-      end
+      end.compact
     end
 
     def total
       @results.css('#essi-hitcount').text.to_i
-    end
-
-    def paging
-      extract_links(@results.xpath("//*[@class='ess-respages']/*[@class='ess-page' or @class='ess-current']"))
     end
 
     def more_query
@@ -50,55 +47,51 @@ module SiteSearch
     end
 
     def editors_choice
-      ec = @results.xpath("//*[@class='ess-bestbets']")
-      { url: ec.xpath("dt/a/@href").text,
-        text: ec.xpath("dt/a").text,
-        description: ec.xpath("dd").text }
-    end
-
-    def suggestions
-      extract_links(@results.xpath("//*[@class='ess-spelling']/ul/li/a"))
-    end
-
-    def entries
-      @results.css("dl.ess-hits dt").map do |entry|
-        Entry.new(entry)
-      end
-    end
-
-    CategoryGroups = Struct.new :title, :categories
-    def category_groups
-      @results.css("[id^=essi-bd-cg-]").map do |category_group|
-        CategoryGroups.new(
-          category_group.css(".ess-cat-bd-heading").text.strip.gsub(/:$/, ""),
-          category_group.css(".ess-cat-bd-category").map { |entry| Category.new(entry) }
+      @results.xpath("//*[@class='ess-bestbets']").map do |ec|
+        OpenStruct.new(
+          text: ec.xpath("dt/a").text,
+          url: ec.xpath("dt/a/@href").text,
+          summary: ec.xpath("dd").text
         )
       end
     end
 
-    def to_json
-      %w(sorting total title paging more_query categories editors_choice suggestions).map do |m|
-        { m => send(m), entries: entries }
-      end.to_json
+    def suggestions
+      @results.css(".ess-spelling a").map do |suggestion|
+        OpenStruct.new(text: suggestion.text, url: rewrite_query(suggestion.xpath("@href").text))
+      end
+    end
+
+    def entries
+      @results.css("dl.ess-hits dt").map do |entry|
+        next unless entry.css('a').present?
+        Entry.new(entry)
+      end.compact
+    end
+
+    def category_groups
+      @results.css("[id^=essi-bd-cg-]").map do |category_group|
+        OpenStruct.new(
+          title: category_group.css(".ess-cat-bd-heading").text.strip.gsub(/:$/, ""),
+          categories: category_group.css(".ess-cat-bd-category").map { |entry| Category.new(entry) }
+        )
+      end
+    end
+
+    def category_all
+      all = @results.css("p.ess-cat-bd-all")
+      OpenStruct.new(
+        title: all.css("strong").text,
+        query: rewrite_query(all.xpath("strong/a/@href").text),
+        hits: all.css(".ess-num").text.strip,
+        current?: !!all.xpath("@class").text.match("ess-current")
+      )
     end
 
   protected
 
-    def extract_links(node_set)
-      node_set.map do |entry|
-        { query: URI::parse(entry.xpath("@href").text).query, text: entry.text }
-      end
-    end
-
-    # Rewrite href's in each a element
-    def rewrite_urls(node_set)
-      node_set.map do |entry|
-        entry.css("a").each do |a|
-          a.set_attribute("href", "?#{URI::parse(a.xpath("@href").text).query}")
-        end
-        entry
-      end
-      node_set
+    def rewrite_query(url)
+      URI::parse(url).query
     end
 
     # Depollute some Siteseeker crap
@@ -123,7 +116,7 @@ module SiteSearch
     end
 
     def title
-      @entry.css('a').first.text.strip
+      @entry.css('a').first.text
     end
 
     def summary
@@ -131,7 +124,7 @@ module SiteSearch
     end
 
     def url
-      @entry.css("a").first['href']
+      @entry.css('a').first['href']
     end
 
     def content_type
@@ -142,10 +135,9 @@ module SiteSearch
       @entry.xpath("following-sibling::dd[2]").css('.ess-date').text.strip
     end
 
-    EntryBreadcrumb = Struct.new :text, :url
-    def breadcrumb
-      @entry.xpath("following-sibling::dd[1]/div[@class='ess-special']/ul/li").map do |item|
-        EntryBreadcrumb.new(item.css("a").text.strip, item.css("a/@href").text)
+    def breadcrumbs
+      @entry.xpath("following-sibling::dd[1]/div[@class='ess-special']/ul/li[a]").map do |item|
+        OpenStruct.new(text: item.css("a").text.strip, url: item.css("a/@href").text)
       end
     end
 
@@ -170,37 +162,9 @@ module SiteSearch
     def hits
       @category.css(".ess-num").text.strip
     end
+
+    def current?
+      !!@category.xpath("@class").text.match("ess-current")
+    end
   end
 end
-
-# results = SiteSearch::Search.new("semester", APP_CONFIG['site_search_base_url'])
-# puts results.error.class
-# puts results.sorting[1].text.class
-# puts results.sorting[1].query.class
-# puts results.sorting[1].current.class
-# puts results.sorting.class
-# puts results.total
-# puts results.paging.class
-# puts results.more_query.class
-# puts results.editors_choice.class
-# puts results.suggestions.class
-# puts "=" * 72
-# puts results.category_groups.class
-# puts results.category_groups.first.class
-# puts results.category_groups.first.title.class
-# puts results.category_groups.first.categories.first.title.class
-# puts results.category_groups.first.categories.first.query.class
-# puts results.category_groups.first.categories.first.hits.class
-# puts "=" * 72
-# puts results.entries
-# puts results.entries.first.title
-# puts results.entries.first.summary.class
-# puts results.entries.first.url.class
-# puts results.entries.first.number.class
-# puts results.entries.first.date.class
-# puts results.entries.first.content_type.class
-# puts results.entries.first.category.class
-# puts results.entries.first.breadcrumb.class
-# puts results.entries.first.breadcrumb.first.class
-# puts results.entries.first.breadcrumb.first.text.class
-# puts results.entries.first.breadcrumb.first.url.class
