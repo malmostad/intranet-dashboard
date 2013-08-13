@@ -40,9 +40,6 @@
           %br
           - if @user.address.present?
             %span.street-address= link_to @user.address, show_on_map(@user.address)
-            %br
-            %span.postal-code= "#{@user.post_code} "
-            %span.locality= "#{@user.postal_town}"
 
       %section.competence
         %h2.form-group-title Kompetensprofil

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130612202656) do
+ActiveRecord::Schema.define(:version => 20130813114635) do
 
   create_table "colleagueships", :force => true do |t|
     t.integer  "user_id"
@@ -187,9 +187,6 @@ ActiveRecord::Schema.define(:version => 20130612202656) do
     t.string   "homepage"
     t.string   "room"
     t.string   "address"
-    t.string   "post_code"
-    t.string   "postal_town"
-    t.string   "neighborhood"
     t.integer  "geo_position_x"
     t.integer  "geo_position_y"
   end
