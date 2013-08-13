@@ -49,7 +49,7 @@ group :assets do
   gem 'sass-rails', '3.2.6'
   gem 'coffee-rails', '3.2.2'
   gem 'uglifier', '2.1.2'
-  # gem 'therubyracer', '0.11.4', require: 'v8'
+  gem 'therubyracer', '0.11.4', require: 'v8'
 end
 
 group :production do
