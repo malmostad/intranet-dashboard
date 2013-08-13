@@ -324,6 +324,9 @@
   }
 
   .show.user {
+    section.vcard a.edit span {
+      display: none;
+    }
     .employee-column-1,
     .employee-column-2 {
       @include columns(12);
