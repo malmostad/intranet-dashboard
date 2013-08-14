@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 class AastraCWI
 
+  attr_accessor :client_defaults
+
   def initialize
     @client_defaults = {
       pretty_print_xml: Rails.env.development?,
       log_level: Rails.configuration.log_level,
-      logger: Rails.logger
+      logger: Rails.logger,
+      log: !Rails.env.development? # turns of HTTPI logging if false
     }
   end
 
@@ -58,7 +61,7 @@ class AastraCWI
   private
     # There are serveral wsdl endpoints, each one needs its own savon client
     def client(wsdl)
-      Savon.client(
+      client = Savon.client({
         wsdl: wsdl,
         soap_header: { "urn:CommonHeader" => {
             "urn:AnAToken!" => "<![CDATA[#{auth_token}]]>"
@@ -66,15 +69,13 @@ class AastraCWI
         },
         namespace_identifier: "urn",
         convert_request_keys_to: :none
-      ).merge(@client_defaults)
+      }.merge(@client_defaults))
     end
 
     # Fetch and cache the auth token required to query CWI
     def auth_token
       Rails.cache.fetch('aastra_auth_token', expires_in: 1.day) do
-        auth_client = Savon.client(
-          wsdl: APP_CONFIG['aastra_cwi']["auth_service"]
-        ).merge(@client_defaults)
+        auth_client = Savon.client({ wsdl: APP_CONFIG['aastra_cwi']["auth_service"] }.merge(@client_defaults))
 
         auth = auth_client.call(:get_sso_token,
           message: {
