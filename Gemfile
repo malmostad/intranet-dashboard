@@ -6,6 +6,7 @@ gem 'haml', '4.0.3'
 
 gem 'nokogiri', '1.5.10'
 gem 'feedzirra', '0.2.0.rc2' #, '0.1.3' #, :git => 'https://github.com/pauldix/feedzirra.git'
+gem 'savon'
 
 gem 'net-ldap', '0.3.1'
 gem 'ruby-saml', '0.7.0' # 0.7.2 is broken
@@ -22,6 +23,7 @@ gem 'daemons-rails', '1.2.0'
 gem 'capistrano', '2.15.5'
 gem 'capistrano-ext'
 gem 'whenever', require: false
+
 
 group :development do
   gem 'haml-rails'
