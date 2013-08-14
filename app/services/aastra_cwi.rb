@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 class AastraCWI
 
-  attr_accessor :client_defaults
-
   def initialize
     @client_defaults = {
       pretty_print_xml: Rails.env.development?,

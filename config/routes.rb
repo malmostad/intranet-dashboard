@@ -11,6 +11,7 @@ Dashboard::Application.routes.draw do
   put "/users/select_shortcuts/:category" => "users#update_shortcuts"
   put "/users/reset_shortcuts/:category" => "users#reset_shortcuts", as: "user_reset_shortcuts"
   put "/users/update_status_message" => "users#update_status_message", as: "user_update_status_message"
+  get "/users/activities/:cmg_id" => "users#activities", as: "user_activities"
 
   # Avatars belongs to users but has its own controller
   resources :avatars
@@ -44,9 +45,6 @@ Dashboard::Application.routes.draw do
   get  "/login" => "sessions#new"
   post "/login" => "sessions#create"
   get  "/logout" => "sessions#destroy"
-
-  post "/cmg" => "cmg#index"
-  get "/cmg" => "cmg#index"
 
   # Catch everything else. "a" is the path in Rails 3's routing
   match '*a', to: 'application#not_found', format: false

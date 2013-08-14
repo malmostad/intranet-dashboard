@@ -107,6 +107,11 @@ class UsersController < ApplicationController
     redirect_to edit_user_path(current_user.id)
   end
 
+  def activities
+    cmg = AastraCWI.new
+    render json: cmg.activities(params[:cmg_id])
+  end
+
   # User selects optional feeds
   def select_feeds
     @user = User.where(id: current_user.id).includes(:roles, :feeds).first
