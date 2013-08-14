@@ -4,6 +4,8 @@ class AastraCWI
   def initialize
     @client_defaults = {
       pretty_print_xml: Rails.env.development?,
+      open_timeout: 1,
+      read_timeout: 1,
       log_level: Rails.configuration.log_level,
       logger: Rails.logger,
       log: !Rails.env.development? # turns of HTTPI logging if false
@@ -53,7 +55,6 @@ class AastraCWI
       }
     )
     user.to_array(:get_activity_information_by_user_id_response, :get_activity_information_by_user_id_result, :activities, :activity)
-    # activities.each { |a| puts a[:reason]; puts a[:to_date_time] }
   end
 
   private
