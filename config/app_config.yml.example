@@ -13,6 +13,12 @@ defaults: &defaults
   feed_worker_concurrency: 10
   feed_worker_batch_pause: 1
   feed_worker_cycle_pause: 10
+  aastra_cwi:
+    username: "FILL_IN"
+    password: "FILL_IN"
+    auth_service: "http://example.org/NwAnA/AnaService.asmx?WSDL"
+    user_service: "http://example.org/CMGUserInformationService/CMGUserService.asmx?WSDL"
+    activity_service: "http://example.org/CMGActivityService/CMGActivityService.asmx?WSDL"
 
 development:
   <<: *defaults
