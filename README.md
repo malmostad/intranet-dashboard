@@ -3,7 +3,7 @@
 The Intranet Dashboard, “Min sida”, is City of Malmö’s personalized intranet front. Information and tools on the dashboard are targeted for the employee based on roles and her own preferences. The dashboards core functionality is:
 
 * Targeted and user selected news from the organization and external resources.
-* Searchable employee information with data compiled from other systems and a self service interface where the employees can update their information.
+* Searchable employee information with data compiled from other systems and a self service interface where the employees can update their information. Integration with Aastra CMG.
 * Direct access to tools and applications based on the user’s roles and profile.
 * Enterprise search for all intranet resources.
 * User managed portrait pictures. The system acts as an avatar service for other intranet systems.
@@ -14,7 +14,7 @@ For more information about the Intranet Dashboard, contact kominteamet@malmo.se.
 * Ruby >=1.9.3
 * Ruby on Rails >=3.2
 * MySQL or PostgreSQL
-* Memcached or another cache store with ttl support
+* Memcached or other cache store with ttl support
 * LDAP or a SAML 2.0 IdP for authentication
 * LDAP directory for employee attributes
 * ImageMagick
