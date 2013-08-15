@@ -6,15 +6,15 @@ class AastraCWI
       pretty_print_xml: Rails.env.development?,
       open_timeout: 1,
       read_timeout: 1,
-      log_level: Rails.configuration.log_level,
-      logger: Rails.logger,
-      log: !Rails.env.development? # turns of HTTPI logging if false
+      # log_level: Rails.configuration.log_level,
+      # logger: Rails.logger,
+      # log: !Rails.env.development? # turns of HTTPI logging if false
     }
   end
 
-  # Search for an employee by the LDAP id. Should return 0 or 1 employee
-  # This is how we get the CMG id
-  def search(ldap_id)
+  # Search for an employee by the LDAP id.
+  # Return the employees ID in CMG or nil
+  def get_cmg_id(ldap_id)
     search_client = client(APP_CONFIG['aastra_cwi']['user_service'])
     users = search_client.call(:get_user_information,
       message: {
@@ -26,6 +26,7 @@ class AastraCWI
         }
       }
     )
+    users.to_array(:get_user_information_response, :get_user_information_result, :subscribers, :subscriber).first[:cmg_id]
   end
 
   # Get the record for a known employee by CMG id, except activities
