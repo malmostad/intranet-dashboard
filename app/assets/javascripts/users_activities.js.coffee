@@ -2,6 +2,7 @@ $ ->
   $activities = $("#user-activities")
   if $activities.length
     $.get $activities.attr('data-path'), (activities) ->
+      console.log(activities)
       if activities.length
         $ul = $activities.append("<ul>")
         $.each activities, (i, activity) ->
