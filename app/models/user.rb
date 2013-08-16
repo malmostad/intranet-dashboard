@@ -48,6 +48,11 @@ class User < ActiveRecord::Base
     self.twitter = twitter.gsub(/^@/, "").downcase unless twitter.blank?
   end
 
+  after_create do
+    # Map CMG ID when account is created
+    update_attribute(:cmg_id, AastraCWI.get_cmg_id(self))
+  end
+
   validates_attachment_content_type :avatar,
     content_type: ['image/tiff', 'image/jpeg', 'image/pjpeg', 'image/jp2'],
     message: "Fel bildformat. Du kan ladda upp en jpeg- eller tiff-bild"

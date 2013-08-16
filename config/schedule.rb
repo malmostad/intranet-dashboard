@@ -11,7 +11,7 @@ job_type :rake, "cd :path && PATH=/usr/local/bin:$PATH RAILS_ENV=:real_environme
 
 if environment == "staging"
   every :day, :at => '1:30am' do
-    rake "update_user_profiles"
+    rake "user:update_profiles"
   end
 
   every :day, :at => '2:13am' do
@@ -25,7 +25,7 @@ end
 
 if environment == "production"
   every :day, :at => '0:30am' do
-    rake "update_user_profiles"
+    rake "user:update_profiles"
   end
 
   every :day, :at => '4:13am' do
