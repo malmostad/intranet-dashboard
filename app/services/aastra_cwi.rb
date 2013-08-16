@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+
+# Aastra CMG is the switchboard phone catalog and CWI is its SOAP API
+# We map employees in the dashboard to CMG records with #get_cmg_id and
+# use #activities to get the activities for an employee
+
 class AastraCWI
 
   CLIENT_SETTINGS = {
@@ -13,9 +18,9 @@ class AastraCWI
   # Search for an employee by the LDAP id.
   # Return the employees ID in CMG or nil
   def self.get_cmg_id(user)
+    return 0 if user.phone.blank?
     search_client = client(APP_CONFIG['aastra_cwi']['user_service'])
 
-    return 0 if user.phone.blank?
     cmg_phone = user.phone.gsub(/\s/, "")[-5, 5]
     return 0 if cmg_phone == "41000" # switchboard number
 
@@ -82,7 +87,7 @@ class AastraCWI
       }.merge(CLIENT_SETTINGS))
     end
 
-    # Fetch and cache the auth token required to 
+    # Fetch and cache the auth token required to
     def self.auth_token
       Rails.cache.fetch('aastra_auth_token', expires_in: 1.day) do
         auth_client = Savon.client({ wsdl: APP_CONFIG['aastra_cwi']["auth_service"] }.merge(CLIENT_SETTINGS))
