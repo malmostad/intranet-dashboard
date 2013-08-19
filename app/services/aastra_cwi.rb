@@ -24,22 +24,21 @@ class AastraCWI
     cmg_phone = user.phone.gsub(/\s/, "")[-5, 5]
     return 0 if cmg_phone == "41000" # switchboard number
 
-    users = search_client.call(:get_user_information,
-      message: {
-        "theSearchRequest" => {
-          "SearchKeys" => {
-            # "string" => "MISC8=#{user.username}",
-            # "string" => "MSGID=#{user.email}",
-            "string" => "TELNO=#{cmg_phone}"
-          },
-          "GetFieldNames" => 1
+    begin
+      users = search_client.call(:get_user_information,
+        message: {
+          "theSearchRequest" => {
+            "SearchKeys" => {
+              # "string" => "MISC8=#{user.username}",
+              # "string" => "MSGID=#{user.email}",
+              "string" => "TELNO=#{cmg_phone}"
+            },
+            "GetFieldNames" => 1
+          }
         }
-      }
-    )
-    user = users.to_array(:get_user_information_response, :get_user_information_result, :subscribers, :subscriber)
-    if user.present?
-      user.first[:cmg_id]
-    else
+      )
+      users.to_array(:get_user_information_response, :get_user_information_result, :subscribers, :subscriber).first[:cmg_id]
+    rescue
       0
     end
   end
@@ -60,17 +59,22 @@ class AastraCWI
 
   # Get activities for a known employee by CML id
   def self.activities(cmg_id)
-    acitvities_client = client(APP_CONFIG['aastra_cwi']['activity_service'])
-    user = acitvities_client.call(:get_activity_information_by_user_id,
-      message: {
-        "theSearchRequest" => {
-          "SearchKey" => "CMGId",
-          "KeyValue" => cmg_id,
-          "Lang" => "SVE"
+    return [] if cmg_id == "0"
+    begin
+      acitvities_client = client(APP_CONFIG['aastra_cwi']['activity_service'])
+      user = acitvities_client.call(:get_activity_information_by_user_id,
+        message: {
+          "theSearchRequest" => {
+            "SearchKey" => "CMGId",
+            "KeyValue" => cmg_id,
+            "Lang" => "SVE"
+          }
         }
-      }
-    )
-    events = user.to_array(:get_activity_information_by_user_id_response, :get_activity_information_by_user_id_result, :activities, :activity)
+      )
+      events = user.to_array(:get_activity_information_by_user_id_response, :get_activity_information_by_user_id_result, :activities, :activity)
+    rescue
+      return []
+    end
 
     events.map! do |event|
       starting = Time.parse event[:from_date_time]
