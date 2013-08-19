@@ -108,7 +108,8 @@ class UsersController < ApplicationController
   end
 
   def activities
-    render json: AastraCWI.activities(params[:cmg_id])
+    @activities = AastraCWI.activities(params[:cmg_id])
+    render "activities", layout: false
   end
 
   # User selects optional feeds
