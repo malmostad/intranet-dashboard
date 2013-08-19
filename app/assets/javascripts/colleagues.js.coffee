@@ -44,6 +44,7 @@ $ ->
       source: $field.attr("data-path")
       minLength: 2
       autoFocus: true
+      appendTo: $field.closest(".box")
       select: (event, ui) ->
         selectedColleagueId = ui.item.id
         $form.submit()

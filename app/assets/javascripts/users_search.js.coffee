@@ -6,6 +6,7 @@ $ ->
       .autocomplete
         source: $queryEmployee.parents("form").attr("action")
         minLength: 2
+        appendTo: $queryEmployee.closest(".box")
         select: (event, ui) ->
           document.location = "#{$queryEmployee.data("path")}/#{ui.item.username}"
       .data("ui-autocomplete")
