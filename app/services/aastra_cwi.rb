@@ -70,7 +70,24 @@ class AastraCWI
         }
       }
     )
-    user.to_array(:get_activity_information_by_user_id_response, :get_activity_information_by_user_id_result, :activities, :activity)
+    events = user.to_array(:get_activity_information_by_user_id_response, :get_activity_information_by_user_id_result, :activities, :activity)
+
+    events.map! do |event|
+      starting = Time.parse event[:from_date_time]
+      ending   = Time.parse event[:to_date_time]
+      # Does the event occur today?
+      if starting < Time.now.end_of_day && ending > Time.now
+        OpenStruct.new(
+          starting: starting,
+          ending: ending,
+          reason: event[:reason],
+          absent: event[:absent]
+        )
+      else
+        nil
+      end
+    end
+    events.compact
   end
 
   private

@@ -1,6 +1,5 @@
 # # -*- coding: utf-8 -*-
 require 'open-uri'
-require 'ostruct'
 
 # XPath selectors are efficient, CSS selectors are readable
 module SiteSearch

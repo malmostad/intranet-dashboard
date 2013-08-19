@@ -1,8 +1,10 @@
 - if @activities.present?
-  %ul#user-activities
-    - @activities.each do |activity|
-      %li
-        = activity[:reason]
-        = activity[:from_date_time]
-        = "till"
-        = activity[:to_date_time]
+  #user-activities
+    %h2.form-group-title Dagens aktiviteter
+    %ul
+      - @activities.each do |activity|
+        %li
+          = activity.reason
+          = l activity.starting, format: :short
+          = "till"
+          = l activity.ending, format: :short
