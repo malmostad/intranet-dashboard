@@ -1,4 +1,4 @@
-namespace :user do
+namespace :users do
   desc "Update all user profiles from LDAP"
   task update_profiles: :environment do
     started_at = Time.now.to_f

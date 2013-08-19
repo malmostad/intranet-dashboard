@@ -12,7 +12,7 @@ class AastraCWI
     # read_timeout: 1,
     log_level: Rails.configuration.log_level,
     logger: Rails.logger,
-    log: !Rails.env.development? # turns of HTTPI logging if false
+    log: Rails.env.development? # turns of HTTPI logging if false
   }
 
   # Search for an employee by the LDAP id.
