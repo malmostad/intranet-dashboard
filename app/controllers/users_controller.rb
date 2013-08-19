@@ -30,7 +30,7 @@ class UsersController < ApplicationController
             avatar_full_url: u.avatar.url(:mini_quadrat),
             first_name: u.first_name,
             last_name: u.last_name,
-            company_short: u.company_short,
+            company_short: u.company_short || "",
             department: u.department || "" }
         }
       }
