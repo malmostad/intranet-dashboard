@@ -17,8 +17,10 @@ $ ->
         $("<li>")
           .data("item.autocomplete", item)
           .append("<a><img src='#{item.avatar_full_url}'/>
-              <p>#{item.first_name} #{item.last_name}<br/>
-              #{item.company_short}</p></a>")
+              <p>#{item.first_name} #{item.last_name}<br>
+              #{item.company_short}<br>
+              #{item.department}</p></a>
+          ")
           .appendTo(ul)
 
   # Search results, load more
