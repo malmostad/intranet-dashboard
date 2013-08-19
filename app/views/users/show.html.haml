@@ -30,7 +30,7 @@
         %p.phone= [@user.phone, @user.cell_phone].reject(&:blank?).join(", ")
         %p.email= @user.email
         %p.status_message= "Statusmeddelande: #{@user.status_message || "Jag har ingen status än"}"
-        #user-activities{ "data-path" => user_activities_path(@user.cmg_id) }
+        #user-activities{ "data-path" => user_activities_path(@user) }
 
     .employee-column-1
       %section.address.vcard
