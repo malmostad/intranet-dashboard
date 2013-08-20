@@ -34,7 +34,7 @@
         %p.email= @user.email
         %p.status_message= "Statusmeddelande: #{@user.status_message || "Jag har ingen status än"}"
         - unless @user.cmg_id == "0"
-          #user-activities{ "data-path" => user_activities_path(@user.cmg_id) }
+          #user-activities.hide{ "data-path" => user_activities_path(@user.cmg_id) }
 
     .employee-column-1
       %section.address.vcard
