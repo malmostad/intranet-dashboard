@@ -39,18 +39,23 @@ class Ldap
       # Find existing user or create a new
       user = User.where(username: username).first_or_initialize
 
-      user.first_name    = ldap_user['givenname'].first
-      user.last_name     = ldap_user['sn'].first
-      user.displayname   = ldap_user['displayname'].first
-      user.title         = ldap_user['title'].first
-      user.email         = ldap_user['mail'].first
-      user.company       = ldap_user['company'].first
-      user.department    = ldap_user['division'].first
-      user.address       = ldap_user['streetaddress'].first
-      user.room          = ldap_user['roomnumber'].first
-      user.manager       = User.where(username: extract_cn(ldap_user["manager"].first)).first
-      user.phone         = phone ||= ldap_user['telephonenumber'].first
-      user.cell_phone    = cell_phone ||= ldap_user['mobile'].first
+      user.first_name     = ldap_user['givenname'].first
+      user.last_name      = ldap_user['sn'].first
+      user.displayname    = ldap_user['displayname'].first
+      user.title          = ldap_user['title'].first
+      user.email          = ldap_user['mail'].first
+      user.company        = ldap_user['company'].first
+      user.department     = ldap_user['division'].first
+      user.address        = ldap_user['streetaddress'].first
+      user.room           = ldap_user['roomnumber'].first
+      user.manager        = User.where(username: extract_cn(ldap_user["manager"].first)).first
+      user.phone          = phone ||= ldap_user['telephonenumber'].first
+      user.cell_phone     = cell_phone ||= ldap_user['mobile'].first
+
+      # Activate the user if previsously deactivated
+      user.deactivated    = false
+      user.deactivated_at = nil
+
       @user_profile_changed = user.changed?
       user.save(validate: false)
       user

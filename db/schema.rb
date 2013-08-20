@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130819143812) do
+ActiveRecord::Schema.define(:version => 20130820080221) do
 
   create_table "colleagueships", :force => true do |t|
     t.integer  "user_id"
@@ -190,6 +190,8 @@ ActiveRecord::Schema.define(:version => 20130819143812) do
     t.integer  "geo_position_x"
     t.integer  "geo_position_y"
     t.string   "cmg_id",                    :default => "0"
+    t.boolean  "deactivated",               :default => false
+    t.datetime "deactivated_at"
   end
 
   add_index "users", ["manager_id"], :name => "index_users_on_manager_id"
