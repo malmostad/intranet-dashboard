@@ -44,6 +44,9 @@
       }
       #user-activities {
         margin-top: 1em;
+        &.hide {
+          display: none;
+        }
       }
     }
   }
