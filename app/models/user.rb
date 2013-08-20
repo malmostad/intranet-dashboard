@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
   attr_accessor :avatar
   attr_reader :avatar_remote_url
 
+  default_scope where(deactivated: false)
+
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :feeds
   has_and_belongs_to_many :shortcuts
@@ -27,6 +29,7 @@ class User < ActiveRecord::Base
   has_many :languages, through: :user_languages
   has_many :user_skills
   has_many :skills, through: :user_skills
+
   has_many :colleagueships, dependent: :destroy
   has_many :colleagues, through: :colleagueships
   has_many :inverse_colleagueships, class_name: "Colleagueship", foreign_key: "colleague_id", dependent: :destroy

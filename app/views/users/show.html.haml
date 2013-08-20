@@ -97,6 +97,9 @@
           %p= "Administratör: #{@user.admin? ? 'Ja' : 'Nej'}"
           %p= "Early adopter: #{@user.early_adopter? ? 'Ja' : 'Nej'}"
           %p= "Första inloggningen: #{l @user.created_at, format: :short}"
+          %p= "Avaktiverad i katalogen: #{@user.deactivated? ? 'Ja' : 'Nej'}"
+          - if @user.deactivated?
+            %p= "Avaktiverades: #{l @user.deactivated_at, format: :short}"
         %p= "Senast inloggad: #{l @user.last_login, format: :short}"
 
   - if admin_or_myself?
