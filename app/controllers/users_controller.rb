@@ -86,6 +86,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to users_path, notice: "Användaren raderades"
+  end
+
   def update_status_message
     respond_to do |format|
       current_user.status_message = params[:status_message]

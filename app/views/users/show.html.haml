@@ -8,6 +8,9 @@
         - if admin_or_myself?
           = link_to(raw("Redigera <span>profil</span>"), edit_user_path(@user), class: "btn btn-mini edit")
           = link_to "Byt bild", edit_avatar_path(@user), class: "change-avatar btn btn-mini"
+          %br
+          - if admin?
+            = link_to delete_icon_text, @user, data: { confirm: 'Är du säker på att du vill radera användaren?', method: :delete }, class: "btn btn-danger btn-mini"
 
       .main-card
         - unless myself?
