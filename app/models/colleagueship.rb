@@ -3,8 +3,6 @@
 class Colleagueship < ActiveRecord::Base
   attr_accessible :colleague_id, :create, :destroy, :user_id
 
-  default_scope where("users.deactivated" => false)
-
   belongs_to :user
   belongs_to :colleague, :class_name => "User"
 
