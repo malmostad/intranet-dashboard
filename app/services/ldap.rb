@@ -37,7 +37,7 @@ class Ldap
 
     if ldap_user.present?
       # Find existing user or create a new
-      user = User.where(username: username).first_or_initialize
+      user = User.unscoped.where(username: username).first_or_initialize
 
       user.first_name     = ldap_user['givenname'].first
       user.last_name      = ldap_user['sn'].first

@@ -14,7 +14,7 @@ namespace :users do
         if user.deactivated? && user.deactivated_at > Time.now + 45.days
           # Delete the user if it has been deactivated in the Dashboard for 45 days
           user.destroy
-        else
+        elsif !user.deactivated?
           # Mark the user as deactivated
           user.deactivated = true
           user.deactivated_at = DateTime.now
