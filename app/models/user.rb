@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   attr_accessor :avatar
   attr_reader :avatar_remote_url
 
-  # default_scope { where(deactivated: false) }
+  default_scope { where(deactivated: false) }
 
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :feeds
@@ -118,7 +118,10 @@ class User < ActiveRecord::Base
 
   # Sort colleagues by their status_message_updated_at
   def sorted_colleagues
-    colleagueships.includes(:colleague).sort do |a,b|
+    # Filter deactivated colleagues (users)
+    c = colleagueships.includes(:colleague).reject { |cs| cs.colleague.blank? }
+
+    c.sort do |a,b|
       ( b.colleague.status_message_updated_at && a.colleague.status_message_updated_at ) ?
       b.colleague.status_message_updated_at <=> a.colleague.status_message_updated_at : ( a.colleague.status_message_updated_at ? -1 : 1 )
     end
