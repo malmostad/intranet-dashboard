@@ -4,7 +4,7 @@ namespace :users do
     started_at = Time.now.to_f
     deleted = deactivated = updated = 0
 
-    User.find_each do |user|
+    User.unscoped.find_each do |user|
       ldap = Ldap.new
       results = ldap.update_user_profile(user.username)
       if results
