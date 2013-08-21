@@ -61,7 +61,7 @@ class Ldap
       user
     else
       Rails.logger.info "LDAP: couldn't find #{username}. #{@client.get_operation_result}"
-      return false
+      false
     end
   end
 

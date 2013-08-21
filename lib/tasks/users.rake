@@ -18,7 +18,7 @@ namespace :users do
           # Mark the user as deactivated
           user.deactivated = true
           user.deactivated_at = DateTime.now
-          user.save
+          user.save(validate: false)
           deactivated += 1
         end
       end
