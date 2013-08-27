@@ -16,5 +16,4 @@ describe UserMailer do
       mail.body.encoded.should match("Hej televäxeln")
     end
   end
-
 end

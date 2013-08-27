@@ -184,7 +184,7 @@ class UsersController < ApplicationController
   # Room and street address is not changed locally, send mail to switchboard
   def change_address
     UserMailer.change_address(current_user).deliver
-    redirect_to root_path, notice: "Dina ändringar har sänts till televäxeln."
+    redirect_to root_path, notice: "Din ändringsbegäran har skickats till televäxeln."
   end
 
   private
