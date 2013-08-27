@@ -25,6 +25,9 @@ Dashboard::Application.configure do
   config.assets.compress = false
   config.assets.debug = true
 
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { host: 'www.local.malmo.se:3000' }
+
   # ImageMagick resize. (Use "which convert" path)
   Paperclip.options[:command_path] = "/usr/local/bin/convert"
 end
