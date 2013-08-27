@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
 class UserMailer < ActionMailer::Base
-  default from: "noreploy@malmo.se"
 
   def change_address(user)
+    # @message = params[:message]
     @user = user
-    mail to: "televaxeln@malmo.se, serviceforvaltningen.televaxeln@malmo.se"
+    mail to: "Televäxeln <#{APP_CONFIG["switchboard_email"]}>",
+         from: "#{@user.first_name} #{@user.last_name} <#{@user.email}>",
+         subject: "Adressändring"
   end
 end
