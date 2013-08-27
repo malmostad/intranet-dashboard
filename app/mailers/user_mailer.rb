@@ -1,25 +1,8 @@
 class UserMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: "noreploy@malmo.se"
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.user_mailer.change_room.subject
-  #
-  def change_room
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
-  end
-
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.user_mailer.change_streetaddress.subject
-  #
-  def change_streetaddress
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
+  def change_address(user)
+    @user = user
+    mail to: "televaxeln@malmo.se, serviceforvaltningen.televaxeln@malmo.se"
   end
 end
