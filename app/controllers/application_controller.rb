@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
     rescue_from Exception, with: :error_page
   end
-  def method_missing(method, *args)
+  def action_missing(method, *args)
     not_found
   end
 
