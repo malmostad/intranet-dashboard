@@ -1,0 +1,10 @@
+- title "Ändra adress"
+%section.box.form#edit-user
+  %h1.box-title= h1
+  .box-content
+    = simple_form_for current_user, url: :switchboard_changes, html: { class: "form-horizontal" } do |f|
+      = f.error_notification class: "warning"
+      = f.input :room
+      = f.input :address
+      = f.button :submit, "Sänd"
+

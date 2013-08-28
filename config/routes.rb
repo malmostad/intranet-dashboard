@@ -12,7 +12,6 @@ Dashboard::Application.routes.draw do
   put "/users/reset_shortcuts/:category" => "users#reset_shortcuts", as: "user_reset_shortcuts"
   put "/users/update_status_message" => "users#update_status_message", as: "user_update_status_message"
   get "/users/activities/:cmg_id" => "users#activities", as: "user_activities"
-  get "/users/change_address" => "users#change_address", as: "change_address"
 
   # Avatars belongs to users but has its own controller
   resources :avatars
@@ -31,6 +30,7 @@ Dashboard::Application.routes.draw do
   delete "/my_own_feeds/delete_all" => "my_own_feeds#destroy_all"
 
   resources :shortcuts, :roles, :languages, :skills, :feeds, :my_own_feeds, except: [:show]
+  resources :switchboard_changes, only: [:new, :create]
 
   get "/languages/suggest" => "languages#suggest", as: "languages_suggest"
   get "/skills/suggest" => "skills#suggest", as: "skills_suggest"
