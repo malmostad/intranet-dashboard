@@ -2,9 +2,22 @@
 %section.box.form#edit-user
   %h1.box-title= h1
   .box-content
-    = simple_form_for current_user, url: :switchboard_changes, html: { class: "form-horizontal" } do |f|
-      = f.error_notification class: "warning"
-      = f.input :room
-      = f.input :address
-      = f.button :submit, "Sänd"
+    %p.instruction= "Dina ändringar kommer att sändas till televäxeln. När de uppdaterat telefonisystemet kommer ändringarna att synas "
 
+    = form_tag :switchboard_changes, method: :post, class: "form-horizontal" do
+      .control-group.room
+        = label_tag :room, "Rumsnummer:", class: "control-label"
+        .controls
+          = text_field_tag :room, current_user.room, class: 'input-wide'
+
+      .control-group.room
+        = label_tag :address, "Adress:", class: "control-label"
+        .controls
+          = text_field_tag :address, current_user.address, class: 'input-wide'
+
+      .control-group.room
+        = label_tag :comment, "Kommentar:", class: "control-label"
+        .controls
+          = text_area_tag :comment, nil, class: 'input-wide', rows: 7
+
+      = submit_tag "Sänd", class: "btn btn-primary"

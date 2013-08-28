@@ -2,7 +2,6 @@
 
 # Room and street address is not changed locally, send mail to switchboard
 # When the switchboard team change the data in CMG it is synced to the Dashboard
-
 class SwitchboardChangesController < ApplicationController
   before_filter { add_body_class('employee') }
   before_filter :require_user
