@@ -22,4 +22,7 @@
         .controls
           = text_area_tag :comment, nil, class: 'input-wide', rows: 7
 
-      = submit_tag "Sänd", class: "btn btn-primary"
+      .control-group
+        .controls
+          = submit_tag "Sänd", class: "btn btn-primary"
+          = link_to t('actions.cancel'), user_path(current_user.username), class: "btn"
