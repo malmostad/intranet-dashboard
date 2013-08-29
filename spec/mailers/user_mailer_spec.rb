@@ -2,9 +2,9 @@
 require "spec_helper"
 
 describe UserMailer do
-  describe "change_address" do
+  describe "switchboard_changes" do
     let(:user) { create(:user) }
-    let(:mail) { UserMailer.change_address(user) }
+    let(:mail) { UserMailer.switchboard_changes(user, {}) }
 
     it "renders the headers" do
       mail.subject.should eq("Adressändring")

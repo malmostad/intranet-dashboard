@@ -10,8 +10,8 @@ class SwitchboardChangesController < ApplicationController
   end
 
   def create
-    if params[:room] || params[:streetadress]
-      UserMailer.change_address(current_user).deliver
+    if params[:room] || params[:streetadress] || params[:comment]
+      UserMailer.switchboard_changes(current_user, params).deliver
       redirect_to root_path, notice: "Din ändringsbegäran har skickats till televäxeln."
     else
       render action: "new"
