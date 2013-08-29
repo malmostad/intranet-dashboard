@@ -1,8 +1,10 @@
 - title "Ändra adress"
-%section.box.form#edit-user
+%section.box.form#switchboard-changes
   %h1.box-title= h1
   .box-content
-    %p.instruction= "Dina ändringar kommer att sändas till televäxeln. När de uppdaterat telefonisystemet kommer ändringarna att synas "
+    %p.instruction
+      = "Dina ändringar kommer att sändas till televäxeln."
+      = "När de uppdaterat uppgifterna i telefonisystemet kommer ändringarna att synas i kontaktboken."
 
     = form_tag :switchboard_changes, method: :post, class: "form-horizontal" do
       .control-group.room
