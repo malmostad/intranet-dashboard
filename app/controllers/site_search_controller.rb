@@ -3,7 +3,6 @@ require 'open-uri'
 
 class SiteSearchController < ApplicationController
   before_filter { add_body_class "site-search" }
-  before_filter :require_early_adopter
 
   def index
     @terms = params[:q]
