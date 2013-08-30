@@ -148,9 +148,6 @@ class User < ActiveRecord::Base
   end
 
   # Search for users by term or a distinct value
-  # TODO: Refactor out search.
-  #       Distinct values maybe as /user/skills/tyska etc.
-  #       Search with Ransack?
   def self.search(q, limit = 25, offset = 0)
     if q.present? && q[:term].present?
       term = "#{q[:term].strip}%"

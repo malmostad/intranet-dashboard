@@ -175,12 +175,6 @@ class UsersController < ApplicationController
     @user.roles.order(:name).map { |r| r.category == "department" ? 'department': 'working_field' }.compact
   end
 
-  # Room and street address is not changed locally, send mail to switchboard
-  def change_address
-    UserMailer.change_address(current_user).deliver
-    redirect_to root_path, notice: "Din ändringsbegäran har skickats till televäxeln."
-  end
-
   private
 
   def user_stats
