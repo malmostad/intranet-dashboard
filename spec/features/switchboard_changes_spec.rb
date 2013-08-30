@@ -2,9 +2,10 @@
 require 'spec_helper'
 
 describe "SwitchboardChanges" do
+
+  let(:user) { create(:user) }
   before(:each) do
-    @ldap_user = create_ldap_user
-    login_ldap_user
+    login(user.username, "") # Stubbed auth
     visit new_switchboard_change_path
   end
 
@@ -24,7 +25,7 @@ describe "SwitchboardChanges" do
     fill_in :room, with: "123"
     fill_in :address, with: "Sunset Boulevard"
     click_on("Sänd")
-    current_path.should eq(user_path(@ldap_user.username))
+    current_path.should eq(user_path(user.username))
     page.should have_selector(".flash.notice", text: "skickats till televäxeln.")
   end
 end

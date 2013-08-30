@@ -2,11 +2,10 @@
 require 'spec_helper'
 
 describe "Feeds" do
-  let(:ldap_user) { create_ldap_user }
-
+  let(:user) { create(:user) }
   before(:each) do
-    create_feeds_for_user(ldap_user)
-    login_ldap_user
+    create_feeds_for_user(user)
+    login(user.username, "") # Stubbed auth
   end
 
   it "should have news feed entries box" do
@@ -39,7 +38,7 @@ describe "Feeds" do
 
   describe "administration" do
     before(:each) do
-      ldap_user.update_attribute(:admin, true)
+      user.update_attribute(:admin, true)
       visit feeds_path
     end
 

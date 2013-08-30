@@ -50,4 +50,3 @@ describe "Users" do
     page.should have_selector(".alert.warning", text: "korrigera")
   end
 end
-
