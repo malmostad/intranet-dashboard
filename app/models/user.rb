@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
   end
 
   after_validation do
-    # Explicit validation for accociated objects
+    # Explicit validation for accociated models. `validates_associated` will not do.
     errors.add(:skill_list, "Max 48 tecken per kompetensområde") if @skill_errors
     errors.add(:language_list, "Max 48 tecken per språknamn") if @language_errors
   end
@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
   def language_list=(names)
     self.languages = names.split(",").map do |n|
       l = Language.where(name: n.strip).first_or_create
-      # Explicit validation for accociated object
+      # Explicit validation for accociated model
       if l.valid?
         l
       else
@@ -100,7 +100,7 @@ class User < ActiveRecord::Base
   def skill_list=(names)
     self.skills = names.split(",").map do |n|
       s = Skill.where(name: n.strip).first_or_create
-      # Explicit validation for accociated object
+      # Explicit validation for accociated model
       if s.valid?
         s
       else
