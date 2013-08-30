@@ -72,18 +72,12 @@ class UsersController < ApplicationController
       @user.errors.add(:admin, "Du kan inte ta bort din egen administratörsrättighet!")
     end
 
-    respond_to do |format|
-      # Some fields require admin rights for mass assignment
-      if @user.errors.empty? && @user.update_attributes(params[:user], as: ( :admin if admin? ))
-        set_profile_cookie
-        format.html {
-          redirect_to user_path(@user.username), notice: "Användaren uppdaterades"
-        }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    # Some fields require admin rights for mass assignment
+    if @user.errors.empty? && @user.update_attributes(params[:user], as: ( :admin if admin? ))
+      set_profile_cookie
+      redirect_to user_path(@user.username), notice: "Användaren uppdaterades"
+    else
+      render action: 'edit'
     end
   end
 
