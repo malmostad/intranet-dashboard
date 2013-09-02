@@ -17,7 +17,7 @@ module SiteSearch
     def search
       begin
         # Siteseeker is slow and indexing is only done at night so we cache hard
-        html = Rails.cache.fetch(Digest::SHA1.hexdigest("search-#{@query}"), expires_in: 12.hours) do
+        html = Rails.cache.fetch(Digest::SHA1.hexdigest("search-#{@query}"), expires_in: 6.hours) do
           open("#{@base_search_url}#{@query}", read_timeout: @options[:read_timeout]).read
         end
         document = Nokogiri::HTML(html, nil, "UTF-8")
