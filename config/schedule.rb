@@ -19,7 +19,7 @@ if environment == "staging"
   end
 
   every :day, :at => '2:43am' do
-    rake "clear_expired_sessions"
+    rake "users:clear_expired_sessions"
   end
 end
 
@@ -33,7 +33,7 @@ if environment == "production"
   end
 
   every :day, :at => '4:43am' do
-    rake "clear_expired_sessions"
+    rake "users:clear_expired_sessions"
   end
 end
 
