@@ -16,7 +16,10 @@ module SiteSearch
     # Send a GET request to the Siteseeker server and create a Nokogiri doc from the returned HTML
     def search
       begin
-        html = open("#{@base_search_url}#{@query}", read_timeout: @options[:read_timeout]).read
+        # Siteseeker is slow and indexing is only done at night so we cache hard
+        html = Rails.cache.fetch(Digest::SHA1.hexdigest("search-#{@query}"), expires_in: 12.hours) do
+          open("#{@base_search_url}#{@query}", read_timeout: @options[:read_timeout]).read
+        end
         document = Nokogiri::HTML(html, nil, "UTF-8")
         @results = clean_up(document).xpath("/html/body")
       rescue Exception => e
