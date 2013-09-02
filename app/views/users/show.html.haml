@@ -39,8 +39,14 @@
     .employee-column-1
       %section.address.vcard
         %h2.form-group-title Arbetsplats
-        %p.room= "Rumsnummer: #{@user.room}"
-        %p.street-address= "Besöksadress: #{@user.address}"
+        %p.room
+          = "Rumsnummer: #{@user.room}"
+          - if myself?
+            = link_to "(ändra)", new_switchboard_change_path, class: "change"
+        %p.street-address
+          = "Besöksadress: #{@user.address}"
+          - if myself?
+            = link_to "(ändra)", new_switchboard_change_path, class: "change"
 
       %section.competence
         %h2.form-group-title Kompetensprofil
