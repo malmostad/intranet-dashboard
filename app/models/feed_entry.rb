@@ -11,6 +11,8 @@ class FeedEntry < ActiveRecord::Base
     [ "slash:comments", as: "count_comments" ],
     [ "comments",       as: "comments_link" ],
     [ "enclosure",      as: "image_url", value: "url" ],
+    [ "enclosure",      as: "url_medium", value: "dashboard:url-medium" ],
+    [ "enclosure",      as: "url_large", value: "dashboard:url-large" ],
     [ "published",      as: "pubDate" ],
     [ "guid",           as: "entry_id" ] # Feedzirra::Parser::ITunesRSSItem is using guid instead of entry_id
   ].each do |element|

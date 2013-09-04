@@ -1,12 +1,12 @@
-%section#feeds-feature.box.feeds
-  %h1.box-title Tema
-  - if @feature_entry.present?
+- if @feature_entry.present?
+  %section#feeds-feature.box.feeds
+    %h1.box-title Tema
     %ul.box-content
       %li
         %a{ href: @feature_entry.full.url, rel: "external" }
           - if @feature_entry.full.image_url.present?
             .crop
-              = image_tag( @feature_entry.full.image_url, alt: '' )
+              = image_tag( @feature_entry.full.url_large, alt: '' )
           .text
             %h2= sanitize( @feature_entry.full.title )
         %p.more= link_to "Fler temanyheter", @feature_feed_url.feed_url.gsub(/\/feed\/*$/, "")

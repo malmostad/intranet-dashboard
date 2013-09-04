@@ -122,14 +122,14 @@ section.box#feeds-feature {
     }
   }
   .crop {
-    max-height: 9em;
     overflow: hidden;
     margin-bottom: .5em;
     border: $border;
-  }
-  img {
-    width: 100%;
-    height: auto;
+    img {
+      width: 100%;
+      height: auto;
+      margin: 0;
+    }
   }
   .more {
     margin: 0;
