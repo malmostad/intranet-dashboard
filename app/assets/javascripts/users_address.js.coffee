@@ -16,7 +16,7 @@ $ ->
               value: item.name
               address: item.name
               post_code: item.postcode
-              neighborhood: item.district
+              neighborhood: item.towndistrict
               postal_town: item.postal_town
               east: item.east
               north: item.north
