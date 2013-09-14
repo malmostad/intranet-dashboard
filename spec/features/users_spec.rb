@@ -10,7 +10,7 @@ describe "Users" do
   it "should have a contact card" do
     visit user_path(user.username)
     page.should have_selector("h1", text: user.displayname)
-    page.should have_selector("h2", text: "Arbetsplats")
+    # page.should have_selector("h2", text: "Arbetsplats")
     page.should have_selector("h2", text: "Kompetens")
     page.should have_selector("h2", text: "Rapporterar till")
     page.should have_selector("p.email", text: user.email)
