@@ -1,0 +1,21 @@
+Hej televäxeln!
+
+<%= "#{@user.first_name} #{@user.last_name}" %> vill göra ändringar i sina adressuppgifter. De nya uppgifterna är:
+
+Rumsnummer: <%= @message[:room] %>
+Gatuadress: <%= @message[:address] %>
+
+<% if @message[:comment].present? %>
+Meddelande:
+<%= @message[:comment] %>
+<% end %>
+
+Kontaktuppgifter:
+E-post: <%= @user.email %>
+Telefon: <%= @user.phone %>
+Användarnamn: <%= @user.username %>
+Kontaktkort: <%= user_url(@user.username) %>
+
+<%= "-- " %>
+Detta e-postmeddelande är skickat från Komins kontaktbok på begäran av den anställde.
+Generella frågor besvaras av kominteamet@malmo.se.

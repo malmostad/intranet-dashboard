@@ -25,9 +25,9 @@
           - if @user.title.present?
             %span.title= "#{@user.title}, "
           - if @user.company.present?
-            %span.department= link_to "#{@user.company_short}, ", users_path(company: @user.company)
-          - if @user.department.present?
-            %span.team= link_to @user.department, users_path(department: @user.department)
+            %span.department= link_to "#{@user.company_short} ", users_path(company: @user.company)
+          - # if @user.department.present?
+          - # %span.team= link_to @user.department, users_path(department: @user.department)
 
         = simple_format @user.professional_bio, class: "professional-bio"
         %p.phone= [@user.phone, @user.cell_phone].reject(&:blank?).join(", ")
@@ -37,10 +37,17 @@
           #user-activities.hide{ "data-path" => user_activities_path(@user.cmg_id) }
 
     .employee-column-1
-      %section.address.vcard
-        %h2.form-group-title Arbetsplats
-        %p.room= "Rumsnummer: #{@user.room}"
-        %p.street-address= "Besöksadress: #{@user.address}"
+      - if false # i.e., we are waiting for switchboard to sync data to ldap
+        %section.address.vcard
+          %h2.form-group-title Arbetsplats
+          %p.room
+            = "Rumsnummer: #{@user.room}"
+            - if myself?
+              = link_to "(ändra)", new_switchboard_change_path, class: "change"
+          %p.street-address
+            = "Besöksadress: #{@user.address}"
+            - if myself?
+              = link_to "(ändra)", new_switchboard_change_path, class: "change"
 
       %section.competence
         %h2.form-group-title Kompetensprofil

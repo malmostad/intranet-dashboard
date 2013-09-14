@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :init_body_class
+  before_filter :init_body_class, :mailer_set_url_options
 
   # Set a permanent cookie w/data from the user profile. Used by the masthead in other webapps
   def set_profile_cookie
@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
     rescue_from Exception, with: :error_page
   end
-  def method_missing(method, *args)
+  def action_missing(method, *args)
     not_found
   end
 
@@ -134,5 +134,11 @@ class ApplicationController < ActionController::Base
 
   def sub_layout(name = "")
     @sub_layout = name
+  end
+
+  # It is not possible to set a /path mounted app url in the
+  # action mailer config so we need to do it here
+  def mailer_set_url_options
+    ActionMailer::Base.default_url_options[:host] = request.env["HTTP_HOST"] + root_path.slice(0..-2)
   end
 end

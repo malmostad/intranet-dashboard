@@ -1,19 +1,20 @@
-- increase_counter = @results.editors_choice.count
-- @results.entries.each do |entry|
-  %li{ "data-position" => entry.number + increase_counter }
-    %h2
-      = link_to entry.title, entry.url
-      - unless entry.content_type == "html"
-        %span.file_info= "[#{entry.content_type}]"
-    %p.extract
-      = entry.summary
-      %span.date= entry.date
+- cache Digest::SHA1.hexdigest("search-results-fragment-#{params}"), :expires_in => 6.hour do
+  - increase_counter = @results.editors_choice.count
+  - @results.entries.each do |entry|
+    %li{ "data-position" => entry.number + increase_counter }
+      %h2
+        = link_to entry.title, entry.url
+        - unless entry.content_type == "html"
+          %span.file_info= "[#{entry.content_type}]"
+      %p.extract
+        = entry.summary
+        %span.date= entry.date
 
-    %p.category= entry.category
-    - if entry.breadcrumbs.present?
-      %ul.breadcrumb
-        - entry.breadcrumbs.each do |breadcrumb|
-          %li= link_to breadcrumb.text, breadcrumb.url
+      %p.category= entry.category
+      - if entry.breadcrumbs.present?
+        %ul.breadcrumb
+          - entry.breadcrumbs.each do |breadcrumb|
+            %li= link_to breadcrumb.text, breadcrumb.url
 
-- if @results.more_query.present?
-  %li#load-more-search-results= link_to "Visa fler träffar", "#{search_path}?#{@results.more_query}", class: "btn"
+  - if @results.more_query.present?
+    %li#load-more-search-results= link_to "Visa fler träffar", "#{search_path}?#{@results.more_query}", class: "btn"

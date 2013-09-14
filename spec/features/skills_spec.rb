@@ -2,11 +2,9 @@
 require 'spec_helper'
 
 describe "Skills" do
-  let(:ldap_user) { create_ldap_user }
-
+  let(:user) { create(:user) }
   before(:each) do
-    create_feeds_for_user(ldap_user)
-    login_ldap_user
+    login(user.username, "") # Stubbed auth
   end
 
   it "should be protected from regular users" do

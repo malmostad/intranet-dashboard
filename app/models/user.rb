@@ -51,6 +51,12 @@ class User < ActiveRecord::Base
     self.twitter = twitter.gsub(/^@/, "").downcase unless twitter.blank?
   end
 
+  after_validation do
+    # Explicit validation for accociated models. `validates_associated` will not do.
+    errors.add(:skill_list, "Max 48 tecken per kompetensområde") if @skill_errors
+    errors.add(:language_list, "Max 48 tecken per språknamn") if @language_errors
+  end
+
   after_create do
     # Map CMG ID when account is created
     update_attribute(:cmg_id, AastraCWI.get_cmg_id(self))
@@ -75,8 +81,15 @@ class User < ActiveRecord::Base
 
   def language_list=(names)
     self.languages = names.split(",").map do |n|
-      Language.where(name: n.strip).first_or_create!
-    end
+      l = Language.where(name: n.strip).first_or_create
+      # Explicit validation for accociated model
+      if l.valid?
+        l
+      else
+        @language_errors = true
+        nil
+      end
+    end.compact
   end
 
   # Skill names as tokens
@@ -86,8 +99,15 @@ class User < ActiveRecord::Base
 
   def skill_list=(names)
     self.skills = names.split(",").map do |n|
-      Skill.where(name: n.strip).first_or_create!
-    end
+      s = Skill.where(name: n.strip).first_or_create
+      # Explicit validation for accociated model
+      if s.valid?
+        s
+      else
+        @skill_errors = true
+        nil
+      end
+    end.compact
   end
 
   # Get users feeds in a given category
@@ -128,9 +148,6 @@ class User < ActiveRecord::Base
   end
 
   # Search for users by term or a distinct value
-  # TODO: Refactor out search.
-  #       Distinct values maybe as /user/skills/tyska etc.
-  #       Search with Ransack?
   def self.search(q, limit = 25, offset = 0)
     if q.present? && q[:term].present?
       term = "#{q[:term].strip}%"

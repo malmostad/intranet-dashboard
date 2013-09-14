@@ -3,7 +3,6 @@ require 'open-uri'
 
 class SiteSearchController < ApplicationController
   before_filter { add_body_class "site-search" }
-  before_filter :require_early_adopter
 
   def index
     @terms = params[:q]
@@ -20,7 +19,10 @@ class SiteSearchController < ApplicationController
 
   def autocomplete
     begin
-      results = open("#{APP_CONFIG['site_search_autocomplete_url']}?q=#{CGI.escape(params[:q])}&ilang=sv&callback=results", read_timeout: 5).first
+      # Siteseeker is slow and indexing is only done at night so we cache hard
+      results = Rails.cache.fetch(Digest::SHA1.hexdigest("search-autocomplete-#{params[:q]}"), expires_in: 12.hours) do
+        open("#{APP_CONFIG['site_search_autocomplete_url']}?q=#{CGI.escape(params[:q])}&ilang=sv&callback=results", read_timeout: 5).first
+      end
     rescue Exception => e
       results = 'results({})'
     end

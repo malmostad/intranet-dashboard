@@ -2,9 +2,9 @@
 require 'spec_helper'
 
 describe "Global assets javascript" do
+  let(:user) { create(:user) }
   before(:each) do
-    create_ldap_user
-    login_ldap_user
+    login(user.username, "") # Stubbed auth
   end
 
   it "should have injected the masthead", js: true do

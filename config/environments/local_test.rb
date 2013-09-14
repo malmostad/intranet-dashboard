@@ -16,5 +16,8 @@ Dashboard::Application.configure do
   config.assets.debug = true
   config.assets.compress = false
 
+  config.action_mailer.default_url_options = { host: 'www.local.malmo.se:3000' }
+  config.action_mailer.delivery_method = :test
+
   Paperclip.options[:command_path] = "/usr/local/bin/convert"
 end
