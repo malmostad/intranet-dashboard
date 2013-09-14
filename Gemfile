@@ -44,7 +44,7 @@ group :local_test do
   gem 'launchy'
   gem 'database_cleaner'
   gem 'vcr'
-  gem 'webmock', '1.13.0'
+  gem 'webmock', '1.11.0'
 end
 
 group :assets do
