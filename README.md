@@ -61,18 +61,18 @@ $ bundle exec guard
 ```
 
 ## Feed Worker
-The feed worker daemon updates all news feeds that are in use in the dashboard. It runs as a daemon. The aggressiveness is defined in `app_config.yml`. The daemon is started/restarted by the Capistrano deployment in staging and production. It is also added as a `@reboot` task to the crontab by the `whenever` schedule. To check the status, start or stop the daemon manually, execute the following:
+The feed worker daemon updates all news feeds that are in use in the dashboard. It runs as a daemon. The aggressiveness is defined in `app_config.yml`. The daemon is started/restarted by the Capistrano deployment in staging and production. It is also added as a `@reboot` task to the crontab during deployment by `whenever`. To check the status, start or stop the daemon manually, execute the following:
 
 ```shell
 $ RAILS_ENV=development|test|production lib/daemons/feed_worker_ctl status|start|stop
 ```
 
-You can use the `status` and `stop` commands for the daemon. Stop is made gracefully so the worker will run until the current batch is finished. Results are written to the log file.
+Stop is made gracefully so the worker will run until the current batch is finished. Results are written to the log file.
 
 You can also use the following Rails console command to run the feed updates once:
 
 ```shell
-$ rails c
+$ rails c development|test|production
 $ FeedWorker.update_all
 ```
 
