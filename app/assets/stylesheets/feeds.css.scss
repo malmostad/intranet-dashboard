@@ -10,7 +10,7 @@ section.box.feeds {
     }
     li {
       margin: 0;
-      overflow: hidden;
+      overflow-x: hidden;
       a {
         display: block;
         @include box-sizing('border-box');
@@ -39,7 +39,7 @@ section.box.feeds {
         overflow: hidden;
       }
       .text {
-        overflow: hidden;
+        overflow-x: hidden;
         margin-bottom: .5em;
         h2 {
           margin: 0 0 .1em;
