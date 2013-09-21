@@ -5,13 +5,16 @@ module Api
     class EmployeesController < ApplicationController
       respond_to :json
 
-       def search
-         @employees = { fox: "barx" }
-       end
+      def search
+        @limit = 100
+        page = params[:page].present? ? params[:page].to_i : 0
+        @offset = page * @limit
+        @employees = User.search(params, @limit, @offset)
+      end
 
-       def show
-         @employee = User.where(username: params[:username]).first
-       end
+      def show
+        @employee = User.where(username: params[:username]).first
+      end
     end
   end
 end
