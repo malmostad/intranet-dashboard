@@ -47,6 +47,13 @@ Dashboard::Application.routes.draw do
   post "/login" => "sessions#create"
   get  "/logout" => "sessions#destroy"
 
+  namespace :api, defaults: {format: 'json'} do
+    namespace :v1 do
+      get "/employees/search" => "employees#search"
+      get "/employees/:username" => "employees#show", as: "employee"
+    end
+  end
+
   # Catch everything else. "a" is the path in Rails 3's routing
   match '*a', to: 'application#not_found', format: false
 end
