@@ -7,12 +7,13 @@
           %h2.fn= link_to "#{user.first_name} #{user.last_name}", user_path(user.username)
           %p
             - if user.company.present?
-              %span.org= link_to "#{user.company_short}, ", users_path(company: user.company)
+              %span.org= link_to "#{user.company_short}", users_path(company: user.company)
             - if user.department.present?
               %span.org= link_to "#{user.department}", users_path(department: user.department)
           %p
             %span.phone= user.phone
-            %span.phone= user.cell_phone
+            - if user.cell_phone.present?
+              %span.phone= user.cell_phone
             %span.email= user.email
 
           %p.note= user.professional_bio
