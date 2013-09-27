@@ -5,13 +5,15 @@
     %thead
       %tr
         %th Namn
+        %th Medarbetare
         %th
     %tbody
       - @languages.each do |language|
         %tr
           %td= link_to language.name, edit_language_path(language)
+          %td= link_to language.name, users_path(language: language.name)
           %td.delete= link_to delete_icon_text, language, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini"
 
       %tr
-        %td{ colspan: 1 }
+        %td{ colspan: 3 }
           .actions= link_to add_icon_text, new_language_path, class: "btn btn-primary"
