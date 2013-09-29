@@ -10,7 +10,7 @@ gem 'savon', '2.3.0'
 
 gem 'net-ldap', '0.3.1'
 gem 'ruby-saml', '0.7.0' # 0.7.2 is broken
-gem 'bcrypt-ruby', '3.1.2'
+gem 'bcrypt-ruby', '~> 3.0.0'
 
 gem 'dalli', '2.6.4'
 gem 'mysql2', '0.3.13'

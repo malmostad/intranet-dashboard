@@ -1,5 +1,8 @@
 Dashboard::Application.routes.draw do
 
+  resources :api_apps
+
+
   root to: "dashboard#index"
 
   get "/more_feed_entries/:category/:before" => "dashboard#more_feed_entries", as: "more_feed_entries"

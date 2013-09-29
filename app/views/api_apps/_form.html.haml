@@ -1,0 +1,18 @@
+= simple_form_for @api_app, html: { class: "form-horizontal" } do |f|
+  = f.error_notification class: "warning"
+
+  .form-inputs
+    = f.input :name, placeholder: "systemnamn, t.ex. malmo.se", input_html: { class: 'input-wide' }
+    = f.input :contact, placeholder: "systemförvaltare med e-postadress", input_html: { class: 'input-wide' }
+    = f.input :ip_address, placeholder: "systemets ip-adress, t.ex. 161.52.15.153", input_html: { class: 'input-wide' }
+    - unless @api_app.new_record?
+      = f.input :app_token, as: :text_only
+      .control-group.text-only
+        .control-label app_secret:
+        .controls.token
+          %button.btn.btn-small.generate-secret Generera ny
+
+  .control-group
+    .controls
+      = f.button :submit, :class => 'btn-primary'
+      = link_to t('actions.cancel'), api_apps_path(@api_app), class: "btn"

@@ -28,6 +28,12 @@ sv-SE:
         private_bio: "Om mig, personlig bio"
         homepage: "Hemsida"
         admin: "Administratör"
+      api_app:
+        name: "Namn"
+        contact: "Kontakt"
+        ip_address: "IP-adress"
+        app_token: "app_token"
+        app_secret: "app_secret"
     hints:
       user:
         displayname: "<p>Ditt namn hämtas från HR-systemet. Ditt namn kan du ändra genom att kontakta din egen förvaltnings lokala HR-funktion. Det vanligaste är att du vill ändra för att ditt namn är felstavat eller för att du byter efternamn.</p><p>Kontaktuppgift till din lokala HR-finktion hittar du på Komin > Min förvaltning > Vår organisation.</p>"

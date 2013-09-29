@@ -39,6 +39,9 @@
     td.delete {
       text-align: right;
     }
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
   }
 
 
@@ -57,6 +60,7 @@
       &.shortcuts .shortcuts a,
       &.skills .skills a,
       &.languages .languages a,
+      &.api_apps .api-apps a,
       a:hover {
         background: $backgroundLightHover;
       }

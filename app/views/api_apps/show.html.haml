@@ -1,0 +1,35 @@
+- title "API-applikation"
+%section.box.show.api-apps
+  %h1.box-title= h1
+  .box-content.form-horizontal.form-data
+
+    .control-group.text-only
+      .control-label Namn:
+      .controls= @api_app.name
+    .control-group.text-only
+      .control-label Kontakt:
+      .controls= @api_app.contact
+    .control-group.text-only
+      .control-label IP-nummer:
+      .controls= @api_app.ip_address
+
+    .control-group.text-only
+      .control-label app_token:
+      .controls.token= @api_app.app_token
+
+    - if @api_app.app_secret.present?
+      .control-group.text-only
+        .control-label app_secret:
+        .controls.token
+          = @api_app.app_secret
+          .warning= raw "Kopiera <span class='token'>app_secret</span>. Den sparas inte och kan inte visas igen."
+
+    - else
+      .control-group.text-only
+        .control-label app_secret:
+        .controls
+          Lagras inte. Du kan skapa en ny under Redigera.
+
+    .control-group
+      .controls
+        = link_to 'Redigera', edit_api_app_path(@api_app), class: "btn"

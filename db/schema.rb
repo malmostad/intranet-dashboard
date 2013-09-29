@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130820080221) do
+ActiveRecord::Schema.define(:version => 20130925201830) do
+
+  create_table "api_apps", :force => true do |t|
+    t.string   "name"
+    t.string   "contact"
+    t.string   "app_token"
+    t.string   "ip_address"
+    t.string   "password_digest"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "api_apps", ["app_token"], :name => "index_api_apps_on_app_token"
 
   create_table "colleagueships", :force => true do |t|
     t.integer  "user_id"
