@@ -48,8 +48,8 @@ section.box.index.users {
       font-size: emize(13);
       line-height: 1.4;
       margin: 0 0 .15em;
-      span {
-        // margin-right: .5em;
+      span.phone, span.org {
+        margin-right: .5em;
       }
     }
     p.note {

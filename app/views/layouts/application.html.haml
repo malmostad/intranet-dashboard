@@ -12,7 +12,6 @@
     = stylesheet_link_tag "#{APP_CONFIG['assets_url_base']}malmo.css", media: 'all'
     = stylesheet_link_tag "application", media: 'all'
     /[if lte IE 9]
-      = stylesheet_link_tag "#{APP_CONFIG['assets_url_base']}legacy/ie9.css", media: 'all'
       = stylesheet_link_tag "legacy/ie9", media: 'all'
     /[if lte IE 7]
       = stylesheet_link_tag "#{APP_CONFIG['assets_url_base']}legacy/ie7.css", media: 'all'

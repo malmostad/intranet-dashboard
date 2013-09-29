@@ -12,13 +12,15 @@
       %thead
         %tr
           %th Namn
+          %th Medarbetare
           %th
       %tbody
         - @skills.each do |skill|
           %tr
             %td= link_to skill.name, edit_skill_path(skill)
+            %td= link_to skill.name, users_path(skill: skill.name)
             %td.delete= link_to delete_icon_text, skill, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini"
 
         %tr
-          %td{ colspan: 2 }
+          %td{ colspan: 3 }
             .actions= link_to add_icon_text, new_skill_path, class: "btn btn-primary"

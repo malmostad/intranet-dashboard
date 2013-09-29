@@ -70,7 +70,7 @@ describe SiteSearch do
 
     it "should show a spelling suggestions" do
       results = SiteSearch::Search.new({ q: "semstr" }.to_query)
-      results.suggestions.count.should > 1
+      results.suggestions.count.should > 0
     end
   end
 end

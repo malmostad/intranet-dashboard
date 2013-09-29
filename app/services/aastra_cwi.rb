@@ -77,18 +77,24 @@ class AastraCWI
     end
 
     events.map! do |event|
-      starting = Time.parse event[:from_date_time]
-      ending   = Time.parse event[:to_date_time]
-      # Does the event occur today?
-      if starting < Time.now.end_of_day && ending > Time.now
-        OpenStruct.new(
-          starting: starting,
-          ending: ending,
-          reason: event[:reason],
-          absent: event[:absent]
-        )
-      else
-        nil
+      begin
+        starting = Time.parse event[:from_date_time]
+        ending = Time.parse event[:to_date_time]
+        # Does the event occur today?
+        if starting < Time.now.end_of_day && ending > Time.now
+          OpenStruct.new(
+            starting: starting,
+            ending: ending,
+            reason: event[:reason],
+            absent: event[:absent]
+          )
+        else
+          nil
+        end
+      rescue
+        # No time in time fields from Aastra, prbably just string like "TV"
+        ending = event[:to_date_time]
+        starting = event[:from_date_time]
       end
     end
     events.compact
