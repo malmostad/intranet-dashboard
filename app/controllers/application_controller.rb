@@ -60,15 +60,18 @@ class ApplicationController < ActionController::Base
   end
 
   def not_found(exception = "404")
-    logger.warn "#{exception} #{request.fullpath}"
+    logger.warn "Exception: #{exception}"
+    logger.warn "  Full path: #{request.fullpath}"
+    logger.warn "  Referer: #{request.referer}"
     reset_body_classes
     render template: "404", status: 404
   end
 
   def error_page(exception = "500", msg = "Prova att navigera med menyn ovan.")
-    logger.error("Exception: #{exception}\n" +
-                 "#{' ' * 32 }User id: #{session[:user_id] ? session[:user_id] : 'not logged in'}\n" +
-                 "#{' ' * 32 }Params: #{params}")
+    logger.error "Exception: #{exception}"
+    logger.error "  User id: #{session[:user_id] ? session[:user_id] : 'not logged in'}"
+    logger.error "  Referer: #{request.referer}"
+    logger.error "  Params: #{params}"
     reset_body_classes
     @msg = msg
     render template: "500", status: 500
