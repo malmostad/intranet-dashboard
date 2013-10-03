@@ -92,9 +92,13 @@ class AastraCWI
           nil
         end
       rescue
-        # No time in time fields from Aastra, prbably just string like "TV"
-        ending = event[:to_date_time]
-        starting = event[:from_date_time]
+        # No time in time fields from Aastra, prbably just a string like "TV"
+        OpenStruct.new(
+          starting: event[:from_date_time],
+          ending: event[:to_date_time],
+          reason: event[:reason],
+          absent: event[:absent]
+        )
       end
     end
     events.compact
