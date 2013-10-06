@@ -7,5 +7,5 @@ $ ->
         success: (data) ->
           $("#generate-secret").replaceWith data
         error: (jqXHR, textStatus, errorThrown) ->
-          $("#generate-secret").after('<p class="warning">Ett fel inträffade. Försök lite senare.' + textStatus + " | " + errorThrown + '</p>')
+          $("#generate-secret").after('<p class="warning">Ett fel inträffade. Försök lite senare.<br/>(' + textStatus + " " + errorThrown + ')</p>')
 
