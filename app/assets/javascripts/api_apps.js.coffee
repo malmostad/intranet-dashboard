@@ -1,6 +1,11 @@
 $ ->
-  $("#api-apps button.generate-secret").click (event) ->
+  $("#generate-secret button").click (event) ->
     event.preventDefault()
     if confirm("Nuvarande app_secret kommer att sluta fungera. Vill du fortsätta?")
-      console.log "Ja"
-      # TODO: ajax call that triggers new key
+      $.ajax
+        url: $(@).attr('data-path')
+        success: (data) ->
+          $("#generate-secret").replaceWith data
+        error: (jqXHR, textStatus, errorThrown) ->
+          $("#generate-secret").after('<p class="warning">Ett fel inträffade. Försök lite senare.' + textStatus + " | " + errorThrown + '</p>')
+

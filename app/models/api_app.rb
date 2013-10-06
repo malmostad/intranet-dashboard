@@ -1,5 +1,3 @@
-# rails g scaffold api_app name contact app_token:index ip_address password_digest --skip-assets
-
 class ApiApp < ActiveRecord::Base
   attr_accessible :contact, :ip_address, :name
 

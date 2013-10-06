@@ -1,8 +1,5 @@
 Dashboard::Application.routes.draw do
 
-  resources :api_apps
-
-
   root to: "dashboard#index"
 
   get "/more_feed_entries/:category/:before" => "dashboard#more_feed_entries", as: "more_feed_entries"
@@ -49,6 +46,9 @@ Dashboard::Application.routes.draw do
   get  "/login" => "sessions#new"
   post "/login" => "sessions#create"
   get  "/logout" => "sessions#destroy"
+
+  resources :api_apps
+  get "/api_apps/create_app_secret/:id" => "api_apps#create_app_secret", as: "create_app_secret"
 
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do

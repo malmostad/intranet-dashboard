@@ -27,8 +27,10 @@
     - else
       .control-group.text-only
         .control-label app_secret:
-        .controls
-          Lagras inte. Du kan skapa en ny under Redigera.
+        .controls#generate-secret
+          %p
+            %button.btn.btn-small{ 'data-path' => create_app_secret_path } Generera ny
+          %p App secret lagras inte i klartext. Generera en ny vid behov.
 
     .control-group
       .controls

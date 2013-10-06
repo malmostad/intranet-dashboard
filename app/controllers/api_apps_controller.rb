@@ -53,4 +53,11 @@ class ApiAppsController < ApplicationController
     @api_app.destroy
     redirect_to api_apps_url
   end
+
+  def create_app_secret
+    @api_app = ApiApp.find(params[:id])
+    @api_app.generate_app_secret
+    @api_app.save
+    render :create_app_secret, layout: false
+  end
 end

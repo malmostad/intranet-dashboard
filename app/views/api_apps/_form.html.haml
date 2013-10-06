@@ -7,10 +7,6 @@
     = f.input :ip_address, placeholder: "systemets ip-adress, t.ex. 161.52.15.153", input_html: { class: 'input-wide' }
     - unless @api_app.new_record?
       = f.input :app_token, as: :text_only
-      .control-group.text-only
-        .control-label app_secret:
-        .controls.token
-          %button.btn.btn-small.generate-secret Generera ny
 
   .control-group
     .controls
