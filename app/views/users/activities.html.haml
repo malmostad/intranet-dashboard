@@ -5,6 +5,6 @@
       - @activities.each do |activity|
         %li
           = activity.reason
-          = l activity.starting, format: :short
+          = activity.starting
           = "till"
-          = l activity.ending, format: :short
+          = activity.ending
