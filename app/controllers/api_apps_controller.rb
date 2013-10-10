@@ -11,7 +11,6 @@ class ApiAppsController < ApplicationController
 
   def show
     @api_app = ApiApp.find(params[:id])
-    logger.debug session[:app_secret]
     if session[:app_secret].present?
       @api_app.app_secret = session[:app_secret]
       session.delete :app_secret
@@ -30,7 +29,6 @@ class ApiAppsController < ApplicationController
     @api_app = ApiApp.new(params[:api_app])
 
     if @api_app.save
-      logger.debug @api_app.app_secret
       session[:app_secret] = @api_app.app_secret
       redirect_to @api_app, notice: "Api-applikationen registrerades."
     else
