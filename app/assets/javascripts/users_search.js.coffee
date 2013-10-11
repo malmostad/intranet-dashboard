@@ -15,7 +15,7 @@ $ ->
         if $queryEmployee.hasClass("full-search")
           ul.addClass('full-search')
         $("<li>")
-          .data("item.autocomplete", item)
+          .data("ui-autocomplete-item", item)
           .append("<a><img src='#{item.avatar_full_url}'/>
               <p>#{item.first_name} #{item.last_name}<br>
               #{item.company_short}<br>
