@@ -231,7 +231,8 @@
 
     &.malmo-masthead-dashboard {
       padding: 0;
-      margin: 0;
+      margin-right: 0;
+      margin-left: 0;
       section.box {
         border: none;
         @include radius(0);
