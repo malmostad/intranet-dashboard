@@ -83,8 +83,8 @@ class AastraCWI
         # Does the event occur today?
         if starting < Time.now.end_of_day && ending > Time.now
           OpenStruct.new(
-            starting: starting,
-            ending: ending,
+            starting: starting.starting.strftime('%Y-%m-%d %H:%M'),
+            ending: ending.starting.strftime('%Y-%m-%d %H:%M'),
             reason: event[:reason],
             absent: event[:absent]
           )
