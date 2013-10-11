@@ -49,10 +49,10 @@ $ ->
         selectedColleagueId = ui.item.id
         $form.submit()
         hideForm()
-    .data("autocomplete")._renderItem = (ul, item) ->
+    .data("ui-autocomplete")._renderItem = (ul, item) ->
       ul.addClass('search_users')
       return $("<li>")
-        .data("item.autocomplete", item)
+        .data("ui-autocomplete-item", item)
         .append( "<a><img src='" + item.avatar_full_url + "' />" +
            "<p>" + item.first_name + " " + item.last_name +
             "<br/> " + item.company_short + "</p></a>" )
