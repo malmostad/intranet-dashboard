@@ -70,6 +70,7 @@ class ApplicationController < ActionController::Base
   def error_page(exception = "500", msg = "Prova att navigera med menyn ovan.")
     logger.error "Exception: #{exception}"
     logger.error "  User id: #{session[:user_id] ? session[:user_id] : 'not logged in'}"
+    logger.error "  User Agent: #{request.user_agent}"
     logger.error "  Referer: #{request.referer}"
     logger.error "  Params: #{params}"
     reset_body_classes
