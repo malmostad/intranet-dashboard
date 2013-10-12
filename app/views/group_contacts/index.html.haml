@@ -1,0 +1,22 @@
+- title "Gruppkontakter"
+%section.box.index
+  %h1.box-title= h1
+  .table-wrapper
+    %table
+      %thead
+        %tr
+          %th Namn
+          %th E-post
+          %th
+          %th
+          %th
+      %tbody
+        - @group_contacts.each do |group_contact|
+          %tr
+            %td= link_to group_contact.name, group_contact
+            %td= group_contact.email
+            %td= link_to 'Redigera', edit_group_contact_path(group_contact), class: "btn btn-mini"
+            %td= link_to delete_icon_text, group_contact, :method => :delete, :data => { :confirm => 'Är du säker?' }, class: "btn btn-danger btn-mini"
+        %tr
+          %td{ colspan: 4 }
+            .actions= link_to add_icon_text, new_group_contact_path, class: "btn btn-primary"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130925201830) do
+ActiveRecord::Schema.define(:version => 20131012150341) do
 
   create_table "api_apps", :force => true do |t|
     t.string   "name"
@@ -72,6 +72,33 @@ ActiveRecord::Schema.define(:version => 20130925201830) do
   end
 
   add_index "feeds_users", ["feed_id", "user_id"], :name => "index_feeds_user", :unique => true
+
+  create_table "group_contacts", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "cell_phone"
+    t.string   "fax"
+    t.string   "phone_hours"
+    t.string   "homepage"
+    t.string   "address"
+    t.string   "zip_code"
+    t.string   "postal_town"
+    t.string   "geo_position_x"
+    t.string   "geo_position_y"
+    t.string   "district"
+    t.string   "visitors_address"
+    t.string   "visitors_address_zip_code"
+    t.string   "visitors_address_postal_town"
+    t.string   "visitors_address_geo_position_x"
+    t.string   "visitors_address_geo_position_y"
+    t.string   "visitors_district"
+    t.string   "visiting_hours"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  add_index "group_contacts", ["name"], :name => "index_group_contacts_on_name"
 
   create_table "languages", :force => true do |t|
     t.string   "name"

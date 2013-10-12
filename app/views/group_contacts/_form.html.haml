@@ -1,0 +1,29 @@
+= simple_form_for @group_contact, html: { class: "form-horizontal" } do |f|
+  = f.error_notification class: "warning"
+
+  .form-inputs
+    = f.input :name, input_html: { class: 'input-wide' }
+    = f.input :email, input_html: { class: 'input-wide' }
+    = f.input :phone, input_html: { class: 'input-wide' }
+    = f.input :cell_phone, input_html: { class: 'input-wide' }
+    = f.input :fax, input_html: { class: 'input-wide' }
+    = f.input :phone_hours, input_html: { class: 'input-wide' }
+    = f.input :homepage, input_html: { class: 'input-wide' }
+    = f.input :address, input_html: { class: 'input-wide' }
+    = f.input :zip_code, input_html: { class: 'input-wide' }
+    = f.input :postal_town, input_html: { class: 'input-wide' }
+    = f.input :geo_position_x, input_html: { class: 'input-wide' }
+    = f.input :geo_position_y, input_html: { class: 'input-wide' }
+    = f.input :district, input_html: { class: 'input-wide' }
+    = f.input :visitors_address, input_html: { class: 'input-wide' }
+    = f.input :visitors_address_zip_code, input_html: { class: 'input-wide' }
+    = f.input :visitors_address_postal_town, input_html: { class: 'input-wide' }
+    = f.input :visitors_address_geo_position_x, input_html: { class: 'input-wide' }
+    = f.input :visitors_address_geo_position_y, input_html: { class: 'input-wide' }
+    = f.input :visitors_district, input_html: { class: 'input-wide' }
+    = f.input :visiting_hours, input_html: { class: 'input-wide' }
+
+  .control-group
+    .controls
+      = f.button :submit, :class => 'btn-primary'
+      = link_to t('actions.cancel'), group_contacts_path, class: "btn"

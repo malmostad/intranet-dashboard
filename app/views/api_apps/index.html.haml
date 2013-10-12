@@ -3,8 +3,8 @@
   %h1.box-title= h1
   .table-wrapper
     %table
-      %tr
-        %thead
+      %thead
+        %tr
           %th Namn
           %th Kontakt
           %th Ip-adress
@@ -16,7 +16,7 @@
             %td= link_to api_app.name, api_app_path(api_app)
             %td= api_app.contact
             %td= api_app.ip_address
-            %td= link_to delete_icon_text, api_app, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-danger btn-mini"
+            %td= link_to delete_icon_text, api_app, :method => :delete, :data => { :confirm => 'Är du säker?' }, class: "btn btn-danger btn-mini"
 
         %tr
           %td{ colspan: 3 }

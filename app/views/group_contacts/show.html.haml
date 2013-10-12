@@ -1,0 +1,69 @@
+- title "Gruppkontakt"
+%section.box.show.group-contacts
+  %h1.box-title= h1
+  .box-content.form-horizontal.form-data
+
+    %p
+      Name:
+      = @group_contact.name
+    %p
+      Email:
+      = @group_contact.email
+    %p
+      Phone:
+      = @group_contact.phone
+    %p
+      Cell phone:
+      = @group_contact.cell_phone
+    %p
+      Fax:
+      = @group_contact.fax
+    %p
+      Phone hours:
+      = @group_contact.phone_hours
+    %p
+      Homepage:
+      = @group_contact.homepage
+    %p
+      Address:
+      = @group_contact.address
+    %p
+      Zip code:
+      = @group_contact.zip_code
+    %p
+      Postal town:
+      = @group_contact.postal_town
+    %p
+      Geo position x:
+      = @group_contact.geo_position_x
+    %p
+      Geo position y:
+      = @group_contact.geo_position_y
+    %p
+      District:
+      = @group_contact.district
+    %p
+      Visitors address:
+      = @group_contact.visitors_address
+    %p
+      Visitors address zip code:
+      = @group_contact.visitors_address_zip_code
+    %p
+      Visitors address postal town:
+      = @group_contact.visitors_address_postal_town
+    %p
+      Visitors address geo position x:
+      = @group_contact.visitors_address_geo_position_x
+    %p
+      Visitors address geo position y:
+      = @group_contact.visitors_address_geo_position_y
+    %p
+      Visitors district:
+      = @group_contact.visitors_district
+    %p
+      Visiting hours:
+      = @group_contact.visiting_hours
+
+    = link_to 'Edit', edit_group_contact_path(@group_contact)
+    |
+    = link_to 'Back', group_contacts_path
