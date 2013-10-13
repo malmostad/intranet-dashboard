@@ -28,12 +28,17 @@ $ ->
         $('#group_contact_visitors_district').val ui.item.neighborhood
         $('#group_contact_visitors_address_geo_position_x').val ui.item.east
         $('#group_contact_visitors_address_geo_position_y').val ui.item.north
-      open: () ->
-        $(@).removeClass("ui-corner-all").addClass("ui-corner-top")
-      close: () ->
-        $(@).removeClass("ui-corner-top").addClass("ui-corner-all")
 
     # Don't submit the form on enter key for this field
     $address.keydown (event) ->
       if event.which is 13
         event.preventDefault()
+
+    # Clear retrived fields if address is empty
+    $address.blur (event) ->
+      if $(@).val().trim() is ""
+        $('#group_contact_visitors_address_zip_code').val ""
+        $('#group_contact_visitors_address_postal_town').val ""
+        $('#group_contact_visitors_district').val ""
+        $('#group_contact_visitors_address_geo_position_x').val ""
+        $('#group_contact_visitors_address_geo_position_y').val ""
