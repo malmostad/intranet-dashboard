@@ -25,7 +25,7 @@ class GroupContactsController < ApplicationController
     @group_contact = GroupContact.new(params[:group_contact])
 
     if @group_contact.save
-      redirect_to @group_contact, notice: 'Group contact was successfully created.'
+      redirect_to @group_contact, notice: 'Gruppkontakten skapades.'
     else
       render action: "new"
     end
@@ -35,7 +35,7 @@ class GroupContactsController < ApplicationController
     @group_contact = GroupContact.find(params[:id])
 
     if @group_contact.update_attributes(params[:group_contact])
-      redirect_to @group_contact, notice: 'Group contact was successfully updated.'
+      redirect_to @group_contact, notice: 'Gruppkontakten uppdaterades.'
     else
       render action: "edit"
     end
