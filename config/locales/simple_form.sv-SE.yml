@@ -12,28 +12,51 @@ sv-SE:
       default_message: "Vänligen korrigera nedanstående markerade uppgifter."
     labels:
       user:
-        displayname: "Namn"
-        title: "HR-titel"
-        professional_bio: "Om mig"
-        company_short: "Förvaltning"
-        department: "Avdelning"
-        email: "E-post"
-        phone: "Fast telefon"
-        cell_phone: "Mobiltelefon"
-        status_message: "Statusmeddelande"
-        room: "Rumsnummer"
-        address: "Gatuadress"
-        skill_list: "Kunskapsområden"
-        language_list: "Språkkunskaper"
-        private_bio: "Om mig, personlig bio"
-        homepage: "Hemsida"
-        admin: "Administratör"
+        displayname: Namn
+        title: HR-titel
+        professional_bio: Om mig
+        company_short: Förvaltning
+        department: Avdelning
+        email: E-post
+        phone: Fast telefon
+        cell_phone: Mobiltelefon
+        status_message: Statusmeddelande
+        room: Rumsnummer
+        address: Gatuadress
+        skill_list: Kunskapsområden
+        language_list: Språkkunskaper
+        private_bio: Om mig, personlig bio
+        homepage: Hemsida
+        admin: Administratör
       api_app:
-        name: "Namn"
-        contact: "Kontakt"
-        ip_address: "IP-adress"
-        app_token: "app_token"
-        app_secret: "app_secret"
+        name: Namn
+        contact: Kontakt
+        ip_address: IP-adress
+        app_token: app_token
+        app_secret: app_secret
+      group_contact:
+        name: Namn
+        email: E-post
+        phone: Telefon
+        cell_phone: Mobiltelefon
+        fax: Fax
+        phone_hours: Telefontider
+        homepage: Hemsida
+        address: Postadress
+        zip_code: Postnummer
+        postal_town: Postort
+        visitors_address: Besöksadress
+        visitors_address_zip_code: Postnummer
+        visitors_address_postal_town: Postort
+        visitors_district: Stadsområde
+        visiting_hours: Besökstider
+
+    placeholders:
+      group_contact:
+        visitors_address_zip_code: ange besöksadress först
+        visitors_address_postal_town: ange besöksadress först
+        visitors_district: ange besöksadress först
+
     hints:
       user:
         displayname: "<p>Ditt namn hämtas från HR-systemet. Ditt namn kan du ändra genom att kontakta din egen förvaltnings lokala HR-funktion. Det vanligaste är att du vill ändra för att ditt namn är felstavat eller för att du byter efternamn.</p><p>Kontaktuppgift till din lokala HR-finktion hittar du på Komin > Min förvaltning > Vår organisation.</p>"

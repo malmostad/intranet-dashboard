@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131012150341) do
+ActiveRecord::Schema.define(:version => 20131013133547) do
 
   create_table "api_apps", :force => true do |t|
     t.string   "name"
@@ -84,9 +84,6 @@ ActiveRecord::Schema.define(:version => 20131012150341) do
     t.string   "address"
     t.string   "zip_code"
     t.string   "postal_town"
-    t.string   "geo_position_x"
-    t.string   "geo_position_y"
-    t.string   "district"
     t.string   "visitors_address"
     t.string   "visitors_address_zip_code"
     t.string   "visitors_address_postal_town"
