@@ -29,11 +29,6 @@ $ ->
         $('#group_contact_visitors_address_geo_position_x').val ui.item.east
         $('#group_contact_visitors_address_geo_position_y').val ui.item.north
 
-    # Don't submit the form on enter key for this field
-    $address.keydown (event) ->
-      if event.which is 13
-        event.preventDefault()
-
     # Clear retrived fields if address is empty
     $address.blur (event) ->
       if $(@).val().trim() is ""
