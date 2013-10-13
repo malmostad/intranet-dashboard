@@ -56,6 +56,7 @@ sv-SE:
         visitors_address_zip_code: ange besöksadress först
         visitors_address_postal_town: ange besöksadress först
         visitors_district: ange besöksadress först
+        homepage: om inte på malmo.se
 
     hints:
       user:

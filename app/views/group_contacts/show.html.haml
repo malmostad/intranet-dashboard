@@ -3,58 +3,39 @@
   %h1.box-title= h1
   .box-content.form-horizontal.form-data
 
-    %p
-      Name:
-      = @group_contact.name
-    %p
-      Email:
-      = @group_contact.email
-    %p
-      Phone:
-      = @group_contact.phone
-    %p
-      Cell phone:
-      = @group_contact.cell_phone
-    %p
-      Fax:
-      = @group_contact.fax
-    %p
-      Phone hours:
-      = @group_contact.phone_hours
-    %p
-      Homepage:
-      = @group_contact.homepage
-    %p
-      Address:
-      = @group_contact.address
-    %p
-      Zip code:
-      = @group_contact.zip_code
-    %p
-      Postal town:
-      = @group_contact.postal_town
-    %p
-      Visitors address:
-      = @group_contact.visitors_address
-    %p
-      Visitors address zip code:
-      = @group_contact.visitors_address_zip_code
-    %p
-      Visitors address postal town:
-      = @group_contact.visitors_address_postal_town
-    %p
-      Visitors address geo position x:
-      = @group_contact.visitors_address_geo_position_x
-    %p
-      Visitors address geo position y:
-      = @group_contact.visitors_address_geo_position_y
-    %p
-      Visitors district:
-      = @group_contact.visitors_district
-    %p
-      Visiting hours:
-      = @group_contact.visiting_hours
+    = show_attribute("Namn", @group_contact.name)
+    = show_attribute("E-post", @group_contact.email)
+    = show_attribute("Telefon", @group_contact.phone)
+    = show_attribute("Telefontider", @group_contact.phone_hours)
+    = show_attribute("Mobiltelefon", @group_contact.cell_phone)
+    = show_attribute("Fax", @group_contact.fax)
 
-    = link_to 'Edit', edit_group_contact_path(@group_contact)
-    |
-    = link_to 'Back', group_contacts_path
+    .control-group.text-only
+      .control-label Postadress:
+      .controls
+        = @group_contact.address
+        %br
+        = @group_contact.zip_code
+        = @group_contact.postal_town
+
+    .control-group.text-only
+      .control-label Besöksadress:
+      .controls
+        = @group_contact.visitors_address
+        %br
+        = @group_contact.visitors_address_zip_code
+        = @group_contact.visitors_address_postal_town
+        %br= @group_contact.visitors_district
+
+
+    = show_attribute("Besökstider", @group_contact.visiting_hours)
+
+    .control-group.text-only
+      .control-label Hemsida:
+      .controls
+        - if @group_contact.homepage.present?
+          = link_to @group_contact.homepage, @group_contact.homepage
+
+    .control-group
+      .controls
+        = link_to 'Redigera', edit_group_contact_path(@group_contact), class: "btn"
