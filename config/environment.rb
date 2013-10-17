@@ -6,3 +6,5 @@ Dashboard::Application.initialize!
 
 # html5 is used in templates. This will autoclose empty tags.
 Haml::Template.options[:format] = :xhtml
+
+Jbuilder.key_format camelize: :lower
