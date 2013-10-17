@@ -1,15 +1,15 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.14'
+gem 'rails', '3.2.15'
 gem 'jquery-rails', '3.0.4'
 gem 'haml', '4.0.3'
 
-gem 'nokogiri', '1.5.10'
-gem 'feedzirra', '0.2.0.rc2' #, '0.1.3' #, :git => 'https://github.com/pauldix/feedzirra.git'
-gem 'savon', '2.3.0'
+gem 'nokogiri', '1.6.0'
+gem 'feedzirra', '0.2.1'
+gem 'savon', git: 'https://github.com/savonrb/savon.git', branch: 'master' #, '2.3.0'
 
 gem 'net-ldap', '0.3.1'
-gem 'ruby-saml', '0.7.0' # 0.7.2 is broken
+gem 'ruby-saml', '0.7.0' # 0.7.1/2 is broken
 gem 'bcrypt-ruby', '~> 3.0.0'
 
 gem 'dalli', '2.6.4'
@@ -20,11 +20,11 @@ gem 'simple_form', '2.1.0'
 
 gem 'daemons-rails', '1.2.1'
 
-gem 'capistrano', '2.15.5'
+gem 'capistrano', '3.0.0'
 gem 'capistrano-ext'
 gem 'whenever', require: false
 
-gem 'jbuilder', '1.0.2'
+gem 'jbuilder', '1.5.2'
 
 group :development do
   gem 'haml-rails'
@@ -45,7 +45,7 @@ group :local_test do
   gem 'launchy'
   gem 'database_cleaner'
   gem 'vcr'
-  gem 'webmock', '1.11.0'
+  gem 'webmock', '1.13.0'
 end
 
 group :assets do
