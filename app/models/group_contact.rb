@@ -13,4 +13,8 @@ class GroupContact < ActiveRecord::Base
     self.phone_hours.gsub!(/\s*-\s*/, "–")
     self.visiting_hours.gsub!(/\s*-\s*/, "–")
   end
+
+  def self.search(term, limit = 50)
+    where("name like ?", "#{term}%").order(:name).limit(limit)
+  end
 end

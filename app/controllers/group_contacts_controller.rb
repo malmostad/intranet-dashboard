@@ -50,7 +50,7 @@ class GroupContactsController < ApplicationController
 
   # Used for autocomplete and search results in edit
   def search
-    @group_contacts = GroupContact.where("name like ?", "%#{params[:term]}%").order(:name).limit(50)
+    @group_contacts = GroupContact.search(params[:term])
 
     respond_to do |format|
       format.html
