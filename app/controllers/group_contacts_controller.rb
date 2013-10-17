@@ -6,7 +6,7 @@ class GroupContactsController < ApplicationController
   before_filter :require_admin
 
   def index
-    @group_contacts = GroupContact.all
+    # Display search form
   end
 
   def show
@@ -25,7 +25,7 @@ class GroupContactsController < ApplicationController
     @group_contact = GroupContact.new(params[:group_contact])
 
     if @group_contact.save
-      redirect_to @group_contact, notice: 'Gruppkontakten skapades.'
+      redirect_to @group_contact, notice: 'Funktionskontakten skapades.'
     else
       render action: "new"
     end
@@ -35,7 +35,7 @@ class GroupContactsController < ApplicationController
     @group_contact = GroupContact.find(params[:id])
 
     if @group_contact.update_attributes(params[:group_contact])
-      redirect_to @group_contact, notice: 'Gruppkontakten uppdaterades.'
+      redirect_to @group_contact, notice: 'Funktionskontakten uppdaterades.'
     else
       render action: "edit"
     end
@@ -46,5 +46,17 @@ class GroupContactsController < ApplicationController
     @group_contact.destroy
 
     redirect_to group_contacts_url
+  end
+
+  # Used for autocomplete and search results in edit
+  def search
+    @group_contacts = GroupContact.where("name like ?", "%#{params[:term]}%").order(:name).limit(50)
+
+    respond_to do |format|
+      format.html
+      format.json {
+        render json: @group_contacts.map { |s| { id: s.id, value: s.name } }
+      }
+    end
   end
 end

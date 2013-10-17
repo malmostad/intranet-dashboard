@@ -1,7 +1,7 @@
 Dashboard::Application.routes.draw do
 
+  get "/group_contacts/search" => "group_contacts#search", as: "group_contacts_search"
   resources :group_contacts
-
 
   root to: "dashboard#index"
 

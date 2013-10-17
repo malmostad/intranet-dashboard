@@ -1,4 +1,12 @@
 $ ->
+  # Autocomplete search for group contacts
+  $("#search-group-contacts #term").focus().autocomplete
+    source: $("#search-group-contacts").attr("action")
+    minLength: 2
+    autoFocus: true
+    select: (event, ui) ->
+      document.location = $("#search-group-contacts").data("path") + "/" + ui.item.id + '/edit'
+
   $address = $("#group_contact_visitors_address")
   if $address.length
     # Autocomplete search on SBK's address API

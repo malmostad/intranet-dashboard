@@ -1,4 +1,4 @@
-# json.key_format! camelize: :lower
+json.key_format! camelize: :lower
 
 json.array! @employees do |employee|
   json.catalog_id employee.username

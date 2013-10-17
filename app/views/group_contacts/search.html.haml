@@ -1,0 +1,24 @@
+- title "Funktionskontakter"
+%section.box.index
+  %h1.box-title= h1
+  .box-content
+    - if @group_contacts.empty?
+      %p.warning Inga kunskapsområden matchade din sökning
+    = render "search_form"
+
+  .table-wrapper
+    %table
+      %thead
+        %tr
+          %th Namn
+          %th E-post
+          %th
+      %tbody
+        - @group_contacts.each do |group_contact|
+          %tr
+            %td= link_to group_contact.name, group_contact
+            %td= group_contact.email
+            %td= link_to delete_icon_text, group_contact, :method => :delete, :data => { :confirm => 'Är du säker?' }, class: "btn btn-danger btn-mini"
+        %tr
+          %td{ colspan: 3}
+            .actions= link_to add_icon_text, new_group_contact_path, class: "btn btn-primary"
