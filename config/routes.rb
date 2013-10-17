@@ -57,6 +57,8 @@ Dashboard::Application.routes.draw do
     namespace :v1 do
       get "/employees/search" => "employees#search"
       get "/employees/:username" => "employees#show", as: "employee"
+      get "/group_contacts/search" => "group_contacts#search"
+      get "/group_contacts/:id" => "group_contacts#show", as: "group_contact"
     end
   end
 
