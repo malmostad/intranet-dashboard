@@ -7,11 +7,11 @@ class GroupContact < ActiveRecord::Base
 
   before_validation do
     self.homepage = "http://#{homepage}" unless homepage.blank? || homepage.match(/^https?:\/\//)
-    self.phone.gsub!(/\s*-\s*/, "-")
-    self.cell_phone.gsub!(/\s*-\s*/, "-")
-    self.fax.gsub!(/\s*-\s*/, "-")
-    self.phone_hours.gsub!(/\s*-\s*/, "–")
-    self.visiting_hours.gsub!(/\s*-\s*/, "–")
+    self.phone.gsub!(/\s*-\s*/, "-") unless phone.blank?
+    self.cell_phone.gsub!(/\s*-\s*/, "-") unless cell_phone.blank?
+    self.fax.gsub!(/\s*-\s*/, "-") unless fax.blank?
+    self.phone_hours.gsub!(/\s*-\s*/, "–") unless phone_hours.blank?
+    self.visiting_hours.gsub!(/\s*-\s*/, "–") unless visiting_hours.blank?
   end
 
   def self.search(term, limit = 50)
