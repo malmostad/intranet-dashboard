@@ -20,7 +20,7 @@ gem 'simple_form', '2.1.0'
 
 gem 'daemons-rails', '1.2.1'
 
-gem 'capistrano', '2.15.5'
+gem 'capistrano', '~> 2.15.5'
 gem 'capistrano-ext'
 gem 'whenever', require: false
 
