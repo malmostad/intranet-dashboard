@@ -45,7 +45,7 @@ class GroupContactsController < ApplicationController
     @group_contact = GroupContact.find(params[:id])
     @group_contact.destroy
 
-    redirect_to group_contacts_url
+    redirect_to group_contacts_url, notice: "Funktionskontakten raderades"
   end
 
   # Used for autocomplete and search results in edit
