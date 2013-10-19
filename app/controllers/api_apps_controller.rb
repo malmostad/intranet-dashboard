@@ -30,7 +30,7 @@ class ApiAppsController < ApplicationController
 
     if @api_app.save
       session[:app_secret] = @api_app.app_secret
-      redirect_to @api_app, notice: "Api-applikationen registrerades."
+      redirect_to @api_app, notice: "Api-applikationen sparades."
     else
       render action: "new"
     end
@@ -49,7 +49,7 @@ class ApiAppsController < ApplicationController
   def destroy
     @api_app = ApiApp.find(params[:id])
     @api_app.destroy
-    redirect_to api_apps_url
+    redirect_to api_apps_url, notice: "Api-applikationen raderades."
   end
 
   def create_app_secret

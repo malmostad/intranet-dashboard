@@ -22,7 +22,7 @@
         .control-label app_secret:
         .controls.token
           = @api_app.app_secret
-          .warning= raw "Kopiera <span class='token'>app_secret</span>. Den sparas inte och kan inte visas igen."
+          .warning= raw "Kopiera <span class='token'>app_secret</span>. Den sparas inte i klartext och kan inte visas igen."
 
     - else
       .control-group.text-only
