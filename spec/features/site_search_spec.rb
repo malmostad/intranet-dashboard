@@ -13,7 +13,7 @@ describe "SiteSearch" do
   end
 end
 
-feature "Search results" do
+feature "SiteSearch" do
   it "should have a search form" do
     visit search_path
     page.should have_selector('form#full-search')
