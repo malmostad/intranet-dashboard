@@ -306,6 +306,7 @@ DEPENDENCIES
   paperclip (= 3.5.1)
   poltergeist
   quiet_assets
+  rack-test
   rails (= 3.2.15)
   rb-fsevent
   rspec-rails
