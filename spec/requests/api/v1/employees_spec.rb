@@ -100,6 +100,28 @@ describe "Employees API" do
       it "should have a department " do
         expect(json.first["department"]).to eq(user.department)
       end
+
+      it "should not give away private attributes" do
+        %w(
+          statusMessage
+          admin
+          createdAt
+          updatedAt
+          lastLogin
+          statusMessageUpdatedAt
+          earlyAdopter
+          twitter
+          skype
+          privateBio
+          managerId
+          homepage
+          cmgId
+          deactivated
+          deactivatedAt
+        ).each do |attribute|
+          expect(json.first[attribute]).to eq(nil)
+        end
+      end
     end
   end
 
