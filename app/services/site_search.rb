@@ -9,7 +9,7 @@ module SiteSearch
     def initialize(query, options={})
       @query = query
       @base_search_url = "#{APP_CONFIG['site_search_query_url']}?oenc=UTF-8&"
-      @options = { read_timeout: 10 }.merge(options)
+      @options = { read_timeout: 1 }.merge(options)
       search
     end
 
