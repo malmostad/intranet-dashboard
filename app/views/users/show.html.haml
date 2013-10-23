@@ -102,6 +102,7 @@
 
         - if admin?
           %p= "Administratör: #{@user.admin? ? 'Ja' : 'Nej'}"
+          %p= "Kontaktboksredaktör: #{@user.contacts_editor? ? 'Ja' : 'Nej'}"
           %p= "Early adopter: #{@user.early_adopter? ? 'Ja' : 'Nej'}"
           %p= "Första inloggningen: #{l @user.created_at, format: :short}"
           %p= "Avaktiverad i katalogen: #{@user.deactivated? ? 'Ja' : 'Nej'}"

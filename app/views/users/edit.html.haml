@@ -58,8 +58,9 @@
 
       - if admin?
         %h2.form-group-title Rättigheter
-        = f.input :admin
         = f.input :early_adopter
+        = f.input :contacts_editor
+        = f.input :admin
 
       .control-group
         .controls

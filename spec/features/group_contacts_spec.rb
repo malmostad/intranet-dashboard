@@ -7,18 +7,18 @@ describe "GroupContacts" do
     login(user.username, "") # Stubbed auth
   end
 
-  it "administration should require and administrator" do
+  it "administration should require a contacts_editor" do
     visit group_contacts_path
     page.should have_selector('.error', text: "Du saknar behörighet")
   end
 
-  describe "administration" do
+  describe "editing" do
     before(:each) do
-      user.update_attribute(:admin, true)
+      user.update_attribute(:contacts_editor, true)
       visit group_contacts_path
     end
 
-    it "should be available for administrators" do
+    it "should be available for contacts_editor" do
       page.should have_selector('h1', text: "Funktionskontakter")
     end
 

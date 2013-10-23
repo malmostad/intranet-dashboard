@@ -88,6 +88,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def contacts_editor?
+    current_user && (current_user.contacts_editor? || current_user.admin?)
+  end
+  helper_method :admin?, :contacts_editor?, :current_user
+
   def admin?
     current_user && current_user.admin?
   end
@@ -99,6 +104,10 @@ class ApplicationController < ActionController::Base
 
   def require_admin
     not_authorized unless admin?
+  end
+
+  def require_contacts_editor
+    not_authorized unless contacts_editor?
   end
 
   def require_early_adopter

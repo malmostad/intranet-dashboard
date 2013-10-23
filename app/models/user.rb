@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
       :language_list, :skill_list,
       :private_bio, :twitter, :skype, :homepage, :company_short,
       :room, :address, :geo_position_x, :geo_position_y,
-      :admin, :early_adopter, as: :admin
+      :admin, :contacts_editor, :early_adopter, as: :admin
 
   attr_accessor :avatar
   attr_reader :avatar_remote_url

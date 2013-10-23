@@ -3,7 +3,7 @@
 class GroupContactsController < ApplicationController
   before_filter { add_body_class('edit group-contacts') }
   before_filter { sub_layout("admin") }
-  before_filter :require_admin
+  before_filter :require_contacts_editor
 
   def index
     # Display search form

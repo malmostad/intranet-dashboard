@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131013133547) do
+ActiveRecord::Schema.define(:version => 20131023100227) do
 
   create_table "api_apps", :force => true do |t|
     t.string   "name"
@@ -228,6 +228,7 @@ ActiveRecord::Schema.define(:version => 20131013133547) do
     t.string   "cmg_id",                    :default => "0"
     t.boolean  "deactivated",               :default => false
     t.datetime "deactivated_at"
+    t.boolean  "contacts_editor",           :default => false
   end
 
   add_index "users", ["manager_id"], :name => "index_users_on_manager_id"

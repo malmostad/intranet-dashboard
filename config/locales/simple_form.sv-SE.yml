@@ -28,6 +28,7 @@ sv-SE:
         private_bio: Om mig, personlig bio
         homepage: Hemsida
         admin: Administratör
+        contacts_editor: Kontaktboksredaktör
       api_app:
         name: Namn
         contact: Kontakt
