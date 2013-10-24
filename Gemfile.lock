@@ -56,7 +56,7 @@ GEM
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cliver (0.2.2)
-    cocaine (0.5.2)
+    cocaine (0.5.3)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.0.9)
     coffee-rails (3.2.2)
@@ -94,7 +94,7 @@ GEM
     formatador (0.2.4)
     gorillib (0.1.11)
       json
-    guard (2.1.1)
+    guard (2.2.2)
       formatador (>= 0.2.4)
       listen (~> 2.1)
       lumberjack (~> 1.0)

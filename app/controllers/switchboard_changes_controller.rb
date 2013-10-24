@@ -10,7 +10,7 @@ class SwitchboardChangesController < ApplicationController
   end
 
   def create
-    if params[:room].strip.present? || params[:address].strip.present? || params[:comment].strip.present?
+    if params[:room].present? || params[:address].present? || params[:comment].present?
       UserMailer.switchboard_changes(current_user, params).deliver
       redirect_to user_path(current_user.username), notice: "Din ändringsbegäran har skickats till televäxeln."
     else
