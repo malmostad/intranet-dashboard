@@ -7,17 +7,17 @@
       = "När de uppdaterat uppgifterna i telefonisystemet kommer ändringarna att synas i kontaktboken."
 
     = form_tag :switchboard_changes, method: :post, class: "form-horizontal" do
-      .control-group.room
-        = label_tag :room, "Rumsnummer:", class: "control-label"
-        .controls
-          = text_field_tag :room, current_user.room, class: 'input-wide'
+      / .control-group
+      /   = label_tag :room, "Rumsnummer:", class: "control-label"
+      /   .controls
+      /     = text_field_tag :room, current_user.room, class: 'input-wide'
 
-      .control-group.room
+      .control-group
         = label_tag :address, "Adress:", class: "control-label"
         .controls
-          = text_field_tag :address, current_user.address, class: 'input-wide'
+          = text_field_tag :address, current_user.address, class: 'input-wide', placeholder: "Skriv och välj ur förslagslistan"
 
-      .control-group.room
+      .control-group
         = label_tag :comment, "Kommentar:", class: "control-label"
         .controls
           = text_area_tag :comment, nil, class: 'input-wide', rows: 7

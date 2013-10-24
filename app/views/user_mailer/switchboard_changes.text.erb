@@ -2,13 +2,15 @@ Hej televäxeln!
 
 <%= "#{@user.first_name} #{@user.last_name}" %> vill göra ändringar i sina adressuppgifter. De nya uppgifterna är:
 
+<% if @message[:room].present? %>
 Rumsnummer: <%= @message[:room] %>
+<% end %>
+<% if @message[:address].present? %>
 Gatuadress: <%= @message[:address] %>
+<% end %>
 
-<% if @message[:comment].present? %>
 Meddelande:
 <%= @message[:comment] %>
-<% end %>
 
 Kontaktuppgifter:
 E-post: <%= @user.email %>

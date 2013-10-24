@@ -10,7 +10,7 @@ describe "SwitchboardChanges" do
   end
 
   it "should have a form" do
-    page.should have_selector('#room')
+    # page.should have_selector('#room')
     page.should have_selector('#address')
     page.should have_selector('#comment')
   end
@@ -22,7 +22,7 @@ describe "SwitchboardChanges" do
   end
 
   it "should send the form" do
-    fill_in :room, with: "123"
+    # fill_in :room, with: "123"
     fill_in :address, with: "Sunset Boulevard"
     click_on("Sänd")
     current_path.should eq(user_path(user.username))
