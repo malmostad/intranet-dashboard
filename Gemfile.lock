@@ -281,7 +281,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt-ruby (= 3.1.2)
-  capistrano (= 2.15.5)
+  capistrano (~> 2.15.5)
   capistrano-ext
   capybara
   coffee-rails (= 3.2.2)
