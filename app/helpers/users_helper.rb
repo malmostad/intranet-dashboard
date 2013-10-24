@@ -11,6 +11,8 @@ module UsersHelper
     { term: params[:term],
       company: params[:company],
       department: params[:department],
+      language: params[:language],
+      skill: params[:skill],
       page: @offset / @limit + 1 }
   end
 
