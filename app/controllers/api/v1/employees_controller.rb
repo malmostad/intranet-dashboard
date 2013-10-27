@@ -6,9 +6,7 @@ module Api
       respond_to :json
 
       def search
-        @limit = 100
-        page = params[:page].present? ? params[:page].to_i : 0
-        @offset = page * @limit
+        paginate
         @employees = User.search(params, @limit, @offset)
       end
 

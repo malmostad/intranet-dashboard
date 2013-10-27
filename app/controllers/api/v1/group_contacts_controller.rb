@@ -5,8 +5,8 @@ module Api
       respond_to :json
 
       def search
-        @limit = 100
-        @group_contacts = GroupContact.search(params[:term], @limit)
+        paginate
+        @group_contacts = GroupContact.search(params[:term], @limit, @offset)
       end
 
       def show
