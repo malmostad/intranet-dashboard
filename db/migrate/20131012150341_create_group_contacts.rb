@@ -24,6 +24,6 @@ class CreateGroupContacts < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :group_contacts, :name
+    add_index :group_contacts, :name, unique: true
   end
 end

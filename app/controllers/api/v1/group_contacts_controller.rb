@@ -6,7 +6,7 @@ module Api
 
       def search
         paginate
-        @group_contacts = GroupContact.search(params[:term], @limit, @offset)
+        @group_contacts = GroupContact.search(params[:q], @limit, @offset)
       end
 
       def show
