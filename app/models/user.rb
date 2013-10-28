@@ -147,25 +147,25 @@ class User < ActiveRecord::Base
     end
   end
 
-  # Search for users by term or a distinct value
-  def self.search(q, limit = 25, offset = 0)
-    if q.present? && q[:term].present?
-      term = "#{q[:term].strip}%"
+  # Search for users by q= query or a distinct value
+  def self.search(params = {}, limit = 25, offset = 0)
+    if params[:q].present?
+      q = "#{params[:q].strip}%"
       where(
         "username LIKE ? OR
         first_name LIKE ? OR
         last_name LIKE ? OR
         concat_ws(' ', first_name, last_name) LIKE ? OR
         email LIKE ?",
-      term, term, term, term, term).order(:first_name).limit(limit).offset(offset)
-    elsif q[:company].present?
-      where(company: q[:company]).order(:first_name).limit(limit).offset(offset)
-    elsif q[:department].present?
-      where(department: q[:department]).order(:first_name).limit(limit).offset(offset)
-    elsif q[:skill].present?
-      where("skills.name" => q[:skill]).includes(:skills).order(:first_name).limit(limit).offset(offset)
-    elsif q[:language].present?
-      where("languages.name" => q[:language]).includes(:languages).order(:first_name).limit(limit).offset(offset)
+      q, q, q, q, q).order(:first_name).limit(limit).offset(offset)
+    elsif params[:company].present?
+      where(company: params[:company]).order(:first_name).limit(limit).offset(offset)
+    elsif params[:department].present?
+      where(department: params[:department]).order(:first_name).limit(limit).offset(offset)
+    elsif params[:skill].present?
+      where("skills.name" => params[:skill]).includes(:skills).order(:first_name).limit(limit).offset(offset)
+    elsif params[:language].present?
+      where("languages.name" => params[:language]).includes(:languages).order(:first_name).limit(limit).offset(offset)
     else
       return {}
     end
@@ -175,7 +175,6 @@ class User < ActiveRecord::Base
 
   # Validate avatar before scaling it
   def validate_avatar_file_size
-    valid?
-    errors.messages.blank?
+    valid? && errors.messages.blank?
   end
 end

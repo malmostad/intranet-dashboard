@@ -15,7 +15,7 @@ class GroupContact < ActiveRecord::Base
     self.visiting_hours.gsub!(/\s*-\s*/, "–") unless visiting_hours.blank?
   end
 
-  def self.search(term, limit = 100, offset = 0)
-    where("name like ?", "#{term}%").order(:name).limit(limit).offset(offset)
+  def self.search(q, limit = 25, offset = 0)
+    where("name like ?", "#{q}%").order(:name).limit(limit).offset(offset)
   end
 end

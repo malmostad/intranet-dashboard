@@ -50,7 +50,7 @@ class GroupContactsController < ApplicationController
 
   # Used for autocomplete and search results in edit
   def search
-    @group_contacts = GroupContact.search(params[:term])
+    @group_contacts = GroupContact.search(params[:q])
 
     respond_to do |format|
       format.html

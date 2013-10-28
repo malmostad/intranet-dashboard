@@ -47,30 +47,30 @@ describe "Employees API" do
 
   describe "search response" do
     it "should be a success" do
-      get "/api/v1/employees/search?term=#{user.username}&app_token=#{api_app.app_token}&app_secret=#{api_app.app_secret}"
+      get "/api/v1/employees/search?q=#{user.username}&app_token=#{api_app.app_token}&app_secret=#{api_app.app_secret}"
       expect(response).to be_success
     end
 
     it "should contain one employee" do
-      get "/api/v1/employees/search?term=#{user.username}&app_token=#{api_app.app_token}&app_secret=#{api_app.app_secret}"
+      get "/api/v1/employees/search?q=#{user.username}&app_token=#{api_app.app_token}&app_secret=#{api_app.app_secret}"
       expect(json.size).to eq(1)
     end
 
     it "should not contain any employee" do
-      get "/api/v1/employees/search?term=foo&app_token=#{api_app.app_token}&app_secret=#{api_app.app_secret}"
+      get "/api/v1/employees/search?q=foo&app_token=#{api_app.app_token}&app_secret=#{api_app.app_secret}"
       expect(json.size).to eq(0)
     end
 
     it "should contain two employees" do
       create(:user, username: "foo-1")
       create(:user, username: "foo-2")
-      get "/api/v1/employees/search?term=foo-&app_token=#{api_app.app_token}&app_secret=#{api_app.app_secret}"
+      get "/api/v1/employees/search?q=foo-&app_token=#{api_app.app_token}&app_secret=#{api_app.app_secret}"
       expect(json.size).to eq(2)
     end
 
     describe "first matching employee" do
       before(:each) do
-        get "/api/v1/employees/search?term=#{user.username}&app_token=#{api_app.app_token}&app_secret=#{api_app.app_secret}"
+        get "/api/v1/employees/search?q=#{user.username}&app_token=#{api_app.app_token}&app_secret=#{api_app.app_secret}"
       end
 
       it "should have an id" do
