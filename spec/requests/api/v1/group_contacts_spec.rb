@@ -189,21 +189,11 @@ describe "GroupContactsAPI" do
 
     it "should not give away private attributes" do
       %w(
-        createdAt
-        updatedAt
+        created_at
+        updated_at
       ).each do |attribute|
         expect(json[attribute]).to eq(nil)
       end
     end
-  end
-
-  it "should return response by group_contact id" do
-    get "/api/v1/group_contacts/#{group_contact.id}?app_token=#{api_app.app_token}&app_secret=#{api_app.app_secret}"
-    pending("implement feature")
-  #   # expect(response).to be_success
-  #   # expect(json["id"]).to eq(group_contact.id)
-  #   # expect(json["catalogId"]).to eq(group_contact.id)
-  #   # expect(json["firstName"]).to eq(group_contact.first_name)
-  #   # expect(json["lastName"]).to eq(group_contact.last_name)
   end
 end
