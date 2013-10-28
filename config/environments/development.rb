@@ -5,7 +5,8 @@ Dashboard::Application.configure do
 
   # Note: A cache store must be available since we use key-value caching
   #       With memory_store, some code changes requires a restart of the server
-  config.cache_store = :dalli_store, '127.0.0.1:11211', { namespace: "dashboard-development" }
+  #config.cache_store = :dalli_store, '127.0.0.1:11211', { namespace: "dashboard-development" }
+  config.cache_store = :null_store
   # config.cache_store = :mem_cache_store
 
   config.whiny_nils = true
