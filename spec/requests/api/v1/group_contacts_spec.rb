@@ -82,23 +82,23 @@ describe "GroupContactsAPI" do
       it "should not give away all attributes" do
         %w(
           address
-          cellPhone
+          cell_phone
           email
           fax
           homepage
           phone
-          phoneHours
-          postalTtown
-          visitingHours
-          visitorsAddress
-          visitorsAddressGeoPositionX
-          visitorsAddressGeoPositionY
-          visitorsAddressPostalTown
-          visitorsAddressZipCode
-          visitorsDistrict
-          zipCode
-          createdAt
-          updatedAt
+          phone_hours
+          postal_town
+          visiting_hours
+          visitors_address
+          visitors_address_geo_position_x
+          visitors_address_geo_position_y
+          visitors_address_postal_town
+          visitors_address_zip_code
+          visitors_district
+          zip_code
+          created_at
+          updated_at
         ).each do |attribute|
           expect(json.first[attribute]).to eq(nil)
         end
@@ -132,11 +132,11 @@ describe "GroupContactsAPI" do
     end
 
     it "should return phone_hours" do
-      expect(json["phoneHours"]).to eq(group_contact.phone)
+      expect(json["phone_hours"]).to eq(group_contact.phone_hours)
     end
 
     it "should return cell_phone" do
-      expect(json["cellPhone"]).to eq(group_contact.cell_phone)
+      expect(json["cell_phone"]).to eq(group_contact.cell_phone)
     end
 
     it "should return fax" do
@@ -148,39 +148,39 @@ describe "GroupContactsAPI" do
     end
 
     it "should return zip_code" do
-      expect(json["zipCode"]).to eq(group_contact.zip_code)
+      expect(json["zip_code"]).to eq(group_contact.zip_code)
     end
 
     it "should return postal_town" do
-      expect(json["postalTown"]).to eq(group_contact.postal_town)
+      expect(json["postal_town"]).to eq(group_contact.postal_town)
     end
 
     it "should return visitors_address" do
-      expect(json["visitorsAddress"]).to eq(group_contact.visitors_address)
+      expect(json["visitors_address"]).to eq(group_contact.visitors_address)
     end
 
     it "should return visitors_address_zip_code" do
-      expect(json["visitorsAddressZipCode"]).to eq(group_contact.visitors_address_zip_code)
+      expect(json["visitors_address_zip_code"]).to eq(group_contact.visitors_address_zip_code)
     end
 
     it "should return visitors_address_postal_town" do
-      expect(json["visitorsAddressPostalTown"]).to eq(group_contact.visitors_address_postal_town)
+      expect(json["visitors_address_postal_town"]).to eq(group_contact.visitors_address_postal_town)
     end
 
     it "should return visitors_district" do
-      expect(json["visitorsDistrict"]).to eq(group_contact.visitors_district)
+      expect(json["visitors_district"]).to eq(group_contact.visitors_district)
     end
 
     it "should return visitors_address_geo_position_x" do
-      expect(json["visitorsAddressGeoPositionX"]).to eq(group_contact.visitors_address_geo_position_x)
+      expect(json["visitors_address_geo_position_x"]).to eq(group_contact.visitors_address_geo_position_x)
     end
 
     it "should return visitors_address_geo_position_y" do
-      expect(json["visitorsAaddressGeoPositionY"]).to eq(group_contact.visitors_address_geo_position_y)
+      expect(json["visitors_address_geo_position_y"]).to eq(group_contact.visitors_address_geo_position_y)
     end
 
     it "should return visiting_hours" do
-      expect(json["visitingHours"]).to eq(group_contact.visiting_hours)
+      expect(json["visiting_hours"]).to eq(group_contact.visiting_hours)
     end
 
     it "should return homepage" do

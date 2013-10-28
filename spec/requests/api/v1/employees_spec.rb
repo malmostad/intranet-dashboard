@@ -78,11 +78,11 @@ describe "Employees API" do
       end
 
       it "should have a first_name" do
-        expect(json.first["firstName"]).to eq(user.first_name)
+        expect(json.first["first_name"]).to eq(user.first_name)
       end
 
       it "should have an last_name" do
-        expect(json.first["lastName"]).to eq(user.last_name)
+        expect(json.first["last_name"]).to eq(user.last_name)
       end
 
       it "should have a title" do
@@ -103,21 +103,21 @@ describe "Employees API" do
 
       it "should not give away private attributes" do
         %w(
-          statusMessage
+          status_message
           admin
-          createdAt
-          updatedAt
-          lastLogin
-          statusMessageUpdatedAt
-          earlyAdopter
+          created_at
+          updated_at
+          last_login
+          status_message_updated_at
+          early_adopter
           twitter
           skype
-          privateBio
-          managerId
+          private_bio
+          manager_id
           homepage
-          cmgId
+          cmg_id
           deactivated
-          deactivatedAt
+          deactivated_at
         ).each do |attribute|
           expect(json.first[attribute]).to eq(nil)
         end
@@ -139,15 +139,15 @@ describe "Employees API" do
     end
 
     it "should return employee catalogId" do
-      expect(json["catalogId"]).to eq(user.username)
+      expect(json["catalog_id"]).to eq(user.username)
     end
 
     it "should return employee firstName" do
-      expect(json["firstName"]).to eq(user.first_name)
+      expect(json["first_name"]).to eq(user.first_name)
     end
 
     it "should return employee catalogId" do
-      expect(json["lastName"]).to eq(user.last_name)
+      expect(json["last_name"]).to eq(user.last_name)
     end
 
     it "should return employee title" do
@@ -163,7 +163,7 @@ describe "Employees API" do
     end
 
     it "should return employee cellPhone" do
-      expect(json["cellPhone"]).to eq(user.cell_phone)
+      expect(json["cell_phone"]).to eq(user.cell_phone)
     end
 
     it "should return employee company" do
@@ -190,19 +190,19 @@ describe "Employees API" do
       %w(
         statusMessage
         admin
-        createdAt
-        updatedAt
-        lastLogin
-        statusMessageUpdatedAt
-        earlyAdopter
+        created_at
+        updated_at
+        last_login
+        status_message_updated_at
+        early_adopter
         twitter
         skype
-        privateBio
-        managerId
+        private_bio
+        manager_id
         homepage
         cmgId
         deactivated
-        deactivatedAt
+        deactivated_at
       ).each do |attribute|
         expect(json[attribute]).to eq(nil)
       end
