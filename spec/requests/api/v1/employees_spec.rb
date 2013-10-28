@@ -186,6 +186,14 @@ describe "Employees API" do
       expect(json["roles"].class).to eq(Array)
     end
 
+    it "should know languages" do
+      expect(json["languages"]).to eq(user.languages.map(&:name))
+    end
+
+    it "should have skills" do
+      expect(json["skills"]).to eq(user.skills.map(&:name))
+    end
+
     it "should not give away private attributes" do
       %w(
         statusMessage

@@ -3,6 +3,8 @@ json.extract! @employee, :id, :first_name, :last_name, :title,
     :email, :phone, :cell_phone, :company, :department, :address, :room
 
 json.roles @employee.roles.map(&:name)
+json.skills @employee.skills.map(&:name)
+json.languages @employee.languages.map(&:name)
 
 # json.avatars do |avatar|
 #   base_url = "//#{APP_CONFIG['avatar_base_url']}#{@employee.username}"

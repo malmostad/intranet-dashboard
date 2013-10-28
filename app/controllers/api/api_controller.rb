@@ -11,7 +11,7 @@ module Api
         end
       end
 
-      # Used for searches.
+      # Used for searches
       # Takes `per_page` and `page` query params
       # Defines @limit and @offset
       def paginate
