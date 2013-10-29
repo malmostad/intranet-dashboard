@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     @limit = 25
     page = params[:page].present? ? params[:page].to_i : 0
     @offset = page * @limit
-    @user_stats = user_stats if admin?
+    @user_stats = user_stats if admin? && !request.xhr?
     @users = User.search(params, @limit, @offset)
 
     respond_to do |format|

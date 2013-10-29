@@ -147,28 +147,19 @@ class User < ActiveRecord::Base
     end
   end
 
-  # Search for users by q= query or a distinct value
-  def self.search(params = {}, limit = 25, offset = 0)
-    if params[:q].present?
-      q = "#{params[:q].strip}%"
-      where(
-        "username LIKE ? OR
-        first_name LIKE ? OR
-        last_name LIKE ? OR
-        concat_ws(' ', first_name, last_name) LIKE ? OR
-        email LIKE ?",
-      q, q, q, q, q).order(:first_name).limit(limit).offset(offset)
-    elsif params[:company].present?
-      where(company: params[:company]).order(:first_name).limit(limit).offset(offset)
-    elsif params[:department].present?
-      where(department: params[:department]).order(:first_name).limit(limit).offset(offset)
-    elsif params[:skill].present?
-      where("skills.name" => params[:skill]).includes(:skills).order(:first_name).limit(limit).offset(offset)
-    elsif params[:language].present?
-      where("languages.name" => params[:language]).includes(:languages).order(:first_name).limit(limit).offset(offset)
-    else
-      return {}
+  def self.search(query, limit = 25, offset = 0)
+    users = User.scoped
+    query[:q] ||=  query[:term] # Can be removed when query[:term] is changed in Assets v3
+    if query[:q].present?
+      q = "#{query[:q]}%"
+      users = users.where("username LIKE ? OR first_name LIKE ? OR last_name LIKE ? OR
+          concat_ws(' ', first_name, last_name) LIKE ? OR email LIKE ?", q, q, q, q, q)
     end
+    users = users.where(company: query[:company]) if query[:company].present?
+    users = users.where(department: query[:department]) if query[:department].present?
+    users = users.where("skills.name" => query[:skill]).includes(:skills) if query[:skill].present?
+    users = users.where("languages.name" => query[:language]).includes(:languages) if query[:language].present?
+    users.order(:first_name).limit(limit).offset(offset)
   end
 
   private
