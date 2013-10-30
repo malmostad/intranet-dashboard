@@ -217,13 +217,13 @@ describe "Employees API" do
     end
   end
 
-  it "should return response by user id" do
+  it "should return response by user id as well" do
     get "/api/v1/employees/#{user.id}?app_token=#{api_app.app_token}&app_secret=#{api_app.app_secret}"
-    pending("implement feature")
-    # expect(response).to be_success
-    # expect(json["id"]).to eq(user.id)
-    # expect(json["catalogId"]).to eq(user.username)
-    # expect(json["firstName"]).to eq(user.first_name)
-    # expect(json["lastName"]).to eq(user.last_name)
+    expect(response).to be_success
+    expect(json["id"]).to eq(user.id)
+    expect(json["catalog_id"]).to eq(user.username)
+    expect(json["first_name"]).to eq(user.first_name)
+    expect(json["last_name"]).to eq(user.last_name)
+    expect(json["email"]).to eq(user.email)
   end
 end

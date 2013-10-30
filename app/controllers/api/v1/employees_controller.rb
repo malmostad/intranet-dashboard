@@ -11,7 +11,12 @@ module Api
       end
 
       def show
-        @employee = User.where(username: params[:username]).first
+        # We accept both users id and username
+        begin
+          @employee = User.find(params[:id])
+        rescue
+          @employee = User.where(username: params[:id]).first
+        end
       end
     end
   end
