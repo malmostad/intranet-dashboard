@@ -90,7 +90,7 @@ GEM
       loofah (~> 1.2.1)
       nokogiri (~> 1.5.3)
       sax-machine (~> 0.2.0.rc1)
-    ffi (1.9.2)
+    ffi (1.9.3)
     formatador (0.2.4)
     gorillib (0.1.11)
       json
