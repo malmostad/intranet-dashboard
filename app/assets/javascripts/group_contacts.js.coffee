@@ -1,6 +1,6 @@
 $ ->
   # Autocomplete search for group contacts
-  $("#search-group-contacts #q").focus().autocomplete
+  $("#search-group-contacts #term").focus().autocomplete
     source: $("#search-group-contacts").attr("action")
     minLength: 2
     autoFocus: true
@@ -16,7 +16,7 @@ $ ->
           url: "//xyz.malmo.se/rest/1.0/addresses/"
           dataType: "jsonp"
           data:
-            q: request.q
+            q: request.term
             items: 25
           success: (data) ->
             response $.map data.addresses, (item) ->
