@@ -12,7 +12,11 @@ class ApiApp < ActiveRecord::Base
 
   def self.authenticate(app_token, app_secret, ip_address)
     app = where(app_token: app_token, ip_address: ip_address).first
-    app && app.authenticate(app_secret)
+    if app.present? && app.authenticate(app_secret)
+      return app
+    else
+      return false
+    end
   end
 
   def generate_app_secret

@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 
 class GroupContact < ActiveRecord::Base
-  attr_accessible :address, :cell_phone, :email, :fax, :homepage, :name, :phone, :phone_hours, :postal_town, :visiting_hours, :visitors_address, :visitors_address_geo_position_x, :visitors_address_geo_position_y, :visitors_address_postal_town, :visitors_address_zip_code, :visitors_district, :zip_code
+  attr_accessible :address, :cell_phone, :email, :fax, :homepage, :name, :phone, :phone_hours,
+      :postal_town, :visiting_hours, :visitors_address, :visitors_address_geo_position_x,
+      :visitors_address_geo_position_y, :visitors_address_postal_town, :visitors_address_zip_code,
+      :visitors_district, :zip_code,
+      :last_request, :last_request_by
+
+  # Used for logging of last_request from ApiApp consumer
+  has_one :last_request_by_api_app, class_name: "ApiApp", foreign_key: "id"
 
   validates_presence_of :name
   validates_uniqueness_of :name
