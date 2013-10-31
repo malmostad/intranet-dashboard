@@ -8,7 +8,7 @@ class GroupContact < ActiveRecord::Base
       :last_request, :last_request_by
 
   # Used for logging of last_request from ApiApp consumer
-  has_one :last_request_by_api_app, class_name: "ApiApp", foreign_key: "id"
+  has_one :last_request_by_api_app, class_name: "ApiApp", foreign_key: "id", primary_key: "last_request_by"
 
   validates_presence_of :name
   validates_uniqueness_of :name
