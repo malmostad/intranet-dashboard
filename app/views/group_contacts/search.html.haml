@@ -18,4 +18,6 @@
           %tr
             %td= link_to group_contact.name, group_contact
             %td= group_contact.email
-            %td= link_to delete_icon_text, group_contact, :method => :delete, :data => { :confirm => 'Är du säker?' }, class: "btn btn-danger btn-mini"
+            %td
+              - if admin?
+                = link_to delete_icon_text, group_contact, :method => :delete, :data => { :confirm => 'Är du säker?' }, class: "btn btn-danger btn-mini"
