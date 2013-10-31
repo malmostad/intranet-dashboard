@@ -6,9 +6,11 @@
       .input-append
         %input#query-employee{ type: "text", name: :q, placeholder: "För- och/eller efternamn", "data-path" => users_path}
         %input.btn{ type: "submit", value: "Sök", name: nil }
-  - if admin?
+  - if admin? || contacts_editor?
     .dropdown.box-menu.pull-right
       %a#search-employee-menu.dropdown-toggle{ "role" => "button", "data-toggle" => "dropdown", "href" => "#", "title" => "Anpassa denna box" }
         %span.icon-caret-down.icon-large
       %menu.dropdown-menu{ "aria-labelledby" => "search-employee-menu" }
-        %li= link_to "Administrera...", users_path
+        - if admin?
+          %li= link_to "Administrera medarbetare...", users_path
+        %li= link_to "Administrera funktionskontakter...", group_contacts_path
