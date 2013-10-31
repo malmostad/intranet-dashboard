@@ -36,9 +36,12 @@
         - if @group_contact.homepage.present?
           = link_to @group_contact.homepage, @group_contact.homepage
 
-    - if @group_contact.last_request.present? && @group_contact.last_request_by_api_app.present?
-      = show_attribute("Senast efterfrågad", l(@group_contact.last_request, format: :short))
-      = show_attribute("Senast efterfrågad av", link_to(@group_contact.last_request_by_api_app.name, api_apps_path(@group_contact.last_request_by_api_app.id)))
+    - if contacts_editor?
+      - if @group_contact.last_request.present? && @group_contact.last_request_by_api_app.present?
+        = show_attribute("Senast efterfrågad", l(@group_contact.last_request, format: :short))
+        = show_attribute("Senast efterfrågad av", link_to(@group_contact.last_request_by_api_app.name, api_apps_path(@group_contact.last_request_by_api_app.id)))
+      - else
+        = show_attribute("Senast efterfrågad", "Aldrig")
 
     .control-group
       .controls
