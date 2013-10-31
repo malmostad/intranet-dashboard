@@ -67,3 +67,11 @@
           = f.button :submit, :class => 'btn-primary'
           = link_to t('actions.cancel'), user_path(@user.username), class: "btn"
           %p.help Tänk på att det du skriver i din profil – precis som nästan allt annat du gör i Malmö stad – blir offentlig handling. Skriv bara sådant du kan stå för.
+
+- if admin? && !@user.admin?
+  %section.box.show.user.danger-zone
+    %h1.box-title Riskområde
+    .box-content.form-horizontal.form-data
+      %section.misc
+        %p= "Medarbetaren kommer att raderas permanent från Kontaktboken. Detta går inte att ångra."
+        .delete= link_to raw("<span class='icon-trash icon-large'></span> Radera #{@user.first_name} #{@user.last_name} permanent"), @user, data: { confirm: 'Är du säker på att du vill radera medarbetaren permanent?', method: :delete }, class: "btn btn-danger btn-small"

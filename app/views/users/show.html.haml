@@ -114,11 +114,3 @@
       %menu.dropdown-menu{ "aria-labelledby" => "feeds-dialog-menu" }
         %li= link_to "Redigera profil...", edit_user_path(@user)
         %li= link_to "Byt bild...", edit_avatar_path(@user)
-
-- if admin? && !@user.admin?
-  %section.box.show.user.danger-zone
-    %h1.box-title Riskområde
-    .box-content.form-horizontal.form-data
-      %section.misc
-        %p= "Medarbetaren kommer att raderas permanent från Kontaktboken. Detta går inte att ångra."
-        .delete= link_to raw("<span class='icon-trash icon-large'></span> Radera #{@user.first_name} #{@user.last_name} permanent"), @user, data: { confirm: 'Är du säker på att du vill radera medarbetaren permanent?', method: :delete }, class: "btn btn-danger btn-mini"
