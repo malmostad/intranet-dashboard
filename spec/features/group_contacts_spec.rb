@@ -41,6 +41,7 @@ describe "GroupContacts" do
 
     it "should delete group contact", js: true do
       create(:group_contact)
+      user.update_attribute(:admin, true)
       click_button "Sök"
       first("a.btn-danger").click
       page.evaluate_script("window.confirm()")
