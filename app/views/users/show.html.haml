@@ -36,15 +36,10 @@
     .employee-column-1
       %section.address.vcard
         %h2.form-group-title Arbetsplats
-        - if false # i.e., we are waiting for switchboard to sync data to ldap
-          %p.room
-            = "Rumsnummer: #{@user.room}"
-            - if myself?
-              = link_to "(ändra)", new_switchboard_change_path, class: "change"
+        %p.room
+          = "Rumsnummer: #{@user.room}"
         %p.street-address
           = "Besöksadress: #{@user.address}"
-          - if myself?
-            = link_to "(ändra)", new_switchboard_change_path, class: "change"
 
       %section.competence
         %h2.form-group-title Kompetensprofil

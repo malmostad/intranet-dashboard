@@ -33,7 +33,7 @@ Dashboard::Application.routes.draw do
   delete "/my_own_feeds/delete_all" => "my_own_feeds#destroy_all"
 
   resources :shortcuts, :roles, :languages, :skills, :feeds, :my_own_feeds, except: [:show]
-  resources :switchboard_changes, only: [:new, :create]
+  # resources :switchboard_changes, only: [:new, :create]
 
   get "/languages/suggest" => "languages#suggest", as: "languages_suggest"
   get "/skills/suggest" => "skills#suggest", as: "skills_suggest"
