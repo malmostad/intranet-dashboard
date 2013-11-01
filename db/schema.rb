@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131031103622) do
+ActiveRecord::Schema.define(:version => 20131101143722) do
 
   create_table "api_apps", :force => true do |t|
     t.string   "name"
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(:version => 20131031103622) do
     t.datetime "updated_at",                      :null => false
     t.datetime "last_request"
     t.integer  "last_request_by"
+    t.string   "legacy_dn"
   end
 
   add_index "group_contacts", ["name"], :name => "index_group_contacts_on_name", :unique => true
