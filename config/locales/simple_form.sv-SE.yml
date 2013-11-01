@@ -38,8 +38,6 @@ sv-SE:
         email: "<p>Din e-postadress finns lagrad i Malmö stads centrala databas över alla anställda. Kontaktboken visar vilken e-postadress som är knuten till dig. Om det visas fel e-postadress, kontakta ITS, 040-342727.</p>"
         status_message: "Skriv vad du arbetar med just nu. Kollegor som följer dig kan då se detta. Din status visas och kan också uppdateras direkt på ”Min sida”."
         skype: "Om du vill kan du ange vilken Skype-adress du har."
-        room: "Skicka ett e-postmeddelande till televaxeln@malmo.se om du vill ändra ditt rumsnummer. Ange även ditt telefonnummer i meddelandet."
-        address: "Skicka ett e-postmeddelande till televaxeln@malmo.se om du vill ändra din adress. Ange även ditt telefonnummer i meddelandet."
         skill_list: "Skriv in ord som beskriver saker du kan, har ansvar för och sådant som du ska förknippas med i Malmö stad. När en kollega söker efter ett ord du angett får de träff på dig."
         language_list: "Ange vilka språk du kan. Detta kan hjälpa till internt i organisationen när en kollega letar efter en viss kompetens till ett projekt/en aktivitet."
         private_bio: "Om du vill kan du skriva en personlig presentation om dig. <em>Observera:</em> yrkespresentationen om dig skriver du in i fältet ”Om mig” högre upp på sidan."
