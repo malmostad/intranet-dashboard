@@ -58,6 +58,10 @@ sv-SE:
         visitors_address_postal_town: ange besöksadress först
         visitors_district: ange besöksadress först
         homepage: om inte på malmo.se
+      api_app:
+        name: systemnamn, t.ex. malmo.se
+        contact: systemförvaltares e-postadress
+        ip_address: systemets ip-adress, t.ex. 161.52.15.153
 
     hints:
       user:
