@@ -7,7 +7,9 @@ module Api
         @api_app = ApiApp.authenticate(params["app_token"], params["app_secret"], request.remote_ip)
         unless @api_app
           render json: {
-            message: "401 Unauthorized. Your app_token, app_secret or ip address is not correct" },
+            message: "401 Unauthorized. Your app_token, app_secret or ip address is not correct",
+            documentation_url: "https://github.com/malmostad/intranet-dashboard/wiki/Contacts-API-v1"
+            },
           status: :unauthorized
         end
       end
