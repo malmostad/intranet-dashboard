@@ -87,6 +87,9 @@ Syncing of LDAP attributes for all employees in the system is made with a worker
 ## Avatar Service
 The system contains management of employee portraits and is used as an [avatar service for other applications on the intranet](https://github.com/malmostad/intranet-dashboard/wiki/Avatar-Service-API-v1) with a REST API.
 
+## Contacts API
+A [REST API for employees and group contacts](https://github.com/malmostad/intranet-dashboard/wiki/Contacts-API-v1) is available. 
+
 ## Intranet Search Interface
 The system contains an integration with the Siteseeker search engine. The search contains results from all intranet systems.
 
