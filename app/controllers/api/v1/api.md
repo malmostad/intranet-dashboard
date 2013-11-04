@@ -25,8 +25,36 @@ Before you can use the API, you need to contact kominteamet@malmo.se to discuss 
 
 ## Resources
 
+Search request.
 ~~~
-GET /api/v1/employees/search?term=jesbyl
+GET /api/v1/employees/search?q=sve
+~~~
+
+Response:
+~~~
+HTTP/1.1 200 OK
+[
+  {
+    "catalog_id": "sveper",
+    "id": 123,
+    "first_name": "Svetlana",
+    "last_name": "Persson",
+    "title": "Fritidsledare",
+    "email": "svetlana.persson@example.org",
+    "company": "154 SoF Väster",
+    "department": "Förskolan Gäddan"
+  },
+  {
+    "catalog_id": "andsve4",
+    "id": 4321,
+    "first_name": "Anders",
+    "last_name": "Svensson",
+    "title": "Badvärd",
+    "email": "anders.p.svensson@example.org",
+    "company": "040 Fritidsförvaltningen",
+    "department": "Badhuset"
+  }
+]
 ~~~
 
 ~~~
