@@ -53,7 +53,7 @@ Dashboard::Application.routes.draw do
   resources :api_apps
   get "/api_apps/create_app_secret/:id" => "api_apps#create_app_secret", as: "create_app_secret"
 
-  namespace :api, defaults: {format: 'json'}, constraints: { protocol: Rails.env.production? || Rails.env.test? ? "https://" : "http://" } do
+  namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
       get "/employees/search" => "employees#search"
       get "/employees/:id" => "employees#show", as: "employee"
