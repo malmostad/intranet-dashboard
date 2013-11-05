@@ -119,6 +119,8 @@ HTTP/1.1 200 OK
   "created_at": "2012-05-02T11:44:16+02:00",
   "updated_at": "2013-10-30T10:47:36+01:00"
 }
+~~~
+
 
 ### Profile Pictures for Employees
 To get a profile pictures for an employee, use the employees `:username` as documented in the [Avatar Service](Avatar-Service) API.
