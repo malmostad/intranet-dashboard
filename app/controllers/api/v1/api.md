@@ -190,3 +190,4 @@ HTTP/1.1 200 OK
   "updated_at": "2013-11-05T13:59:56+01:00",
   "legacy_dn": "cn=Individ- & familjeomsorgen Roseng\u00e5rd, ou=Funktionskonton, ou=Organisation och funktion, ou=Sitevision, o=malmo"
 }
+~~~
