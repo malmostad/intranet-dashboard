@@ -28,15 +28,15 @@ Before you can use the API, you need to contact kominteamet@malmo.se to discuss 
 Case insensitive search for `first_name`, `last_name`, `first_name last_name` or `email`. `q` matches start of one of the fields.
 
 Example:
-~~~
+```
 GET /api/v1/employees/search?q=jes
-~~~
+```
 
 Response:
-~~~
+```
 HTTP/1.1 200 OK
-~~~
-~~~
+```
+```json
 [
   {
     "catalog_id": "jesbyl",
@@ -60,27 +60,27 @@ HTTP/1.1 200 OK
   },
   ...
 ]
-~~~
+```
 
 ### Get a single employee
 Get the record for a single employee by the unique `:id` or the `:catalog_id` that is an unique identifier within the organization.
 
-~~~
+```
 GET /api/v1/employees/:id
 GET /api/v1/employees/:catalog_id
-~~~
+```
 
 Examples:
-~~~
+```
 GET /api/v1/employees/111
 GET /api/v1/employees/jesbyl
-~~~
+```
 
 Response:
-~~~
+```
 HTTP/1.1 200 OK
-~~~
-~~~
+```
+```json
 {
   "catalog_id": "jesbyl",
   "id": 111,
@@ -119,7 +119,7 @@ HTTP/1.1 200 OK
   "created_at": "2012-05-02T11:44:16+02:00",
   "updated_at": "2013-10-30T10:47:36+01:00"
 }
-~~~
+```
 
 
 ### Profile Pictures for Employees
@@ -129,15 +129,15 @@ To get a profile pictures for an employee, use the employees `:username` as docu
 Case insensitive search for `name`. The `q` value matches the start of one of the field.
 
 Example:
-~~~
+```
 GET /api/v1/group_contacts/search?q=Individ-%20&%20familjeomsorgen
-~~~
+```
 
 Response:
-~~~
+```
 HTTP/1.1 200 OK
-~~~
-~~~
+```
+```json
 [
   {
     "id": 16,
@@ -149,26 +149,26 @@ HTTP/1.1 200 OK
   },
   ...
 ]
-~~~
+```
 
 
 ### Get a single employee
 Get the record for a single employee by the unique `:id` or the `:catalog_id` that is an unique identifier within the organization.
 
-~~~
+```
 GET /api/v1/group_contacts/:id
-~~~
+```
 
 Example:
-~~~
+```
 GET /api/v1/group_contacts/23
-~~~
+```
 
 Response:
-~~~
+```
 HTTP/1.1 200 OK
-~~~
-~~~
+```
+```json
 {
   "id": 23,
   "name": "Individ- & familjeomsorgen Roseng\u00e5rd",
@@ -192,4 +192,4 @@ HTTP/1.1 200 OK
   "updated_at": "2013-11-05T13:59:56+01:00",
   "legacy_dn": "cn=Individ- & familjeomsorgen Roseng\u00e5rd, ou=Funktionskonton, ou=Organisation och funktion, ou=Sitevision, o=malmo"
 }
-~~~
+```
