@@ -186,14 +186,5 @@ describe "GroupContactsAPI" do
     it "should return homepage" do
       expect(json["homepage"]).to eq(group_contact.homepage)
     end
-
-    it "should not give away private attributes" do
-      %w(
-        created_at
-        updated_at
-      ).each do |attribute|
-        expect(json[attribute]).to eq(nil)
-      end
-    end
   end
 end

@@ -198,8 +198,6 @@ describe "Employees API" do
       %w(
         statusMessage
         admin
-        created_at
-        updated_at
         last_login
         status_message_updated_at
         early_adopter
