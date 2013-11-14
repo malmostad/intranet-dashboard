@@ -64,7 +64,15 @@ class ApplicationController < ActionController::Base
     logger.warn "  Full path: #{request.fullpath}"
     logger.warn "  Referer: #{request.referer}"
     reset_body_classes
-    render template: "404", status: 404
+
+    respond_to do |format|
+      format.html {
+        render template: "404", status: 404
+      }
+      format.json {
+        render json: { response: "Not Found", status: 404 }, status: 404
+      }
+    end
   end
 
   def error_page(exception = "500", msg = "Prova att navigera med menyn ovan.")
@@ -75,7 +83,14 @@ class ApplicationController < ActionController::Base
     logger.error "  Params: #{params}"
     reset_body_classes
     @msg = msg
-    render template: "500", status: 500
+    respond_to do |format|
+      format.html {
+        render template: "500", status: 500
+      }
+      format.json {
+        render json: { response: "Server Error", status: 500 }, status: 500
+      }
+    end
   end
 
   protected
