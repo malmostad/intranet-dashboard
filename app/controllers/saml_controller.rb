@@ -33,7 +33,7 @@ class SamlController < ApplicationController
       end
     rescue
       logger.error "SAML response not valid"
-      error_page("500", "Ett fel uppstod med Single Sign On-tjänsten.")
+      server_error("Ett fel uppstod med Single Sign On-tjänsten.")
     end
   end
 

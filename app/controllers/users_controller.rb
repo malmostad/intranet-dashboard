@@ -40,17 +40,15 @@ class UsersController < ApplicationController
   def show
     @user = User.where(username: params[:username]).includes(:subordinates).first
 
-    if @user.blank?
-      reset_body_classes
-      sub_layout
-      render template: "404", status: 404
-    else
+    if @user.present?
       @colleagueship = current_user.colleagueships.where(colleague_id: @user.id).first
       if request.xhr?
         render layout: false
       else
         render layout: true
       end
+    else
+      not_found
     end
   end
 

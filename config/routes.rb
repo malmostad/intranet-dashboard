@@ -62,6 +62,7 @@ Dashboard::Application.routes.draw do
     end
   end
 
-  # Catch everything else. "a" is the path in Rails 3's routing
-  match '*a', to: 'application#not_found', format: false
+  unless Rails.application.config.consider_all_requests_local
+    match '*not_found', to: 'errors#error_404'
+  end
 end

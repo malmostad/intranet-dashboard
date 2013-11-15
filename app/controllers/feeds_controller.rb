@@ -16,6 +16,7 @@ class FeedsController < ApplicationController
 
   def edit
     @feed = Feed.where(id: params[:id]).includes(:roles).first
+    not_found unless @feed.present?
   end
 
   def create
