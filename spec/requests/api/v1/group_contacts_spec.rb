@@ -14,7 +14,7 @@ describe "GroupContactsAPI" do
 
   it "should have an unauthorized message" do
     get "/api/v1/group_contacts/123"
-    expect(json["message"]).to eq("401 Unauthorized. Your app_token, app_secret or ip address is not correct")
+    json["message"].should match("401 Unauthorized")
   end
 
   it "should require valid app_token" do
