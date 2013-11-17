@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(:version => 20131116141513) do
     t.string   "legacy_dn"
   end
 
-  add_index "group_contacts", ["name"], :name => "index_group_contacts_on_name"
+  add_index "group_contacts", ["name"], :name => "index_group_contacts_on_name", :unique => true
 
   create_table "languages", :force => true do |t|
     t.string   "name"
