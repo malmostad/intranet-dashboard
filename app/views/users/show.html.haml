@@ -74,7 +74,7 @@
             %p= link_to @user.manager.displayname, user_path(@user.manager.username)
             %p= @user.manager.title
         - else
-          %p= "#{possessive(@user.displayname)} chef har inte loggat in på min sida än"
+          %p= "#{@user.first_name} #{possessive(@user.last_name)} chef har inte loggat in på min sida än"
 
       - if @user.subordinates.present?
         %section.org
@@ -100,7 +100,8 @@
           %p= "Avaktiverad i katalogen: #{@user.deactivated? ? 'Ja' : 'Nej'}"
           - if @user.deactivated?
             %p= "Avaktiverades: #{l @user.deactivated_at, format: :short}"
-        %p= "Senast inloggad: #{l @user.last_login, format: :short}"
+        - if @user.last_login.present?
+          %p= "Senast inloggad: #{l @user.last_login, format: :short}"
 
   - if admin_or_myself?
     .dropdown.box-menu.pull-right
