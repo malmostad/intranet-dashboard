@@ -46,8 +46,8 @@ class Ldap
       user.email          = ldap_user['mail'].first
       user.company        = ldap_user['company'].first
       user.department     = ldap_user['division'].first
-      # user.address        = ldap_user['streetaddress'].first
-      # user.room           = ldap_user['roomnumber'].first
+      user.address        = ldap_user['streetaddress'].first if user.address.blank? # Selective sync
+      user.room           = ldap_user['roomnumber'].first if user.room.blank? # Selective sync
       user.manager        = User.where(username: extract_cn(ldap_user["manager"].first)).first
       user.phone          = phone ||= ldap_user['telephonenumber'].first
       user.cell_phone     = cell_phone ||= ldap_user['mobile'].first
