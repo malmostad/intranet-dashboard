@@ -24,7 +24,7 @@ module Api
       # Takes `per_page` and `page` query params
       # Defines @limit and @offset
       def paginate
-        @limit = params[:per_page].present? ? params[:per_page].to_i : 100
+        @limit = params[:per_page].present? ? params[:per_page].to_i : 25
         @limit = 100 if @limit > 100 # Miximum allowed
         page = params[:page].present? ? (params[:page].to_i - 1) : 0
         @offset = page * @limit
