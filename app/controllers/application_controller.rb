@@ -126,7 +126,7 @@ class ApplicationController < ActionController::Base
 
   # Error responses are triggered both from rescue_from and routing match with errors controller
   def not_found(exception = "Sidan kunde inte hittas")
-    log_response_error(404, exception)
+    log_response_not_found
     sub_layout(false)
     respond_to do |format|
       format.html { render template: "errors/error_404", status: 404 }
@@ -155,6 +155,13 @@ class ApplicationController < ActionController::Base
     logger.error "  Params: #{params}"
   end
 
+  def log_response_not_found
+    logger.warn "404 Not Found"
+    logger.warn "  User id: #{session[:user_id] ? (session && session[:user_id]) : 'anonymous'}"
+    logger.warn "  Full path: #{request.fullpath}"
+    logger.warn "  Referer: #{request.referer}"
+    logger.warn "  Params: #{params}"
+  end
 
   # It is not possible to set a /path mounted app url in the
   # action mailer config so we need to do it here
