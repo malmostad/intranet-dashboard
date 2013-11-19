@@ -25,8 +25,9 @@ $boxShadow: 2px 2px 3px #ccc;
 $dangerColor: #c00;
 
 // Fonts
-$sansSerif: 'OpenSans', 'Verdana', 'DejaVu Sans', 'Bitstream Vera Sans', sans-serif;
-$serif: Georgia, 'DejaVu Serif', 'Bitstream Vera Serif', serif;
-/* NOTE: Use with font-weight: normal */;
-$sansSerifSemibold: 'OpenSansSemibold', 'DejaVu Sans', 'Bitstream Vera Sans', sans-serif;
+$sansSerif: 'OpenSans', 'Droid Sans', Verdana, 'DejaVu Sans', 'Bitstream Vera Sans', sans-serif;
+$serif: Georgia, 'Droid Serif', 'DejaVu Serif', 'Bitstream Vera Serif', serif;
+$monospace: Consolas, Inconsolata, 'Droid Sans Mono', 'DejaVu Mono', 'Bitstream Vera Mono', monospace;
+/* NOTE: Use with font-weight: normal */
+$sansSerifSemibold: 'OpenSansSemibold', 'Droid Sans', Verdana, 'DejaVu Sans', 'Bitstream Vera Sans', sans-serif;
 $iconFont: FontAwesome;

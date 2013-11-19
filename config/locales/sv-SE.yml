@@ -143,7 +143,7 @@ sv-SE:
     select:
       prompt: Välj
     submit:
-      create: Skapa
+      create: Spara
       submit: Spara
       update: Spara
   number:

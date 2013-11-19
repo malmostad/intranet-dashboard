@@ -1,5 +1,8 @@
 Dashboard::Application.routes.draw do
 
+  get "/group_contacts/search" => "group_contacts#search", as: "group_contacts_search"
+  resources :group_contacts
+
   root to: "dashboard#index"
 
   get "/more_feed_entries/:category/:before" => "dashboard#more_feed_entries", as: "more_feed_entries"
@@ -47,6 +50,19 @@ Dashboard::Application.routes.draw do
   post "/login" => "sessions#create"
   get  "/logout" => "sessions#destroy"
 
-  # Catch everything else. "a" is the path in Rails 3's routing
-  match '*a', to: 'application#not_found', format: false
+  resources :api_apps
+  get "/api_apps/create_app_secret/:id" => "api_apps#create_app_secret", as: "create_app_secret"
+
+  namespace :api, defaults: { format: 'json' } do
+    namespace :v1 do
+      get "/employees/search" => "employees#search"
+      get "/employees/:id" => "employees#show", as: "employee"
+      get "/group_contacts/search" => "group_contacts#search"
+      get "/group_contacts/:id" => "group_contacts#show", as: "group_contact"
+    end
+  end
+
+  unless Rails.application.config.consider_all_requests_local
+    match '*not_found', to: 'errors#error_404'
+  end
 end

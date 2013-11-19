@@ -39,6 +39,9 @@
     td.delete {
       text-align: right;
     }
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
   }
 
 
@@ -52,11 +55,13 @@
     }
     ul {
       &.users .users a,
+      &.group_contacts .group-contacts a,
       &.roles .roles a,
       &.feeds .feeds a,
       &.shortcuts .shortcuts a,
       &.skills .skills a,
       &.languages .languages a,
+      &.api_apps .api-apps a,
       a:hover {
         background: $backgroundLightHover;
       }
@@ -79,5 +84,11 @@
     &:last-child {
       border-bottom: none;
     }
+  }
+}
+.danger-zone {
+  margin-bottom: 4em;
+  h1.box-title {
+    background: $dangerColor;
   }
 }

@@ -8,7 +8,7 @@ module UsersHelper
   end
 
   def load_more_query
-    { term: params[:term],
+    { q: params[:q],
       company: params[:company],
       department: params[:department],
       language: params[:language],

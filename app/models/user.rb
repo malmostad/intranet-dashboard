@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
       :language_list, :skill_list,
       :private_bio, :twitter, :skype, :homepage, :company_short,
       :room, :address, :geo_position_x, :geo_position_y,
-      :admin, :early_adopter, as: :admin
+      :admin, :contacts_editor, :early_adopter, as: :admin
 
   attr_accessor :avatar
   attr_reader :avatar_remote_url
@@ -147,35 +147,26 @@ class User < ActiveRecord::Base
     end
   end
 
-  # Search for users by term or a distinct value
-  def self.search(q, limit = 25, offset = 0)
-    if q.present? && q[:term].present?
-      term = "#{q[:term].strip}%"
-      where(
-        "username LIKE ? OR
-        first_name LIKE ? OR
-        last_name LIKE ? OR
-        concat_ws(' ', first_name, last_name) LIKE ? OR
-        email LIKE ?",
-      term, term, term, term, term).order(:first_name).limit(limit).offset(offset)
-    elsif q[:company].present?
-      where(company: q[:company]).order(:first_name).limit(limit).offset(offset)
-    elsif q[:department].present?
-      where(department: q[:department]).order(:first_name).limit(limit).offset(offset)
-    elsif q[:skill].present?
-      where("skills.name" => q[:skill]).includes(:skills).order(:first_name).limit(limit).offset(offset)
-    elsif q[:language].present?
-      where("languages.name" => q[:language]).includes(:languages).order(:first_name).limit(limit).offset(offset)
-    else
-      return {}
+  def self.search(query, limit = 25, offset = 0)
+    return {} if query.empty?
+    users = User.scoped
+    query[:q] ||=  query[:term] # :term can be removed when query[:term] is changed in Assets v3
+    if query[:q].present?
+      q = "#{query[:q]}%"
+      users = users.where("username LIKE ? OR first_name LIKE ? OR last_name LIKE ? OR
+          concat_ws(' ', first_name, last_name) LIKE ? OR email LIKE ?", q, q, q, q, q)
     end
+    users = users.where(company: query[:company]) if query[:company].present?
+    users = users.where(department: query[:department]) if query[:department].present?
+    users = users.where("skills.name" => query[:skill]).includes(:skills) if query[:skill].present?
+    users = users.where("languages.name" => query[:language]).includes(:languages) if query[:language].present?
+    users.order(:first_name).limit(limit).offset(offset)
   end
 
   private
 
   # Validate avatar before scaling it
   def validate_avatar_file_size
-    valid?
-    errors.messages.blank?
+    valid? && errors.messages.blank?
   end
 end

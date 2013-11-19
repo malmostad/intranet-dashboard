@@ -29,6 +29,14 @@ module ApplicationHelper
       attributes: %w(href src) }
   end
 
+  # Text only form style display of attribute
+  def show_attribute(name, value)
+    content_tag(:div,
+      content_tag(:div, "#{name}:", class: 'control-label') +
+      content_tag(:div, value, class: 'controls'),
+      class: 'control-group text-only')
+  end
+
   def delete_icon_text
     raw "#{content_tag(:span, nil, class: 'icon-trash icon-large')} Radera"
   end

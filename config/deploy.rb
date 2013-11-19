@@ -98,7 +98,9 @@ namespace :prompt do
     puts "\nThis will use your **working copy** and deploy a **#{rails_env}** version to #{server_address} #{releases_path}/#{release_name}"
     puts "Task performed:"
     puts "  * Assets compiled #{precompile_assets}"
-    puts "  * Database dumped to #{backup_dir}"
+    if rails_env == "production"
+      puts "  * Database dumped to #{backup_dir}"
+    end
     puts "  * Migration run"
     puts "  * App restarted and linked as current version"
     continue = Capistrano::CLI.ui.ask "\nDo you want to continue [y/n]: "
@@ -110,14 +112,16 @@ namespace :prompt do
 end
 
 namespace :backup do
-  desc 'performs a backup using mysqldump'
-  task :mysql, :roles => :db, :only => { :primary => true } do
-    filepath = "#{backup_dir}#{application}-#{rails_env}-predeploy-#{release_name}.sql.bz2"
-    text = capture "cat #{shared_path}/config/database.yml"
-    yaml = YAML::load(text)
+  if rails_env == "production"
+    desc 'performs a backup using mysqldump'
+    task :mysql, :roles => :db, :only => { :primary => true } do
+      filepath = "#{backup_dir}#{application}-#{rails_env}-predeploy-#{release_name}.sql.bz2"
+      text = capture "cat #{shared_path}/config/database.yml"
+      yaml = YAML::load(text)
 
-    run "mysqldump -u #{yaml[rails_env]['username']} -p #{yaml[rails_env]['database']} | bzip2 -c > #{filepath}" do |ch, stream, out|
-      ch.send_data "#{yaml[rails_env]['password']}\n" if out =~ /^Enter password:/
+      run "mysqldump -u #{yaml[rails_env]['username']} -p #{yaml[rails_env]['database']} | bzip2 -c > #{filepath}" do |ch, stream, out|
+        ch.send_data "#{yaml[rails_env]['password']}\n" if out =~ /^Enter password:/
+      end
     end
   end
 end

@@ -48,34 +48,9 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  # Catch errors and record not founds
-  unless Rails.env.development?
-    rescue_from ActionController::RoutingError, with: :not_found
-    rescue_from AbstractController::ActionNotFound, with: :not_found
-    rescue_from ActiveRecord::RecordNotFound, with: :not_found
-    rescue_from Exception, with: :error_page
-  end
-  def action_missing(method, *args)
-    not_found
-  end
-
-  def not_found(exception = "404")
-    logger.warn "Exception: #{exception}"
-    logger.warn "  Full path: #{request.fullpath}"
-    logger.warn "  Referer: #{request.referer}"
-    reset_body_classes
-    render template: "404", status: 404
-  end
-
-  def error_page(exception = "500", msg = "Prova att navigera med menyn ovan.")
-    logger.error "Exception: #{exception}"
-    logger.error "  User id: #{session[:user_id] ? session[:user_id] : 'not logged in'}"
-    logger.error "  User Agent: #{request.user_agent}"
-    logger.error "  Referer: #{request.referer}"
-    logger.error "  Params: #{params}"
-    reset_body_classes
-    @msg = msg
-    render template: "500", status: 500
+  unless Rails.application.config.consider_all_requests_local
+    rescue_from Exception, with: lambda { |exception| server_error(exception) }
+    rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, ActiveRecord::RecordNotFound, with: lambda { |exception| not_found(exception) }
   end
 
   protected
@@ -88,6 +63,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def contacts_editor?
+    current_user && (current_user.contacts_editor? || current_user.admin?)
+  end
+  helper_method :admin?, :contacts_editor?, :current_user
+
   def admin?
     current_user && current_user.admin?
   end
@@ -99,6 +79,10 @@ class ApplicationController < ActionController::Base
 
   def require_admin
     not_authorized unless admin?
+  end
+
+  def require_contacts_editor
+    not_authorized unless contacts_editor?
   end
 
   def require_early_adopter
@@ -139,6 +123,38 @@ class ApplicationController < ActionController::Base
   def sub_layout(name = "")
     @sub_layout = name
   end
+
+  # Error responses are triggered both from rescue_from and routing match with errors controller
+  def not_found(exception = "Sidan kunde inte hittas")
+    log_response_error(404, exception)
+    sub_layout(false)
+    respond_to do |format|
+      format.html { render template: "errors/error_404", status: 404 }
+      format.json { render json: { response: "Not Found", status: 404 }, status: 404 }
+      format.all  { render nothing: true, status: 404 }
+    end
+  end
+
+  def server_error(exception = "Ett fel inträffade")
+    log_response_error(500, exception)
+    sub_layout(false)
+    respond_to do |format|
+      format.html { render template: "errors/error_500", status: 500}
+      format.json { render json: { response: "Server Error", status: 500 }, status: 500 }
+      format.all  { render nothing: true, status: 500 }
+    end
+  end
+
+  def log_response_error(response, exception = "")
+    logger.error "Exception: #{exception}"
+    logger.error "  Response code: #{response}"
+    logger.error "  Full path: #{request.fullpath}"
+    logger.error "  User id: #{session[:user_id] ? (session && session[:user_id]) : 'anonymous'}"
+    logger.error "  User Agent: #{request.user_agent}"
+    logger.error "  Referer: #{request.referer}"
+    logger.error "  Params: #{params}"
+  end
+
 
   # It is not possible to set a /path mounted app url in the
   # action mailer config so we need to do it here

@@ -6,7 +6,7 @@ class SkillsController < ApplicationController
   before_filter :require_admin, except: [:search, :suggest]
 
   def index
-    @skills = Skill.order(:name)
+    # Display search form
   end
 
   def new

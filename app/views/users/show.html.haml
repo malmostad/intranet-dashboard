@@ -8,9 +8,6 @@
         - if admin_or_myself?
           = link_to(raw("Redigera <span>profil</span>"), edit_user_path(@user), class: "btn btn-mini edit")
           = link_to "Byt bild", edit_avatar_path(@user), class: "change-avatar btn btn-mini"
-          %br
-          - if admin?
-            = link_to delete_icon_text, @user, data: { confirm: 'Är du säker på att du vill radera användaren?', method: :delete }, class: "btn btn-danger btn-mini"
 
       .main-card
         - unless myself?
@@ -77,7 +74,7 @@
             %p= link_to @user.manager.displayname, user_path(@user.manager.username)
             %p= @user.manager.title
         - else
-          %p= "#{possessive(@user.displayname)} chef har inte loggat in på min sida än"
+          %p= "#{@user.first_name} #{possessive(@user.last_name)} chef har inte loggat in på min sida än"
 
       - if @user.subordinates.present?
         %section.org
@@ -97,12 +94,14 @@
 
         - if admin?
           %p= "Administratör: #{@user.admin? ? 'Ja' : 'Nej'}"
+          %p= "Kontaktboksredaktör: #{@user.contacts_editor? ? 'Ja' : 'Nej'}"
           %p= "Early adopter: #{@user.early_adopter? ? 'Ja' : 'Nej'}"
           %p= "Första inloggningen: #{l @user.created_at, format: :short}"
           %p= "Avaktiverad i katalogen: #{@user.deactivated? ? 'Ja' : 'Nej'}"
           - if @user.deactivated?
             %p= "Avaktiverades: #{l @user.deactivated_at, format: :short}"
-        %p= "Senast inloggad: #{l @user.last_login, format: :short}"
+        - if @user.last_login.present?
+          %p= "Senast inloggad: #{l @user.last_login, format: :short}"
 
   - if admin_or_myself?
     .dropdown.box-menu.pull-right
@@ -111,6 +110,3 @@
       %menu.dropdown-menu{ "aria-labelledby" => "feeds-dialog-menu" }
         %li= link_to "Redigera profil...", edit_user_path(@user)
         %li= link_to "Byt bild...", edit_avatar_path(@user)
-        - if admin?
-          %li= link_to "Radera användare", @user, data: { confirm: 'Är du säker på att du vill radera användaren?', method: :delete }
-

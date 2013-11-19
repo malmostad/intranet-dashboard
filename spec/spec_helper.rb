@@ -32,6 +32,8 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
+  config.include Requests::JsonHelpers, type: :request
+
   # config.before(:all) do
   #   DatabaseCleaner.clean_with(:truncation)
   # end

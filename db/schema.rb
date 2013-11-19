@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130820080221) do
+ActiveRecord::Schema.define(:version => 20131116141513) do
+
+  create_table "api_apps", :force => true do |t|
+    t.string   "name"
+    t.string   "contact"
+    t.string   "app_token"
+    t.string   "ip_address"
+    t.string   "password_digest"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "api_apps", ["app_token"], :name => "index_api_apps_on_app_token"
 
   create_table "colleagueships", :force => true do |t|
     t.integer  "user_id"
@@ -60,6 +72,33 @@ ActiveRecord::Schema.define(:version => 20130820080221) do
   end
 
   add_index "feeds_users", ["feed_id", "user_id"], :name => "index_feeds_user", :unique => true
+
+  create_table "group_contacts", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "cell_phone"
+    t.string   "fax"
+    t.string   "phone_hours"
+    t.string   "homepage"
+    t.string   "address"
+    t.string   "zip_code"
+    t.string   "postal_town"
+    t.string   "visitors_address"
+    t.string   "visitors_address_zip_code"
+    t.string   "visitors_address_postal_town"
+    t.string   "visitors_address_geo_position_x"
+    t.string   "visitors_address_geo_position_y"
+    t.string   "visitors_district"
+    t.string   "visiting_hours"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.datetime "last_request"
+    t.integer  "last_request_by"
+    t.string   "legacy_dn"
+  end
+
+  add_index "group_contacts", ["name"], :name => "index_group_contacts_on_name", :unique => true
 
   create_table "languages", :force => true do |t|
     t.string   "name"
@@ -192,6 +231,7 @@ ActiveRecord::Schema.define(:version => 20130820080221) do
     t.string   "cmg_id",                    :default => "0"
     t.boolean  "deactivated",               :default => false
     t.datetime "deactivated_at"
+    t.boolean  "contacts_editor",           :default => false
   end
 
   add_index "users", ["manager_id"], :name => "index_users_on_manager_id"

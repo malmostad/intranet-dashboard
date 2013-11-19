@@ -8,8 +8,8 @@ class AastraCWI
 
   CLIENT_SETTINGS = {
     pretty_print_xml: Rails.env.development?,
-    # open_timeout: 1,
-    # read_timeout: 1,
+    open_timeout: 1,
+    read_timeout: 1,
     log_level: Rails.configuration.log_level,
     logger: Rails.logger,
     log: false # Rails.env.development? # turns of HTTPI logging if false

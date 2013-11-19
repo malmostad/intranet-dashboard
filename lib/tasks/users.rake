@@ -5,22 +5,27 @@ namespace :users do
     deleted = deactivated = updated = 0
 
     User.unscoped.find_each do |user|
-      ldap = Ldap.new
-      results = ldap.update_user_profile(user.username)
-      if results
-        updated += 1 if ldap.user_profile_changed
-      else
-        # User is deactivated in the LDAP
-        if user.deactivated? && user.deactivated_at > Time.now + 45.days
-          # Delete the user if it has been deactivated in the Dashboard for 45 days
-          user.destroy
-        elsif !user.deactivated?
-          # Mark the user as deactivated
-          user.deactivated = true
-          user.deactivated_at = DateTime.now
-          user.save(validate: false)
-          deactivated += 1
+      begin
+        ldap = Ldap.new
+        results = ldap.update_user_profile(user.username)
+        if results
+          updated += 1 if ldap.user_profile_changed
+        else
+          # User is deactivated in the LDAP
+          if user.deactivated? && user.deactivated_at > Time.now + 45.days
+            # Delete the user if it has been deactivated in the Dashboard for 45 days
+            user.destroy
+          elsif !user.deactivated?
+            # Mark the user as deactivated
+            user.deactivated = true
+            user.deactivated_at = DateTime.now
+            user.save(validate: false)
+            deactivated += 1
+          end
         end
+      rescue Exception => e
+        puts "Error updating user #{user.id}"
+        puts "Exception: #{e}"
       end
     end
 

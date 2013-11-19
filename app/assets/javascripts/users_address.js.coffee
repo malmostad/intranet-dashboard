@@ -23,17 +23,3 @@ $ ->
       minLength: 2
       select: (event, ui) ->
         $address.val ui.item.address
-        # $('#user_post_code').val ui.item.post_code
-        # $('#user_postal_town').val ui.item.postal_town
-        # $('#user_neighborhood').val ui.item.neighborhood
-        # $('#user_geo_position_x').val ui.item.east
-        # $('#user_geo_position_y').val ui.item.north
-      open: () ->
-        $(@).removeClass("ui-corner-all").addClass("ui-corner-top")
-      close: () ->
-        $(@).removeClass("ui-corner-top").addClass("ui-corner-all")
-
-    # Don't submit the form on enter key for this field
-    $address.keydown (event) ->
-      if event.which is 13
-        event.preventDefault()
