@@ -2,12 +2,12 @@ desc "Migrate group contacts from MalmoAut export"
 task migrate_group_contacts: :environment do
 
   # Group contacts in use
-  contact_boxes = File.open(Rails.root.join('migrate', 'contact_boxes.csv'), 'r').each_line.map do |line|
+  contact_boxes = File.open(Rails.root.join('import', 'contact_boxes.csv'), 'r').each_line.map do |line|
     line.split(";").first
   end
 
   # All group contacts
-  File.open( Rails.root.join('migrate', 'group_contacts.csv'), 'r').each_line do |line|
+  File.open( Rails.root.join('import', 'group_contacts.csv'), 'r').each_line do |line|
     group_contact = line.split(";")
     if contact_boxes.include? group_contact[2]
       GroupContact.create(
