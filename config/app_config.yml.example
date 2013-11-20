@@ -7,8 +7,10 @@ defaults: &defaults
     base_dn: "FILL_IN"
     proxy_user: "FILL_IN"
     proxy_password: "FILL_IN"
-  site_search_query_url: "http://search.example.org/"
-  site_search_autocomplete_url: "http://search.example.org/search/ac"
+  siteseeker:
+    account: "FILL_IN"
+    index: "FILL_IN"
+  site_search_autocomplete_url: "/search/autocomplete"
   remember_me_days: 30
   feed_worker_concurrency: 10
   feed_worker_batch_pause: 1
