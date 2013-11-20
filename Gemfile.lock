@@ -1,5 +1,6 @@
-PATH
-  remote: ../siteseeker_normalizer
+GIT
+  remote: https://github.com/malmostad/siteseeker_normalizer.git
+  revision: ef8fd51d8f3bfd23302be5eab72c8002381c6491
   specs:
     siteseeker_normalizer (0.0.1.alpha)
       nokogiri (~> 1.5)
