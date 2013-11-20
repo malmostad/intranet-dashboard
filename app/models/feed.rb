@@ -34,7 +34,7 @@ class Feed < ActiveRecord::Base
       true
     rescue Exception => e
       errors.add(:feed_url, "Flödet kunde inte hämtas.")
-      logger.warn "Couldn't fetch feed #{id} #{feed_url}: #{e}"
+      logger.info "Couldn't fetch feed #{id} #{feed_url}: #{e}"
       false
     end
   end
