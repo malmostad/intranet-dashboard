@@ -5,8 +5,11 @@ gem 'jquery-rails', '3.0.4'
 gem 'haml', '4.0.3'
 
 gem 'nokogiri', '1.5.10'
-gem 'feedzirra', '0.2.0.rc2' # :git => 'https://github.com/pauldix/feedzirra.git'
+gem 'feedzirra', '0.2.0.rc2' # git: 'https://github.com/pauldix/feedzirra.git'
 gem 'savon', '2.3.0'
+
+#gem 'siteseeker_normalizer', git: 'https://github.com/malmostad/siteseeker_normalizer.git'
+gem 'siteseeker_normalizer', path: '../siteseeker_normalizer'
 
 gem 'net-ldap', '0.3.1'
 gem 'ruby-saml', '0.7.0' # 0.7.1/2 is broken

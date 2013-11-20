@@ -7,7 +7,9 @@ class SiteSearchController < ApplicationController
   def index
     @terms = params[:q]
     if @terms.present?
-      @results = SiteSearch::Search.new(params.except(:action, :controller).to_query)
+      client = SiteseekerNormalizer::Client.new(APP_CONFIG['site_search_query_url'])
+      @results = client.search(params.except(:action, :controller).to_query)
+      @error = ""
     end
 
     if request.xhr?

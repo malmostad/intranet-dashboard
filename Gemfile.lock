@@ -1,3 +1,9 @@
+PATH
+  remote: ../siteseeker_normalizer
+  specs:
+    siteseeker_normalizer (0.0.1.alpha)
+      nokogiri (~> 1.5)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -314,6 +320,7 @@ DEPENDENCIES
   sass-rails (= 3.2.6)
   savon (= 2.3.0)
   simple_form (= 2.1.0)
+  siteseeker_normalizer!
   therubyracer (= 0.12.0)
   thin
   uglifier (= 2.2.1)

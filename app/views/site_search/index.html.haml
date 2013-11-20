@@ -14,7 +14,7 @@
         %p.summary
           = "Din sökning gav "
           = pluralize(@results.total, "träff", "träffar")
-        - if @results.error.present?
+        - if @error.present?
           .error= "Ett fel inträffade med Euroling Siteseeker (#{@results.error})"
 
         - if @results.sorting.present?
