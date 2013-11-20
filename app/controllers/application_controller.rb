@@ -156,11 +156,11 @@ class ApplicationController < ActionController::Base
   end
 
   def log_response_not_found
-    logger.warn "404 Not Found"
-    logger.warn "  User id: #{session[:user_id] ? (session && session[:user_id]) : 'anonymous'}"
-    logger.warn "  Full path: #{request.fullpath}"
-    logger.warn "  Referer: #{request.referer}"
-    logger.warn "  Params: #{params}"
+    logger.info "404 Not Found"
+    logger.info "  User id: #{session[:user_id] ? (session && session[:user_id]) : 'anonymous'}"
+    logger.info "  Full path: #{request.fullpath}"
+    logger.info "  Referer: #{request.referer}"
+    logger.info "  Params: #{params}"
   end
 
   # It is not possible to set a /path mounted app url in the
