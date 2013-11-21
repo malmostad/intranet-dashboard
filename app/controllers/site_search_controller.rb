@@ -7,9 +7,8 @@ class SiteSearchController < ApplicationController
   def index
     @terms = params[:q]
     if @terms.present?
-      client = SiteseekerNormalizer::Client.new(APP_CONFIG['siteseeker']['account'], APP_CONFIG['siteseeker']['index'], encoding: "ISO-8859-1")
-      @results = client.search(params.except(:action, :controller).to_query)
-      logger.debug @results.entries
+      client = SiteseekerNormalizer::Client.new(APP_CONFIG['siteseeker']['account'], APP_CONFIG['siteseeker']['index'], encoding: "UTF-8")
+      @results = client.search(params.except(:action, :controller))
       @error = ""
     end
 

@@ -10,7 +10,7 @@ defaults: &defaults
   siteseeker:
     account: "FILL_IN"
     index: "FILL_IN"
-  site_search_autocomplete_url: "/search/autocomplete"
+  site_search_autocomplete_url: "http://ACCOUNT.appliance.siteseeker.se/qc/INDEX/qc"
   remember_me_days: 30
   feed_worker_concurrency: 10
   feed_worker_batch_pause: 1
@@ -69,7 +69,6 @@ production:
   avatar_base_url: "example.org/avatars/"
   avatar_default_url: "example.org/avatars/default.jpg"
   assets_url_base: "//assets.example.org/internal/3.0/"
-  site_search_autocomplete_url: "/dashboard/search/autocomplete"
   saml:
     issuer: "https://www.example.org/dashboard"
     idp_sso_target_url: "https://idp.example.org/wa/auth/saml/"
