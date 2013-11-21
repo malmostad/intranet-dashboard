@@ -10,12 +10,12 @@
             = text_field_tag :q, @terms, { placeholder: "Ange ett eller flera sökord", "data-autocomplete-path" => site_search_autocomplete_path }
             = submit_tag "Sök", { class: "btn", name: nil }
 
-      - if @results.present?
+      - if @error.present?
+        .error= "Ett fel inträffade med Euroling Siteseeker (#{@error})"
+      - elsif @results.present?
         %p.summary
           = "Din sökning gav "
           = pluralize(@results.total, "träff", "träffar")
-        - if @error.present?
-          .error= "Ett fel inträffade med Euroling Siteseeker (#{@results.error})"
 
         - if @results.sorting.present?
           .menu.sort

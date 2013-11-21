@@ -1,1 +1,4 @@
-= render "results"
+- if @error.present?
+  .error= "Ett fel inträffade med Euroling Siteseeker (#{@error})"
+- else
+  = render "results"

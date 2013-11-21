@@ -7,9 +7,13 @@ class SiteSearchController < ApplicationController
   def index
     @terms = params[:q]
     if @terms.present?
-      client = SiteseekerNormalizer::Client.new(APP_CONFIG['siteseeker']['account'], APP_CONFIG['siteseeker']['index'], encoding: "UTF-8")
-      @results = client.search(params.except(:action, :controller))
-      @error = ""
+      begin
+        client = SiteseekerNormalizer::Client.new(APP_CONFIG['siteseeker']['account'], APP_CONFIG['siteseeker']['index'], encoding: "UTF-8")
+        @results = client.search(params.except(:action, :controller))
+      rescue Exception => e
+        logger.error "Siteseeker: #{e}"
+        @error = e
+      end
     end
 
     if request.xhr?
@@ -26,6 +30,8 @@ class SiteSearchController < ApplicationController
         open("#{APP_CONFIG['site_search_autocomplete_url']}?q=#{CGI.escape(params[:q])}&ilang=sv&callback=results", read_timeout: 1).first
       end
     rescue Exception => e
+      logger.error "Siteseeker: #{e}"
+      # Silent error
       results = 'results({})'
     end
     render json: results
