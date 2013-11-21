@@ -8,8 +8,11 @@ class SiteSearchController < ApplicationController
     @terms = params[:q]
     if @terms.present?
       begin
-        client = SiteseekerNormalizer::Client.new(APP_CONFIG['siteseeker']['account'], APP_CONFIG['siteseeker']['index'], encoding: "UTF-8")
-        @results = client.search(params.except(:action, :controller))
+        raw_results = Rails.cache.fetch(["search-raw-results", params], expires_in: 12.hours) do
+          client = SiteseekerNormalizer::Client.new(APP_CONFIG['siteseeker']['account'], APP_CONFIG['siteseeker']['index'], encoding: "UTF-8")
+          client.fetch(params.except(:action, :controller))
+        end
+        @results = SiteseekerNormalizer::Parse.new(raw_results, encoding: "UTF-8")
       rescue Exception => e
         logger.error "Siteseeker: #{e}"
         @error = e

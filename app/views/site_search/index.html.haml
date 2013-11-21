@@ -1,4 +1,4 @@
-- cache Digest::SHA1.hexdigest("search-fragment-#{params}"), :expires_in => 6.hour do
+- cache ["search-fragment", params], :expires_in => 12.hour do
   - title "Sök på Komin"
   %section.site-search.body-copy
     .search-and-results
