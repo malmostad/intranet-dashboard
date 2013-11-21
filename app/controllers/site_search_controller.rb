@@ -30,7 +30,7 @@ class SiteSearchController < ApplicationController
         open("#{APP_CONFIG['site_search_autocomplete_url']}?q=#{CGI.escape(params[:q])}&ilang=sv&callback=results", read_timeout: 1).first
       end
     rescue Exception => e
-      logger.error "Siteseeker: #{e}"
+      logger.error "Siteseeker autocomplete: #{e}"
       # Silent error
       results = 'results({})'
     end
