@@ -52,9 +52,9 @@ class Feed < ActiveRecord::Base
       # Is the feed updated since last fetch?
       self.updated = previous_checksum != checksum
       true
-    rescue => e
+    rescue Exception => e
       # Parsing failed
-      logger.warn "Couldn't parse feed #{id} #{feed_url}: #{e}"
+      logger.info "Couldn't parse feed #{id} #{feed_url}: #{e}"
       errors.add(:feed_url, "Flödet kunde inte tolkas. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
       false
     end
