@@ -1,7 +1,6 @@
 - cache Digest::SHA1.hexdigest("search-results-fragment-#{params}"), :expires_in => 6.hour do
-  - increase_counter = @results.editors_choice.count
   - @results.entries.each do |entry|
-    %li{ "data-position" => entry.number + increase_counter }
+    %li
       %h2
         = link_to entry.title, entry.url
         - unless entry.content_type == "html"
