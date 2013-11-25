@@ -40,7 +40,7 @@ $ ->
 
   # Event tracking of details for selected link in the search results
   if $("section.site-search").length
-    $('section.site-search h2 a, section.site-search .ess-bestbets a, section.site-search ul.breadcrumb a, section.site-search .categories a').click (event) ->
+    $('body').on "click", "section.site-search h2 a, section.site-search .ess-bestbets a, section.site-search ul.breadcrumb a, section.site-search .categories a", (event) ->
       $a = $(this)
       if typeof gaDelayEvent is "function" then gaDelayEvent($a, event)
       link = $a.attr('href')
@@ -48,7 +48,8 @@ $ ->
       GALabel = $.trim($a.text()) + " " + link
 
       # Track all clicks in the results list
-      _gaq.push(['_trackEvent', 'SearchClickPosition', GAAction, GALabel, parseInt($a.closest('li').attr('data-position'), 10)])
+      if $a.closest(".results").length > 0
+        _gaq.push(['_trackEvent', 'SearchClickPosition', GAAction, GALabel, $(".results > ul > li").index($a.closest("li")) + 1, 10])
 
       # Track clicks on breadcrumbs in the results list
       if $a.closest(".breadcrumb").length > 0
