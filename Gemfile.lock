@@ -1,7 +1,7 @@
 PATH
   remote: ../siteseeker_normalizer
   specs:
-    siteseeker_normalizer (0.0.4.alpha)
+    siteseeker_normalizer (0.0.5.alpha)
       nokogiri (~> 1.5)
 
 GEM
