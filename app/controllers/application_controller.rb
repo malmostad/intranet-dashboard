@@ -152,7 +152,7 @@ class ApplicationController < ActionController::Base
     logger.error "  User id: #{session[:user_id] ? (session && session[:user_id]) : 'anonymous'}"
     logger.error "  User Agent: #{request.user_agent}"
     logger.error "  Referer: #{request.referer}"
-    logger.error "  Params: #{params}"
+    logger.error "  Params: #{params.except(:password)}"
   end
 
   def log_response_not_found
@@ -160,7 +160,7 @@ class ApplicationController < ActionController::Base
     logger.info "  User id: #{session[:user_id] ? (session && session[:user_id]) : 'anonymous'}"
     logger.info "  Full path: #{request.fullpath}"
     logger.info "  Referer: #{request.referer}"
-    logger.info "  Params: #{params}"
+    logger.info "  Params: #{params.except(:password)}"
   end
 
   # It is not possible to set a /path mounted app url in the
