@@ -11,7 +11,14 @@ class ApiApp < ActiveRecord::Base
   validates_presence_of :name, :contact, :ip_address
 
   def self.authenticate(app_token, app_secret, ip_address)
-    app = where(app_token: app_token, ip_address: ip_address).first
+    if Rails.env.test?
+      # Only restricted to 161.52.*.* in test
+      return false unless /^161.52\.\d+\.\d+/.match(ip_address)
+      app = where(app_token: app_token).first
+    else
+      app = where(app_token: app_token, ip_address: ip_address).first
+    end
+
     if app.present? && app.authenticate(app_secret)
       return app
     else
