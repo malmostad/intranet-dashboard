@@ -7,7 +7,7 @@ module Api
         @api_app = ApiApp.authenticate(params["app_token"], params["app_secret"], request.remote_ip)
         if !protocol_ok?
           render json: {
-            message: "404 Not Found. (Hey, only HTTPS allowed)",
+            message: "404 Not Found. (Hey, only HTTPS allowed!)",
             documentation_url: "https://github.com/malmostad/intranet-dashboard/wiki/Contacts-API-v1"
             },
           status: :not_found
