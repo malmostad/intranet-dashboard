@@ -2,9 +2,9 @@
   - @results.entries.each do |entry|
     %li
       %h2
-        = link_to entry.title, entry.url
         - unless entry.content_type == "html"
           %span.file_info= "[#{entry.content_type}]"
+        = link_to entry.title, entry.url
       %p.extract
         = entry.summary
         %span.date= entry.date
