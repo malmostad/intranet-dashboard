@@ -35,7 +35,7 @@ describe "SiteSearch" do
     end
 
     it "should have hits for the main category in parenthesis" do
-      find(".categories .all.current.group .hits").text.should match(/\(\d+\)/)
+      find(".categories .current .hits").text.should match(/\(\d+\)/)
     end
 
     it "should have results" do
@@ -65,7 +65,7 @@ describe "SiteSearch" do
     it "should load more results", js: true do
       before = all("section.results li h2").count
       click_on("Visa fler")
-      sleep 1
+      sleep 3
       before.should < all("section.results li h2").count
     end
   end
