@@ -16,6 +16,7 @@
     /[if lte IE 7]
       = stylesheet_link_tag "#{APP_CONFIG['assets_url_base']}legacy/ie7.css", media: 'all'
       = stylesheet_link_tag "legacy/ie7", media: 'all'
+    %link{ rel: 'icon', type: 'image/x-icon', href: "#{APP_CONFIG['assets_url_base']}favicon.ico" }
     = csrf_meta_tag
   %body{ class: "#{@body_classes} malmo-form" }
     .wrapper
