@@ -17,7 +17,7 @@ $ ->
         $.ajax
           url: $searchField.attr("data-autocomplete-path")
           data:
-            q: request.term
+            q: request.term.toLowerCase()
             ilang: 'sv'
           dataType: "jsonp"
           jsonpCallback: "results"
