@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class Ldap
-  attr_reader :user_profile_changed
+  attr_reader :user_profile_changed, :address
 
   def initialize
     @client = Net::LDAP.new(
@@ -38,6 +38,8 @@ class Ldap
     if ldap_user.present?
       # Find existing user or create a new
       user = User.unscoped.where(username: username).first_or_initialize
+
+      @address = { dashboard: user.address, ldap: ldap_user['streetaddress'].first }
 
       user.first_name     = ldap_user['givenname'].first
       user.last_name      = ldap_user['sn'].first

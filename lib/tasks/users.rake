@@ -4,6 +4,10 @@ namespace :users do
     started_at = Time.now.to_f
     deleted = deactivated = updated = 0
 
+    address_diff_file = File.new(File.join(Rails.root, "data", "ldap_diff.xls"), "w")
+    address_diff_file.puts "Diff skapad #{Time.now.localtime.to_s[0..18]}"
+    address_diff_file.puts "Namn\tKatalognamn\tAdress i kontaktboken\tAdress i ADM}"
+
     User.unscoped.find_each do |user|
       begin
         ldap = Ldap.new
@@ -23,11 +27,18 @@ namespace :users do
             deactivated += 1
           end
         end
+
+        # Log user with diffs between the address in ldap and dashboard
+        if @address[:ldap] != @address[:dashboard]
+          address_diff_file.puts "#{user.displayname}\t#{user.username}\t#{@address[:dashboard]}\t#{@address[:ldap]}"
+        end
       rescue Exception => e
         puts "Error updating user #{user.id}"
         puts "Exception: #{e}"
       end
     end
+
+    address_diff_file.close
 
     # Log stats
     puts "#{Time.now} update_user_profiles in #{(Time.now.to_f - started_at).ceil} seconds."
