@@ -1,0 +1,12 @@
+section.box.statistics {
+  ul {
+    list-style: disc;
+    padding: .8em 0;
+    li {
+      margin-left: 2em;
+      font-family: $sansSerif;
+      font-size: emize(15);
+      line-height: 1.5;
+    }
+  }
+}
