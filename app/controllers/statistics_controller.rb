@@ -5,6 +5,13 @@ class StatisticsController < ApplicationController
   before_filter :require_admin
 
   def index
+    @user_stats = {}
+    @user_stats["total_users"] = User.count
+    @user_stats["last_week_users"] = User.where("last_login > ?", Time.now - 1.week).count
+    @user_stats["registered_last_week_users"] = User.where("created_at > ?", Time.now - 1.week).count
+    @user_stats["has_status"] = User.where("status_message != ?", "").count
+    @user_stats["has_avatar"] = User.where("avatar_updated_at != ?", "").count
+    @user_stats
   end
 
   def ldap_diff

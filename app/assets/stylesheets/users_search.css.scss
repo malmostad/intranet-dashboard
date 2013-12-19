@@ -58,19 +58,6 @@ section.box.index.users {
       margin: 0;
     }
   }
-
-  ul.user-stats {
-    color: $textColorDark;
-    list-style: disc;
-    padding: .8em 0;
-    border-top: $border;
-    li {
-      margin-left: 2em;
-      font-family: $sansSerif;
-      font-size: emize(13);
-      line-height: 1.5;
-    }
-  }
 }
 
 // Search box for users

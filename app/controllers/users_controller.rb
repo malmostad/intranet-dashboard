@@ -11,7 +11,6 @@ class UsersController < ApplicationController
     @limit = 25
     page = params[:page].present? ? params[:page].to_i : 0
     @offset = page * @limit
-    @user_stats = user_stats if admin? && !request.xhr?
     @users = User.search(params.except(:controller, :action), @limit, @offset)
 
     respond_to do |format|
@@ -178,16 +177,6 @@ class UsersController < ApplicationController
   end
 
   private
-
-  def user_stats
-    user_stats = {}
-    user_stats["total_users"] = User.count
-    user_stats["last_week_users"] = User.where("last_login > ?", Time.now - 1.week).count
-    user_stats["registered_last_week_users"] = User.where("created_at > ?", Time.now - 1.week).count
-    user_stats["has_status"] = User.where("status_message != ?", "").count
-    user_stats["has_avatar"] = User.where("avatar_updated_at != ?", "").count
-    user_stats
-  end
 
   # Clear the users key/value ttl cache for feed entries
   def clear_feed_entries_cache(category)

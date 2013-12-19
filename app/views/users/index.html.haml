@@ -24,11 +24,3 @@
         %div.warning Ingen användare matchade din sökning
 
   = render "results"
-
-  - if admin?
-    %ul.user-stats
-      %li= "#{@user_stats['total_users']} anställda finns i kontaktboken."
-      %li= "#{@user_stats['registered_last_week_users']} har tillkommit senaste sju dagarna."
-      %li= "#{@user_stats['last_week_users']} användare har loggat in senaste sju dagarna."
-      %li= "#{@user_stats['has_status']} har ett statusmeddelande."
-      %li= "#{@user_stats['has_avatar']} har en profilbild."
