@@ -50,6 +50,12 @@ Dashboard::Application.routes.draw do
   post "/login" => "sessions#create"
   get  "/logout" => "sessions#destroy"
 
+  resources :statistics do
+    collection do
+      get  "ldap_diff"
+    end
+  end
+
   resources :api_apps
   get "/api_apps/create_app_secret/:id" => "api_apps#create_app_secret", as: "create_app_secret"
 
