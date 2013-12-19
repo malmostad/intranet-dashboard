@@ -12,7 +12,6 @@ class StatisticsController < ApplicationController
     @user_stats["deactivated"] = User.unscoped.where(deactivated: true).count
     @user_stats["has_address"] = @user_stats["total_users"] - User.where(address: [nil, ""]).count
     @user_stats["has_status"] = User.where("status_message != ?", "").count
-    @user_stats["has_colleagues"] = User.where(colleagues: nil).count
     @user_stats["has_avatar"] = User.where("avatar_updated_at != ?", "").count
     @user_stats
   end
