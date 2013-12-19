@@ -1,12 +1,16 @@
 section.box.statistics {
+  h2 {
+    font-family: $sansSerif;
+    margin: 0 0 .5em;
+  }
   ul {
     list-style: disc;
-    padding: .8em 0;
+    padding: 0;
+    margin-bottom: 1em;
     li {
-      margin-left: 2em;
       font-family: $sansSerif;
-      font-size: emize(15);
-      line-height: 1.5;
+      font-size: emize(13);
+      line-height: 1.6;
     }
   }
 }

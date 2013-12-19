@@ -1,11 +1,14 @@
 - title "Statistik"
 %section.box.index.statistics
   %h1.box-title= h1
-  %ul.user-stats
-    %li= "#{@user_stats['total_users']} anställda finns i kontaktboken"
-    %li= "#{@user_stats['registered_last_week_users']} har tillkommit senaste sju dagarna"
-    %li= "#{@user_stats['last_week_users']} användare har loggat in senaste sju dagarna"
-    %li= "#{@user_stats['has_address']} användare har en adress"
-    %li= "#{@user_stats['has_status']} har ett statusmeddelande"
-    %li= "#{@user_stats['has_avatar']} har en profilbild"
-    %li= link_to "Adresser som skiljer sig mellan ADM och kontaktboken (fil)", ldap_diff_statistics_path
+  .box-content
+    %h2.form-group-title Användare
+    %ul.user-stats
+      %li= "#{@user_stats['total_users']} anställda finns i kontaktboken"
+      %li= "#{@user_stats['registered_last_week_users']} har tillkommit senaste sju dagarna"
+      %li= "#{@user_stats['last_week_users']} användare har loggat in senaste sju dagarna"
+      %li= "#{@user_stats["deactivated"]} användare är deaktiverade men finns kvar"
+      %li= "#{@user_stats['has_address']} användare har en adress"
+      %li= "#{@user_stats['has_status']} har ett statusmeddelande"
+      %li= "#{@user_stats['has_avatar']} har en profilbild"
+      %li= link_to "Adresser som skiljer sig mellan ADM och kontaktboken (fil)", ldap_diff_statistics_path
