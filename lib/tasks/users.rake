@@ -45,7 +45,7 @@ namespace :users do
     address_diff_report.close
     # Delete old report and store the new
     File.delete(diff_report) if File.exist?(diff_report)
-    File.rename(diff_report, tmp_report)
+    File.rename(tmp_report, diff_report)
 
     # Log stats
     puts "#{Time.now} update_user_profiles in #{(Time.now.to_f - started_at).ceil} seconds."
