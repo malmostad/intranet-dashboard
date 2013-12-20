@@ -6,9 +6,11 @@ namespace :users do
     deleted = deactivated = updated = 0
 
     # Log user with diffs between the address in ldap and dashboard
-    address_diff_file = File.new(APP_CONFIG["ldap"]["diff_log"], "w")
-    address_diff_file.puts "Diff startad #{Time.now.localtime.to_s[0..18]}"
-    address_diff_file.puts "Namn\tKatalognamn\tAdress i kontaktboken\tAdress i ADM"
+    diff_report = APP_CONFIG["ldap"]["diff_log"]
+    tmp_report = "#{diff_report}.generating";
+    address_diff_report = File.new(tmp_report, "w")
+    address_diff_report.puts "Diff startad #{Time.now.localtime.to_s[0..18]}"
+    address_diff_report.puts "Namn\tKatalognamn\tAdress i kontaktboken\tAdress i ADM"
 
     User.unscoped.find_each do |user|
       begin
@@ -16,7 +18,7 @@ namespace :users do
         results = ldap.update_user_profile(user.username)
         if results
           if ldap.address[:dashboard] != ldap.address[:ldap] && !user.deactivated
-            address_diff_file.puts %q(#{user.displayname}\t#{user.username}\t#"{ldap.address[:dashboard]}"\t"#{ldap.address[:ldap]}")
+            address_diff_report.puts "#{user.displayname}\t#{user.username}\t#{ldap.address[:dashboard]}\t#{ldap.address[:ldap]}"
           end
 
           updated += 1 if ldap.user_profile_changed
@@ -33,14 +35,17 @@ namespace :users do
             deactivated += 1
           end
         end
-      rescue Exception => e
-        puts "Error updating user #{user.id}"
-        puts "Exception: #{e}"
-      end
+     rescue Exception => e
+       puts "Error updating user #{user.id}"
+       puts "Exception: #{e}"
+     end
     end
 
-    address_diff_file.puts "Diff slutförd #{Time.now.localtime.to_s[0..18]}"
-    address_diff_file.close
+    address_diff_report.puts "Diff slutförd #{Time.now.localtime.to_s[0..18]}"
+    address_diff_report.close
+    # Delete old report and store the new
+    File.delete(diff_report) if File.exist?(diff_report)
+    File.rename(diff_report, tmp_report)
 
     # Log stats
     puts "#{Time.now} update_user_profiles in #{(Time.now.to_f - started_at).ceil} seconds."

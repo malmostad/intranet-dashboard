@@ -18,6 +18,6 @@ class StatisticsController < ApplicationController
   end
 
   def ldap_diff
-    send_file APP_CONFIG["ldap"]["diff_log"], type: :xls, disposition: "attachment", filename: "ldap_diff.xls"
+    send_file APP_CONFIG["ldap"]["diff_log"], type: :xls, disposition: "attachment", filename: "ldap_diff.tsv"
   end
 end
