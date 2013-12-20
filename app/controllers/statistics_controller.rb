@@ -13,10 +13,11 @@ class StatisticsController < ApplicationController
     @user_stats["has_address"] = @user_stats["total_users"] - User.where(address: [nil, ""]).count
     @user_stats["has_status"] = User.where("status_message != ?", "").count
     @user_stats["has_avatar"] = User.where("avatar_updated_at != ?", "").count
+    @user_stats["ldap_diff_mtime"] = File.exists?(APP_CONFIG["ldap"]["diff_log"]) ? File.mtime(APP_CONFIG["ldap"]["diff_log"]).localtime.to_s[0..18] : false
     @user_stats
   end
 
   def ldap_diff
-    send_file File.join(Rails.root, "data", "ldap_diff.xls"), type: :xls, disposition: "attachment", filename: "ldap_diff.xls"
+    send_file APP_CONFIG["ldap"]["diff_log"], type: :xls, disposition: "attachment", filename: "ldap_diff.xls"
   end
 end

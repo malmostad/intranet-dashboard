@@ -1,18 +1,24 @@
+# -*- coding: utf-8 -*-
 namespace :users do
   desc "Update all user profiles from LDAP"
   task update_profiles: :environment do
     started_at = Time.now.to_f
     deleted = deactivated = updated = 0
 
-    address_diff_file = File.new(File.join(Rails.root, "data", "ldap_diff.xls"), "w")
-    address_diff_file.puts "Diff skapad #{Time.now.localtime.to_s[0..18]}"
-    address_diff_file.puts "Namn\tKatalognamn\tAdress i kontaktboken\tAdress i ADM}"
+    # Log user with diffs between the address in ldap and dashboard
+    address_diff_file = File.new(APP_CONFIG["ldap"]["diff_log"], "w")
+    address_diff_file.puts "Diff startad #{Time.now.localtime.to_s[0..18]}"
+    address_diff_file.puts "Namn\tKatalognamn\tAdress i kontaktboken\tAdress i ADM"
 
     User.unscoped.find_each do |user|
       begin
         ldap = Ldap.new
         results = ldap.update_user_profile(user.username)
         if results
+          if ldap.address[:dashboard] != ldap.address[:ldap] && !user.deactivated
+            address_diff_file.puts %q(#{user.displayname}\t#{user.username}\t#"{ldap.address[:dashboard]}"\t"#{ldap.address[:ldap]}")
+          end
+
           updated += 1 if ldap.user_profile_changed
         else
           # User is deactivated in the LDAP
@@ -27,17 +33,13 @@ namespace :users do
             deactivated += 1
           end
         end
-
-        # Log user with diffs between the address in ldap and dashboard
-        if @address[:ldap] != @address[:dashboard]
-          address_diff_file.puts "#{user.displayname}\t#{user.username}\t#{@address[:dashboard]}\t#{@address[:ldap]}"
-        end
       rescue Exception => e
         puts "Error updating user #{user.id}"
         puts "Exception: #{e}"
       end
     end
 
+    address_diff_file.puts "Diff slutförd #{Time.now.localtime.to_s[0..18]}"
     address_diff_file.close
 
     # Log stats

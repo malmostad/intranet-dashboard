@@ -4,11 +4,12 @@
   .box-content
     %h2.form-group-title Användare
     %ul.user-stats
-      %li= "#{@user_stats['total_users']} anställda finns i kontaktboken"
-      %li= "#{@user_stats['registered_last_week_users']} har tillkommit senaste sju dagarna"
-      %li= "#{@user_stats['last_week_users']} användare har loggat in senaste sju dagarna"
-      %li= "#{@user_stats["deactivated"]} användare är deaktiverade men finns kvar"
-      %li= "#{@user_stats['has_address']} användare har en adress"
-      %li= "#{@user_stats['has_status']} har ett statusmeddelande"
-      %li= "#{@user_stats['has_avatar']} har en profilbild"
-      %li= link_to "Adresser som skiljer sig mellan ADM och kontaktboken (fil)", ldap_diff_statistics_path
+      %li= "Aktiva i kontakboken: #{@user_stats['total_users']}"
+      %li= "Deaktiverade: #{@user_stats["deactivated"]}"
+      %li= "Tillkommit senaste sju dagarna: #{@user_stats['registered_last_week_users']}"
+      %li= "Loggat in senaste sju dagarna: #{@user_stats['last_week_users']}"
+      %li= "Har adress: #{@user_stats['has_address']}"
+      %li= "Har statusmeddelande: #{@user_stats['has_status']}"
+      %li= "Har profilbild: #{@user_stats['has_avatar']}"
+      - if @user_stats["ldap_diff_mtime"]
+        %li= link_to "Adresser som skiljer sig mellan ADM och kontaktboken, rapport genererad #{@user_stats["ldap_diff_mtime"]}.", ldap_diff_statistics_path
