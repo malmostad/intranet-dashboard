@@ -15,6 +15,8 @@ set :application, "dashboard_komin"
 set :stages, %w(staging production) # 'test' is a reserved word
 set :default_stage, "staging"
 
+set :shared_children, shared_children + %w{reports}
+
 set :whenever_command, "bundle exec whenever"
 set :whenever_environment, defer { stage }
 set :whenever_identifier, defer { "#{application}_#{stage}" }
@@ -95,6 +97,7 @@ end
 
 namespace :prompt do
   task :continue do
+    puts "\n#{shared_children}"
     puts "\nThis will use your **working copy** and deploy a **#{rails_env}** version to #{server_address} #{releases_path}/#{release_name}"
     puts "Task performed:"
     puts "  * Assets compiled #{precompile_assets}"
