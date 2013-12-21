@@ -40,8 +40,9 @@ namespace :users do
     heading = axlsx.workbook.styles.add_style font_name: 'Calibri', bg_color: "000000"
     body = axlsx.workbook.styles.add_style font_name: 'Calibri', fg_color: "000000"
     axlsx.workbook.add_worksheet(name: "KB-ADM diff") do |sheet|
-      sheet.add_row ["Namn", "Katalognamn", "Adress i kontaktboken", "Adress i ADM"], style: heading
+      sheet.add_row ["Namn", "Katalognamn", "Adress i kontaktboken", "Adress i ADM", "Kontaktkort"], style: heading
       address_diff.each do |diff|
+        diff << "http://webapps06.malmo.se/dashboard/users/#{diff[1]}"
         sheet.add_row diff, style: body
       end
       sheet.add_row ["Rapport genererad #{Time.now.localtime.to_s[0..18]}"], style: body
