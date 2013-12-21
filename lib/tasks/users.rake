@@ -6,7 +6,7 @@ namespace :users do
     deleted = deactivated = updated = 0
     address_diff = []
 
-    User.limit(10).each do |user|
+    User.unscoped.find_each do |user|
       begin
         ldap = Ldap.new
         results = ldap.update_user_profile(user.username)
