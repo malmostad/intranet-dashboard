@@ -26,7 +26,7 @@ gem 'capistrano-ext'
 gem 'whenever', require: false
 
 gem 'jbuilder', '1.5.2'
-gem 'axlsx'
+gem 'axlsx', '2.0.1'
 
 group :development do
   gem 'haml-rails'

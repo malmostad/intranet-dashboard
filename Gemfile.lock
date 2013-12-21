@@ -293,7 +293,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  axlsx
+  axlsx (= 2.0.1)
   bcrypt-ruby (~> 3.0.0)
   capistrano (~> 2.15.5)
   capistrano-ext
