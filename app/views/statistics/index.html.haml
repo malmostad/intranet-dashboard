@@ -4,11 +4,11 @@
   .box-content
     %h2.form-group-title Användare
     %ul.user-stats
-      %li= "Aktiva i kontakboken: #{@user_stats['total_users']}"
-      %li= "Deaktiverade: #{@user_stats["deactivated"]}"
-      %li= "Tillkommit senaste sju dagarna: #{@user_stats['registered_last_week_users']}"
-      %li= "Loggat in senaste sju dagarna: #{@user_stats['last_week_users']}"
-      %li= "HR-titel: #{@user_stats['has_title']}"
+      %li= "Är aktiva i kontakboken: #{@user_stats['total_users']}"
+      %li= "Är deaktiverade: #{@user_stats["deactivated"]}"
+      %li= "Har tillkommit senaste sju dagarna: #{@user_stats['registered_last_week_users']}"
+      %li= "Har loggat in senaste sju dagarna: #{@user_stats['last_week_users']}"
+      %li= "Har HR-titel: #{@user_stats['has_title']}"
       %li= "Har förvaltning: #{@user_stats['has_company']}"
       %li= "Har avdelning: #{@user_stats['has_department']}"
       %li= "Har adress: #{@user_stats['has_address']}"
