@@ -4,23 +4,17 @@ namespace :users do
   task update_profiles: :environment do
     started_at = Time.now.to_f
     deleted = deactivated = updated = 0
+    address_diff = []
 
-    # Log user with diffs between the address in ldap and dashboard
-    diff_report = APP_CONFIG["ldap"]["diff_log"]
-    tmp_report = "#{diff_report}.generating";
-    address_diff_report = File.new(tmp_report, "w")
-    address_diff_report.puts "Diff startad #{Time.now.localtime.to_s[0..18]}"
-    address_diff_report.puts "Namn\tKatalognamn\tAdress i kontaktboken\tAdress i ADM"
-
-    User.unscoped.find_each do |user|
+    User.limit(10).each do |user|
       begin
         ldap = Ldap.new
         results = ldap.update_user_profile(user.username)
         if results
+          # Diff between LDAP and Dashboard address
           if ldap.address[:dashboard] != ldap.address[:ldap] && !user.deactivated
-            address_diff_report.puts "#{user.displayname}\t#{user.username}\t#{ldap.address[:dashboard]}\t#{ldap.address[:ldap]}"
+            address_diff << [user.displayname, user.username, ldap.address[:dashboard], ldap.address[:ldap]]
           end
-
           updated += 1 if ldap.user_profile_changed
         else
           # User is deactivated in the LDAP
@@ -41,11 +35,18 @@ namespace :users do
      end
     end
 
-    address_diff_report.puts "Diff slutförd #{Time.now.localtime.to_s[0..18]}"
-    address_diff_report.close
-    # Delete old report and store the new
-    File.delete(diff_report) if File.exist?(diff_report)
-    File.rename(tmp_report, diff_report)
+    # Log users with diffs between the address in ldap and dashboard in an xlsx file
+    axlsx = Axlsx::Package.new
+    heading = axlsx.workbook.styles.add_style font_name: 'Calibri', bg_color: "000000"
+    body = axlsx.workbook.styles.add_style font_name: 'Calibri', fg_color: "000000"
+    axlsx.workbook.add_worksheet(name: "KB-ADM diff") do |sheet|
+      sheet.add_row ["Namn", "Katalognamn", "Adress i kontaktboken", "Adress i ADM"], style: heading
+      address_diff.each do |diff|
+        sheet.add_row diff, style: body
+      end
+      sheet.add_row ["Rapport genererad #{Time.now.localtime.to_s[0..18]}"], style: body
+    end
+    axlsx.serialize(APP_CONFIG["ldap"]["diff_log"])
 
     # Log stats
     puts "#{Time.now} update_user_profiles in #{(Time.now.to_f - started_at).ceil} seconds."
