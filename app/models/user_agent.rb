@@ -9,7 +9,15 @@ class UserAgent < ActiveRecord::Base
   attr_accessible :user_id, :remember_me, :remember_me_hash, :user_agent_tag
 
   def authenticate(token)
-    remember_me? && !expired? && valid_token?(token)
+    remember_me? && !expired? && valid_token?(token) && valid_user
+  end
+
+  def valid_user
+    begin
+      true if User.find(user_id)
+    rescue
+      false
+    end
   end
 
   def valid_token?(token)
