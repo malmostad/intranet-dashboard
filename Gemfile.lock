@@ -246,7 +246,7 @@ GEM
     simple_form (2.1.0)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
-    siteseeker_normalizer (0.1.0)
+    siteseeker_normalizer (0.1.1)
       nokogiri (~> 1.5)
     slop (3.4.7)
     sprockets (2.2.2)
@@ -324,7 +324,7 @@ DEPENDENCIES
   sass-rails (= 3.2.6)
   savon (= 2.3.0)
   simple_form (= 2.1.0)
-  siteseeker_normalizer (= 0.1.0)
+  siteseeker_normalizer (= 0.1.1)
   therubyracer (= 0.12.0)
   thin
   uglifier (= 2.2.1)
