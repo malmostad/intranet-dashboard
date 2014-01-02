@@ -2,23 +2,22 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.16'
 gem 'jquery-rails', '3.0.4'
-gem 'haml', '4.0.3'
+gem 'haml', '4.0.4'
 
 gem 'nokogiri', '1.6.1'
-# gem 'feedzirra', '0.2.0.rc2' # git: 'https://github.com/pauldix/feedzirra.git'
 gem "feedzirra", "0.6.0"
 gem 'savon', '2.3.2'
 gem 'siteseeker_normalizer', '0.1.1'
 
 gem 'net-ldap', '0.3.1'
 gem 'ruby-saml', '0.7.0' # 0.7.1/2 is broken
-gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '~> 3.0.1'
 
 gem 'dalli', '2.6.4'
-gem 'mysql2', '0.3.13'
+gem 'mysql2', '0.3.14'
 
-gem 'paperclip', '3.5.1'
-gem 'simple_form', '2.1.0'
+gem 'paperclip', '3.5.2'
+gem 'simple_form', '2.1.1'
 
 gem 'daemons-rails', '1.2.1'
 
@@ -26,7 +25,7 @@ gem 'capistrano', '~> 2.15.5'
 gem 'capistrano-ext'
 gem 'whenever', require: false
 
-gem 'jbuilder', '1.5.2'
+gem 'jbuilder', '2.0.1'
 gem 'axlsx', '2.0.1'
 
 group :development do
@@ -55,7 +54,7 @@ end
 group :assets do
   gem 'sass-rails', '3.2.6'
   gem 'coffee-rails', '3.2.2'
-  gem 'uglifier', '2.2.1'
+  gem 'uglifier', '2.4.0'
   gem 'therubyracer', '0.12.0', require: 'v8'
 end
 
