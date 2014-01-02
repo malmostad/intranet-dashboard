@@ -4,9 +4,10 @@ gem 'rails', '3.2.16'
 gem 'jquery-rails', '3.0.4'
 gem 'haml', '4.0.3'
 
-gem 'nokogiri', '1.5.10'
-gem 'feedzirra', '0.2.0.rc2' # git: 'https://github.com/pauldix/feedzirra.git'
-gem 'savon', '2.3.0'
+gem 'nokogiri', '1.6.1'
+# gem 'feedzirra', '0.2.0.rc2' # git: 'https://github.com/pauldix/feedzirra.git'
+gem "feedzirra", "0.6.0"
+gem 'savon', '2.3.2'
 gem 'siteseeker_normalizer', '0.1.1'
 
 gem 'net-ldap', '0.3.1'
