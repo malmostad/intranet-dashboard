@@ -1,5 +1,6 @@
 .DS_Store
 .ruby-version
+.bundle
 log
 tmp
 doc
@@ -10,3 +11,4 @@ spec/auth_credentials.yml
 import
 reports/*.*
 public/assets
+public/system/avatars
