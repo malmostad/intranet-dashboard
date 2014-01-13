@@ -12,4 +12,10 @@ class Language < ActiveRecord::Base
   before_save do
     self.name.downcase!
   end
+
+  # Merge first language into second. Transfer users having first to second.
+  def self.merge(first, second)
+    second.update_attribute(:users, (second.users + first.users).uniq)
+    first.destroy
+  end
 end
