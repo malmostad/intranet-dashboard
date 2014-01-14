@@ -37,21 +37,21 @@ describe Language do
     end
 
     it "should destroy the first language" do
-      expect { Language.merge(Language.first, Language.last) }.to change(Language, :count).by(-1)
+      expect { @lang_1.merge(@lang_2) }.to change(Language, :count).by(-1)
     end
 
     it "should not destroy the second language" do
-      Language.merge(Language.first, Language.last)
+      @lang_1.merge(@lang_2)
       expect(Language.last).to eq(@lang_2)
     end
 
     it "should not change a users number of languages (if she don't have both)" do
-      expect { Language.merge(@lang_1, @lang_2) }.to change(@user_1.languages, :count).by(0)
+      expect { @lang_1.merge(@lang_2) }.to change(@user_1.languages, :count).by(0)
     end
 
     it "should change a users number of languages (if she has both)" do
       @user_1.languages << @lang_2
-      expect { Language.merge(@lang_1, @lang_2) }.to change(@user_1.languages, :count).by(-1)
+      expect { @lang_1.merge(@lang_2) }.to change(@user_1.languages, :count).by(-1)
     end
   end
 end
