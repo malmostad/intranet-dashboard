@@ -15,6 +15,11 @@ class Language < ActiveRecord::Base
 
   # Merge first language into second. Transfer users having first to second.
   def merge(into)
+    if id == into.id
+      self.errors.add(:into, "Du kan inte slå samman ett språk med sig själv!")
+      return false
+    end
+
     if into && into.update_attribute(:users, (users + into.users).uniq)
       destroy
     else

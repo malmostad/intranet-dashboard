@@ -1,0 +1,16 @@
+= form_for @language, url: languages_merge_path(@language), method: :put, html: { id: "merge-language", class: "form-horizontal merge" } do |f|
+  .box-content
+    - if @language.errors.any?
+      .warning= t 'messages.validation_errors'
+
+    .control-group
+      = label_tag :into, "Slå samman med:", class: "control-label"
+      .controls
+        = text_field_tag :into, nil, class: 'input-wide', 'data-search-path' => languages_search_path
+        - @language.errors[:into].each do |msg|
+          .help-inline.warning= "#{msg}"
+
+    .control-group
+      .controls
+        = f.submit "Slå samman", class: "btn btn-primary"
+        = link_to t('actions.cancel'), languages_path, class: "btn"

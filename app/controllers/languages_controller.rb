@@ -41,7 +41,7 @@ class LanguagesController < ApplicationController
   def destroy
     @language = Language.find(params[:id])
     @language.destroy
-    redirect_to languages_url, notice: "Språket togs bort"
+    redirect_to languages_url, notice: "Språket raderades"
   end
 
   # Returns a json hash with languages
