@@ -14,3 +14,5 @@
       .controls
         = f.submit t( 'actions.save' ), class: "btn btn-primary"
         = link_to t('actions.cancel'), languages_path, class: "btn"
+        - unless @language.new_record?
+          = link_to "Slå samman med …", languages_edit_merge_path(@language), class: "btn"

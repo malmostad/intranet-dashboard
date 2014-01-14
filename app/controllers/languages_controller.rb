@@ -57,11 +57,25 @@ class LanguagesController < ApplicationController
     render json: @languages
   end
 
+  # Same as `suggest` but we do not allow creation
+  def search
+    @languages = Language.where("name like ?", "#{params[:into]}%").order(:name).limit(20)
+    @languages.map! { |l| { id: l.id, name: l.name } }
+    render json: @languages
+  end
+
+  def edit_merge
+    @language = Language.find(params[:id])
+  end
+
   def merge
     @language = Language.find(params[:id])
-    @into = Language.find(params[:into_language])
+    @into = Language.where(name: params[:into]).first
 
-    @language.merge @into
-    redirect_to languages_url, notice: "#{@language.name} har sligits ihop med #{@into.name}"
+    if @language.merge @into
+      redirect_to languages_url, notice: "#{@language.name} har sligits ihop med #{@into.name}"
+    else
+      render action: "edit_merge"
+    end
   end
 end
