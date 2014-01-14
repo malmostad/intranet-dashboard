@@ -36,6 +36,7 @@ Dashboard::Application.routes.draw do
   # resources :switchboard_changes, only: [:new, :create]
 
   get "/languages/suggest" => "languages#suggest", as: "languages_suggest"
+  put "/languages/merge" => "languages#merge", as: "languages_merge"
   get "/skills/suggest" => "skills#suggest", as: "skills_suggest"
   get "/skills/search" => "skills#search", as: "skills_search"
 

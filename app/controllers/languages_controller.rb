@@ -56,4 +56,12 @@ class LanguagesController < ApplicationController
     @languages.map! { |l| { id: l.name, name: l.name } }
     render json: @languages
   end
+
+  def merge
+    @language = Language.find(params[:id])
+    @into = Language.find(params[:into_language])
+
+    @language.merge @into
+    redirect_to languages_url, notice: "#{@language.name} har sligits ihop med #{@into.name}"
+  end
 end
