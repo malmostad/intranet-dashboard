@@ -1,0 +1,23 @@
+- title "Slå samman kunskapsområde"
+%section.box.form
+  %h1.box-title= h1
+  = form_for @skill, url: skills_merge_path(@skill), method: :put, html: { id: "merge-skill", class: "form-horizontal merge" } do |f|
+    .box-content
+      - if @skill.errors.any?
+        .warning= t 'messages.validation_errors'
+
+      .control-group
+        = label_tag :name, "Kunskapsområde:", class: "control-label"
+        .controls= @skill.name
+
+      .control-group
+        = label_tag :into, "Slå samman med:", class: "control-label"
+        .controls
+          = text_field_tag :into, nil, class: 'input-wide', 'data-search-path' => skills_search_path
+          - @skill.errors[:into].each do |msg|
+            .help-inline.warning= "#{msg}"
+
+      .control-group
+        .controls
+          = f.submit "Slå samman", class: "btn btn-primary"
+          = link_to t('actions.cancel'), skills_path, class: "btn"
