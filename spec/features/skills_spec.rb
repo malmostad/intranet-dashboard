@@ -63,7 +63,7 @@ describe "Skills" do
       visit edit_skill_path(Skill.first)
       click_on("Slå samman med")
 
-      page.execute_script "$('#into').val('#{Skill.last.name}').trigger('focus').trigger('keydown')"
+      page.execute_script "$('#into').val('#{Skill.limit(2).last.name}').trigger('focus').trigger('keydown')"
       page.should have_selector("ul.ui-autocomplete li.ui-menu-item a")
 
       item_selector = "ul.ui-autocomplete li.ui-menu-item:last-child a"
