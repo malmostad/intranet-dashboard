@@ -11,5 +11,5 @@ $ ->
           jsonpCallback: "results"
           success: (data) ->
             response $.map data, (item) ->
-              label: item.name
-              value: item.name
+              label: item.value
+              value: item.value

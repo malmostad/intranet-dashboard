@@ -40,12 +40,13 @@ class SkillsController < ApplicationController
   def destroy
     @skill = Skill.find(params[:id])
     @skill.destroy
-    redirect_to skills_url, notice: "Kunskapsområdet togs bort"
+    redirect_to skills_url, notice: "Kunskapsområdet raderades"
   end
 
   # Used for autocomplete and search results in edit
   def search
-    @skills = Skill.where("name like ?", "%#{params[:term]}%").order(:name).limit(50)
+    term = params[:term] || params[:into]
+    @skills = Skill.where("name like ?", "%#{term}%").order(:name)
 
     respond_to do |format|
       format.html
@@ -66,5 +67,20 @@ class SkillsController < ApplicationController
     @skills.map! { |l| { id: l.name, name: l.name } }
 
     render json: @skills
+  end
+
+  def edit_merge
+    @skill = Skill.find(params[:id])
+  end
+
+  def merge
+    @skill = Skill.find(params[:id])
+    @into = Skill.where(name: params[:into]).first
+
+    if @skill.merge @into
+      redirect_to skills_url, notice: "#{@skill.name} har sligits ihop med #{@into.name}"
+    else
+      render action: "edit_merge"
+    end
   end
 end

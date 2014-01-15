@@ -16,10 +16,11 @@ describe "Skills" do
       login(user.username, "") # Stubbed auth
       create_list(:skill, 10)
       visit skills_path
+      click_button "Sök"
     end
 
     it "should be available to admins" do
-      page.should have_selector('h1.box-title', text: "Språk")
+      page.should have_selector('h1.box-title', text: "Kunskapsområde")
     end
 
     it "should have skills" do
@@ -28,19 +29,19 @@ describe "Skills" do
 
     it "should have an edit form" do
       first('section.box table tbody td a').click
-      page.should have_selector('h1.box-title', text: "Redigera språk")
+      page.should have_selector('h1.box-title', text: "Redigera")
     end
 
     it "should create skill" do
       click_on('Lägg till')
-      fill_in "skill_name", with: "Svenska"
+      fill_in "skill_name", with: "Excel"
       click_button "Spara"
       page.should have_selector(".notice", text: "skapades")
     end
 
     it "should update skill" do
-      visit edit_skill_path(skill.first)
-      fill_in "skill_name", with: "Swahili"
+      visit edit_skill_path(Skill.first)
+      fill_in "skill_name", with: "PowerPoint"
       click_button "Spara"
       page.should have_selector(".notice", text: "uppdaterades")
     end
@@ -52,17 +53,17 @@ describe "Skills" do
     end
 
     it "should not merge skill without a second skill" do
-      visit edit_skill_path(skill.first)
+      visit edit_skill_path(Skill.first)
       click_on("Slå samman med")
       click_button "Slå samman"
-      page.should have_selector(".warning", text: "Du måste välja ett språk från listan")
+      page.should have_selector(".warning", text: "Du måste välja")
     end
 
     it "should merge skill", js: true do
-      visit edit_skill_path(skill.first)
+      visit edit_skill_path(Skill.first)
       click_on("Slå samman med")
 
-      page.execute_script "$('#into').val('#{skill.last.name}').trigger('focus').trigger('keydown')"
+      page.execute_script "$('#into').val('#{Skill.last.name}').trigger('focus').trigger('keydown')"
       page.should have_selector("ul.ui-autocomplete li.ui-menu-item a")
 
       item_selector = "ul.ui-autocomplete li.ui-menu-item:last-child a"
