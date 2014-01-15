@@ -21,6 +21,3 @@
         .controls
           = f.submit "Slå samman", class: "btn btn-primary"
           = link_to t('actions.cancel'), languages_path, class: "btn"
-      .control-group
-        .controls
-          .help-inline= "Användare som har #{@language.name} som språk kommer att tilldelas ovanstående språk om de inte har det."
