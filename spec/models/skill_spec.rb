@@ -36,13 +36,13 @@ describe Skill do
       @user_2 = create(:user, skills: [@skill_2])
     end
 
-    it "should destroy the first language" do
-      expect { @skill_1.merge(@skill_2) }.to change(Language, :count).by(-1)
+    it "should destroy the first skill" do
+      expect { @skill_1.merge(@skill_2) }.to change(Skill, :count).by(-1)
     end
 
-    it "should not destroy the second language" do
+    it "should not destroy the second skill" do
       @skill_1.merge(@skill_2)
-      expect(Language.last).to eq(@skill_2)
+      expect(Skill.last).to eq(@skill_2)
     end
 
     it "should not change a users number of skills (if she don't have both)" do
