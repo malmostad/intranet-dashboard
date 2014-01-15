@@ -41,6 +41,8 @@ Dashboard::Application.routes.draw do
   put "/languages/merge/:id" => "languages#merge", as: "languages_merge"
   get "/skills/suggest" => "skills#suggest", as: "skills_suggest"
   get "/skills/search" => "skills#search", as: "skills_search"
+  get "/skills/merge/:id" => "skills#edit_merge", as: "skills_edit_merge"
+  put "/skills/merge/:id" => "skills#merge", as: "skills_merge"
 
   get  "/search" => "site_search#index"
   get  "/search/autocomplete" => "site_search#autocomplete", as: "site_search_autocomplete"
