@@ -71,7 +71,7 @@ describe "Skills" do
 
       page.execute_script "$('#{item_selector}').trigger('mouseenter').trigger('click')"
       click_button "Slå samman"
-      page.should have_selector(".notice", text: "har sligits ihop med")
+      page.should have_selector(".notice", text: "har slagits ihop med")
     end
   end
 end

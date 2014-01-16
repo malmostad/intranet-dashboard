@@ -78,7 +78,7 @@ class SkillsController < ApplicationController
     @into = Skill.where(name: params[:into]).first
 
     if @skill.merge @into
-      redirect_to skills_url, notice: "#{@skill.name} har sligits ihop med #{@into.name}"
+      redirect_to skills_url, notice: "#{@skill.name} har slagits ihop med #{@into.name}"
     else
       render action: "edit_merge"
     end

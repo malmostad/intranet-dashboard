@@ -72,7 +72,7 @@ class LanguagesController < ApplicationController
     @into = Language.where(name: params[:into]).first
 
     if @language.merge @into
-      redirect_to languages_url, notice: "#{@language.name} har sligits ihop med #{@into.name}"
+      redirect_to languages_url, notice: "#{@language.name} har slagits ihop med #{@into.name}"
     else
       render action: "edit_merge"
     end
