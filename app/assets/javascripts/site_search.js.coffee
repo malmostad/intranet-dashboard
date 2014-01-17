@@ -64,15 +64,14 @@ $ ->
           _gaq.push(['_trackEvent', 'SearchClickCategory', GAAction,  GALabel])
 
     # Override user agents and scroll to search box on narrow devices
-    if $(document).width() <= 568
-      newY = 75
-      $("body").css("min-height", $(document).height() + newY)
+    if $(document).width() <= 2568
+      $("body").css("min-height", $(document).height() + $searchField.offset().top)
       $searchField.focus ->
         $searchField.css("font-size", "16px") # hack to prevent iOS from zooming
         times = 0
         i = setInterval ->
-          window.scrollTo(0, newY - 6)
-          if times++ > 10
+          window.scrollTo(0, $searchField.offset().top - 6)
+          if times++ > 20
             clearInterval(i)
         , 10
 
