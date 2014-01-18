@@ -64,16 +64,21 @@ $ ->
           _gaq.push(['_trackEvent', 'SearchClickCategory', GAAction,  GALabel])
 
     # Override user agents and scroll to search box on narrow devices
-    if $(document).width() <= 600
-      $("body").css("min-height", $(document).height() + $searchField.offset().top)
+    if $(document).width() <= 2600
       $searchField.focus ->
+        $("body").css("min-height", $(document).height() + $searchField.offset().top)
+        $("#malmo-masthead").css("position", "absolute")
+        y = $searchField.offset().top - 6
         times = 0
         i = setInterval ->
-          window.scrollTo(0, $searchField.offset().top - 6)
+          window.scrollTo(0, y)
           if times++ > 20
             clearInterval(i)
-        , 10
+        , 1
+      $searchField.blur ->
+        $("body").css("min-height", 0)
+        window.scrollTo(0, 0)
+        $("#malmo-masthead").css("position", "fixed")
 
     else # set focus on field if not a narrow device and if no search field is empty
       $searchField.focus() unless $searchField.val().length
-
