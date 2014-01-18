@@ -64,7 +64,7 @@ $ ->
           _gaq.push(['_trackEvent', 'SearchClickCategory', GAAction,  GALabel])
 
     # Override user agents and scroll to search box on narrow devices
-    window.scrollTo(0, 0) # restore the mess we make below on next page load
+    window.scrollTo(0, 0) # restore the mess we make below on next search page load
     $searchField.focus ->
       $("body").css("min-height", $(document).height() + $searchField.offset().top)
       y = $searchField.offset().top - 6
