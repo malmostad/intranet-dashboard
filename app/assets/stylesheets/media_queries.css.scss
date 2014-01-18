@@ -343,3 +343,9 @@
     display: none;
   }
 }
+
+@media (max-width: 38em) {
+  #q {
+    font-size: 16px; // hack to avoid zoom in iOS
+  }
+}
