@@ -22,11 +22,11 @@ sv-SE:
         cell_phone: Mobiltelefon
         status_message: Statusmeddelande
         room: Rumsnummer
-        search_address: Sök adress
+        search_address: Sök gatuadress
         address: Gatuadress
         district: Stadsområde
         post_code: Postnummer
-        postal_town: Postadress
+        postal_town: Postort
         skill_list: Kunskapsområden
         language_list: Språkkunskaper
         private_bio: Om mig, personlig bio
