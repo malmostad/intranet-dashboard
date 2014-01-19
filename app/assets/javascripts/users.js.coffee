@@ -103,8 +103,9 @@ $ ->
       open: () ->
         $(@).removeClass("ui-corner-all").addClass("ui-corner-top")
       close: () ->
-        $('#search_address').val("")
         $(@).removeClass("ui-corner-top").addClass("ui-corner-all")
+    .blur ->
+      $('#search_address').val ""
 
     # Don't submit the form on enter key for this field
     $address.keydown (event) ->
