@@ -71,7 +71,7 @@ $ ->
     $(@).removeClass("btn-danger").text("Följer")
 
 
-  $address = $("#edit-user #search_address")
+  $address = $("#edit-user #user_search_address")
   if $address.length
     # Autocomplete search on SBK's address API
     $address.autocomplete
@@ -105,7 +105,7 @@ $ ->
       close: () ->
         $(@).removeClass("ui-corner-top").addClass("ui-corner-all")
     .blur ->
-      $('#search_address').val ""
+      $(@).val ""
 
     # Don't submit the form on enter key for this field
     $address.keydown (event) ->
