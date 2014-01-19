@@ -2,4 +2,8 @@ section#edit-user {
   .control-group {
     margin-bottom: .5em;
   }
+  input.success {
+    background: $successBackground;
+    border: $successBorder;
+  }
 }

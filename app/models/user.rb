@@ -5,13 +5,13 @@ class User < ActiveRecord::Base
       :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
       :language_list, :skill_list,
       :private_bio, :twitter, :skype, :homepage, :company_short,
-      :room, :address, :geo_position_x, :geo_position_y
+      :room, :address, :district, :post_code, :postal_town, :geo_position_x, :geo_position_y
 
   attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
       :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
       :language_list, :skill_list,
       :private_bio, :twitter, :skype, :homepage, :company_short,
-      :room, :address, :geo_position_x, :geo_position_y,
+      :room, :address, :district, :post_code, :postal_town, :geo_position_x, :geo_position_y,
       :admin, :contacts_editor, :early_adopter, as: :admin
 
   attr_accessor :avatar

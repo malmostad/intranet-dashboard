@@ -22,6 +22,14 @@ $mastheadBackgroundHighlightGlare: lighten($mastheadBackgroundHighlight, 9%);
 
 $boxShadow: 2px 2px 3px #ccc;
 
+// Colors for status messages
+$successBackground: #eafcea;
+$successBorder: 1px solid desaturate(darken($successBackground, 50%), 40%);
+$warningBackground: #fffcd0;
+$warningColor: #c00;
+$warningBorder: 1px solid $warningColor;
+$errorBackground: #ffeae0;
+$errorBorder: 1px solid darken($errorBackground, 40%);
 $dangerColor: #c00;
 
 // Fonts

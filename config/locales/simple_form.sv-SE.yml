@@ -22,7 +22,11 @@ sv-SE:
         cell_phone: Mobiltelefon
         status_message: Statusmeddelande
         room: Rumsnummer
+        search_address: Sök adress
         address: Gatuadress
+        district: Stadsområde
+        post_code: Postnummer
+        postal_town: Postadress
         skill_list: Kunskapsområden
         language_list: Språkkunskaper
         private_bio: Om mig, personlig bio
@@ -78,3 +82,4 @@ sv-SE:
         private_bio: "Om du vill kan du skriva en personlig presentation om dig. <em>Observera:</em> yrkespresentationen om dig skriver du in i fältet ”Om mig” högre upp på sidan."
         homepage: "Om du vill kan du ange vilken privat hemsida du har."
         twitter: "Om du vill kan du ange vilken Twitteradress du har."
+        search_address: "Sök upp och välj en gatuadress ovan för att ändra adressuppgifter nedan."

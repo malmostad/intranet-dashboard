@@ -71,7 +71,7 @@ $ ->
     $(@).removeClass("btn-danger").text("Följer")
 
 
-  $address = $("#edit-user #user_address")
+  $address = $("#edit-user #search_address")
   if $address.length
     # Autocomplete search on SBK's address API
     $address.autocomplete
@@ -88,21 +88,22 @@ $ ->
               value: item.name
               address: item.name
               post_code: item.postcode
-              neighborhood: item.towndistrict
+              district: item.towndistrict
               postal_town: item.postal_town
               east: item.east
               north: item.north
       minLength: 2
       select: (event, ui) ->
-        $address.val ui.item.address
-        # $('#user_post_code').val ui.item.post_code
-        # $('#user_postal_town').val ui.item.postal_town
-        # $('#user_neighborhood').val ui.item.neighborhood
+        $('#user_address').val(ui.item.address).addClass("success")
+        $('#user_post_code').val(ui.item.post_code).addClass("success")
+        $('#user_postal_town').val(ui.item.postal_town).addClass("success")
+        $('#user_district').val(ui.item.district).addClass("success")
         $('#user_geo_position_x').val ui.item.east
         $('#user_geo_position_y').val ui.item.north
       open: () ->
         $(@).removeClass("ui-corner-all").addClass("ui-corner-top")
       close: () ->
+        $('#search_address').val("").blur()
         $(@).removeClass("ui-corner-top").addClass("ui-corner-all")
 
     # Don't submit the form on enter key for this field
