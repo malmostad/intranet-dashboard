@@ -345,7 +345,14 @@
 }
 
 @media (max-width: 38em) {
+  // hack to avoid zoom in iOS
   #q {
-    font-size: 16px; // hack to avoid zoom in iOS
+    font-size: 16px;
+  }
+  .login section#login {
+    input[type="text"],
+    input[type="password"] {
+      font-size: 16px;
+    }
   }
 }
