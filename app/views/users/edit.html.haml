@@ -29,6 +29,8 @@
       = f.input :geo_position_x, as: "hidden"
       = f.input :geo_position_y, as: "hidden"
 
+      = f.input :room
+
       = f.input :email, as: :text_only_more_info, wrapper: :text_only_more_info
       = f.input :phone, wrapper: :text_only_more_info do
         = @user.phone
@@ -47,7 +49,6 @@
             = link_to "IT-kompassen.", "http://marval.malmo.se/MSMSelfService/Itservice/telefoni-forandring.aspx"
             = "Om du behöver hjälp, kontakta ITS, 040-342727."
 
-      = f.input :room
       = f.input :skype
 
       %h2.form-group-title Kompetensprofil
