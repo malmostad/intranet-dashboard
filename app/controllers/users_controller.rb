@@ -80,7 +80,7 @@ class UsersController < ApplicationController
 
       # Send mail to switchboard if address is changed
       if address_changed
-        UserMailer.switchboard_changes(@user, params).deliver
+        UserMailer.switchboard_changes(@user, params[:user]).deliver
       end
       redirect_to user_path(@user.username), notice: "Katalogkortet uppdaterades"
     else

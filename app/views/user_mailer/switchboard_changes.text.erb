@@ -1,23 +1,15 @@
 Hej televäxeln!
 
-<%= "#{@user.first_name} #{@user.last_name}" %> vill göra ändringar i sina adressuppgifter. De nya uppgifterna är:
+<%= "#{@user.first_name} #{@user.last_name}" %> har gjort ändringar i sina adressuppgifter. De nya uppgifterna är:
 
-<% if @message[:room].present? %>
-Rumsnummer: <%= @message[:room] %>
-<% end %>
-<% if @message[:address].present? %>
-Gatuadress: <%= @message[:address] %>
-<% end %>
+Rumsnummer: <%= @data[:room] %>
+Gatuadress: <%= @data[:address] %>
 
-Meddelande:
-<%= @message[:comment] %>
-
-Kontaktuppgifter:
+Kontaktuppgifter
 E-post: <%= @user.email %>
 Telefon: <%= @user.phone %>
 Användarnamn: <%= @user.username %>
 Kontaktkort: <%= user_url(@user.username) %>
 
 <%= "-- " %>
-Detta e-postmeddelande är skickat från Komins kontaktbok på begäran av den anställde.
-Generella frågor besvaras av kominteamet@malmo.se.
+Detta e-postmeddelande har skickats automatiskt från Komins kontaktbok efter ändring av besöksadress av den anställde. Generella frågor besvaras av kominteamet@malmo.se.
