@@ -49,4 +49,29 @@ describe "Users" do
     click_button "Spara"
     page.should have_selector(".alert.warning", text: "korrigera")
   end
+
+  it "should save room number" do
+    visit edit_user_path(user)
+    fill_in :user_room, with: "S6094"
+    click_button "Spara"
+    page.should have_selector(".room", text: "S6094")
+  end
+
+  it "should suggest visiting address", js: true do
+    visit edit_user_path(user)
+    page.execute_script "$('#user_search_address').val('Storgatan').trigger('focus').trigger('keydown')"
+    item_selector = "ul.ui-autocomplete li.ui-menu-item a"
+    page.should have_selector(item_selector)
+
+    page.execute_script "$('#{item_selector}').trigger('mouseenter').trigger('click')"
+    page.execute_script "$('#user_search_address').blur()"
+
+    page.should have_field("Sök gatuadress:", with: "")
+    page.should have_field("Gatuadress:", with: "Storgatan 1A")
+    page.should have_field("Postnummer:", with: "211 41")
+    page.should have_field("Postort:", with: "Malmö")
+
+    click_button "Spara"
+    page.should have_selector(".street-address", text: "Storgatan")
+  end
 end
