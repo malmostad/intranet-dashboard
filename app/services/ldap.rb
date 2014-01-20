@@ -80,6 +80,8 @@ class Ldap
       puts "division: #{ldap_user['division'].first}"
       puts "roomnumber: #{ldap_user['roomnumber'].first}"
       puts "streetaddress: #{ldap_user['streetaddress'].first}"
+      puts "extensionattribute1: #{ldap_user['extensionattribute1'].first}"
+      puts "department: #{ldap_user['department'].first}"
     else
       Rails.logger.debug  "No user #{username}"
     end
