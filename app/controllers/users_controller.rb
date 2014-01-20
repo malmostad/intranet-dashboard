@@ -67,7 +67,8 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @roles = Role.all
-    address_changed = params[:user][:address].present? && @user.address != params[:user][:address]
+    notify_switchboard = (params[:user][:address].present? && params[:user][:address] != @user.address) ||
+      (params[:user][:room].present? && params[:user][:room] != @user.room)
 
     # Prevent an admin from un-admin herself
     if admin? && editing_myself? && params[:user][:admin] == "0"
@@ -79,8 +80,8 @@ class UsersController < ApplicationController
       set_profile_cookie
 
       # Send mail to switchboard if address is changed
-      if address_changed
-        UserMailer.switchboard_changes(@user, params[:user]).deliver
+      if notify_switchboard
+        UserMailer.delay.switchboard_changes(@user, params[:user])
       end
       redirect_to user_path(@user.username), notice: "Katalogkortet uppdaterades"
     else

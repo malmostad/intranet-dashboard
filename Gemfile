@@ -18,6 +18,8 @@ gem 'mysql2', '0.3.14'
 
 gem 'paperclip', '3.5.2'
 gem 'simple_form', '2.1.1'
+gem 'daemons', '1.1.9'
+gem 'delayed_job_active_record', '4.0.0'
 
 gem 'daemons-rails', '1.2.1'
 

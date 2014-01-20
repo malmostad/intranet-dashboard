@@ -79,6 +79,11 @@ GEM
       multi_json (~> 1.0)
     dalli (2.6.4)
     database_cleaner (1.2.0)
+    delayed_job (4.0.0)
+      activesupport (>= 3.0, < 4.1)
+    delayed_job_active_record (4.0.0)
+      activerecord (>= 3.0, < 4.1)
+      delayed_job (>= 3.0, < 4.1)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     eventmachine (1.0.3)
@@ -300,9 +305,11 @@ DEPENDENCIES
   capistrano-ext
   capybara
   coffee-rails (= 3.2.2)
+  daemons (= 1.1.9)
   daemons-rails (= 1.2.1)
   dalli (= 2.6.4)
   database_cleaner
+  delayed_job_active_record (= 4.0.0)
   factory_girl_rails
   feedzirra (= 0.6.0)
   guard-rspec

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140119164613) do
+ActiveRecord::Schema.define(:version => 20140120124808) do
 
   create_table "api_apps", :force => true do |t|
     t.string   "name"
@@ -33,6 +33,22 @@ ActiveRecord::Schema.define(:version => 20140119164613) do
   end
 
   add_index "colleagueships", ["user_id", "colleague_id"], :name => "index_colleagueships_on_user_id_and_colleague_id", :unique => true
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0, :null => false
+    t.integer  "attempts",   :default => 0, :null => false
+    t.text     "handler",                   :null => false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "feed_entries", :force => true do |t|
     t.text     "full",         :limit => 16777215
