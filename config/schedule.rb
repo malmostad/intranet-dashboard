@@ -38,6 +38,6 @@ if environment == "production"
 end
 
 every :reboot do
-  command "RAILS_ENV=#{real_environment} #{path}/lib/daemons/feed_worker_ctl start >> #{path}/log/feed_worker.log 2>&1"
-  command "RAILS_ENV=#{real_environment} #{path}/script/delayed_job start"
+  command "sleep 60; RAILS_ENV=#{real_environment} #{path}/lib/daemons/feed_worker_ctl start >> #{path}/log/feed_worker.log 2>&1"
+  command "sleep 60; RAILS_ENV=#{real_environment} #{path}/script/delayed_job start"
 end
