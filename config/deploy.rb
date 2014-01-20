@@ -7,6 +7,7 @@
 
 require "bundler/capistrano"
 require 'capistrano/ext/multistage'
+require "delayed/recipes"
 
 config = YAML::load_file(File.join(File.dirname(File.expand_path(__FILE__)), 'deploy.yml'))
 
@@ -53,7 +54,7 @@ end
 
 before "deploy", "prompt:continue", "assets:precompile_#{precompile_assets}", 'backup:mysql'
 before 'deploy:restart', 'deploy:symlink_config', 'deploy:migrate'
-after 'deploy', 'deploy:restart_daemons', 'deploy:cleanup', 'assets:cleanup'
+after 'deploy', "delayed_job:restart", 'deploy:restart_daemons', 'deploy:cleanup', 'assets:cleanup'
 
 namespace :deploy do
   desc 'Symlink to shared files'
