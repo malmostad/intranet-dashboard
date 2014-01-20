@@ -67,6 +67,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @roles = Role.all
+    address_changed = params[:user][:address].present? && @user.address != params[:user][:address]
 
     # Prevent an admin from un-admin herself
     if admin? && editing_myself? && params[:user][:admin] == "0"
@@ -76,6 +77,11 @@ class UsersController < ApplicationController
     # Some fields require admin rights for mass assignment
     if @user.errors.empty? && @user.update_attributes(params[:user], as: ( :admin if admin? ))
       set_profile_cookie
+
+      # Send mail to switchboard if address is changed
+      if address_changed
+        UserMailer.switchboard_changes(@user, params).deliver
+      end
       redirect_to user_path(@user.username), notice: "Katalogkortet uppdaterades"
     else
       render action: 'edit'
