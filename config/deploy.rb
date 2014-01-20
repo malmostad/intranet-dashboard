@@ -116,9 +116,9 @@ namespace :prompt do
 end
 
 namespace :backup do
-  if rails_env == "production"
-    desc 'performs a backup using mysqldump'
-    task :mysql, :roles => :db, :only => { :primary => true } do
+  desc 'performs a backup using mysqldump'
+  task :mysql, :roles => :db, :only => { :primary => true } do
+    if rails_env == "production"
       filepath = "#{backup_dir}#{application}-#{rails_env}-predeploy-#{release_name}.sql.bz2"
       text = capture "cat #{shared_path}/config/database.yml"
       yaml = YAML::load(text)
