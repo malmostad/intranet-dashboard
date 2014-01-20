@@ -39,4 +39,5 @@ end
 
 every :reboot do
   command "RAILS_ENV=#{real_environment} #{path}/lib/daemons/feed_worker_ctl start"
+  command "RAILS_ENV=#{real_environment} #{path}/script/delayed_job start"
 end
