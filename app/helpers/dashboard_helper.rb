@@ -11,6 +11,6 @@ module DashboardHelper
 
   # Add "s" to the end of a name if not already there. Swedish, no apostrophe.
   def possessive(owner)
-    owner.match(/[sz]$/) ? owner : "#{owner}s"
+    owner.match(/[sz]$/) ? owner : "#{owner}s" unless owner.blank?
   end
 end
