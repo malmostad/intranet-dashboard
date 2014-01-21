@@ -39,7 +39,10 @@
         %p.room
           = "Rumsnummer: #{@user.room}"
         %p.street-address
-          = "Besöksadress: #{@user.address}"
+          = "Besöksadress:"
+          - if @user.address.present?
+            = link_to @user.address, "#map", title: @user.address, data: { poi: @user.address, "map-selector" => "#map", "scroll-to" => ".address.vcard" }
+        #map
 
       %section.competence
         %h2.form-group-title Kompetensprofil

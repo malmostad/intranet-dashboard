@@ -109,4 +109,21 @@
   a.change {
     margin-left: .4em;
   }
+
+  #map {
+    display: none;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin: 0 0 1em;
+    border: $border;
+    width: 100%;
+    height: 31.3em;
+    iframe {
+      width: 100%;
+      height: 100%;
+    }
+    .close-map {
+      position: absolute;
+    }
+  }
 }
