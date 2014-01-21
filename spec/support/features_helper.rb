@@ -31,8 +31,6 @@ def create_feeds_for_user(user)
     https://github.com/guard/guard-rspec/commits.atom
     https://github.com/thoughtbot/factory_girl/commits.atom
     https://github.com/vcr/vcr/commits.atom
-    https://github.com/malmostad/intranet-dashboard/commits.atom
-    https://github.com/malmostad/intranet-assets/commits.atom
   ]
 
   VCR.use_cassette('feeds') do
