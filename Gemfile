@@ -5,7 +5,7 @@ gem 'jquery-rails', '3.0.4'
 gem 'haml', '4.0.4'
 
 gem 'nokogiri', '1.6.1'
-gem "feedzirra", "0.6.0"
+gem "feedzirra", "0.7.0"
 gem 'savon', '2.3.2'
 gem 'siteseeker_normalizer', '0.1.1'
 
