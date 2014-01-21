@@ -26,7 +26,10 @@ describe "Feeds" do
 
   it "should load more news feed entries", :js => true do
     before = all("#feeds-news .box-content li").count
+    find("#feeds-news .box-content li.load-more input").value.should == "Visa fler"
     find("#feeds-news .box-content li.load-more input").click
+    find("#feeds-news .box-content li.load-more input").value.should == "Hämtar fler..."
+
     sleep 1
     before.should < all("#feeds-news .box-content li").count
   end
