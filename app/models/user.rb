@@ -150,7 +150,7 @@ class User < ActiveRecord::Base
   def self.search(query, limit = 25, offset = 0)
     return {} if query.empty?
     users = User.scoped
-    query[:q] ||=  query[:term] # :term can be removed when query[:term] is changed in Assets v3
+    query[:q]
     if query[:q].present?
       q = "#{query[:q]}%"
       users = users.where("username LIKE ? OR first_name LIKE ? OR last_name LIKE ? OR
