@@ -68,6 +68,12 @@ describe "Employees API" do
       expect(json.size).to eq(2)
     end
 
+    it "should not contain any employees" do
+      create(:user, username: "foo")
+      get "/api/v1/employees/search?q=bar-&app_token=#{api_app.app_token}&app_secret=#{api_app.app_secret}"
+      expect(json.size).to eq(0)
+    end
+
     describe "first matching employee" do
       before(:each) do
         get "/api/v1/employees/search?q=#{user.username}&app_token=#{api_app.app_token}&app_secret=#{api_app.app_secret}"

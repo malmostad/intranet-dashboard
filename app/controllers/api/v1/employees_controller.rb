@@ -7,7 +7,7 @@ module Api
 
       def search
         paginate
-        @employees = User.search(params.except(:controller, :action), @limit, @offset)
+        @employees = User.search(params.except(:controller, :action), @limit, @offset)[:users]
       end
 
       def show
