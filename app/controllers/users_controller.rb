@@ -11,12 +11,13 @@ class UsersController < ApplicationController
     @limit = 25
     page = params[:page].present? ? params[:page].to_i : 0
     @offset = page * @limit
-    @users = User.search(params.except(:controller, :action), @limit, @offset)
+    results = User.search(params.except(:controller, :action), @limit, @offset)
+    @users = results[:users]
+    @total = results[:total]
+    @has_more = @offset + @limit < @total
 
     respond_to do |format|
       format.html {
-        # Don't execute a db count
-        @has_more = @users.size == @limit
         if request.xhr?
           render :_results, layout: false
         else

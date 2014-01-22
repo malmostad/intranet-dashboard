@@ -160,7 +160,7 @@ class User < ActiveRecord::Base
     users = users.where(department: query[:department]) if query[:department].present?
     users = users.where("skills.name" => query[:skill]).includes(:skills) if query[:skill].present?
     users = users.where("languages.name" => query[:language]).includes(:languages) if query[:language].present?
-    users.order(:first_name).limit(limit).offset(offset)
+    { users: users.order(:first_name).limit(limit).offset(offset), total: users.count }
   end
 
   private

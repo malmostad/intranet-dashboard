@@ -20,7 +20,7 @@
               = submit_tag "Sök", { class: "btn", name: nil }
             .help-inline Sök på förnamn, efternamn, e-postadress eller användarnamn.
 
-      - if params[:q].present? && @users.empty?
-        %div.warning Ingen användare matchade din sökning
+    - if @total.present?
+      %div= "#{number_to_words(@total).titlecase} medarbetare matchade din sökning"
 
   = render "results"
