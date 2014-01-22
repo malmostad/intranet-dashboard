@@ -20,6 +20,11 @@ module ApplicationHelper
     separator
   end
 
+  def number_to_words(number, alt = false)
+    words = alt ? I18n.t("number_words_alt") : I18n.t("number_words")
+    words[number] ? words[number] : number.to_s
+  end
+
   def page_title
     !@title.nil? ? "#{@title} - #{title_suffix}" : title_suffix
   end

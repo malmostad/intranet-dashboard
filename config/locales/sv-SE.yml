@@ -213,3 +213,31 @@ sv-SE:
     errors:
       <<: *errors
 
+  number_words:
+    - ingen
+    - en
+    - två
+    - tre
+    - fyra
+    - fem
+    - sex
+    - sju
+    - åtta
+    - nio
+    - tio
+    - elva
+    - tolv
+  number_words_alt:
+    - inget
+    - ett
+    - två
+    - tre
+    - fyra
+    - fem
+    - sex
+    - sju
+    - åtta
+    - nio
+    - tio
+    - elva
+    - tolv
