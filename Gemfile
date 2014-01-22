@@ -46,7 +46,7 @@ group :local_test do
   gem 'capybara'
   gem 'rack-test'
   gem 'poltergeist'
-  gem 'guard-rspec'
+  gem 'guard-rspec', '4.2.4'
   gem 'rb-fsevent'
   gem 'launchy'
   gem 'database_cleaner'
