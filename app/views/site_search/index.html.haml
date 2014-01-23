@@ -18,7 +18,7 @@
           = pluralize(@results.total, "träff", "träffar")
 
         - if @results.sorting.present?
-          .menu.sort
+          %menu.sort
             %li.label Sortera efter
             - @results.sorting.each_with_index do |entry, i|
               %li
@@ -27,6 +27,9 @@
                     = link_to entry.text.downcase, "#{search_path}?#{entry.query}"
                   - else
                     %span.current= entry.text.downcase
+
+        - if @results.present? && @results.category_groups.present?
+          %p.filter= link_to "Filtrera", "#filter"
 
         - if @results.suggestions.present?
           %ul.suggestions
@@ -45,7 +48,7 @@
             = render "results"
 
     - if @results.present? && @results.category_groups.present?
-      %section.categories
+      %section.categories#filter
         %h1= "Hela Komin"
         %ul
           %li{ class: (@results.category_all.current? ? "current" : nil)}

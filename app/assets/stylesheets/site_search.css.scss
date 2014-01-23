@@ -24,10 +24,13 @@ section.site-search {
     width: 80%;
   }
   .sort {
-    font-family: $sansSerif;
-    font-size: emize(13);
+    margin: 0 0 .5em;
+    padding: 0;
   }
   .sort li {
+    font-family: $sansSerif;
+    font-size: emize(13);
+    line-height: 1.3;
     display: inline;
     margin: 0;
     .current {
@@ -98,10 +101,14 @@ section.site-search {
       margin-left: 0;
     }
   }
-  .summary {
+  .summary, .filter {
     margin-bottom: .5em;
     font-family: $sansSerif;
     font-size: emize(13);
+    line-height: 1.3;
+  }
+  .filter {
+    display: none;
   }
   .ess-bestbets {
     .ess-header {

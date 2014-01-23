@@ -27,7 +27,7 @@ describe "SiteSearch" do
     end
 
     it "should have a sort menu" do
-      page.should have_selector(".menu.sort", text: "relevans")
+      page.should have_selector("menu.sort", text: "relevans")
     end
 
     it "should have categories" do
