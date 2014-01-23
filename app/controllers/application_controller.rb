@@ -1,13 +1,7 @@
 # -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :fox, :init_body_class, :mailer_set_url_options
-
-
-  def fox
-    logger.debug "session[:requested].to_yaml"
-    logger.debug session[:requested].to_yaml
-  end
+  before_filter :init_body_class, :mailer_set_url_options
 
   # Set a permanent cookie w/data from the user profile. Used by the masthead in other webapps
   def set_profile_cookie
