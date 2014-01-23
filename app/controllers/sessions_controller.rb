@@ -66,8 +66,9 @@ class SessionsController < ApplicationController
     @user = User.where(username: username).first
     if @user
       session[:user_id] = @user.id
-      redirect_to root_url
+      redirect_after_login
     else
+      @login_failed = "Fel användarnamn eller lösenord. Vänligen försök igen."
       render "new"
     end
   end
