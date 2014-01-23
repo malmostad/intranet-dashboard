@@ -22,22 +22,25 @@ describe " Authentication (stub)" do
     page.should have_selector('h1', text: "Logga in")
   end
 
-  it "should not sign in a user with incorrect credentials" do
-    visit login_path
-    fill_in 'username', with: 'Fox'
-    fill_in 'password', with: 'barx'
-    click_button 'Logga in'
+  it "should not sign in a user without credentials" do
+    login('', '')
     current_path.should eq(login_path)
     page.should have_selector('.warning', text: 'Fel användarnamn eller lösenord')
   end
 
-  it "should not sign in a user without credentials" do
-    visit login_path
-    fill_in 'username', with: ''
-    fill_in 'password', with: ''
-    click_button 'Logga in'
-    current_path.should eq(login_path)
-    page.should have_selector('.warning', text: 'Fel användarnamn eller lösenord')
+  it "should require admin role" do
+    user = create(:user)
+    login(user.username, '')
+    visit feeds_path
+    page.should have_selector('.error', text: "Du saknar behörighet")
+  end
+
+  it "should honor admin role" do
+    user = create(:user)
+    login(user.username, '')
+    user.update_attribute(:admin, true)
+    visit feeds_path
+    page.should have_selector('h1', text: "Nyhetsflöden")
   end
 
   it "should redirect to requested page after login" do
