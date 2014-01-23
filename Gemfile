@@ -2,18 +2,18 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.16'
 gem 'jquery-rails', '3.0.4'
-gem 'haml', '4.0.4'
+gem 'haml', '4.0.5'
 
 gem 'nokogiri', '1.6.1'
 gem "feedzirra", "0.7.0"
-gem 'savon', '2.3.2'
+gem 'savon', '2.3.3'
 gem 'siteseeker_normalizer', '0.1.1'
 
 gem 'net-ldap', '0.3.1'
 gem 'ruby-saml', '0.7.0' # 0.7.1/2 is broken
 gem 'bcrypt-ruby', '~> 3.0.1'
 
-gem 'dalli', '2.6.4'
+gem 'dalli', '2.7.0'
 gem 'mysql2', '0.3.14'
 
 gem 'paperclip', '3.5.2'
@@ -27,7 +27,7 @@ gem 'capistrano', '~> 2.15.5'
 gem 'capistrano-ext'
 gem 'whenever', require: false
 
-gem 'jbuilder', '2.0.1'
+gem 'jbuilder', '2.0.2'
 gem 'axlsx', '2.0.1'
 
 group :development do
