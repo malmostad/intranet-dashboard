@@ -41,11 +41,11 @@ class Ldap
 
       @address = { dashboard: user.address, ldap: ldap_user['streetaddress'].first }
 
-      user.first_name     = ldap_user['givenname'].first
-      user.last_name      = ldap_user['sn'].first
-      user.displayname    = ldap_user['displayname'].first
+      user.first_name     = ldap_user['givenname'].first || username
+      user.last_name      = ldap_user['sn'].first || username
+      user.displayname    = ldap_user['displayname'].first || username
       user.title          = ldap_user['title'].first
-      user.email          = ldap_user['mail'].first
+      user.email          = ldap_user['mail'].first || "#{username}@malmo.se"
       user.company        = ldap_user['company'].first
       user.department     = ldap_user['division'].first
       user.address        = ldap_user['streetaddress'].first if user.address.blank? # Selective sync

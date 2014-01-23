@@ -150,7 +150,7 @@ class User < ActiveRecord::Base
   def self.search(query, limit = 25, offset = 0)
     return {} if query.empty?
     users = User.scoped
-    query[:q]
+    query[:q] ||=  query[:term]
     if query[:q].present?
       q = "#{query[:q]}%"
       users = users.where("username LIKE ? OR first_name LIKE ? OR last_name LIKE ? OR

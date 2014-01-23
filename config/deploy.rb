@@ -106,7 +106,8 @@ namespace :prompt do
       puts "  * Database dumped to #{backup_dir}"
     end
     puts "  * Migration run"
-    puts "  * App restarted and linked as current version"
+    puts "  * App restart and linked as current version"
+    puts "  * Daemons restart"
     continue = Capistrano::CLI.ui.ask "\nDo you want to continue [y/n]: "
     if continue.downcase != 'y' && continue.downcase != 'yes'
       puts "Deployment halted by user"
