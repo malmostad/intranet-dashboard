@@ -2,11 +2,17 @@
 require 'spec_helper'
 
 if APP_CONFIG["auth_method"] == "ldap"
-  APP_CONFIG["stub_auth"] = false
-
   describe "LDAP authentication" do
     before(:each) do
+      # Disable stub for ldap specs
+      @stub_auth = APP_CONFIG["stub_auth"]
+      APP_CONFIG["stub_auth"] = false
       create_ldap_user
+    end
+
+    after(:each) do
+      # Reset stub setting to not affect other specs
+      APP_CONFIG["stub_auth"] = @stub_auth
     end
 
     it "should not sign in a user without username and password" do
