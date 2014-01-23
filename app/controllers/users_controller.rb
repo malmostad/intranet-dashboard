@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     results = User.search(params.except(:controller, :action), @limit, @offset)
     @users = results[:users]
     @total = results[:total]
-    @has_more = @offset + @limit < @total
+    @has_more = @total.present? ? (@offset + @limit < @total) : false
 
     respond_to do |format|
       format.html {
