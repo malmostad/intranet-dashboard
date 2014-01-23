@@ -27,7 +27,7 @@ class SamlController < ApplicationController
         set_profile_cookie
         track_user_agent
 
-        redirect_to root_path
+        redirect_after_login
       else
         logger.warn "SAML response not valid for #{username}"
       end

@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :init_body_class, :mailer_set_url_options
+  before_filter :fox, :init_body_class, :mailer_set_url_options
+
+
+  def fox
+    logger.debug "session[:requested].to_yaml"
+    logger.debug session[:requested].to_yaml
+  end
 
   # Set a permanent cookie w/data from the user profile. Used by the masthead in other webapps
   def set_profile_cookie
@@ -74,7 +80,12 @@ class ApplicationController < ActionController::Base
   helper_method :admin?, :current_user
 
   def require_user
-    redirect_to login_path unless current_user
+    if !current_user
+      if !request.xhr?
+        session[:requested] = { url: request.fullpath, at: Time.now }
+      end
+      redirect_to login_path
+    end
   end
 
   def require_admin
@@ -101,6 +112,16 @@ class ApplicationController < ActionController::Base
   def not_authorized(msg = "Du saknar behörighet för detta" )
     flash[:error] = msg
     redirect_to root_path
+  end
+
+  def redirect_after_login
+    if session[:requested] && session[:requested][:at] > 1.hour.ago
+      requested_url = session[:requested][:url]
+      session[:requested] = nil
+      redirect_to requested_url
+    else
+      redirect_to root_path
+    end
   end
 
   def init_body_class

@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       current_user.update_attribute("last_login", Time.now)
 
       set_profile_cookie
-      redirect_to root_url
+      redirect_after_login
 
     elsif APP_CONFIG['auth_method'] == "saml"
       # SAML Auth has its own controller
@@ -40,7 +40,7 @@ class SessionsController < ApplicationController
         set_profile_cookie
         track_user_agent
 
-        redirect_to root_path
+        redirect_after_login
       else
         @login_failed = "Fel användarnamn eller lösenord. Vänligen försök igen."
         render "new"
