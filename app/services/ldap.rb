@@ -41,8 +41,8 @@ class Ldap
 
       @address = { dashboard: user.address, ldap: ldap_user['streetaddress'].first }
 
-      user.first_name     = ldap_user['givenname'].first
-      user.last_name      = ldap_user['sn'].first
+      user.first_name     = ldap_user['givenname'].first || username
+      user.last_name      = ldap_user['sn'].first || username
       user.displayname    = ldap_user['displayname'].first
       user.title          = ldap_user['title'].first
       user.email          = ldap_user['mail'].first
