@@ -62,5 +62,25 @@ if APP_CONFIG["auth_method"] == "ldap"
       visit feeds_path
       page.should have_selector('h1', text: "Nyhetsflöden")
     end
+
+    it "should redirect to requested page after login" do
+      user = create(:user)
+      visit user_path(user.username)
+      current_path.should eq(login_path)
+      fill_in 'username', with: AUTH_CREDENTIALS["username"]
+      fill_in 'password', with: AUTH_CREDENTIALS["password"]
+      click_button 'Logga in'
+      current_path.should eq(user_path(user.username))
+    end
+
+    it "should not register ajax request as request to redirect after login", js: true do
+      user = create(:user)
+      visit user_path(user.username)
+      page.execute_script "$.get('#{users_path}')"
+      fill_in 'username', with: AUTH_CREDENTIALS["username"]
+      fill_in 'password', with: AUTH_CREDENTIALS["password"]
+      click_button 'Logga in'
+      current_path.should eq(user_path(user.username))
+    end
   end
 end
