@@ -10,10 +10,6 @@ require 'yaml'
 
 AUTH_CREDENTIALS = YAML.load_file("#{Rails.root.to_s}/spec/auth_credentials.yml")
 
-if APP_CONFIG["auth_method"] != "ldap"
-  puts "NOTE: Feature specs requires `APP_CONFIG['auth_method'] != 'ldap'`\n"
-end
-
 Capybara.javascript_driver = :poltergeist
 Capybara.default_wait_time = 5
 

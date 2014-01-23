@@ -7,7 +7,7 @@ end
 
 # *_ldap_user is used for LDAP auth with AUTH_CREDENTIALS
 def create_ldap_user
-  # We have only one test user in the ldap so we need to reuse it. TODO: Create stub for this
+  # We have only one test user in the ldap so we need to reuse it
   User.where(username: AUTH_CREDENTIALS["username"]).destroy_all
   create(:user, username: AUTH_CREDENTIALS["username"])
 end
