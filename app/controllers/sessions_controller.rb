@@ -56,6 +56,7 @@ class SessionsController < ApplicationController
       logger.warn { "'Remember me' for user #{current_user.id} couldn't be reset on logout" }
     end
     session[:user_id] = nil
+    session[:requested] = nil
     redirect_to root_url, notice: "Nu är du utloggad"
   end
 
