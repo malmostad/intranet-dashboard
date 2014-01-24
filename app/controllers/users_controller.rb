@@ -16,25 +16,25 @@ class UsersController < ApplicationController
     @total = results[:total]
     @has_more = @total.present? ? (@offset + @limit < @total) : false
 
-    respond_to do |format|
-      format.html {
-        if request.xhr?
-          render :_results, layout: false
-        else
-          render :index
-        end
-      }
-      format.json {
-        render json: @users.map { |u|
-          { username: u.username,
-            avatar_full_url: u.avatar.url(:mini_quadrat),
-            first_name: u.first_name,
-            last_name: u.last_name,
-            company_short: u.company_short || "",
-            department: u.department || "" }
-        }
-      }
+    if request.xhr?
+      render :_results, layout: false
+    else
+      render :index
     end
+  end
+
+  def suggest
+    @users = User.search(params.except(:controller, :action), 25)[:users]
+
+    render json: @users.map { |u|
+      { username: u.username,
+        avatar_full_url: u.avatar.url(:mini_quadrat),
+        path: "#{root_path}users/#{u.username}",
+        first_name: u.first_name,
+        last_name: u.last_name,
+        company_short: u.company_short || "",
+        department: u.department || "" }
+    }
   end
 
   def show

@@ -2,13 +2,14 @@ $ ->
   # Autocomplete on user search
   $queryEmployee = $("#query-employee")
   if $queryEmployee.length
+    console.log $queryEmployee.attr("data-path")
     $queryEmployee
       .autocomplete
-        source: $queryEmployee.parents("form").attr("action")
+        source: $queryEmployee.attr("data-path")
         minLength: 2
         appendTo: $queryEmployee.closest(".box")
         select: (event, ui) ->
-          document.location = "#{$queryEmployee.data("path")}/#{ui.item.username}"
+          document.location = ui.item.path
       .data("ui-autocomplete")
       ._renderItem = (ul, item) ->
         ul.addClass('search_users')
