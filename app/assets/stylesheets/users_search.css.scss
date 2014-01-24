@@ -81,9 +81,6 @@ section.box#search-employee {
 
 // Autocomplete list for user search
 ul.ui-autocomplete.search_users {
-  max-height: 30em;
-  overflow-y: auto;
-  overflow-x: hidden;
   .ui-menu-item > a.ui-corner-all {
     padding: .5em 1em .7em .5em;
     clear: left;
