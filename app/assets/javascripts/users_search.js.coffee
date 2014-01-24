@@ -2,7 +2,6 @@ $ ->
   # Autocomplete on user search
   $queryEmployee = $("#query-employee")
   if $queryEmployee.length
-    console.log $queryEmployee.attr("data-path")
     $queryEmployee
       .autocomplete
         source: $queryEmployee.attr("data-path")
