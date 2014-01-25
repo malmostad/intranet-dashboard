@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   end
 
   def suggest
-    @users = User.search(params.except(:controller, :action), 10)[:users]
+    @users = User.search(params.except(:controller, :action), 10)[:users] || {}
 
     response = @users.map { |u|
       { username: u.username,
