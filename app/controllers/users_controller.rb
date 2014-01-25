@@ -2,8 +2,8 @@
 class UsersController < ApplicationController
 
   before_filter { add_body_class('employee') }
-  before_filter :require_user
-  before_filter :require_admin_or_myself, only: [ :edit, :update ]
+  before_filter :require_user, except: [:suggest]
+  before_filter :require_admin_or_myself, only: [:edit, :update]
   before_filter :require_admin, only: :destroy
 
   # Search users and return a hash in json or @users for html rendering
@@ -26,15 +26,21 @@ class UsersController < ApplicationController
   def suggest
     @users = User.search(params.except(:controller, :action), 10)[:users]
 
-    render json: @users.map { |u|
+    response = @users.map { |u|
       { username: u.username,
         avatar_full_url: u.avatar.url(:mini_quadrat),
-        path: "#{root_path}users/#{u.username}",
+        path: "#{root_url}users/#{u.username}",
         first_name: u.first_name,
         last_name: u.last_name,
         company_short: u.company_short || "",
-        department: u.department || "" }
+        department: u.department || ""
+      }
     }
+    if params['callback']
+      render json: response.to_json, callback: params['callback']
+    else
+      render json: response
+    end
   end
 
   def show
