@@ -30,9 +30,9 @@ development:
   # Full base system path to avatar storage
   avatar_base_path: "~/workspaces/dashboard/public/system/avatars/"
   # Full base url to avatar service, omit protocol
-  avatar_base_url: "assets.example.org/avatars/"
+  avatar_base_url: "//assets.example.org/avatars/"
   # Full url to default avatar service, omit protocol
-  avatar_default_url: "assets.example.org/avatars/default.jpg"
+  avatar_default_url: "//assets.example.org/avatars/default.jpg"
   assets_url_base: "//www.local.example.org:3001/assets/"
   saml:
     issuer: "http://www.local.example.org:3000/"
@@ -50,9 +50,9 @@ test:
   # Full base system path to avatar storage
   avatar_base_path: "~/workspaces/dashboard/public/system/avatars/"
   # Full base url to avatar service, omit protocol
-  avatar_base_url: "assets.example.org/avatars/"
+  avatar_base_url: "//assets.example.org/avatars/"
   # Full url to default avatar service, omit protocol
-  avatar_default_url: "assets.example.org/avatars/default.jpg"
+  avatar_default_url: "//assets.example.org/avatars/default.jpg"
   assets_url_base: "//www.local.example.org:3001/assets/"
   saml:
     issuer: "http://www.local.example.org:3000/"
@@ -67,8 +67,8 @@ production:
   <<: *defaults
   title_suffix: "Dashboard"
   avatar_base_path: "/var/www/public/avatars/"
-  avatar_base_url: "example.org/avatars/"
-  avatar_default_url: "example.org/avatars/default.jpg"
+  avatar_base_url: "//example.org/avatars/"
+  avatar_default_url: "//example.org/avatars/default.jpg"
   assets_url_base: "//assets.example.org/internal/3.0/"
   saml:
     issuer: "https://www.example.org/dashboard"

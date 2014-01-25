@@ -5,8 +5,8 @@ end
 Paperclip::Attachment.default_options.update({
   default_style: :medium_quadrat,
   path: "#{APP_CONFIG['avatar_base_path']}:username/:style.:extension",
-  url: "http://#{APP_CONFIG['avatar_base_url']}:username/:style.:extension",
-  default_url: "http://#{APP_CONFIG["avatar_default_url"]}",
+  url: "#{APP_CONFIG['avatar_base_url']}:username/:style.:extension",
+  default_url: "#{APP_CONFIG["avatar_default_url"]}",
   styles: {
     xlarge: {
       geometry: '600x',
