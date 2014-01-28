@@ -31,7 +31,8 @@ $ ->
                   }
         minLength: 2
         select: (event, ui) ->
-          document.location = $("#full-search").attr('action') + '?q=' + unescape(ui.item.value)
+          $searchField.val(ui.item.value)
+          $("#full-search").submit()
       .data( "ui-autocomplete" )._renderItem = (ul, item) ->
         return $("<li></li>")
         .data("ui-autocomplete-item", item)
