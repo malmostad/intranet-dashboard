@@ -10,17 +10,17 @@ set :real_environment, environment == "staging" ? "test" : "production" # 'stagi
 job_type :rake, "cd :path && PATH=/usr/local/bin:$PATH RAILS_ENV=:real_environment bundle exec rake :task --silent :output"
 
 if environment == "staging"
-  every :day, :at => '1:30am' do
-    rake "users:update_profiles"
-  end
+  # every :day, :at => '1:30am' do
+  #   rake "users:update_profiles"
+  # end
 
-  every :day, :at => '2:13am' do
-    rake "delete_old_feed_entries"
-  end
+  # every :day, :at => '2:13am' do
+  #   rake "delete_old_feed_entries"
+  # end
 
-  every :day, :at => '2:43am' do
-    rake "users:clear_expired_sessions"
-  end
+  # every :day, :at => '2:43am' do
+  #   rake "users:clear_expired_sessions"
+  # end
 end
 
 if environment == "production"
@@ -38,6 +38,8 @@ if environment == "production"
 end
 
 every :reboot do
-  command "sleep 60; RAILS_ENV=#{real_environment} #{path}/lib/daemons/feed_worker_ctl start >> #{path}/log/feed_worker.log 2>&1"
-  command "sleep 60; RAILS_ENV=#{real_environment} #{path}/script/delayed_job start"
+  if environment == "production"
+    command "sleep 60; RAILS_ENV=#{real_environment} #{path}/lib/daemons/feed_worker_ctl start >> #{path}/log/feed_worker.log 2>&1"
+    command "sleep 60; RAILS_ENV=#{real_environment} #{path}/script/delayed_job start"
+  end
 end

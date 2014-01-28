@@ -52,9 +52,10 @@ set(:user) do
    Capistrano::CLI.ui.ask "\nUsername for #{server_address}: "
 end
 
-before "deploy", "prompt:continue", "assets:precompile_#{precompile_assets}", 'backup:mysql'
+before "deploy", "prompt:continue", "assets:precompile_#{precompile_assets}"
 before 'deploy:restart', 'deploy:symlink_config', 'deploy:migrate'
-after 'deploy', "delayed_job:restart", 'deploy:restart_daemons', 'deploy:cleanup', 'assets:cleanup'
+after 'deploy', 'deploy:cleanup', 'assets:cleanup'
+# More callbacks in production.rb deploy file
 
 namespace :deploy do
   desc 'Symlink to shared files'
@@ -119,14 +120,12 @@ end
 namespace :backup do
   desc 'performs a backup using mysqldump'
   task :mysql, :roles => :db, :only => { :primary => true } do
-    if rails_env == "production"
-      filepath = "#{backup_dir}#{application}-#{rails_env}-predeploy-#{release_name}.sql.bz2"
-      text = capture "cat #{shared_path}/config/database.yml"
-      yaml = YAML::load(text)
+    filepath = "#{backup_dir}#{application}-#{rails_env}-predeploy-#{release_name}.sql.bz2"
+    text = capture "cat #{shared_path}/config/database.yml"
+    yaml = YAML::load(text)
 
-      run "mysqldump -u #{yaml[rails_env]['username']} -p #{yaml[rails_env]['database']} | bzip2 -c > #{filepath}" do |ch, stream, out|
-        ch.send_data "#{yaml[rails_env]['password']}\n" if out =~ /^Enter password:/
-      end
+    run "mysqldump -u #{yaml[rails_env]['username']} -p #{yaml[rails_env]['database']} | bzip2 -c > #{filepath}" do |ch, stream, out|
+      ch.send_data "#{yaml[rails_env]['password']}\n" if out =~ /^Enter password:/
     end
   end
 end
