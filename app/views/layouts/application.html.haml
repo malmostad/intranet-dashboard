@@ -27,3 +27,5 @@
         = render "layouts/admin_nav"
     = javascript_include_tag "#{APP_CONFIG['assets_url_base']}malmo.js"
     = javascript_include_tag "application"
+    /[if lte IE 8]
+      = javascript_include_tag "legacy/ancient_browser_warning"
