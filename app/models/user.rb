@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
 
   attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
       :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
