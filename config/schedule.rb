@@ -5,7 +5,7 @@
 # Check output with
 # $ bundle exec whenever --set 'environment=production'
 
-# set :output,  "#{path}/log/cron.log"
+set :output,  "#{path}/log/cron.log"
 set :real_environment, environment == "staging" ? "test" : "production" # 'staging' is a pseudo environment
 job_type :rake, "cd :path && PATH=/usr/local/bin:$PATH RAILS_ENV=:real_environment bundle exec rake :task --silent :output"
 
@@ -39,7 +39,7 @@ end
 
 every :reboot do
   if environment == "production"
-    command "sleep 60; RAILS_ENV=#{real_environment} #{path}/lib/daemons/feed_worker_ctl start >> #{path}/log/feed_worker.log 2>&1"
+    command "sleep 60; RAILS_ENV=#{real_environment} #{path}/lib/daemons/feed_worker_ctl start"
     command "sleep 60; RAILS_ENV=#{real_environment} #{path}/script/delayed_job start"
   end
 end
