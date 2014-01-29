@@ -37,10 +37,10 @@
 
 @media ( max-width: 62em ) {
   .column-1 {
-    @include columns(4);
+    @include columns(4, true);
   }
   .column-2 {
-    @include columns(8, true);
+    @include columns(8);
   }
   .column-3 {
     clear: both;
@@ -86,10 +86,10 @@
 
 @media ( max-width: 51em ) {
   .column-1 {
-    @include columns(4);
+    @include columns(4, true);
   }
   .column-2 {
-    @include columns(8, true);
+    @include columns(8);
   }
 
   body {
