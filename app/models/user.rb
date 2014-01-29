@@ -3,6 +3,26 @@ class User < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
+  mapping do
+    indexes :id, index: :not_analyzed
+    indexes :username, analyzer: 'snowball'
+    indexes :displayname, analyzer: 'snowball', boost: 10
+    indexes :professional_bio, analyzer: 'snowball'
+    indexes :skills do
+      indexes :name, analyzer: 'keyword'
+    end
+    indexes :languages do
+      indexes :name, analyzer: 'keyword'
+    end
+  end
+
+  def to_indexed_json
+    to_json( include: {
+      skills: { only: [:name] },
+      languages: { only: [:name] }
+    })
+  end
+
   attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
       :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
       :language_list, :skill_list,
