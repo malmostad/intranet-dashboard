@@ -3,11 +3,24 @@ class User < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
+
+  settings :analysis => {
+    analyzer: {
+      swedish_snowball: {
+        type: "snowball",
+        language: "Swedish",
+        stopwords: 'komin',
+        filter: 'asciifolding'
+      }
+    }
+  }
+
   mapping do
     indexes :id, index: :not_analyzed
     indexes :username, analyzer: 'snowball'
     indexes :displayname, analyzer: 'snowball'
-    indexes :professional_bio, analyzer: 'snowball'
+    indexes :professional_bio, analyzer: 'swedish_snowball'
+    indexes :professional_bio_2, analyzer: 'snowball'
     indexes :skills do
       indexes :name, analyzer: 'keyword'
     end
@@ -22,6 +35,7 @@ class User < ActiveRecord::Base
       username: username,
       displayname: displayname,
       professional_bio: professional_bio,
+      professional_bio_2: professional_bio,
       skills: skills.map { |m| m.name },
       languages: languages.map { |m| m.name }
     }.to_json
