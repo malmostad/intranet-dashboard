@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   mapping do
     indexes :id, index: :not_analyzed
     indexes :username, analyzer: 'snowball'
-    indexes :displayname, analyzer: 'snowball', boost: 10
+    indexes :displayname, analyzer: 'snowball'
     indexes :professional_bio, analyzer: 'snowball'
     indexes :skills do
       indexes :name, analyzer: 'keyword'
@@ -17,11 +17,20 @@ class User < ActiveRecord::Base
   end
 
   def to_indexed_json
-    to_json( include: {
-      skills: { only: [:name] },
-      languages: { only: [:name] }
-    })
+    {
+      id: id,
+      username: username,
+      displayname: displayname,
+      professional_bio: professional_bio,
+      skills: skills.map { |m| m.name },
+      languages: languages.map { |m| m.name }
+    }.to_json
   end
+
+  after_touch do
+    tire.update_index
+  end
+
 
   attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
       :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
