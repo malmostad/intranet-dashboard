@@ -6,27 +6,47 @@ class User < ActiveRecord::Base
 
   settings :analysis => {
     analyzer: {
-      swedish_snowball: {
-        type: "snowball",
+      swedish_ngram_2: {
         language: "Swedish",
-        stopwords: 'komin',
-        filter: 'asciifolding'
+        tokenizer: "ngram_2",
+        filter: ["swedish_snowball"] # and maybe "asciifolding"
+      },
+      ngram_2: {
+        language: "Swedish",
+        tokenizer: "ngram_2",
+        filter: ["swedish_snowball"] # and maybe "asciifolding"
+      },
+      swedish_snowball: {
+        language: "Swedish",
+        tokenizer: "standard",
+        filter: ["swedish_snowball"]
+      }
+    },
+    tokenizer: {
+      ngram_2: {
+        type: "nGram",
+        min_gram: 2,
+        max_gram: 10,
+        token_chars: ["letter", "digit"]
+      }
+    },
+    filter: {
+     swedish_snowball: {
+       type: "snowball",
+       language: "Swedish"
       }
     }
   }
 
   mapping do
-    indexes :id, index: :not_analyzed
+    indexes :id, index: 'not_analyzed'
     indexes :username, analyzer: 'snowball'
-    indexes :displayname, analyzer: 'snowball'
+    indexes :displayname, analyzer: 'ngram_2'
+    indexes :displayname_2, analyzer: 'standard'
     indexes :professional_bio, analyzer: 'swedish_snowball'
-    indexes :professional_bio_2, analyzer: 'snowball'
-    indexes :skills do
-      indexes :name, analyzer: 'keyword'
-    end
-    indexes :languages do
-      indexes :name, analyzer: 'keyword'
-    end
+    indexes :professional_bio_2, analyzer: 'swedish_ngram_2'
+    indexes :skills, analyzer: 'swedish_snowball'
+    indexes :languages, analyzer: 'swedish_snowball'
   end
 
   def to_indexed_json
@@ -34,6 +54,7 @@ class User < ActiveRecord::Base
       id: id,
       username: username,
       displayname: displayname,
+      displayname_2: displayname,
       professional_bio: professional_bio,
       professional_bio_2: professional_bio,
       skills: skills.map { |m| m.name },
