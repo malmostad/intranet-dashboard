@@ -3,6 +3,33 @@ class User < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
+  # POST /users/_suggest
+  # {
+  #    "users_suggest" : {
+  #     "text" : "bylund jes",
+  #     "completion" : {
+  #       "size": 400,
+  #       "field" : "name_suggest",
+  #         "fuzzy": {
+  #             "edit_distance": 2,
+  #             "prefix_length": 1,
+  #             "unicode_aware": true
+  #         }
+  #     }
+  #   }
+  # }
+
+  # POST /users/_search
+  # {
+  #    "size": 10,
+  #    "query": {
+  #     "fuzzy_like_this" : {
+  #         "fields" : ["displayname"],
+  #         "like_text" : "jepser bülund",
+  #         "min_similarity": 10
+  #     }
+  #   }
+  # }
 
   settings :analysis => {
     analyzer: {
@@ -41,8 +68,8 @@ class User < ActiveRecord::Base
   mapping do
     indexes :id, index: 'not_analyzed'
     indexes :username, analyzer: 'snowball'
-    indexes :displayname, analyzer: 'ngram_2'
-    indexes :displayname_2, analyzer: 'standard'
+    indexes :displayname, analyzer: 'simple'
+    indexes :name_suggest, type: 'completion', analyzer: 'standard', payloads: true
     indexes :professional_bio, analyzer: 'swedish_snowball'
     indexes :professional_bio_2, analyzer: 'swedish_ngram_2'
     indexes :skills, analyzer: 'swedish_snowball'
@@ -54,7 +81,11 @@ class User < ActiveRecord::Base
       id: id,
       username: username,
       displayname: displayname,
-      displayname_2: displayname,
+      name_suggest: {
+        input: [first_name, last_name, " #{last_name} #{first_name}", displayname, username],
+        output: displayname,
+        payload: id
+      },
       professional_bio: professional_bio,
       professional_bio_2: professional_bio,
       skills: skills.map { |m| m.name },
