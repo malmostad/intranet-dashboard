@@ -61,7 +61,7 @@ $ bundle exec guard
 ```
 
 ## Feed Worker
-The feed worker daemon updates all news feeds that are in use in the dashboard. It runs as a daemon. The aggressiveness is defined in `app_config.yml`. The daemon is started/restarted by the Capistrano deployment in staging and production. It is also added as a `@reboot` task to the crontab during deployment by `whenever`. To check the status, start or stop the daemon manually, execute the following:
+The feed worker daemon updates all news feeds that are in use in the dashboard. It runs as a daemon. The aggressiveness is defined in `app_config.yml`. The daemon is started/restarted by the Capistrano deployment in staging and production. It is also added as a `@reboot` task to the crontab during deployment by `whenever`. To check the status, start or stop the daemon manually, execute the following in the application root:
 
 ```shell
 $ RAILS_ENV=development|test|production lib/daemons/feed_worker_ctl status|start|stop
@@ -77,6 +77,13 @@ $ FeedWorker.update_all
 ```
 
 A feed is always fetched and feed entries are updated when it is added or changed by a user. This is part of the validation process.
+
+# Delayed Job Worker
+The Delayed Job worker is also restarted after Capistrano deployment and added as a `@reboot` task to the crontab during deployment by `whenever`. To check the status, start or stop the daemon manually, execute the following in the application root:
+
+```shell
+$ RAILS_ENV=development|test|production script/delayed_job status|start|stop
+```
 
 ## Scheduled Jobs
 The `whenever` gem is used to add database maintenance rake tasks to cron. Change the settings in schedule.rb to match your staging and production environments. Capistrano runs `whenever` during deployment.
