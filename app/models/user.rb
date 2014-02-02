@@ -6,9 +6,9 @@ class User < ActiveRecord::Base
   # POST /users/_suggest
   # {
   #    "users_suggest" : {
-  #     "text" : "bylund jes",
+  #     "text" : "jepser bilund",
   #     "completion" : {
-  #       "size": 400,
+  #       "size": 10,
   #       "field" : "name_suggest",
   #         "fuzzy": {
   #             "edit_distance": 2,
@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   #     "fuzzy_like_this" : {
   #         "fields" : ["displayname"],
   #         "like_text" : "jepser bülund",
-  #         "min_similarity": 10
+  #         "min_similarity": 2
   #     }
   #   }
   # }
@@ -74,6 +74,8 @@ class User < ActiveRecord::Base
     indexes :professional_bio_2, analyzer: 'swedish_ngram_2'
     indexes :skills, analyzer: 'swedish_snowball'
     indexes :languages, analyzer: 'swedish_snowball'
+    indexes :phone, analyzer: 'keyword'
+    indexes :cell_phone, analyzer: 'keyword'
   end
 
   def to_indexed_json
@@ -82,14 +84,20 @@ class User < ActiveRecord::Base
       username: username,
       displayname: displayname,
       name_suggest: {
-        input: [first_name, last_name, " #{last_name} #{first_name}", displayname, username],
+        input: [first_name, last_name, "#{last_name} #{first_name}", displayname, username],
         output: displayname,
-        payload: id
+        payload: {
+          username: username,
+          company_short: company_short,
+          department: department
+        }
       },
       professional_bio: professional_bio,
       professional_bio_2: professional_bio,
       skills: skills.map { |m| m.name },
-      languages: languages.map { |m| m.name }
+      languages: languages.map { |m| m.name },
+      phone: (phone.gsub(/[^\d]/, "") unless phone.blank?),
+      cell_phone: (cell_phone.gsub(/[^\d]/, "") unless cell_phone.blank?)
     }.to_json
   end
 
