@@ -78,7 +78,7 @@ $ FeedWorker.update_all
 
 A feed is always fetched and feed entries are updated when it is added or changed by a user. This is part of the validation process.
 
-# Delayed Job Worker
+## Delayed Job Worker
 The Delayed Job worker is also restarted after Capistrano deployment and added as a `@reboot` task to the crontab during deployment by `whenever`. To check the status, start or stop the daemon manually, execute the following in the application root:
 
 ```shell
