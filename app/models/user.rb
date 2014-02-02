@@ -36,17 +36,22 @@ class User < ActiveRecord::Base
       swedish_ngram_2: {
         language: "Swedish",
         tokenizer: "ngram_2",
-        filter: ["swedish_snowball"] # and maybe "asciifolding"
+        filter: ["swedish_snowball"]
       },
       ngram_2: {
         language: "Swedish",
         tokenizer: "ngram_2",
-        filter: ["swedish_snowball"] # and maybe "asciifolding"
+        filter: ["swedish_snowball"]
       },
       swedish_snowball: {
         language: "Swedish",
         tokenizer: "standard",
         filter: ["swedish_snowball"]
+      },
+      phone_number: {
+        tokenizer: "phone_number",
+        char_filter: ["phone_number"],
+        filter: ["reverse", "edgeNGram", "reverse"]
       }
     },
     tokenizer: {
@@ -55,12 +60,23 @@ class User < ActiveRecord::Base
         min_gram: 2,
         max_gram: 10,
         token_chars: ["letter", "digit"]
+      },
+      phone_number: {
+        type: "nGram",
+        min_gram: 6
       }
     },
     filter: {
      swedish_snowball: {
        type: "snowball",
        language: "Swedish"
+      }
+    },
+    char_filter: {
+      phone_number: {
+        type: "pattern_replace",
+        pattern: "[^\d]",
+        replacement: ""
       }
     }
   }
@@ -74,8 +90,8 @@ class User < ActiveRecord::Base
     indexes :professional_bio_2, analyzer: 'swedish_ngram_2'
     indexes :skills, analyzer: 'swedish_snowball'
     indexes :languages, analyzer: 'swedish_snowball'
-    indexes :phone, analyzer: 'keyword'
-    indexes :cell_phone, analyzer: 'keyword'
+    indexes :phone, analyzer: 'phone_number'
+    indexes :cell_phone, analyzer: 'phone_number'
   end
 
   def to_indexed_json
@@ -96,8 +112,8 @@ class User < ActiveRecord::Base
       professional_bio_2: professional_bio,
       skills: skills.map { |m| m.name },
       languages: languages.map { |m| m.name },
-      phone: (phone.gsub(/[^\d]/, "") unless phone.blank?),
-      cell_phone: (cell_phone.gsub(/[^\d]/, "") unless cell_phone.blank?)
+      phone: phone,
+      cell_phone: cell_phone
     }.to_json
   end
 
