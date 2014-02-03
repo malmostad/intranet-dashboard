@@ -3,34 +3,6 @@ class User < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
-  # POST /users/_suggest
-  # {
-  #    "users_suggest" : {
-  #     "text" : "jepser bilund",
-  #     "completion" : {
-  #       "size": 10,
-  #       "field" : "name_suggest",
-  #         "fuzzy": {
-  #             "edit_distance": 2,
-  #             "prefix_length": 1,
-  #             "unicode_aware": true
-  #         }
-  #     }
-  #   }
-  # }
-
-  # POST /users/_search
-  # {
-  #    "size": 10,
-  #    "query": {
-  #     "fuzzy_like_this" : {
-  #         "fields" : ["displayname"],
-  #         "like_text" : "jepser bülund",
-  #         "min_similarity": 2
-  #     }
-  #   }
-  # }
-
   settings :analysis => {
     analyzer: {
       swedish_ngram_2: {
@@ -49,9 +21,9 @@ class User < ActiveRecord::Base
         filter: ["swedish_snowball"]
       },
       phone_number: {
-        tokenizer: "phone_number",
+        tokenizer: "keyword",
         char_filter: ["phone_number"],
-        filter: ["reverse", "edgeNGram", "reverse"]
+        filter: ["phone_number"]
       }
     },
     tokenizer: {
@@ -60,22 +32,24 @@ class User < ActiveRecord::Base
         min_gram: 2,
         max_gram: 10,
         token_chars: ["letter", "digit"]
-      },
-      phone_number: {
-        type: "nGram",
-        min_gram: 6
       }
     },
     filter: {
      swedish_snowball: {
        type: "snowball",
        language: "Swedish"
+      },
+      phone_number: {
+        type: "edgeNGram",
+        side: "back",
+        min_gram: 5,
+        max_gram: 12
       }
     },
     char_filter: {
       phone_number: {
         type: "pattern_replace",
-        pattern: "[^\d]",
+        pattern: "[^0-9]",
         replacement: ""
       }
     }
