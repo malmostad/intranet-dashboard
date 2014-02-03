@@ -3,6 +3,49 @@ class User < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
+  # Autocomplete for suggestion names or phone numbers
+  # TODO: phone numbers are matching from the back, intentionally
+  # so no suggetsion is made before at least the five last digits are entered
+  #
+  # POST /users/_search
+  # {
+  #    "size": 2000,
+  #    "fields": [
+  #       "displayname",
+  #       "username",
+  #       "company_short",
+  #       "department"
+  #    ],
+  #    "query": {
+  #       "bool": {
+  #          "should": [
+  #             {
+  #                "match": {
+  #                   "displayname_suggest": {
+  #                      "query": "asdasdasdasdasdas",
+  #                      "fuzziness": 0.8,
+  #                      "prefix_length": 0
+  #                   }
+  #                }
+  #             },
+  #             {
+  #                "multi_match": {
+  #                   "fields": [
+  #                      "phone",
+  #                      "cell_phone"
+  #                   ],
+  #                   "query": "341029"
+  #                }
+  #             }
+  #          ]
+  #       }
+  #    }
+  # }
+
+
+
+
+
   # EdgeNgram start matching for autocompletion.
   # Matches "first last", "last first", "username" from start with fuzziness in percent or edition distance
   #
