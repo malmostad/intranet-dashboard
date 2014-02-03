@@ -13,8 +13,8 @@ class User < ActiveRecord::Base
   #    "query": {
   #       "match": {
   #          "displayname_suggest": {
-  #             "query": "Jepser bylund",
-  #             "fuzziness": 0.7,
+  #             "query": "bylund jes",
+  #             "fuzziness": 0.8,
   #             "prefix_length": 0
   #          }
   #       }
@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
   #     }
   # }
 
-  settings :analysis => {
+  settings analysis: {
     analyzer: {
       swedish_ngram_2: {
         language: "Swedish",
@@ -74,14 +74,14 @@ class User < ActiveRecord::Base
         filter: ["swedish_snowball"]
       },
       displayname_index: {
-        tokenizer: "comma",
+        tokenizer: "whitespace",
         filter: ["lowercase", "edge_start_2"],
-        char_filter: ["displayname"]
+        char_filter: ["letters_digits"]
       },
       displayname_search: {
         tokenizer: "keyword",
         filter: ["lowercase"],
-        char_filter: ["displayname"]
+        char_filter: ["name_suggest"]
       },
       swedish_snowball: {
         language: "Swedish",
@@ -129,14 +129,24 @@ class User < ActiveRecord::Base
         pattern: "[^0-9]",
         replacement: ""
       },
-      displayname: {
+      letters_digits: {
         type: "pattern_replace",
-        pattern: "-",
+        pattern: "[^\\w\\d]",
         replacement: " "
+      },
+      normalize_space: {
+        type: "pattern_replace",
+        pattern: "\\s+",
+        replacement: " "
+      },
+      name_suggest: {
+        type: "pattern_replace",
+        pattern: "[^\\w\\d]",
+        replacement: ""
       },
       phonetic_mappings: {
         type: "mapping",
-        mappings: ["ph=>f", "c=>k"]
+        mappings: ["ph=>f", "c=>k", "sch" => "sk"]
       }
     }
   }
@@ -162,7 +172,7 @@ class User < ActiveRecord::Base
       id: id,
       username: username,
       displayname: displayname,
-      displayname_suggest: "#{first_name} #{last_name},#{last_name} #{first_name},#{username}",
+      displayname_suggest: "#{first_name}#{last_name} #{last_name}#{first_name} #{username}",
       name_suggest: {
         input: [first_name, last_name, "#{last_name} #{first_name}", displayname, username],
         output: displayname,
