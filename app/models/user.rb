@@ -3,6 +3,69 @@ class User < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
+  # EdgeNgram start matching for autocompletion.
+  # Matches "first last", "last first", "username" from start with fuzziness in percent or edition distance
+  #
+  # POST /users/_search
+  # {
+  #    "size": 2000,
+  #    "fields": ["displayname", "username", "company_short", "department"],
+  #    "query": {
+  #       "match": {
+  #          "displayname_suggest": {
+  #             "query": "Jepser bylund",
+  #             "fuzziness": 0.7,
+  #             "prefix_length": 0
+  #          }
+  #       }
+  #    }
+  # }
+
+  # Fast elastic suggest completion.
+  # No scoring for exact matches.
+  #
+  # POST /users/_suggest
+  # {
+  #    "users_suggest" : {
+  #     "text" : "carlsson",
+  #     "completion" : {
+  #       "size": 1000,
+  #       "field" : "name_suggest",
+  #         "fuzzy": {
+  #             "edit_distance": 1,
+  #             "prefix_length": 0,
+  #             "unicode_aware": true
+  #         }
+  #     }
+  #   }
+  # }
+
+  # Matches phone number from the end.
+  # Ignores everything non-digit. Possible to match front-truncated 5 digit numbers
+  #
+  # POST /users/_search
+  # {
+  #    "size": 200,
+  #    "query": {
+  #       "multi_match": {
+  #         "fields": ["phone", "cell_phone"],
+  #         "query": "040-341029"
+  #       }
+  #    }
+  # }
+
+  # Query on selected fields. Swedish snowball filter
+  #
+  # POST /users/_search
+  # {
+  #     "query": {
+  #         "query_string": {
+  #             "query": "personalavin",
+  #             "fields": ["skills", "professional_bio"]
+  #         }
+  #     }
+  # }
+
   settings :analysis => {
     analyzer: {
       swedish_ngram_2: {
@@ -10,10 +73,15 @@ class User < ActiveRecord::Base
         tokenizer: "ngram_2",
         filter: ["swedish_snowball"]
       },
-      ngram_2: {
-        language: "Swedish",
-        tokenizer: "ngram_2",
-        filter: ["swedish_snowball"]
+      displayname_index: {
+        tokenizer: "comma",
+        filter: ["lowercase", "edge_start_2"],
+        char_filter: ["displayname"]
+      },
+      displayname_search: {
+        tokenizer: "keyword",
+        filter: ["lowercase"],
+        char_filter: ["displayname"]
       },
       swedish_snowball: {
         language: "Swedish",
@@ -22,8 +90,8 @@ class User < ActiveRecord::Base
       },
       phone_number: {
         tokenizer: "keyword",
-        char_filter: ["phone_number"],
-        filter: ["phone_number"]
+        filter: ["phone_number"],
+        char_filter: ["phone_number"]
       }
     },
     tokenizer: {
@@ -32,6 +100,10 @@ class User < ActiveRecord::Base
         min_gram: 2,
         max_gram: 10,
         token_chars: ["letter", "digit"]
+      },
+      comma: {
+        type: "pattern",
+        pattern: "\\s*,\\s*"
       }
     },
     filter: {
@@ -44,6 +116,11 @@ class User < ActiveRecord::Base
         side: "back",
         min_gram: 5,
         max_gram: 12
+      },
+      edge_start_2: {
+        type: "edgeNGram",
+        min_gram: 2,
+        max_gram: 50
       }
     },
     char_filter: {
@@ -51,21 +128,33 @@ class User < ActiveRecord::Base
         type: "pattern_replace",
         pattern: "[^0-9]",
         replacement: ""
+      },
+      displayname: {
+        type: "pattern_replace",
+        pattern: "-",
+        replacement: " "
+      },
+      phonetic_mappings: {
+        type: "mapping",
+        mappings: ["ph=>f", "c=>k"]
       }
     }
   }
 
   mapping do
     indexes :id, index: 'not_analyzed'
-    indexes :username, analyzer: 'snowball'
+    indexes :username, analyzer: 'simple'
     indexes :displayname, analyzer: 'simple'
-    indexes :name_suggest, type: 'completion', analyzer: 'standard', payloads: true
+    indexes :displayname_suggest, index_analyzer: 'displayname_index', search_analyzer: 'displayname_search'
+    indexes :name_suggest, type: 'completion', analyzer: 'simple', payloads: true
     indexes :professional_bio, analyzer: 'swedish_snowball'
     indexes :professional_bio_2, analyzer: 'swedish_ngram_2'
     indexes :skills, analyzer: 'swedish_snowball'
     indexes :languages, analyzer: 'swedish_snowball'
     indexes :phone, analyzer: 'phone_number'
     indexes :cell_phone, analyzer: 'phone_number'
+    indexes :company_short, analyzer: 'simple'
+    indexes :department, analyzer: 'simple'
   end
 
   def to_indexed_json
@@ -73,9 +162,11 @@ class User < ActiveRecord::Base
       id: id,
       username: username,
       displayname: displayname,
+      displayname_suggest: "#{first_name} #{last_name},#{last_name} #{first_name},#{username}",
       name_suggest: {
         input: [first_name, last_name, "#{last_name} #{first_name}", displayname, username],
         output: displayname,
+        weight: 34,
         payload: {
           username: username,
           company_short: company_short,
@@ -87,7 +178,9 @@ class User < ActiveRecord::Base
       skills: skills.map { |m| m.name },
       languages: languages.map { |m| m.name },
       phone: phone,
-      cell_phone: cell_phone
+      cell_phone: cell_phone,
+      company_short: company_short,
+      department: department
     }.to_json
   end
 
