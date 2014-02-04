@@ -89,6 +89,10 @@ module Searchable
       }
     }
 
+    # Override model name
+    index_name    "employees"
+    document_type "employee"
+
     mappings dynamic: 'false' do
       indexes :id, index: 'not_analyzed'
       indexes :username, analyzer: 'simple'

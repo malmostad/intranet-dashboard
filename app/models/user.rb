@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   include Searchable # Concern with Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
-  def to_indexed_json
+  def as_indexed_json(options={})
     {
       id: id,
       username: username,
@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
       cell_phone: cell_phone,
       company_short: company_short,
       department: department
-    }.to_json
+    }.as_json
   end
 
   after_touch do
