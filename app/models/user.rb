@@ -3,37 +3,6 @@ class User < ActiveRecord::Base
   include Searchable # Concern with Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
-  def as_indexed_json(options={})
-    {
-      id: id,
-      username: username,
-      displayname: displayname,
-      displayname_suggest: "#{first_name}#{last_name} #{last_name}#{first_name} #{username}",
-      name_suggest: {
-        input: [first_name, last_name, "#{last_name} #{first_name}", displayname, username],
-        output: displayname,
-        weight: 34,
-        payload: {
-          username: username,
-          company_short: company_short,
-          department: department
-        }
-      },
-      professional_bio: professional_bio,
-      professional_bio_2: professional_bio,
-      skills: skills.map { |m| m.name },
-      languages: languages.map { |m| m.name },
-      phone: phone,
-      cell_phone: cell_phone,
-      company_short: company_short,
-      department: department
-    }.as_json
-  end
-
-  after_touch do
-    update_document
-  end
-
   attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
       :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
       :language_list, :skill_list,
@@ -93,6 +62,11 @@ class User < ActiveRecord::Base
   after_create do
     # Map CMG ID when account is created
     update_attribute(:cmg_id, AastraCWI.get_cmg_id(self))
+  end
+
+  # Convenience callback for Elastic re-indexing
+  after_touch do
+    update_document
   end
 
   validates_attachment_content_type :avatar,

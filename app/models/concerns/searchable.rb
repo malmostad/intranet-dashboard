@@ -110,6 +110,33 @@ module Searchable
     end
   end
 
+  def as_indexed_json(options={})
+    {
+      id: id,
+      username: username,
+      displayname: displayname,
+      displayname_suggest: "#{first_name}#{last_name} #{last_name}#{first_name} #{username}",
+      name_suggest: {
+        input: [first_name, last_name, "#{last_name} #{first_name}", displayname, username],
+        output: displayname,
+        weight: 34,
+        payload: {
+          username: username,
+          company_short: company_short,
+          department: department
+        }
+      },
+      professional_bio: professional_bio,
+      professional_bio_2: professional_bio,
+      skills: skills.map { |m| m.name },
+      languages: languages.map { |m| m.name },
+      phone: phone,
+      cell_phone: cell_phone,
+      company_short: company_short,
+      department: department
+    }.as_json
+  end
+
   module ClassMethods
     def query(query)
       # ...
