@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/elasticsearch/elasticsearch-rails.git
+  revision: 46734cd4371b58b60872c0aa551de23c4c4a9348
+  specs:
+    elasticsearch-model (0.1.0.rc1)
+      elasticsearch (~> 0.4)
+      hashie
+    elasticsearch-rails (0.1.0.rc1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -86,6 +95,14 @@ GEM
       activerecord (>= 3.0, < 4.1)
       delayed_job (>= 3.0, < 4.1)
     diff-lcs (1.2.5)
+    elasticsearch (0.4.7)
+      elasticsearch-api (= 0.4.7)
+      elasticsearch-transport (= 0.4.7)
+    elasticsearch-api (0.4.7)
+      multi_json
+    elasticsearch-transport (0.4.7)
+      faraday
+      multi_json
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.2)
@@ -94,6 +111,8 @@ GEM
     factory_girl_rails (4.3.0)
       factory_girl (~> 4.3.0)
       railties (>= 3.0.0)
+    faraday (0.9.0)
+      multipart-post (>= 1.2, < 3)
     feedzirra (0.7.0)
       curb (~> 0.8.1)
       loofah (~> 1.2.1)
@@ -118,7 +137,7 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
-    hashr (0.0.22)
+    hashie (2.0.5)
     highline (1.6.20)
     hike (1.2.3)
     htmlentities (4.3.1)
@@ -153,6 +172,7 @@ GEM
     mime-types (1.25.1)
     mini_portile (0.5.2)
     multi_json (1.8.4)
+    multipart-post (2.0.0)
     mysql2 (0.3.14)
     net-ldap (0.3.1)
     net-scp (1.1.2)
@@ -213,8 +233,6 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
-    rest-client (1.6.7)
-      mime-types (>= 1.16)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -275,14 +293,6 @@ GEM
     thor (0.18.1)
     tilt (1.4.1)
     timers (1.1.0)
-    tire (0.6.2)
-      activemodel (>= 3.0)
-      activesupport
-      ansi
-      hashr (~> 0.0.19)
-      multi_json (~> 1.3)
-      rake
-      rest-client (~> 1.6)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -311,6 +321,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ansi
   axlsx (= 2.0.1)
   bcrypt-ruby (~> 3.0.1)
   capistrano (~> 2.15.5)
@@ -322,6 +333,8 @@ DEPENDENCIES
   dalli (= 2.7.0)
   database_cleaner
   delayed_job_active_record (= 4.0.0)
+  elasticsearch-model!
+  elasticsearch-rails!
   factory_girl_rails
   feedzirra (= 0.7.0)
   guard-rspec (= 4.2.4)
@@ -348,7 +361,6 @@ DEPENDENCIES
   siteseeker_normalizer (= 0.1.1)
   therubyracer (= 0.12.0)
   thin
-  tire
   uglifier (= 2.4.0)
   vcr
   webmock (= 1.13.0)

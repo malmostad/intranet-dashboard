@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   # Autocomplete for suggestion names or phone numbers
   # TODO: phone numbers are matching from the back, intentionally
@@ -194,7 +194,7 @@ class User < ActiveRecord::Base
     }
   }
 
-  mapping do
+  mappings dynamic: 'false' do
     indexes :id, index: 'not_analyzed'
     indexes :username, analyzer: 'simple'
     indexes :displayname, analyzer: 'simple'
@@ -238,7 +238,7 @@ class User < ActiveRecord::Base
   end
 
   after_touch do
-    tire.update_index
+    update_document
   end
 
 

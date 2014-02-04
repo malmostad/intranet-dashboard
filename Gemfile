@@ -15,7 +15,9 @@ gem 'bcrypt-ruby', '~> 3.0.1'
 
 gem 'dalli', '2.7.0'
 gem 'mysql2', '0.3.14'
-gem 'tire'
+gem 'elasticsearch-model', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
+gem 'elasticsearch-rails', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
+gem 'ansi'
 
 gem 'paperclip', '3.5.2'
 gem 'simple_form', '2.1.1'
