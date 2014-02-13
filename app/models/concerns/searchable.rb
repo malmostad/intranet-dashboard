@@ -11,10 +11,13 @@ module Searchable
           tokenizer: "ngram_2",
           filter: ["swedish_snowball"]
         },
+        simple_ngram_2: {
+          tokenizer: "keyword",
+          filter: ["lowercase", "edge_start_2"]
+        },
         displayname_index: {
-          tokenizer: "whitespace",
-          filter: ["lowercase", "edge_start_2"],
-          char_filter: ["letters_digits"]
+          tokenizer: "edge_ngram_2",
+          filter: ["lowercase"]
         },
         displayname_search: {
           tokenizer: "keyword",
@@ -37,6 +40,12 @@ module Searchable
           type: "nGram",
           min_gram: 2,
           max_gram: 10,
+          token_chars: ["letter", "digit"]
+        },
+        edge_ngram_2: {
+          type: "edgeNGram",
+          min_gram: 2,
+          max_gram: 50,
           token_chars: ["letter", "digit"]
         },
         comma: {
@@ -79,7 +88,7 @@ module Searchable
         },
         name_suggest: {
           type: "pattern_replace",
-          pattern: "[^\\w\\d]",
+          pattern: "[-,\\s]",
           replacement: ""
         },
         phonetic_mappings: {
@@ -98,6 +107,8 @@ module Searchable
       indexes :username, analyzer: 'simple'
       indexes :displayname, analyzer: 'simple'
       indexes :displayname_suggest, index_analyzer: 'displayname_index', search_analyzer: 'displayname_search'
+      indexes :displayname_suggest_2, index_analyzer: 'simple_ngram_2', search_analyzer: 'displayname_search'
+      indexes :username_2, index_analyzer: 'simple_ngram_2', search_analyzer: 'displayname_search'
       indexes :name_suggest, type: 'completion', analyzer: 'simple', payloads: true
       indexes :professional_bio, analyzer: 'swedish_snowball'
       indexes :professional_bio_2, analyzer: 'swedish_ngram_2'
@@ -116,6 +127,8 @@ module Searchable
       username: username,
       displayname: displayname,
       displayname_suggest: "#{first_name}#{last_name} #{last_name}#{first_name} #{username}",
+      displayname_2: displayname,
+      username_2: username,
       name_suggest: {
         input: [first_name, last_name, "#{last_name} #{first_name}", displayname, username],
         output: displayname,
@@ -227,13 +240,21 @@ end
 # Matches phone number from the end.
 # Ignores everything non-digit. Possible to match front-truncated 5 digit numbers
 #
-# POST /users/_search
+# POST /employees/_search
 # {
 #    "size": 200,
+#    "fields": [
+#       "displayname",
+#       "phone",
+#       "cell_phone"
+#    ],
 #    "query": {
 #       "multi_match": {
-#         "fields": ["phone", "cell_phone"],
-#         "query": "040-341029"
+#          "fields": [
+#             "phone",
+#             "cell_phone"
+#          ],
+#          "query": "040-341139"
 #       }
 #    }
 # }
