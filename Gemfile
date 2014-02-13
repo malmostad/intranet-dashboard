@@ -32,12 +32,12 @@ gem 'axlsx', '2.0.1'
 
 group :development do
   gem 'haml-rails'
+  gem 'pry-rails'
 end
 
 group :development, :local_test do
   gem 'quiet_assets'
   gem 'thin'
-  gem 'pry-rails'
 end
 
 group :local_test do
