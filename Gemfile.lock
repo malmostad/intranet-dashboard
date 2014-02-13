@@ -1,9 +1,9 @@
 GIT
-  remote: git://github.com/elasticsearch/elasticsearch-rails.git
-  revision: 46734cd4371b58b60872c0aa551de23c4c4a9348
+  remote: https://github.com/elasticsearch/elasticsearch-rails.git
+  revision: fa71c29f68c01ee10b8a0649828919236ef3d475
   specs:
     elasticsearch-model (0.1.0.rc1)
-      elasticsearch (~> 0.4)
+      elasticsearch (> 0.4)
       hashie
     elasticsearch-rails (0.1.0.rc1)
 
@@ -95,12 +95,12 @@ GEM
       activerecord (>= 3.0, < 4.1)
       delayed_job (>= 3.0, < 4.1)
     diff-lcs (1.2.5)
-    elasticsearch (0.4.7)
-      elasticsearch-api (= 0.4.7)
-      elasticsearch-transport (= 0.4.7)
-    elasticsearch-api (0.4.7)
+    elasticsearch (1.0.0)
+      elasticsearch-api (= 1.0.0)
+      elasticsearch-transport (= 1.0.0)
+    elasticsearch-api (1.0.0)
       multi_json
-    elasticsearch-transport (0.4.7)
+    elasticsearch-transport (1.0.0)
       faraday
       multi_json
     erubis (2.7.0)

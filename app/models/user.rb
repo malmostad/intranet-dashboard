@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
 
   # Convenience callback for Elastic re-indexing
   after_touch do
-    update_document
+    __elasticsearch__.index_document
   end
 
   validates_attachment_content_type :avatar,
