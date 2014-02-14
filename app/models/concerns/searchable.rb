@@ -15,6 +15,10 @@ module Searchable
           tokenizer: "keyword",
           filter: ["lowercase", "edge_start_2"]
         },
+        edge_ngram_2: {
+          tokenizer: "edge_ngram_2",
+          filter: ["lowercase"]
+        },
         displayname_index: {
           tokenizer: "edge_ngram_2",
           filter: ["lowercase"]
@@ -104,12 +108,13 @@ module Searchable
 
     mappings dynamic: 'false' do
       indexes :id, index: 'not_analyzed'
-      indexes :username, analyzer: 'simple'
+      indexes :username, index_analyzer: 'simple_ngram_2', search_analyzer: 'displayname_search'
+      indexes :first_name, index_analyzer: 'simple_ngram_2', search_analyzer: 'displayname_search'
+      indexes :last_name, index_analyzer: 'simple_ngram_2', search_analyzer: 'displayname_search'
       indexes :displayname, analyzer: 'simple'
-      indexes :displayname_suggest, index_analyzer: 'displayname_index', search_analyzer: 'displayname_search'
-      indexes :displayname_suggest_2, index_analyzer: 'simple_ngram_2', search_analyzer: 'displayname_search'
-      indexes :username_2, index_analyzer: 'simple_ngram_2', search_analyzer: 'displayname_search'
-      indexes :name_suggest, type: 'completion', analyzer: 'simple', payloads: true
+      indexes :name_suggest, index_analyzer: 'displayname_index', search_analyzer: 'displayname_search'
+      indexes :name_suggest_2, index_analyzer: 'edge_ngram_2', search_analyzer: 'edge_ngram_2'
+      indexes :name_completion, type: 'completion', analyzer: 'simple', payloads: true
       indexes :professional_bio, analyzer: 'swedish_snowball'
       indexes :professional_bio_2, analyzer: 'swedish_ngram_2'
       indexes :skills, analyzer: 'swedish_snowball'
@@ -126,10 +131,11 @@ module Searchable
       id: id,
       username: username,
       displayname: displayname,
-      displayname_suggest: "#{first_name}#{last_name} #{last_name}#{first_name} #{username}",
-      displayname_2: displayname,
-      username_2: username,
-      name_suggest: {
+      name_suggest: "#{first_name}#{last_name} #{last_name}#{first_name} #{username}",
+      name_suggest_2: "#{first_name} #{last_name} #{username}",
+      first_name: first_name,
+      last_name: last_name,
+      name_completion: {
         input: [first_name, last_name, "#{last_name} #{first_name}", displayname, username],
         output: displayname,
         weight: 34,
@@ -157,89 +163,20 @@ module Searchable
   end
 end
 
-# Autocomplete for suggestion names or phone numbers
-# TODO: phone numbers are matching from the back, intentionally
-# so no suggetsion is made before at least the five last digits are entered
-#
-# POST /users/_search
-# {
-#    "size": 2000,
-#    "fields": [
-#       "displayname",
-#       "username",
-#       "company_short",
-#       "department"
-#    ],
-#    "query": {
-#       "bool": {
-#          "should": [
-#             {
-#                "match": {
-#                   "displayname_suggest": {
-#                      "query": "asdasdasdasdasdas",
-#                      "fuzziness": 0.8,
-#                      "prefix_length": 0
-#                   }
-#                }
-#             },
-#             {
-#                "multi_match": {
-#                   "fields": [
-#                      "phone",
-#                      "cell_phone"
-#                   ],
-#                   "query": "341029"
-#                }
-#             }
-#          ]
-#       }
-#    }
-# }
+# GET /_cluster/health
+# GET /_aliases
 
+# GET /employees/_mapping
+# GET /employees/_optimize
+# GET /employees/_count
+# GET /employees/employee/111
+# GET /employees/employee/115
+# GET /employees/employee/1416
+# GET /employees/_search?q=professional_bio_2:strategi
+# GET /employees/_analyze?tokenizer=standard&text=Mårten
 
-
-
-
-# EdgeNgram start matching for autocompletion.
-# Matches "first last", "last first", "username" from start with fuzziness in percent or edition distance
-#
-# POST /users/_search
-# {
-#    "size": 2000,
-#    "fields": ["displayname", "username", "company_short", "department"],
-#    "query": {
-#       "match": {
-#          "displayname_suggest": {
-#             "query": "bylund jes",
-#             "fuzziness": 0.8,
-#             "prefix_length": 0
-#          }
-#       }
-#    }
-# }
-
-# Fast elastic suggest completion.
-# No scoring for exact matches.
-#
-# POST /users/_suggest
-# {
-#    "users_suggest" : {
-#     "text" : "carlsson",
-#     "completion" : {
-#       "size": 1000,
-#       "field" : "name_suggest",
-#         "fuzzy": {
-#             "edit_distance": 1,
-#             "prefix_length": 0,
-#             "unicode_aware": true
-#         }
-#     }
-#   }
-# }
-
-# Matches phone number from the end.
-# Ignores everything non-digit. Possible to match front-truncated 5 digit numbers
-#
+# GET /employees/_search?q=skill:responsiv+design
+ 
 # POST /employees/_search
 # {
 #    "size": 200,
@@ -254,19 +191,189 @@ end
 #             "phone",
 #             "cell_phone"
 #          ],
-#          "query": "040-341139"
+#          "query": "41029"
 #       }
 #    }
 # }
 
-# Query on selected fields. Swedish snowball filter
-#
-# POST /users/_search
+# POST /employees/_search
+# {
+#    "size": 2000,
+#    "fields": [
+#       "displayname",
+#       "username"
+#    ],
+#    "query": {
+#       "multi_match": {
+#          "fields": [
+#             "name_suggest"
+#          ],
+#          "query": "je byl",
+#          "fuzziness": 2,
+#          "prefix_length": 0
+#       }
+#    }
+# }
+
+# POST /employees/_search
+# {
+#    "size": 2000,
+#    "fields": [
+#       "displayname",
+#       "username",
+#       "company_short",
+#       "department",
+#       "phone",
+#       "cell_phone"
+#    ],
+#    "query": {
+#       "bool": {
+#          "should": [
+#             {
+#               "multi_match": {
+#                  "boost": 10,
+#                  "fields": [
+#                     "name_suggest"
+#                  ],
+#                  "query": "jesper b"
+#               }
+#             },
+#             {
+#               "multi_match": {
+#                  "boost": 1,
+#                  "fields": [
+#                     "name_suggest"
+#                  ],
+#                  "query": "jesper b",
+#                  "fuzziness": 2,
+#                  "prefix_length": 0
+#               }
+#             }
+#          ]
+#       }
+#    }
+# }
+
+# POST /employees/_search
+# {
+#    "size": 2000,
+#    "fields": [
+#       "displayname",
+#       "username"
+#    ],
+#    "query": {
+#       "multi_match": {
+#          "fields": [
+#             "name_suggest_2"
+#          ],
+#          "query": "jesby ylund",
+#          "fuzziness": 2,
+#          "prefix_length": 0
+#       }
+#    }
+# }
+
+# POST /employees/_search
+# {
+#    "size": 2000,
+#    "fields": [
+#       "displayname",
+#       "username",
+#       "company_short",
+#       "department",
+#       "phone",
+#       "cell_phone"
+#    ],
+#    "query": {
+#       "bool": {
+#          "should": [
+#             {
+#               "multi_match": {
+#                  "fields": [
+#                     "name_suggest"
+#                  ],
+#                  "query": "341029",
+#                  "fuzziness": 2,
+#                  "prefix_length": 0
+#               }
+#             },
+#             {
+#                "multi_match": {
+#                   "fields": [
+#                      "phone",
+#                      "cell_phone"
+#                   ],
+#                   "query": "040341029"
+#                }
+#             }
+#          ]
+#       }
+#    }
+# }
+
+
+# POST /employees/_search
 # {
 #     "query": {
 #         "query_string": {
-#             "query": "personalavin",
-#             "fields": ["skills", "professional_bio"]
+#             "query": "Komin",
+#             "fields": ["skills"]
 #         }
 #     }
 # }
+
+# POST /employees/_search
+# {
+#    "size": 2000,
+#    "fields": ["displayname", "username", "company_short", "department"],
+#    "query": {
+#       "match": {
+#          "name_suggest": {
+#             "query": "jepser b",
+#             "fuzziness": 1,
+#             "prefix_length": 0
+#          }
+#       }
+#    }
+# }
+
+# POST /employees/_suggest
+# {
+#    "users_suggest": {
+#       "text": "carlsson",
+#       "completion": {
+#          "size": 1000,
+#          "field": "name_completion",
+#          "fuzzy": {
+#             "edit_distance": 1,
+#             "prefix_length": 0,
+#             "unicode_aware": true
+#          }
+#       }
+#    }
+# }
+
+# POST /employees/_search
+# {
+#    "size": 1000,
+#    "query": {
+#     "fuzzy_like_this" : {
+#         "fields" : ["displayname"],
+#         "like_text" : "bylund jepser",
+#         "min_similarity": 0.8
+#     }
+#   }
+# }
+
+# POST /employees/_search
+# {
+#    "size": 20,
+#    "query": {
+#     "fuzzy_like_this" : {
+#         "fields" : ["displayname", "skills", "languages", "professional_bio", "username", "phone", "cellphone"],
+#         "like_text" : "040342091",
+#         "min_similarity": 1
+#     }
+#   }
+# }
+
