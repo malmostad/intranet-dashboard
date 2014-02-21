@@ -1,0 +1,41 @@
+analysis:
+  analyzer:
+    displayname_index:
+      tokenizer: edge_ngram_2
+      filter:
+      - lowercase
+    displayname_search:
+      tokenizer: keyword
+      filter:
+      - lowercase
+      char_filter:
+      - name_suggest
+    phone_number:
+      tokenizer: keyword
+      filter:
+      - phone_number
+      char_filter:
+      - phone_number
+  tokenizer:
+    edge_ngram_2:
+      type: edgeNGram
+      min_gram: 2
+      max_gram: 50
+      token_chars:
+      - letter
+      - digit
+  filter:
+    phone_number:
+      type: edgeNGram
+      side: back
+      min_gram: 5
+      max_gram: 12
+  char_filter:
+    phone_number:
+      type: pattern_replace
+      pattern: "[^0-9]"
+      replacement: ''
+    name_suggest:
+      type: pattern_replace
+      pattern: "[-,\\s]"
+      replacement: ''
