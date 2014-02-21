@@ -35,6 +35,25 @@ module Searchable
 
   module ClassMethods
     def suggest(query)
+      __elasticsearch__.search({
+        size: 10,
+        fields: [
+          "displayname",
+          "username",
+          "department",
+          "company_short"
+        ],
+        query: {
+          multi_match: {
+            fields: [
+              "name_suggest"
+            ],
+            query: query,
+            fuzziness: 2,
+            prefix_length: 0
+          }
+        }
+      })
     end
   end
 end
