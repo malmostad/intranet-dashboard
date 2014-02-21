@@ -35,6 +35,7 @@ module Searchable
 
   module ClassMethods
     def suggest(query)
+      query = sanitize_query(query)
       __elasticsearch__.search({
         size: 10,
         fields: [
@@ -54,6 +55,18 @@ module Searchable
           }
         }
       })
+    end
+
+  private
+
+    # NOTE: The sanitizer also prevents grouping and booleans in query
+    def sanitize_query(query)
+      # Remove Lucene reserved characters
+      query.gsub!(/([#{Regexp.escape('\\+-&|!(){}[]^~*?:/"\'')}])/, '')
+
+      # Remove Lucene operators
+      query.gsub!(/\s+\b(AND|OR|NOT)\b/i, '')
+      query
     end
   end
 end
