@@ -59,7 +59,7 @@ module Searchable
 
   private
 
-    # NOTE: The sanitizer also prevents grouping and booleans in query
+    # NOTE: The sanitizer does not allow grouping and operators in the query
     def sanitize_query(query)
       # Remove Lucene reserved characters
       query.gsub!(/([#{Regexp.escape('\\+-&|!(){}[]^~*?:/"\'')}])/, '')
