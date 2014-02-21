@@ -33,6 +33,8 @@ gem 'whenever', require: false
 gem 'jbuilder', '2.0.2'
 gem 'axlsx', '2.0.1'
 
+gem 'macaddr', '1.6.1' # 1.6.2 has a depend issue with systemu
+
 group :development do
   gem 'haml-rails'
   gem 'pry-rails'
