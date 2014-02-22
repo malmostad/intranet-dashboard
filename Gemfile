@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.2.17'
-gem 'jquery-rails', '3.0.4'
+gem 'jquery-rails', '3.1.0'
 gem 'haml', '4.0.5'
 
 gem 'nokogiri', '1.6.1'
