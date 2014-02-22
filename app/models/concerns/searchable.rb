@@ -39,13 +39,27 @@ module Searchable
       __elasticsearch__.search({
         size: 10,
         query: {
-          multi_match: {
-            fields: [
-              "name_suggest"
-            ],
-            query: query,
-            fuzziness: 2,
-            prefix_length: 0
+          bool: {
+            should: [
+              {
+                match: {
+                  name_suggest: {
+                    query: query,
+                    fuzziness: 2,
+                    prefix_length: 0
+                  }
+                }
+              },
+              {
+                multi_match: {
+                  fields: [
+                    "phone",
+                    "cell_phone"
+                  ],
+                  query: query
+                }
+              }
+            ]
           }
         }
       }).map(&:_source)
