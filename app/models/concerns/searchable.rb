@@ -12,7 +12,7 @@ module Searchable
     mappings dynamic: 'false' do
       indexes :username, analyzer: 'simple'
       indexes :displayname, analyzer: 'simple'
-      indexes :name_suggest, index_analyzer: 'displayname_index', search_analyzer: 'displayname_search'
+      indexes :name_suggest, index_analyzer: 'name_suggest_index', search_analyzer: 'name_suggest_search'
       indexes :phone, analyzer: 'phone_number'
       indexes :cell_phone, analyzer: 'phone_number'
       indexes :company_short, analyzer: 'simple'
