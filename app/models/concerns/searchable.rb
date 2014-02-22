@@ -36,7 +36,7 @@ module Searchable
   module ClassMethods
     def suggest(query)
       query = sanitize_query(query)
-      __elasticsearch__.search({
+      results = __elasticsearch__.search({
         size: 10,
         fields: [
           "displayname",
@@ -55,6 +55,7 @@ module Searchable
           }
         }
       })
+      results.map { |r| r.fields }
     end
 
   private

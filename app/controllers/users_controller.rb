@@ -24,6 +24,15 @@ class UsersController < ApplicationController
   end
 
   def suggest
+    @users = User.suggest(params[:term]) || {}
+    if params['callback']
+      render json: @users.to_json, callback: params['callback']
+    else
+      render json: @users
+    end
+  end
+
+  def suggest_x
     @users = User.search(params.except(:controller, :action), 10)[:users] || {}
 
     response = @users.map { |u|
