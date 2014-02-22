@@ -38,6 +38,7 @@ gem 'macaddr', '1.6.1' # 1.6.2 has a depend issue with systemu
 group :development do
   gem 'haml-rails'
   gem 'pry-rails'
+  gem 'rack-mini-profiler'
 end
 
 group :development, :local_test do
