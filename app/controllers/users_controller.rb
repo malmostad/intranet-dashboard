@@ -24,31 +24,20 @@ class UsersController < ApplicationController
   end
 
   def suggest
-    @users = User.suggest(params[:term]) || {}
-    if params['callback']
-      render json: @users.to_json, callback: params['callback']
-    else
-      render json: @users
-    end
-  end
-
-  def suggest_x
-    @users = User.search(params.except(:controller, :action), 10)[:users] || {}
-
-    response = @users.map { |u|
+    users = User.suggest(params[:term]) || {}
+    users = users.map { |u|
       { username: u.username,
-        avatar_full_url: u.avatar.url(:mini_quadrat),
+        avatar_full_url: "#{APP_CONFIG["avatar_base_url"]}#{u.username}/tiny_quadrat.jpg",
         path: "#{root_url}users/#{u.username}",
-        first_name: u.first_name,
-        last_name: u.last_name,
+        displayname: u.displayname,
         company_short: u.company_short || "",
         department: u.department || ""
       }
     }
     if params['callback']
-      render json: response.to_json, callback: params['callback']
+      render json: users.to_json, callback: params['callback']
     else
-      render json: response
+      render json: users
     end
   end
 
