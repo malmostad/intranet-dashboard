@@ -6,7 +6,6 @@ analysis:
       - lowercase
       - name_synonyms
       char_filter:
-      - name_suggest
       - phonetic_mappings
     name_suggest_search:
       tokenizer: keyword
@@ -39,10 +38,14 @@ analysis:
     name_synonyms:
       type: synonym
       synonyms:
-      - "carl, karl"
-      - "carlsson, karlsson"
-      - "sophie, sofie"
-      - "sophia, sofia"
+      - "carlsson, carlson => karlsson"
+      - "karlson => karlsson"
+      - "hanson => hansson"
+      - "nilson => nilsson"
+      - "person => persson"
+      - "anderson => andersson"
+      - "svenson => svensson"
+      - "carl => karl"
 
   char_filter:
     phone_number:
@@ -56,4 +59,5 @@ analysis:
     phonetic_mappings:
       type: mapping
       mappings:
-      - "y => ü"
+      - "û => y"
+      - "ph => f"
