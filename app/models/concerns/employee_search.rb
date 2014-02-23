@@ -35,35 +35,40 @@ module EmployeeSearch
 
   module ClassMethods
     def suggest(query)
-      Rails.cache.fetch(["employee-suggest", query], expires_in: 12.hours) do
-        query = sanitize_query(query)
-        __elasticsearch__.search({
-          size: 10,
-          query: {
-            bool: {
-              should: [
-                {
-                  match: {
-                    name_suggest: {
-                      query: query,
-                      fuzziness: 2,
-                      prefix_length: 0
+      begin
+        Rails.cache.fetch(["employee-suggest", query], expires_in: 12.hours) do
+          query = sanitize_query(query)
+          __elasticsearch__.search({
+            size: 10,
+            query: {
+              bool: {
+                should: [
+                  {
+                    match: {
+                      name_suggest: {
+                        query: query,
+                        fuzziness: 2,
+                        prefix_length: 0
+                      }
+                    }
+                  },
+                  {
+                    multi_match: {
+                      fields: [
+                        "phone",
+                        "cell_phone"
+                      ],
+                      query: query
                     }
                   }
-                },
-                {
-                  multi_match: {
-                    fields: [
-                      "phone",
-                      "cell_phone"
-                    ],
-                    query: query
-                  }
-                }
-              ]
+                ]
+              }
             }
-          }
-        }).map(&:_source)
+          }).map(&:_source)
+        end
+      rescue Exception => e
+        logger.error "Elasticsearch: #{e}"
+        false
       end
     end
 

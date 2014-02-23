@@ -24,16 +24,21 @@ class UsersController < ApplicationController
   end
 
   def suggest
-    @users = User.suggest(params[:term]) || {}
-    @users = @users.map { |u|
-      { username: u.username,
-        avatar_full_url: "#{APP_CONFIG["avatar_base_url"]}#{u.username}/tiny_quadrat.jpg",
-        path: "#{root_url}users/#{u.username}",
-        displayname: u.displayname,
-        company_short: u.company_short || "",
-        department: u.department || ""
+    @users = User.suggest(params[:term])
+    if @users
+      @users = @users.map { |u|
+        { username: u.username,
+          avatar_full_url: "#{APP_CONFIG["avatar_base_url"]}#{u.username}/tiny_quadrat.jpg",
+          path: "#{root_url}users/#{u.username}",
+          displayname: u.displayname,
+          company_short: u.company_short || "",
+          department: u.department || ""
+        }
       }
-    }
+    else
+      @users = { error: "Couldn't get suggestions"}
+    end
+
     if params['callback']
       render json: @users.to_json, callback: params['callback']
     else
