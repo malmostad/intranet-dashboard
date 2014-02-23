@@ -2,24 +2,21 @@ require 'elasticsearch/rails/tasks/import'
 
 namespace :elasticsearch do
   desc "Zero downtime reindexing
-  $ rake environment elasticsearch:reindex CLASS='User' INDEX='employees_123' ALIAS='employees'
-  "
+  $ rake environment elasticsearch:reindex CLASS='User' INDEX='employees_201402240920' ALIAS='employees FORCE=y'"
   task reindex: :environment do
-    # TODO: check for argument
-    # TODO: catch not found index/alias errors
-
-    alias_name = ENV["ALIAS"]
+    # TODO: check for arguments CLASS INDEX ALIAS FORCE
+    aliaz = ENV["ALIAS"]
     index = ENV["INDEX"]
-    klass = ENV["INDEX"]
 
     client = Elasticsearch::Client.new
-    old_indices = client.indices.get_alias(name: alias_name).map {|k,v| k }
+    has_alias = client.indices.exists_alias name: aliaz
+    old_indices = has_alias ? client.indices.get_alias(name: aliaz).map {|k,v| k } : []
 
-    # bundle exec rake environment elasticsearch:import:model CLASS='User' INDEX=index
-    Rake::Task["elasticsearch:import:model"].invoke("CLASS=#{klass} INDEX=#{index}")
+    # Creat new index
+    Rake::Task["elasticsearch:import:model"].invoke
 
-    client.indices.delete_alias index: "*", name: alias_name
-    client.indices.put_alias index: index, name: alias_name
-    client.indices.delete index: old_indices
+    client.indices.delete_alias(index: "*", name: aliaz) if has_alias
+    client.indices.put_alias(index: index, name: aliaz)
+    client.indices.delete(index: old_indices) if old_indices.present?
   end
 end
