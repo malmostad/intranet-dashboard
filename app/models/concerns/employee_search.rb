@@ -1,4 +1,4 @@
-module Searchable
+module EmployeeSearch
   extend ActiveSupport::Concern
 
   included do
@@ -35,34 +35,36 @@ module Searchable
 
   module ClassMethods
     def suggest(query)
-      query = sanitize_query(query)
-      __elasticsearch__.search({
-        size: 10,
-        query: {
-          bool: {
-            should: [
-              {
-                match: {
-                  name_suggest: {
-                    query: query,
-                    fuzziness: 2,
-                    prefix_length: 0
+      Rails.cache.fetch(["employee-suggest", query], expires_in: 12.hours) do
+        query = sanitize_query(query)
+        __elasticsearch__.search({
+          size: 10,
+          query: {
+            bool: {
+              should: [
+                {
+                  match: {
+                    name_suggest: {
+                      query: query,
+                      fuzziness: 2,
+                      prefix_length: 0
+                    }
+                  }
+                },
+                {
+                  multi_match: {
+                    fields: [
+                      "phone",
+                      "cell_phone"
+                    ],
+                    query: query
                   }
                 }
-              },
-              {
-                multi_match: {
-                  fields: [
-                    "phone",
-                    "cell_phone"
-                  ],
-                  query: query
-                }
-              }
-            ]
+              ]
+            }
           }
-        }
-      }).map(&:_source)
+        }).map(&:_source)
+      end
     end
 
   private

@@ -11,9 +11,10 @@ The Intranet Dashboard, “Min sida”, is City of Malmö’s personalized intra
 For more information about the Intranet Dashboard, contact kominteamet@malmo.se.
 
 ## Dependencies
-* Ruby >=1.9.3
-* Ruby on Rails >=3.2
+* Ruby 1.9.3, 2.0, 2.1
+* Ruby on Rails 3.2
 * MySQL or PostgreSQL
+* Elasticsearch >=1.0
 * Memcached or other cache store with ttl support
 * LDAP or a SAML 2.0 IdP for authentication
 * LDAP directory for employee attributes

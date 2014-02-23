@@ -5,10 +5,10 @@ $ ->
     $queryEmployee.autocomplete
       source: (request, response) ->
         $.ajax
-          url: "http://www.local.malmo.se:3000/employee_search_suggestions"
+          url: $queryEmployee.attr("data-autocomplete-url").replace("http:", location.protocol)
           data:
             term: request.term.toLowerCase()
-          dataType: "json"
+          dataType: "jsonp"
           timeout: 5000
           success: (data) ->
             if data.length

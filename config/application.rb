@@ -58,6 +58,6 @@ module Dashboard
       g.test_framework :rspec
     end
 
-    config.middleware.insert_before 0, "EmployeeSearchSuggestions"
+    # config.middleware.insert_before 0, "EmployeeSearchSuggestions"
   end
 end

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
-  include Searchable # Concern with Elasticsearch::Model
+  include EmployeeSearch
   include Elasticsearch::Model::Callbacks
 
   attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
