@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.16'
-gem 'jquery-rails', '3.0.4'
+gem 'rails', '3.2.17'
+gem 'jquery-rails', '3.1.0'
 gem 'haml', '4.0.5'
 
 gem 'nokogiri', '1.6.1'
@@ -30,14 +30,16 @@ gem 'whenever', require: false
 gem 'jbuilder', '2.0.2'
 gem 'axlsx', '2.0.1'
 
+gem 'macaddr', '1.6.1' # 1.6.2 has a depend issue with systemu
+
 group :development do
   gem 'haml-rails'
+  gem 'pry-rails'
 end
 
 group :development, :local_test do
   gem 'quiet_assets'
   gem 'thin'
-  gem 'pry-rails'
 end
 
 group :local_test do
