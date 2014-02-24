@@ -17,12 +17,12 @@ $ ->
       minLength: 2
       select: (event, ui) ->
         document.location = ui.item.path
-        open: (event, ui) ->
-          # Add "More results" at the bottom of the list
-          $("<li class='more-search-results ui-menu-item' role='presentation'><a class='ui-corner-all'>Visa fler resultat</a></li>").click (event) ->
-            event.preventDefault()
-            $queryEmployee.closest("form").submit()
-          .appendTo $('ul.search_users')
+      open: (event, ui) ->
+        # Add "More results" at the bottom of the list
+        $("<li class='more-search-results ui-menu-item' role='presentation'><a class='ui-corner-all'>Visa fler resultat</a></li>").click (event) ->
+          event.preventDefault()
+          $queryEmployee.closest("form").submit()
+        .appendTo $('ul.search_users')
     .data("ui-autocomplete")._renderItem = (ul, item) ->
       ul.addClass('search_users')
       if $queryEmployee.hasClass("full-search")
