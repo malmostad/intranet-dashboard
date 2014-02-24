@@ -4,12 +4,12 @@ $menuColor: $bodyColor;
 
 $linkColor: #007133;
 
-$borderColor: #ccc;
+$borderColor: #b5b5b5;
 $border: $borderColor 1px solid;
 $borderColorDark: darken($borderColor, 20%);
 $borderDark: $borderColorDark 1px solid;
 
-$backgroundLight: #f5f5f5;
+$backgroundLight: #f0f0f0;
 $backgroundLightHover: darken($backgroundLight, 5%);
 $backgroundDark: #888;
 $backgroundDarker: darken($backgroundDark, 14%);
