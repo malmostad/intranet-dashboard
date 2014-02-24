@@ -31,6 +31,7 @@ gem 'jbuilder', '2.0.2'
 gem 'axlsx', '2.0.1'
 
 gem 'macaddr', '1.6.1' # 1.6.2 has a depend issue with systemu
+gem 'net-ssh', '2.7.0' # No prompt for pw in 2.8.0
 
 group :development do
   gem 'haml-rails'
