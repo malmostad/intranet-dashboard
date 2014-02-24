@@ -36,12 +36,18 @@
 }
 
 @media ( max-width: 62em ) {
-  .column-1 {
-    @include columns(4);
+  .group-1 {
+    @include columns(12);
+    .column-1 {
+      @include columns(4);
+      float: left;
+    }
+    .column-2 {
+      @include columns(8, true);
+      float: right;
+    }
   }
-  .column-2 {
-    @include columns(8, true);
-  }
+
   .column-3 {
     clear: both;
     @include columns(12);
@@ -85,13 +91,6 @@
 }
 
 @media ( max-width: 51em ) {
-  .column-1 {
-    @include columns(4);
-  }
-  .column-2 {
-    @include columns(8, true);
-  }
-
   body {
     .wrapper {
       margin: 0 1em;
