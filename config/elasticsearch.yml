@@ -41,10 +41,10 @@ analysis:
       - "carlsson, carlson => karlsson"
       - "karlson => karlsson"
       - "hanson => hansson"
-      - "nilson => nilsson"
-      - "person => persson"
-      - "anderson => andersson"
-      - "svenson => svensson"
+      # - "nilson => nilsson"
+      # - "person => persson"
+      # - "anderson => andersson"
+      # - "svenson => svensson"
       - "carl => karl"
 
   char_filter:
