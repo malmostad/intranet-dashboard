@@ -1,12 +1,13 @@
 - title "Min sida"
-.column.column-2
-  = render "feeds_news"
-  = render "feeds_dialog"
-  = render "feeds_my_own"
+.group-1
+  .column.column-2
+    = render "feeds_news"
+    = render "feeds_dialog"
+    = render "feeds_my_own"
 
-.column.column-1
-  = render "feeds_feature"
-  = render 'colleagues'
+  .column.column-1
+    = render "feeds_feature"
+    = render 'colleagues'
 
 .column.column-3
   - if current_user.early_adopter?
