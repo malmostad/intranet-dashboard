@@ -6,7 +6,7 @@ module EmployeeSearch
     settings YAML.load_file("#{Rails.root.to_s}/config/elasticsearch.yml")
 
     # Override model name
-    index_name    "employees"
+    index_name    "employees_#{Rails.env}"
     document_type "employee"
 
     mappings dynamic: 'false' do

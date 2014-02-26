@@ -30,10 +30,10 @@ namespace :users do
             deactivated += 1
           end
         end
-     rescue Exception => e
-       puts "Error updating user #{user.id}"
-       puts "Exception: #{e}"
-     end
+      rescue Exception => e
+        puts "Error updating user #{user.id}"
+        puts "Exception: #{e}"
+      end
     end
 
     # Log users with diffs between the address in ldap and dashboard in an xlsx file
