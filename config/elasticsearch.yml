@@ -6,6 +6,7 @@ analysis:
       - lowercase
       - name_synonyms
       char_filter:
+      - name_suggest
       - phonetic_mappings
     name_suggest_search:
       tokenizer: keyword
@@ -26,9 +27,7 @@ analysis:
       type: edgeNGram
       min_gram: 2
       max_gram: 50
-      token_chars:
-      - letter
-      - digit
+      token_chars: []
   filter:
     phone_number:
       type: edgeNGram
