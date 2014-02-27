@@ -73,4 +73,17 @@ describe Feed do
     items = feed.feed_entries.size
     expect { feed.destroy }.to change(FeedEntry, :count).by(-items)
   end
+
+  it "should have feed_entries after clear and reload feed" do
+    feed = create(:feed)
+    feed.refresh_entries
+    feed.feed_entries.count.should > 0
+  end
+
+  it "should change updated_at on clear and reload feed" do
+    feed = create(:feed)
+    updated_at = feed.updated_at
+    feed.refresh_entries
+    feed.updated_at.should > updated_at
+  end
 end

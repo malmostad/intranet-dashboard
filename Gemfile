@@ -56,12 +56,12 @@ group :local_test do
   gem 'capybara'
   gem 'rack-test'
   gem 'poltergeist'
-  gem 'guard-rspec', '4.2.4'
+  gem 'guard-rspec'
   gem 'rb-fsevent'
   gem 'launchy'
   gem 'database_cleaner'
   gem 'vcr'
-  gem 'webmock', '1.13.0'
+  gem 'webmock', '1.15.2'
 end
 
 group :assets do

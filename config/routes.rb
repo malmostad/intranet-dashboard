@@ -35,6 +35,8 @@ Dashboard::Application.routes.draw do
 
   resources :shortcuts, :roles, :languages, :skills, :feeds, :my_own_feeds, except: [:show]
 
+  put "/feeds/refresh_entries/:id" => "feeds#refresh_entries", as: "feeds_refresh_entries"
+
   get "/languages/suggest" => "languages#suggest", as: "languages_suggest"
   get "/languages/search" => "languages#search", as: "languages_search"
   get "/languages/merge/:id" => "languages#edit_merge", as: "languages_edit_merge"
