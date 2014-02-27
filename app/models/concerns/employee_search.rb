@@ -53,6 +53,15 @@ module EmployeeSearch
                     }
                   },
                   {
+                    match: {
+                      name_suggest: {
+                        query: query,
+                        fuzziness: 0,
+                        prefix_length: 0
+                      }
+                    }
+                  },
+                  {
                     multi_match: {
                       fields: [
                         "phone",
