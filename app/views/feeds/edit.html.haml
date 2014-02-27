@@ -2,3 +2,10 @@
 %section.box.form
   %h1.box-title= h1
   = render 'form'
+%section.box.show.danger-zone
+  %h1.box-title Riskområde
+  .box-content.form-horizontal.form-data
+    %section.misc
+      %p= "Alla nyheter i flödet kommer att raderas. De senaste nyheterna kommer att hämtas på nytt."
+      .delete= link_to "Radera alla nyheter i flödet", feeds_refresh_entries_path(@feed), data: { confirm: 'Vill du radera alla nyheter i flödet?', method: :put }, class: "btn btn-danger btn-small"
+

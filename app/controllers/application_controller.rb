@@ -135,8 +135,10 @@ class ApplicationController < ActionController::Base
     init_body_class
   end
 
-  def sub_layout(name = "")
-    @sub_layout = name
+  def sub_layout(name = "", options = {})
+    logger.debug options[:except]
+    logger.debug params[:action]
+    @sub_layout = name unless options[:except] == params[:action]
   end
 
   # Error responses are triggered both from rescue_from and routing match with errors controller

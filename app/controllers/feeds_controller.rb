@@ -3,7 +3,7 @@
 # News feeds administration
 class FeedsController < ApplicationController
   before_filter { add_body_class('edit feeds') }
-  before_filter { sub_layout("admin") }
+  before_filter { sub_layout("admin", except: "edit") }
   before_filter :require_admin
 
   def index
