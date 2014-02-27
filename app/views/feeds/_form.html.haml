@@ -58,3 +58,7 @@
       .controls
         = f.submit "Spara och hämta", class: "btn btn-primary"
         = link_to t('actions.cancel'), feeds_path, class: "btn"
+    - unless @feed.new_record?
+      .help-inline= link_to "Radera alla nyheter och ladda hem de senaste", feeds_refresh_entries_path(@feed),
+        data: { confirm: 'Vill du radera alla nyheter och ladda hem de senaste?', method: :put }
+

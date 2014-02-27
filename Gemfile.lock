@@ -93,7 +93,7 @@ GEM
     execjs (2.0.2)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.4.0)
+    factory_girl_rails (4.4.1)
       factory_girl (~> 4.4.0)
       railties (>= 3.0.0)
     feedzirra (0.7.0)
@@ -102,13 +102,13 @@ GEM
       sax-machine (~> 0.2.1)
     ffi (1.9.3)
     formatador (0.2.4)
-    guard (2.4.0)
+    guard (2.5.1)
       formatador (>= 0.2.4)
-      listen (~> 2.1)
+      listen (~> 2.6)
       lumberjack (~> 1.0)
       pry (>= 0.9.12)
       thor (>= 0.18.1)
-    guard-rspec (4.2.4)
+    guard-rspec (4.2.7)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
     gyoku (1.1.1)
@@ -138,7 +138,7 @@ GEM
     launchy (2.4.2)
       addressable (~> 2.3)
     libv8 (3.16.14.3)
-    listen (2.6.0)
+    listen (2.6.1)
       celluloid (>= 0.15.2)
       celluloid-io (>= 0.15.0)
       rb-fsevent (>= 0.9.3)
@@ -290,7 +290,7 @@ GEM
       httpi (~> 2.0)
       mime-types (< 2.0.0)
       nokogiri (>= 1.4.0)
-    webmock (1.13.0)
+    webmock (1.15.2)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
     websocket-driver (0.3.2)
@@ -317,7 +317,7 @@ DEPENDENCIES
   delayed_job_active_record (= 4.0.0)
   factory_girl_rails
   feedzirra (= 0.7.0)
-  guard-rspec (= 4.2.4)
+  guard-rspec
   haml (= 4.0.5)
   haml-rails
   jbuilder (= 2.0.2)
@@ -345,5 +345,5 @@ DEPENDENCIES
   thin
   uglifier (= 2.4.0)
   vcr
-  webmock (= 1.13.0)
+  webmock (= 1.15.2)
   whenever
