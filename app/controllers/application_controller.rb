@@ -136,8 +136,6 @@ class ApplicationController < ActionController::Base
   end
 
   def sub_layout(name = "", options = {})
-    logger.debug options[:except]
-    logger.debug params[:action]
     @sub_layout = name unless options[:except] == params[:action]
   end
 
