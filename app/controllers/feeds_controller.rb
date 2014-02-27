@@ -48,7 +48,7 @@ class FeedsController < ApplicationController
   def refresh_entries
     @feed = Feed.find(params[:id])
     if @feed.refresh_entries
-      redirect_to feeds_path, notice: "Nyhetsflödets samtliga nyheter raderades. De senaste nyheterna hämtades från källan. Notera att data på en användares Min sida caches en liten stund."
+      redirect_to feeds_path, notice: "Nyhetsflödets samtliga nyheter raderades. De senaste nyheterna hämtades från källan. Notera att det kan ta en liten stund innan detta slår igenom hos användarna."
     else
       render action: "edit"
     end
