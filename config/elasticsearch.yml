@@ -6,7 +6,7 @@ analysis:
       - lowercase
       - name_synonyms
       char_filter:
-      - name_suggest
+      - hyphen
       - phonetic_mappings
     name_suggest_search:
       tokenizer: keyword
@@ -14,7 +14,7 @@ analysis:
       - lowercase
       - name_synonyms
       char_filter:
-      - name_suggest
+      - hyphen_space
       - phonetic_mappings
     phone_number:
       tokenizer: keyword
@@ -27,7 +27,11 @@ analysis:
       type: edgeNGram
       min_gram: 2
       max_gram: 50
-      token_chars: []
+      token_chars:
+      - letter
+      - digit
+      - symbol
+      - punctuation
   filter:
     phone_number:
       type: edgeNGram
@@ -51,9 +55,13 @@ analysis:
       type: pattern_replace
       pattern: "[^0-9]"
       replacement: ''
-    name_suggest:
+    hyphen_space:
       type: pattern_replace
       pattern: "[-,\\s]"
+      replacement: ''
+    hyphen:
+      type: pattern_replace
+      pattern: "[-]"
       replacement: ''
     phonetic_mappings:
       type: mapping
