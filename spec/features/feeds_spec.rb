@@ -71,7 +71,7 @@ describe "Feeds" do
 
     it "should refresh feed", js: true do
       first("table tbody td a").click
-      first(".help-inline a").click
+      first("a.btn-danger").click
       page.evaluate_script("window.confirm()")
       page.should have_selector(".flash.notice", text: "De senaste nyheterna hämtades från källan")
     end
