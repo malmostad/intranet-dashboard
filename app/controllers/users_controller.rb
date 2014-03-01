@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_filter :require_admin_or_myself, only: [:edit, :update]
   before_filter :require_admin, only: :destroy
 
-  # Search users and return a hash in json or @users for html rendering
+  # List users matching a tag
   def index
     @limit = 25
     page = params[:page].present? ? params[:page].to_i : 0
@@ -23,6 +23,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # Full search for users
   def search
     @limit = 25
     @offset = params[:page].to_i * @limit
@@ -41,6 +42,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # Suggest user based on a search query
   def suggest
     @users = User.fuzzy_suggest(params[:term])
     if @users
