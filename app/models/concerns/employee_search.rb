@@ -41,44 +41,12 @@ module EmployeeSearch
       }.merge(options)
       begin
         Rails.cache.fetch(["employee_fuzzy_search", query, settings], expires_in: 12.hours) do
-          query = sanitize_query(query)
-          __elasticsearch__.search({
-            from: settings[:from],
-            size: settings[:size],
-            query: {
-              bool: {
-                should: [
-                  {
-                    match: {
-                      name_suggest: {
-                        query: query,
-                        fuzziness: 2,
-                        prefix_length: 0
-                      }
-                    }
-                  },
-                  {
-                    match: {
-                      name_suggest: {
-                        query: query,
-                        fuzziness: 0,
-                        prefix_length: 0
-                      }
-                    }
-                  },
-                  {
-                    multi_match: {
-                      fields: [
-                        "phone",
-                        "cell_phone"
-                      ],
-                      query: query
-                    }
-                  }
-                ]
-              }
-            }
-          })
+          response = __elasticsearch__.search fuzzy_query(query, settings[:from], settings[:size])
+
+          { employees: response.records.to_a, # to_a is need to be able to serealize for memcached
+            total: response.results.total,
+            took: response.took
+          }
         end
       rescue Exception => e
         logger.error "Elasticsearch: #{e}"
@@ -86,16 +54,60 @@ module EmployeeSearch
       end
     end
 
-    def fuzzy_suggest(query, options = {})
-      users = fuzzy_search(query, options)
-      if users
-        users.map(&:_source)
-      else
+    def fuzzy_suggest(query)
+      begin
+        Rails.cache.fetch(["employee_fuzzy_suggest", query], expires_in: 12.hours) do
+          response = __elasticsearch__.search fuzzy_query(query, 0, 10)
+          response.map(&:_source)
+        end
+      rescue Exception => e
+        logger.error "Elasticsearch: #{e}"
         false
       end
     end
 
   private
+
+    def fuzzy_query(query, from, size)
+      query = sanitize_query(query)
+      {
+        from: from,
+        size: size,
+        query: {
+          bool: {
+            should: [
+              {
+                match: {
+                  name_suggest: {
+                    query: query,
+                    fuzziness: 2,
+                    prefix_length: 0
+                  }
+                }
+              },
+              {
+                match: {
+                  name_suggest: {
+                    query: query,
+                    fuzziness: 0,
+                    prefix_length: 0
+                  }
+                }
+              },
+              {
+                multi_match: {
+                  fields: [
+                    "phone",
+                    "cell_phone"
+                  ],
+                  query: query
+                }
+              }
+            ]
+          }
+        }
+      }
+    end
 
     # NOTE: The sanitizer does not allow grouping and operators in the query
     def sanitize_query(query)

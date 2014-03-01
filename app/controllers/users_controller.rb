@@ -29,12 +29,16 @@ class UsersController < ApplicationController
 
     response = User.fuzzy_search(params[:q], from: @offset, size: @limit)
     if response
-      @users = response.records
-      @total = response.results.total
-      logger.info { "Elasticsearch took #{response.took}ms" }
+      @users = response[:employees]
+      @total = response[:total]
+      logger.info { "Elasticsearch took #{response[:took]}ms" }
     end
     @has_more = @total.present? ? (@offset + @limit < @total) : false
-    render :search
+    if request.xhr?
+      render :_results, layout: false
+    else
+      render :search
+    end
   end
 
   def suggest
