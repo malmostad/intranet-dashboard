@@ -12,5 +12,6 @@ guard 'rspec' do
   watch(%r{^spec/support/(.+)\.rb$})                  { "spec" }
   watch('config/routes.rb')                           { "spec/routing" }
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
+  watch(%r{^app/models/concerns/(.+)\.rb$})           { "spec/concerns" }
   watch(%r{^app/services/(.+)/?.*\.rb$})              { |m| "spec/services" }
 end

@@ -34,12 +34,17 @@ module EmployeeSearch
   end
 
   module ClassMethods
-    def suggest(query)
+    def fuzzy_search(query, options = {})
+      return false if query.blank?
+      settings = {
+        from: 0, size: 10
+      }.merge(options)
       begin
-        Rails.cache.fetch(["employee-suggest", query], expires_in: 12.hours) do
+        Rails.cache.fetch(["employee_fuzzy_search", query, settings], expires_in: 12.hours) do
           query = sanitize_query(query)
           __elasticsearch__.search({
-            size: 10,
+            from: settings[:from],
+            size: settings[:size],
             query: {
               bool: {
                 should: [
@@ -73,10 +78,19 @@ module EmployeeSearch
                 ]
               }
             }
-          }).map(&:_source)
+          })
         end
       rescue Exception => e
         logger.error "Elasticsearch: #{e}"
+        false
+      end
+    end
+
+    def fuzzy_suggest(query, options = {})
+      users = fuzzy_search(query, options)
+      if users
+        users.map(&:_source)
+      else
         false
       end
     end

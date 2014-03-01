@@ -16,6 +16,7 @@ Dashboard::Application.routes.draw do
   put "/users/update_status_message" => "users#update_status_message", as: "user_update_status_message"
   get "/users/activities/:cmg_id" => "users#activities", as: "user_activities"
   get "/users/suggest" => "users#suggest", as: "users_suggest"
+  get "/users/search" => "users#search", as: "users_search"
 
   # Avatars belongs to users but has its own controller
   resources :avatars

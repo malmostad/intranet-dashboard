@@ -23,8 +23,22 @@ class UsersController < ApplicationController
     end
   end
 
+  def search
+    @limit = 25
+    @offset = params[:page].to_i * @limit
+
+    response = User.fuzzy_search(params[:q], from: @offset, size: @limit)
+    if response
+      @users = response.records
+      @total = response.results.total
+      logger.info { "Elasticsearch took #{response.took}ms" }
+    end
+    @has_more = @total.present? ? (@offset + @limit < @total) : false
+    render :search
+  end
+
   def suggest
-    @users = User.suggest(params[:term])
+    @users = User.fuzzy_suggest(params[:term])
     if @users
       @users = @users.map { |u|
         { username: u.username,

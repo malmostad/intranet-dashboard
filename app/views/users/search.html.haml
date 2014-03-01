@@ -1,0 +1,17 @@
+- title "Sök medarbetare"
+%section.box.index.users
+  %h1.box-title= h1
+  .box-content.body-copy
+    = form_tag(users_search_path, method: "get", class: "form-horizontal") do
+      .control-group
+        = label_tag "query-employee", "Sök användare: ", class: "control-label"
+        .controls
+          .input-append
+            = text_field_tag "query-employee", params[:q], name: "q", "data-autocomplete-url" => users_suggest_path, class: "full-search", placeholder: "Ange söktext"
+            = submit_tag "Sök", { class: "btn", name: nil }
+          .help-inline Sök på förnamn, efternamn, e-postadress eller användarnamn.
+
+    - if @total.present?
+      %div= "#{number_to_words(@total).titlecase} medarbetare matchade din sökning"
+
+  = render "results"
