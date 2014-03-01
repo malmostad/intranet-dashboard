@@ -29,6 +29,8 @@ $ ->
                     suggestionHighlighted: item.suggestionHighlighted
                     value: item.suggestion
                   }
+              else
+                $searchField.autocomplete("close")
         minLength: 2
         select: (event, ui) ->
           $searchField.val(ui.item.value)
