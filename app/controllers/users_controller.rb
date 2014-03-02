@@ -30,7 +30,7 @@ class UsersController < ApplicationController
 
   # Full search for users
   def search
-    @q = params[:q].dup
+    @q = params[:q].present? ? params[:q].dup : ""
     @limit = 25
     @offset = params[:page].to_i * @limit
 
