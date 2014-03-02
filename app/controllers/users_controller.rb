@@ -6,20 +6,25 @@ class UsersController < ApplicationController
   before_filter :require_admin_or_myself, only: [:edit, :update]
   before_filter :require_admin, only: :destroy
 
-  # List users matching a tag
+  # List users matching a tag (skills, languages etc)
   def index
-    @limit = 25
-    page = params[:page].present? ? params[:page].to_i : 0
-    @offset = page * @limit
-    results = User.search(params.except(:controller, :action), @limit, @offset)
-    @users = results[:users]
-    @total = results[:total]
-    @has_more = @total.present? ? (@offset + @limit < @total) : false
-
-    if request.xhr?
-      render :_results, layout: false
+    # Redirect to full search if no query
+    if params.except(:controller, :action, :q, :utf8).empty?
+      redirect_to users_search_path
     else
-      render :index
+      @limit = 25
+      page = params[:page].present? ? params[:page].to_i : 0
+      @offset = page * @limit
+      results = User.search(params.except(:controller, :action), @limit, @offset)
+      @users = results[:users]
+      @total = results[:total]
+      @has_more = @total.present? ? (@offset + @limit < @total) : false
+
+      if request.xhr?
+        render :_results, layout: false
+      else
+        render :index
+      end
     end
   end
 
