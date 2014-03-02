@@ -1,4 +1,5 @@
 $ ->
+  $("#query-employee").focus()
   # Search results, load more
   $("section.index.users").on "click", ".load-more input", (event) ->
     event.preventDefault()
