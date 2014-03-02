@@ -112,7 +112,7 @@ module EmployeeSearch
     # NOTE: The sanitizer does not allow grouping and operators in the query
     def sanitize_query(query)
       # Remove Lucene reserved characters
-      query.gsub!(/([#{Regexp.escape('\\+&|!(){}[]^~*?:/"\'')}])/, '')
+      query.gsub!(/([#{Regexp.escape('\\+-&|!(){}[]^~*?:/"\'')}])/, '')
 
       # Remove Lucene operators
       query.gsub!(/\s+\b(AND|OR|NOT)\b/i, '')
