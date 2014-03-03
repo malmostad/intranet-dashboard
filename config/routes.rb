@@ -33,7 +33,7 @@ Dashboard::Application.routes.draw do
 
   delete "/my_own_feeds/delete_all" => "my_own_feeds#destroy_all"
 
-  resources :shortcuts, :roles, :languages, :skills, :feeds, :my_own_feeds, except: [:show]
+  resources :shortcuts, :roles, :languages, :skills, :activities, :feeds, :my_own_feeds, except: [:show]
 
   put "/feeds/refresh_entries/:id" => "feeds#refresh_entries", as: "feeds_refresh_entries"
 
@@ -45,6 +45,10 @@ Dashboard::Application.routes.draw do
   get "/skills/search" => "skills#search", as: "skills_search"
   get "/skills/merge/:id" => "skills#edit_merge", as: "skills_edit_merge"
   put "/skills/merge/:id" => "skills#merge", as: "skills_merge"
+  get "/activities/suggest" => "activities#suggest", as: "activities_suggest"
+  get "/activities/search" => "activities#search", as: "activities_search"
+  get "/activities/merge/:id" => "activities#edit_merge", as: "activities_edit_merge"
+  put "/activities/merge/:id" => "activities#merge", as: "activities_merge"
 
   get  "/search" => "site_search#index"
   get  "/search/autocomplete" => "site_search#autocomplete", as: "site_search_autocomplete"
