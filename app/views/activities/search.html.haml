@@ -1,0 +1,26 @@
+- title "Aktiviteter"
+%section.box.index
+  %h1.box-title= h1
+  .box-content
+    - if @activities.empty?
+      %p.warning Inga aktiviteter matchade din sökning
+
+    = render "search_form"
+
+  - if @activities.present?
+    %table
+      %thead
+        %tr
+          %th Namn
+          %th Medarbetare
+          %th
+      %tbody
+        - @activities.each do |activity|
+          %tr
+            %td= link_to activity.name, edit_activity_path(activity)
+            %td= link_to activity.name, users_path(activity: activity.name)
+            %td.delete= link_to delete_icon_text, activity, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini"
+
+        %tr
+          %td{ colspan: 3 }
+            .actions= link_to add_icon_text, new_activity_path, class: "btn btn-primary"

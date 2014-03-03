@@ -20,7 +20,7 @@ describe "Activities" do
     end
 
     it "should be available to admins" do
-      page.should have_selector('h1.box-title', text: "Kunskapsområde")
+      page.should have_selector('h1.box-title', text: "Aktivitet")
     end
 
     it "should have activities" do
