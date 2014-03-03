@@ -45,7 +45,7 @@ describe Skill do
       expect(Skill.last).to eq(@skill_2)
     end
 
-    it "should not change a users number of skills (if she don't have both)" do
+    it "should not change a users number of skills (if she doesn't have both)" do
       expect { @skill_1.merge(@skill_2) }.to change(@user_1.skills, :count).by(0)
     end
 

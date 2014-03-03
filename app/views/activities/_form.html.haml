@@ -1,0 +1,20 @@
+= form_for @activity, html: { class: "form-horizontal" } do |f|
+  .box-content
+    - if @activity.errors.any?
+      .warning= t 'messages.validation_errors'
+
+    .control-group
+      = f.label :name, "Namn:", class: "control-label"
+      .controls
+        = f.text_field :name, class: 'input-wide'
+        - @activity.errors[:name].each do |msg|
+          .help-inline.warning= "#{msg}"
+
+    .control-group
+      .controls
+        = f.submit t( 'actions.save' ), class: "btn btn-primary"
+        - unless @activity.new_record?
+          = link_to delete_icon_text, @activity, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger"
+        = link_to t('actions.cancel'), activities_path, class: "btn"
+    - unless @activity.new_record?
+      .help-inline= link_to "Slå samman med ...", activities_edit_merge_path(@activity)

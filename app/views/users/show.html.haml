@@ -49,6 +49,10 @@
         %p= raw "Kunskapsområden: #{skill_link_list @user.skills}"
         %p= raw "Språkkunskaper: #{language_link_list @user.languages}"
 
+      %section.activities
+        %h2.form-group-title Projekt & aktiviteter
+        %p= raw "Projekt & aktiviteter: #{activity_link_list @user.activities}"
+
       %section.intranet-activities
         %h2.form-group-title Kominaktiviteter
         %p= link_to "Nyheter som #{@user.first_name} skrivit", "https://webapps04.malmo.se/nyheter/author/#{@user.username}"

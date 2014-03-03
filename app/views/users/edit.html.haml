@@ -58,6 +58,10 @@
       = f.input :language_list,
         input_html: { "data-path" => languages_suggest_path, "data-load" => @user.languages.map{ |l| { id: l.name, name: l.name }}.to_json, class: "input-wide" }
 
+      %h2.form-group-title Projekt & aktiviteter
+      = f.input :activity_list,
+        input_html: { "data-path" => activities_suggest_path, "data-load" => @user.activities.map{ |l| { id: l.name, name: l.name }}.to_json, class: "input-wide" }
+
       %h2.form-group-title Personsligt
       = f.input :private_bio, input_html: { class: 'input-wide', rows: 7 }
 
