@@ -6,7 +6,7 @@ describe "Skills" do
 
   it "should be protected from regular users" do
     login(user.username, "") # Stubbed auth
-    visit feeds_path
+    visit skills_path
     page.should have_selector('.error', text: "Du saknar behörighet")
   end
 
