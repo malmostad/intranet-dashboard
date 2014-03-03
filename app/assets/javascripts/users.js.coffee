@@ -32,6 +32,13 @@ $ ->
     }, tokenInputOptions)
   )
 
+  $('#user_activity_list').tokenInput(
+    $('#user_activity_list').data("path"), $.extend({
+      prePopulate: $('#user_activity_list').data('load')
+      hintText: "Lägg till projekt eller aktivitet"
+    }, tokenInputOptions)
+  )
+
   # Follow colleague on profile page
   $("section.show.user .colleagueship").on "click",  ".add", (event) ->
     $trigger = $(@)
