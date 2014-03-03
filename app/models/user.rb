@@ -5,13 +5,13 @@ class User < ActiveRecord::Base
 
   attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
       :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
-      :language_list, :skill_list,
+      :language_list, :skill_list, :project_list,
       :private_bio, :twitter, :skype, :homepage, :company_short,
       :room, :address, :district, :post_code, :postal_town, :geo_position_x, :geo_position_y
 
   attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
       :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
-      :language_list, :skill_list,
+      :language_list, :skill_list, :project_list,
       :private_bio, :twitter, :skype, :homepage, :company_short,
       :room, :address, :district, :post_code, :postal_town, :geo_position_x, :geo_position_y,
       :admin, :contacts_editor, :early_adopter, as: :admin
@@ -31,6 +31,8 @@ class User < ActiveRecord::Base
   has_many :languages, through: :user_languages
   has_many :user_skills
   has_many :skills, through: :user_skills
+  has_many :user_projects
+  has_many :projects, through: :user_projects
 
   has_many :colleagueships, dependent: :destroy
   has_many :colleagues, through: :colleagueships
@@ -56,6 +58,7 @@ class User < ActiveRecord::Base
   after_validation do
     # Explicit validation for accociated models. `validates_associated` will not do.
     errors.add(:skill_list, "Max 48 tecken per kompetensområde") if @skill_errors
+    errors.add(:project_list, "Max 48 tecken per projekt") if @project_errors
     errors.add(:language_list, "Max 48 tecken per språknamn") if @language_errors
   end
 
@@ -117,6 +120,24 @@ class User < ActiveRecord::Base
     end.compact
   end
 
+  # Project names as tokens
+  def project_list
+    projects.map(&:name).join(", ")
+  end
+
+  def project_list=(names)
+    self.projects = names.split(",").map do |n|
+      s = Project.where(name: n.strip).first_or_create
+      # Explicit validation for accociated model
+      if s.valid?
+        s
+      else
+        @project_errors = true
+        nil
+      end
+    end.compact
+  end
+
   # Get users feeds in a given category
   # A user has feeds directly and through her roles
   def feeds_in_category(category)
@@ -166,6 +187,7 @@ class User < ActiveRecord::Base
     users = users.where(company: query[:company]) if query[:company].present?
     users = users.where(department: query[:department]) if query[:department].present?
     users = users.where("skills.name" => query[:skill]).includes(:skills) if query[:skill].present?
+    users = users.where("projects.name" => query[:project]).includes(:projects) if query[:project].present?
     users = users.where("languages.name" => query[:language]).includes(:languages) if query[:language].present?
     { users: users.order(:first_name).limit(limit).offset(offset), total: users.count }
   end

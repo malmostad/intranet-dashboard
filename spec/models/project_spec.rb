@@ -45,7 +45,7 @@ describe Project do
       expect(Project.last).to eq(@project_2)
     end
 
-    it "should not change a users number of projects (if she don't have both)" do
+    it "should not change a users number of projects (if she doesn't have both)" do
       expect { @project_1.merge(@project_2) }.to change(@user_1.projects, :count).by(0)
     end
 

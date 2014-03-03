@@ -45,7 +45,7 @@ describe Language do
       expect(Language.last).to eq(@lang_2)
     end
 
-    it "should not change a users number of languages (if she don't have both)" do
+    it "should not change a users number of languages (if she doesn't have both)" do
       expect { @lang_1.merge(@lang_2) }.to change(@user_1.languages, :count).by(0)
     end
 
