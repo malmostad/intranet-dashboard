@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140303094854) do
+ActiveRecord::Schema.define(:version => 20140303104854) do
+
+  create_table "activities", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "activities", ["name"], :name => "index_activities_on_name"
 
   create_table "api_apps", :force => true do |t|
     t.string   "name"
@@ -124,14 +132,6 @@ ActiveRecord::Schema.define(:version => 20140303094854) do
 
   add_index "languages", ["name"], :name => "index_languages_on_name"
 
-  create_table "projects", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "projects", ["name"], :name => "index_projects_on_name"
-
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.string   "category"
@@ -189,6 +189,16 @@ ActiveRecord::Schema.define(:version => 20140303094854) do
 
   add_index "skills", ["name"], :name => "index_skills_on_name"
 
+  create_table "user_activities", :force => true do |t|
+    t.integer  "activity_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "user_activities", ["activity_id"], :name => "index_user_activities_on_activity_id"
+  add_index "user_activities", ["user_id"], :name => "index_user_activities_on_user_id"
+
   create_table "user_agents", :force => true do |t|
     t.integer  "user_id"
     t.boolean  "remember_me",      :default => false
@@ -209,16 +219,6 @@ ActiveRecord::Schema.define(:version => 20140303094854) do
 
   add_index "user_languages", ["language_id"], :name => "index_user_languages_on_language_id"
   add_index "user_languages", ["user_id"], :name => "index_user_languages_on_user_id"
-
-  create_table "user_projects", :force => true do |t|
-    t.integer  "project_id"
-    t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "user_projects", ["project_id"], :name => "index_user_projects_on_project_id"
-  add_index "user_projects", ["user_id"], :name => "index_user_projects_on_user_id"
 
   create_table "user_skills", :force => true do |t|
     t.integer  "skill_id"
