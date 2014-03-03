@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'spec_helper'
 
-describe Projects do
+describe Project do
   it "should be created" do
     expect { create(:project) }.to change(Project, :count).by(+1)
   end
