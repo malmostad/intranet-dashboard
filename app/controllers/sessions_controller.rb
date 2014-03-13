@@ -13,6 +13,15 @@ class SessionsController < ApplicationController
       set_profile_cookie
       redirect_after_login
 
+    elsif APP_CONFIG['auth_method'] == "portwise"
+      pwa = PortwiseAuth.new(request)
+      if pwa.authenticate?
+        logger.debug "pwa.username: #{pwa.username}"
+        create_session(pwa.username)
+      else
+        render :new
+      end
+
     elsif APP_CONFIG['auth_method'] == "saml"
       # SAML Auth has its own controller
       redirect_to saml_new_path
@@ -61,15 +70,27 @@ class SessionsController < ApplicationController
   end
 
   private
+    def create_session(username)
+      # Update user attributes from LDAP. Create user if it is her first login.
+      @user = Ldap.new.update_user_profile(username)
+      @user.update_attribute("last_login", Time.now)
 
-  def stub_auth(username)
-    @user = User.where(username: username).first
-    if @user
+      # Set user cookies
       session[:user_id] = @user.id
+      set_profile_cookie
+      track_user_agent
+
       redirect_after_login
-    else
-      @login_failed = "Fel användarnamn eller lösenord. Vänligen försök igen."
-      render "new"
     end
-  end
+
+    def stub_auth(username)
+      @user = User.where(username: username).first
+      if @user
+        session[:user_id] = @user.id
+        redirect_after_login
+      else
+        @login_failed = "Fel användarnamn eller lösenord. Vänligen försök igen."
+        render "new"
+      end
+    end
 end
