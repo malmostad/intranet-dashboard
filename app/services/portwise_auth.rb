@@ -26,7 +26,7 @@ class PortwiseAuth
 
   private
     def trust_proxy?
-      @request.remote_ip == APP_CONFIG["portwise"]["ip-address"] &&
+      @request.remote_ip == APP_CONFIG["portwise"]["ip_address"] &&
           @request.headers["X-TOKEN"] == APP_CONFIG["portwise"]["token"]
     end
 end
