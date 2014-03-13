@@ -20,8 +20,6 @@ class PortwiseAuth
       Rails.logger.debug "PW not trusted"
       false
     end
-    @username = "martha2"
-    true
   end
 
   private
