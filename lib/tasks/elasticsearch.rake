@@ -3,7 +3,7 @@ Rake::TaskManager.record_task_metadata = true
 
 namespace :elasticsearch do
   desc "Zero downtime re-indexing
-  $ RAILS_ENV=development rake environment elasticsearch:reindex CLASS='Recommendation' ALIAS='recommendations'
+  $ RAILS_ENV=development rake environment elasticsearch:reindex CLASS='User' ALIAS='employees'"
   task reindex: :environment do |task|
     if ENV['CLASS'].blank? || ENV['ALIAS'].blank?
       puts "USAGE:"

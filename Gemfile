@@ -42,7 +42,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rack-mini-profiler'
+  # gem 'rack-mini-profiler'
 end
 
 group :development, :local_test do

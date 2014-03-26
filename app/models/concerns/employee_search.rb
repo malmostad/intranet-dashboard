@@ -3,7 +3,10 @@ module EmployeeSearch
 
   included do
     include Elasticsearch::Model
-    settings YAML.load_file("#{Rails.root.to_s}/config/elasticsearch.yml")
+    settings Rails.application.config.elasticsearch
+
+    after_commit -> { __elasticsearch__.index_document  }, if: :persisted?
+    after_commit -> { __elasticsearch__.delete_document }, on: :destroy
 
     # Override model name
     index_name    "employees_#{Rails.env}"
