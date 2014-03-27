@@ -8,16 +8,15 @@ class PortwiseAuth
 
   def authenticate?
     if trust_proxy?
-      Rails.logger.debug "PW trusted"
       if @xuid.present?
-        Rails.logger.debug "PW authenticated user #{@xuid}"
+        Rails.logger.debug { "Portwise authenticated user #{@xuid}" }
         @username = @xuid
         true
       else
-        Rails.logger.debug 'Failed: No request.headers["X-UID"]'
+        Rails.logger.warning "Portwise did not send request.headers['X-UID'] #{@xuid}"
       end
     else
-      Rails.logger.debug "PW not trusted"
+      Rails.logger.error "Portwise not trusted #{request.headers}"
       false
     end
   end

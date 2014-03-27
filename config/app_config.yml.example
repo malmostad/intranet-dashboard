@@ -1,5 +1,5 @@
 defaults: &defaults
-  auth_method: "ldap" # ldap or saml
+  auth_method: "ldap" # portwise, ldap or saml
   secret_token: "FILL_IN"
   ldap:
     host: "ldap.example.org"
@@ -8,6 +8,7 @@ defaults: &defaults
     proxy_user: "FILL_IN"
     proxy_password: "FILL_IN"
     diff_log: "reports/ldap_diff.xlsx"
+  site_search_query_url: "http://ACCOUNT.appliance.siteseeker.se/search/INDEX/"
   siteseeker:
     account: "FILL_IN"
     index: "FILL_IN"
@@ -23,6 +24,9 @@ defaults: &defaults
     user_service: "http://example.org/CMGUserInformationService/CMGUserService.asmx?WSDL"
     activity_service: "http://example.org/CMGActivityService/CMGActivityService.asmx?WSDL"
   switchboard_email: "televaxeln@example.org"
+  portwise:
+    ip_address: "FILL_IN"
+    token: "FILL_IN"
 
 development:
   <<: *defaults
