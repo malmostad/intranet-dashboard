@@ -19,6 +19,15 @@ class FeedEntry < ActiveRecord::Base
     Feedzirra::Feed.add_common_feed_entry_element( element[0], element[1] )
   end
 
+  before_save do
+    # Don't save urls for non-ssl media if not allowed in config
+    if !APP_CONFIG["allow_non_ssl_media"] && full.image_url.match(%q(^http://))
+      self.full.image_url = nil
+      self.full.url_medium = nil
+      self.full.url_large = nil
+    end
+  end
+
   # Create or update feed entries for the feed
   def self.add_entries(feed_id, entries)
     entries.each do |entry|
