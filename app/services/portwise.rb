@@ -1,4 +1,4 @@
-class PortwiseAuth
+class Portwise
   attr_reader :username
 
   def initialize(request)
@@ -16,14 +16,16 @@ class PortwiseAuth
         Rails.logger.warning "Portwise did not send request.headers['X-UID'] #{@xuid}"
       end
     else
-      Rails.logger.error "Portwise not trusted #{request.headers}"
+      Rails.logger.error "Portwise not trusted #{@request.headers}"
       false
     end
   end
 
   private
     def trust_proxy?
+      # Has portwise the correct IP, token and is the request ssl, if forced in config
       @request.remote_ip == APP_CONFIG["portwise"]["ip_address"] &&
-          @request.headers["X-TOKEN"] == APP_CONFIG["portwise"]["token"]
+          @request.headers["X-TOKEN"] == APP_CONFIG["portwise"]["token"] &&
+          (@request.ssl? || !APP_CONFIG["portwise"]["require_ssl"])
     end
 end

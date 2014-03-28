@@ -19,7 +19,8 @@ class SamlController < ApplicationController
         username = response.attributes[APP_CONFIG["saml"]["username_key"].to_sym]
 
         # Update user attributes from LDAP. Create user if it is her first login.
-        @user = Ldap.new.update_user_profile(username)
+        @user = User.unscoped.where(username: username).first_or_initialize
+        Ldap.new.update_user_profile(@user)
         @user.update_attribute("last_login", Time.now)
 
         # Set user cookies

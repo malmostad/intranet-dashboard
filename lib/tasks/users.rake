@@ -9,8 +9,7 @@ namespace :users do
     User.unscoped.find_each do |user|
       begin
         ldap = Ldap.new
-        results = ldap.update_user_profile(user.username)
-        if results
+        if ldap.update_user_profile(user)
           # Diff between LDAP and Dashboard address
           if ldap.address[:dashboard] != ldap.address[:ldap] && !user.deactivated
             address_diff << [user.displayname, user.username, ldap.address[:dashboard], ldap.address[:ldap]]
