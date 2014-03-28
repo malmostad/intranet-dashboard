@@ -89,7 +89,7 @@ class Feed < ActiveRecord::Base
       feed_url.gsub!(/@/, '')
       self.feed_url = "http://twitter.com/statuses/user_timeline/#{URI.escape(feed_url)}.rss"
 
-    # Convert shotnames to a Komin blog feed
+    # Convert shortnames to a Komin blog feed
     elsif feed_url.present? && !feed_url.match(/[\.\/]/)
       self.feed_url = "http://webapps04.malmo.se/blogg/author/#{URI.escape(feed_url)}/feed/"
 
