@@ -17,10 +17,6 @@ if environment == "staging"
   # every :day, :at => '2:13am' do
   #   rake "delete_old_feed_entries"
   # end
-
-  # every :day, :at => '2:43am' do
-  #   rake "users:clear_expired_sessions"
-  # end
 end
 
 if environment == "production"
@@ -31,15 +27,11 @@ if environment == "production"
   every :day, :at => '4:13am' do
     rake "delete_old_feed_entries"
   end
-
-  every :day, :at => '4:43am' do
-    rake "users:clear_expired_sessions"
-  end
 end
 
 every :reboot do
   if environment == "production"
-    command "sleep 60; RAILS_ENV=#{real_environment} #{path}/lib/daemons/feed_worker_ctl start"
-    command "sleep 60; RAILS_ENV=#{real_environment} #{path}/script/delayed_job start"
+    command "sleep 120; RAILS_ENV=#{real_environment} #{path}/lib/daemons/feed_worker_ctl start"
+    command "sleep 120; RAILS_ENV=#{real_environment} #{path}/script/delayed_job start"
   end
 end
