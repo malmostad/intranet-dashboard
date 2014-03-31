@@ -76,7 +76,8 @@ class Feed < ActiveRecord::Base
           parsed_entry.id ||= parsed_entry.url unless parsed_entry.url.blank?
 
           # Don't save urls for non-ssl media if not allowed in config
-          if !APP_CONFIG["allow_non_ssl_media"] && parsed_entry.image.present? && parsed_entry.image.match(%q(^http://))
+          if !APP_CONFIG["allow_non_ssl_media"] && parsed_entry.respond_to?(:image) &&
+              parsed_entry.image.present? && parsed_entry.image.match(%q(^http://))
             parsed_entry.image = nil
             parsed_entry.image_medium = nil
             parsed_entry.image_large = nil
