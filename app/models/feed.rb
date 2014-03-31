@@ -74,6 +74,7 @@ class Feed < ActiveRecord::Base
         parsed_feed.entries.each do |parsed_entry|
           # We found some feeds without id (guids) in the entries, use url in those cases
           parsed_entry.id ||= parsed_entry.url unless parsed_entry.url.blank?
+          parsed_entry.published ||= parsed_entry.updated unless parsed_entry.updated.blank?
 
           # Don't save urls for non-ssl media if not allowed in config
           if !APP_CONFIG["allow_non_ssl_media"] && parsed_entry.respond_to?(:image) &&
