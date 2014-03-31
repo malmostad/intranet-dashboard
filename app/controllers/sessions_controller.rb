@@ -41,7 +41,8 @@ class SessionsController < ApplicationController
       ldap = Ldap.new
       if ldap.authenticate(params[:username], params[:password])
         # Update user attributes from LDAP. Create user if it not exist.
-        @user = ldap.update_user_profile(params[:username])
+        @user = User.where(username: params[:username]).first_or_initialize
+        ldap.update_user_profile(@user)
         @user.update_attribute("last_login", Time.now)
 
         # Set user cookies
@@ -62,10 +63,9 @@ class SessionsController < ApplicationController
       @user_agent = UserAgent.find(cookies.signed[:user_agent][:id])
       @user_agent.update_attributes( remember_me: false )
     rescue
-      logger.warn { "'Remember me' for user #{current_user.id} couldn't be reset on logout" }
+      logger.warn { "'Remember me' for user couldn't be reset on logout" }
     end
-    session[:user_id] = nil
-    session[:requested] = nil
+    reset_session
     redirect_to root_url, notice: "Nu är du utloggad"
   end
 
