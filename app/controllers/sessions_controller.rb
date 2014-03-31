@@ -33,7 +33,7 @@ class SessionsController < ApplicationController
 
   def create
     # Stubbed authentication
-    if APP_CONFIG['stub_auth']
+    if APP_CONFIG['stub_auth'] && Rails.env.development?
       stub_auth(params[:username])
 
     # Authenticate with LDAP
