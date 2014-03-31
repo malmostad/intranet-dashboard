@@ -3,53 +3,25 @@ class SessionsController < ApplicationController
   before_filter { add_body_class('login') }
 
   def new
-    # Establish a user session if the user_agent cookie satisfy the remember me criterias
-    @user_agent = cookies.signed[:user_agent].present? ? UserAgent.where(id: cookies.signed[:user_agent][:id]).first : false
-
-    if @user_agent && @user_agent.authenticate(cookies.signed[:user_agent][:token])
-      session[:user_id] = @user_agent.user_id
-      current_user.update_attribute("last_login", Time.now)
-
-      set_profile_cookie
+    if direct_auth?(request) # Portwise or remember me auth
+      finalize_login
       redirect_after_login
-
-    elsif APP_CONFIG['auth_method'] == "portwise"
-      pwa = PortwiseAuth.new(request)
-      if pwa.authenticate?
-        logger.debug "pwa.username: #{pwa.username}"
-        create_session(pwa.username)
-      else
-        render :new
-      end
-
-    elsif APP_CONFIG['auth_method'] == "saml"
-      # SAML Auth has its own controller
+    elsif APP_CONFIG['auth_method'] == "saml" # SAML Auth has its own controller
       redirect_to saml_new_path
-    else
-      # Render the standard login form
+    else # Render the standard form for LDAP login
       render :new
     end
   end
 
   def create
-    # Stubbed authentication
-    if APP_CONFIG['stub_auth'] && Rails.env.development?
+    if APP_CONFIG['stub_auth'] && Rails.env.development? # Stubbed authentication
       stub_auth(params[:username])
-
-    # Authenticate with LDAP
-    else
+    else # Authenticate with LDAP
       ldap = Ldap.new
       if ldap.authenticate(params[:username], params[:password])
-        # Update user attributes from LDAP. Create user if it not exist.
-        @user = User.where(username: params[:username]).first_or_initialize
-        ldap.update_user_profile(@user)
-        @user.update_attribute("last_login", Time.now)
-
-        # Set user cookies
-        session[:user_id] = @user.id
-        set_profile_cookie
-        track_user_agent
-
+        user = User.unscoped.where(username: username).first_or_initialize
+        session[:user_id] = user.id
+        finalize_login
         redirect_after_login
       else
         @login_failed = "Fel användarnamn eller lösenord. Vänligen försök igen."
@@ -60,8 +32,8 @@ class SessionsController < ApplicationController
 
   def destroy
     begin
-      @user_agent = UserAgent.find(cookies.signed[:user_agent][:id])
-      @user_agent.update_attributes( remember_me: false )
+      user_agent = UserAgent.find(cookies.signed[:user_agent][:id])
+      user_agent.update_attributes( remember_me: false )
     rescue
       logger.warn { "'Remember me' for user couldn't be reset on logout" }
     end
@@ -70,26 +42,44 @@ class SessionsController < ApplicationController
   end
 
   private
-    def create_session(username)
-      # Update user attributes from LDAP. Create user if it is her first login.
-      @user = Ldap.new.update_user_profile(username)
-      @user.update_attribute("last_login", Time.now)
+    def direct_auth?(request)
+      if APP_CONFIG['portwise']['enabled'] # Try Portwise authentication
+        portwise = Portwise.new(request)
+        if portwise.authenticate?
+          user = User.unscoped.where(username: username).first_or_initialize
+          session[:user_id] = user.id
+          return true
+        end
+      else # Try "remember me" authentication
+        user_agent = cookies.signed[:user_agent].present? ?
+            UserAgent.where(id: cookies.signed[:user_agent][:id]).first : false
+        if user_agent && user_agent.authenticate(cookies.signed[:user_agent][:token])
+          session[:user_id] = user_agent.user_id
+          return true
+        end
+      end
+      return false
+    end
 
-      # Set user cookies
-      session[:user_id] = @user.id
+    def finalize_login
+      # Update user attributes from LDAP
+      Ldap.new.update_user_profile(current_user.username)
+
+      # Update timestamp
+      current_user.update_attribute("last_login", Time.now)
+
+      # Set cookies
       set_profile_cookie
       track_user_agent
-
-      redirect_after_login
     end
 
     def stub_auth(username)
-      @user = User.where(username: username).first
-      if @user
-        session[:user_id] = @user.id
+      user = User.where(username: username).first
+      if user
+        session[:user_id] = user.id
         redirect_after_login
       else
-        @login_failed = "Fel användarnamn eller lösenord. Vänligen försök igen."
+        @login_failed = "Användarnamnet finns inte"
         render "new"
       end
     end
