@@ -32,6 +32,7 @@ class SessionsController < ApplicationController
 
   def destroy
     begin
+      # Reset user agent ("remember me" auth)
       user_agent = UserAgent.find(cookies.signed[:user_agent][:id])
       user_agent.update_attributes( remember_me: false )
     rescue
