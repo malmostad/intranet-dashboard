@@ -38,7 +38,12 @@ class SessionsController < ApplicationController
       logger.warn { "'Remember me' for user couldn't be reset on logout" }
     end
     reset_session
-    redirect_to root_url, notice: "Nu är du utloggad"
+
+    if Portwise.new(request).request?
+      redirect_to APP_CONFIG['portwise']['signout_url']
+    else
+      redirect_to root_url, notice: "Nu är du utloggad"
+    end
   end
 
   private

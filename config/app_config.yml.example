@@ -12,6 +12,8 @@ defaults: &defaults
     enabled: false
     ip_address: "FILL_IN"
     token: "FILL_IN"
+    require_ssl: true
+    signout_url: "https://example.org/wa/logout"
   allow_non_ssl_media: false
   site_search_query_url: "http://ACCOUNT.appliance.siteseeker.se/search/INDEX/"
   siteseeker:

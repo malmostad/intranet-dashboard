@@ -14,11 +14,16 @@ class Portwise
         true
       else
         Rails.logger.warning "Portwise did not send request.headers['X-UID']"
+        false
       end
     else
       Rails.logger.error "Portwise not trusted #{@request.headers}"
       false
     end
+  end
+
+  def request?
+    trust_proxy? && @xuid.present?
   end
 
   private
