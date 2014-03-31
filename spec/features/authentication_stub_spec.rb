@@ -25,7 +25,7 @@ describe " Authentication (stub)" do
   it "should not sign in a user without credentials" do
     login('', '')
     current_path.should eq(login_path)
-    page.should have_selector('.warning', text: 'Fel användarnamn eller lösenord')
+    page.should have_selector('.warning', text: 'Användarnamnet finns inte')
   end
 
   it "should require admin role" do
