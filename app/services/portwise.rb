@@ -13,7 +13,7 @@ class Portwise
         @username = @xuid
         true
       else
-        Rails.logger.warning "Portwise did not send request.headers['X-UID'] #{@xuid}"
+        Rails.logger.warning "Portwise did not send request.headers['X-UID']"
       end
     else
       Rails.logger.error "Portwise not trusted #{@request.headers}"
