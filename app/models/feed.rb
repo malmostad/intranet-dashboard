@@ -22,7 +22,6 @@ class Feed < ActiveRecord::Base
   # Fetch url and parse it is part of the form validation.
   # Validation is disabled in workers batch mode
   before_validation :fix_url, :fetch, :parse
-
   after_save :save_feed_entries
 
   # Fetch a feed w/open-uri
@@ -69,33 +68,50 @@ class Feed < ActiveRecord::Base
   end
 
   private
+    # Create or update feed entries for the feed
+    def save_feed_entries
+      if updated
+        parsed_feed.entries.each do |parsed_entry|
+          # We found some feeds without id (guids) in the entries, use url in those cases
+          parsed_entry.id ||= parsed_entry.url unless parsed_entry.url.blank?
 
-  def save_feed_entries
-    # Save feed_entries for feed
-    FeedEntry.add_entries(id, parsed_feed.entries) if updated
-  end
+          # Don't save urls for non-ssl media if not allowed in config
+          if !APP_CONFIG["allow_non_ssl_media"] && parsed_entry.image.present? && parsed_entry.image.match(%q(^http://))
+            parsed_entry.image = nil
+            parsed_entry.image_medium = nil
+            parsed_entry.image_large = nil
+          end
 
-  # Pre-parsing and fixing of a feed url, manipulate it for some special cases
-  def fix_url
-    # Remove Safari’s pseudo protocol
-    self.feed_url.gsub!(/^feed:\/\//, '')
+          # Find or initialize new entry
+          entry = FeedEntry.where(guid: parsed_entry.id, feed_id: id).first_or_initialize
 
-    # Convert #<hashtag(s)> to a twitter search feed for given hash tag(s)
-    if feed_url.match(/^#/)
-      self.feed_url = "http://search.twitter.com/search.rss?q=#{URI.escape(feed_url)}"
-
-    # Convert @user to a twitter search feed for that user
-    elsif feed_url.match(/^@/)
-      feed_url.gsub!(/@/, '')
-      self.feed_url = "http://twitter.com/statuses/user_timeline/#{URI.escape(feed_url)}.rss"
-
-    # Convert shortnames to a Komin blog feed
-    elsif feed_url.present? && !feed_url.match(/[\.\/]/)
-      self.feed_url = "http://webapps04.malmo.se/blogg/author/#{URI.escape(feed_url)}/feed/"
-
-    # Add http:// if not there
-    else
-      self.feed_url = "http://#{feed_url}" unless feed_url.match(/^https?:\/\//)
+          # Slice those attributes from fetched_feed that we have FeedENtry columns for
+          entry.update_attributes parsed_entry.to_h.slice(*FeedEntry.column_names)
+        end
+      end
     end
-  end
+
+    # Pre-parsing and fixing of a feed url, manipulate it for some special cases
+    def fix_url
+      # Remove Safari’s pseudo protocol
+      self.feed_url.gsub!(/^feed:\/\//, '')
+
+      # Convert #<hashtag(s)> to a twitter search feed for given hash tag(s)
+      if feed_url.match(/^#/)
+        self.feed_url = "http://search.twitter.com/search.rss?q=#{URI.escape(feed_url)}"
+
+      # Convert @user to a twitter search feed for that user
+      elsif feed_url.match(/^@/)
+        feed_url.gsub!(/@/, '')
+        self.feed_url = "http://twitter.com/statuses/user_timeline/#{URI.escape(feed_url)}.rss"
+
+      # Convert shortnames to a Komin blog feed
+      elsif feed_url.present? && !feed_url.match(/[\.\/]/)
+        self.feed_url = "http://webapps04.malmo.se/blogg/author/#{URI.escape(feed_url)}/feed/"
+
+      # Add http:// if not there
+      else
+        self.feed_url = "http://#{feed_url}" unless feed_url.match(/^https?:\/\//)
+      end
+    end
 end

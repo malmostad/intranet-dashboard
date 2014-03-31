@@ -150,11 +150,11 @@ class User < ActiveRecord::Base
     options = { limit: 5, before: Time.now }.merge(options)
 
     # Select the latest feed_entries. Or (used for "load more") those published before options[:before]
-    FeedEntry.where("feed_id IN (?) AND published_at < ?", feeds_in_category(category), options[:before])
+    FeedEntry.where("feed_id IN (?) AND published < ?", feeds_in_category(category), options[:before])
       .group(:guid)
       .includes(:feed)
-      .order("published_at DESC")
-      .limit(options[:limit]).each { |e| e.full = YAML.load e.full }
+      .order("published DESC")
+      .limit(options[:limit])
   end
 
   def shortcuts_in_category(category)

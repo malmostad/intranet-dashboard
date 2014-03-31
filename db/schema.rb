@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140330123636) do
+ActiveRecord::Schema.define(:version => 20140331162711) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -59,12 +59,18 @@ ActiveRecord::Schema.define(:version => 20140330123636) do
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "feed_entries", :force => true do |t|
-    t.text     "full",         :limit => 16777215
-    t.datetime "published_at"
+    t.datetime "published"
     t.text     "guid"
     t.integer  "feed_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image"
+    t.string   "image_medium"
+    t.string   "image_large"
+    t.string   "url"
+    t.string   "title"
+    t.text     "summary"
+    t.integer  "count_comments"
   end
 
   add_index "feed_entries", ["feed_id"], :name => "index_feed_entries_on_feed_id"
