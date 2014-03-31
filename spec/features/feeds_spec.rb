@@ -20,7 +20,7 @@ describe "Feeds" do
     all("#feeds-dialog .box-content li").count.should > 1
   end
 
-  it "should have one feture feed entry" do
+  it "should have one feature feed entry" do
     all("#feeds-feature .box-content li").count.should == 1
   end
 

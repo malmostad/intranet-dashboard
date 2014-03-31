@@ -14,12 +14,12 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if APP_CONFIG['stub_auth'] && Rails.env.development? # Stubbed authentication
+    if APP_CONFIG['stub_auth'] # Stubbed authentication
       stub_auth(params[:username])
     else # Authenticate with LDAP
       ldap = Ldap.new
       if ldap.authenticate(params[:username], params[:password])
-        user = User.unscoped.where(username: username).first_or_initialize
+        user = User.unscoped.where(username: params[:username]).first_or_initialize
         session[:user_id] = user.id
         finalize_login
         redirect_after_login
@@ -69,7 +69,7 @@ class SessionsController < ApplicationController
 
     def finalize_login
       # Update user attributes from LDAP
-      Ldap.new.update_user_profile(current_user.username)
+      Ldap.new.update_user_profile(current_user)
 
       # Update timestamp
       current_user.update_attribute("last_login", Time.now)
