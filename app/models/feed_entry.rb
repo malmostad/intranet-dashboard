@@ -4,6 +4,7 @@ class FeedEntry < ActiveRecord::Base
   # Define additional feed entry elements
   [ [ "wfw:commentRss", as: "comment_rss" ],
     [ "slash:comments", as: "count_comments" ],
+    [ "enclosure",      as: "image", value: "url" ],
     [ "enclosure",      as: "image_medium", value: "dashboard:url-medium" ],
     [ "enclosure",      as: "image_large", value: "dashboard:url-large" ]
   ].each do |element|

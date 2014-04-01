@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-require 'open-uri'
 
 # News feeds
 class Feed < ActiveRecord::Base
-  attr_accessor :updated
   attr_accessible :title, :feed_url, :category, :role_ids
 
   CATEGORIES = {
@@ -17,41 +15,26 @@ class Feed < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :feed_entries, dependent: :destroy
 
-  # Fetch url and parse it is part of the form validation.
-  # Validation is disabled in workers batch mode
-  before_validation :fix_url, :fetch, :parse
-  after_save :save_feed_entries
-
-  # Fetch a feed w/open-uri
-  def fetch
-    begin
-      timeout(5) do
-        @content = open(feed_url).read
-      end
-    rescue Exception => e
-      errors.add(:feed_url, "Flödet kunde inte hämtas.")
-      logger.info "Couldn't fetch feed #{id} #{feed_url}: #{e}"
-      false
-    end
-  end
-
-  # Parse a feed file w/Feedjira
-  def parse
-    begin
-      @parsed_feed = Feedjira::Feed.parse(@content)
+  before_validation do
+    fix_url
+    if fetch_and_parse
       self.title = @parsed_feed.title || "Utan titel"
       self.url = @parsed_feed.url
       self.fetched_at = Time.now
-      previous_checksum = checksum
-      self.checksum = Digest::MD5.hexdigest(@content)
+      self.feed_entries << fresh_feed_entries
+    end
+  end
 
-      # Is the feed updated since last fetch?
-      @updated = previous_checksum != checksum
+  def fetch_and_parse
+    begin
+      @parsed_feed = Feedjira::Feed.fetch_and_parse(feed_url, timeout: 5, compress: true)
+
+      # Raise if we get HTTP error code or nil instead of feedjira object
+      raise "Failed fetching" if @parsed_feed.is_a? Fixnum || @parsed_feed.blank?
       true
     rescue Exception => e
-      # Parsing failed
-      logger.info "Couldn't parse feed #{id} #{feed_url}: #{e}"
-      errors.add(:feed_url, "Flödet kunde inte tolkas. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
+      errors.add(:feed_url, "Flödet kunde inte hämtas eller var ogiltigt. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
+      logger.info "Feedjira: #{e}. Feed id: #{id}, #{feed_url}"
       false
     end
   end
@@ -66,21 +49,18 @@ class Feed < ActiveRecord::Base
 
   private
     # Create or update feed entries for the feed
-    def save_feed_entries
-      if !errors && @updated
-        @parsed_feed.entries.each do |parsed_entry|
-          # # Find or initialize new entry
-          entry = FeedEntry.where(guid: parsed_entry.entry_id, feed_id: id).first_or_initialize
-          entry.published      = parsed_entry.published
-          entry.url            = parsed_entry.url
-          entry.title          = parsed_entry.title
-          entry.summary        = parsed_entry.summary
-          entry.image          = parsed_entry.image
-          entry.image_medium   = parsed_entry.image_medium
-          entry.image_large    = parsed_entry.image_large
-          entry.count_comments = parsed_entry.count_comments
-          entry.save
-        end
+    def fresh_feed_entries
+      @parsed_feed.entries.map do |parsed_entry|
+        entry = FeedEntry.where(guid: parsed_entry.entry_id, feed_id: id).first_or_initialize
+        entry.published      = parsed_entry.published
+        entry.url            = parsed_entry.url
+        entry.title          = parsed_entry.title
+        entry.summary        = parsed_entry.summary
+        entry.count_comments = parsed_entry.count_comments
+        entry.image          = parsed_entry.image
+        entry.image_medium   = parsed_entry.image_medium
+        entry.image_large    = parsed_entry.image_large
+        entry
       end
     end
 
