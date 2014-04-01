@@ -35,10 +35,10 @@ class Feed < ActiveRecord::Base
     end
   end
 
-  # Parse a feed file w/Feedzirra
+  # Parse a feed file w/Feedjira
   def parse
     begin
-      @parsed_feed = Feedzirra::Feed.parse(@content)
+      @parsed_feed = Feedjira::Feed.parse(@content)
       self.title = @parsed_feed.title || "Utan titel"
       self.url = @parsed_feed.url
       self.fetched_at = Time.now

@@ -112,7 +112,7 @@ GEM
       railties (>= 3.0.0)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
-    feedzirra (0.7.0)
+    feedjira (1.1.0)
       curb (~> 0.8.1)
       loofah (~> 1.2.1)
       sax-machine (~> 0.2.1)
@@ -337,7 +337,7 @@ DEPENDENCIES
   elasticsearch-model (= 0.1.0)
   elasticsearch-rails (= 0.1.0)
   factory_girl_rails
-  feedzirra (= 0.7.0)
+  feedjira (= 1.1.0)
   guard-rspec
   haml (= 4.0.5)
   haml-rails

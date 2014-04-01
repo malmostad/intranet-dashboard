@@ -7,7 +7,7 @@ class FeedEntry < ActiveRecord::Base
     [ "enclosure",      as: "image_medium", value: "dashboard:url-medium" ],
     [ "enclosure",      as: "image_large", value: "dashboard:url-large" ]
   ].each do |element|
-    Feedzirra::Feed.add_common_feed_entry_element(element[0], element[1])
+    Feedjira::Feed.add_common_feed_entry_element(element[0], element[1])
   end
 
   before_save do
