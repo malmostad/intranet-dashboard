@@ -13,9 +13,9 @@ class FeedEntry < ActiveRecord::Base
   before_save do
     # Don't save urls for non-ssl media if not allowed in config
     if !APP_CONFIG["allow_non_ssl_media"] && image? && image.match(%q(^http://))
-      parsed_entry.image = nil
-      parsed_entry.image_medium = nil
-      parsed_entry.image_large = nil
+      self.image = nil
+      self.image_medium = nil
+      self.image_large = nil
     end
   end
 end
