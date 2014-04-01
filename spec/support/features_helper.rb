@@ -31,6 +31,16 @@ def create_feeds_for_user(user)
     https://github.com/guard/guard-rspec/commits.atom
     https://github.com/thoughtbot/factory_girl/commits.atom
     https://github.com/vcr/vcr/commits.atom
+    http://daringfireball.net/index.xml
+    http://feeds.gawker.com/gizmodo/full
+    http://images.apple.com/main/rss/hotnews/hotnews.rss
+    http://rss.cnn.com/rss/cnn_topstories.rss
+    http://weblog.rubyonrails.org/feed/atom.xml
+    http://www.engadget.com/rss.xml
+    http://www.loopinsight.com/feed/
+    http://www.whitehouse.gov/feed/blog/white-house
+    http://xkcd.com/atom.xml
+    https://github.com/feedjira/feedjira/commits/master.atom
   ]
 
   VCR.use_cassette('feeds') do
