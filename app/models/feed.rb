@@ -3,6 +3,9 @@ require 'open-uri'
 
 # News feeds
 class Feed < ActiveRecord::Base
+  attr_accessor :updated
+  attr_accessible :title, :feed_url, :category, :role_ids
+
   CATEGORIES = {
     "news" => "nyheter",
     "dialog" => "diskussioner",
@@ -14,11 +17,6 @@ class Feed < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :feed_entries, dependent: :destroy
 
-  attr_accessible :title, :feed_url, :category, :role_ids
-
-  # Bind some data to the feed during fetching and parsing
-  attr_accessor :content, :parsed_feed, :updated
-
   # Fetch url and parse it is part of the form validation.
   # Validation is disabled in workers batch mode
   before_validation :fix_url, :fetch, :parse
@@ -28,9 +26,8 @@ class Feed < ActiveRecord::Base
   def fetch
     begin
       timeout(5) do
-        self.content = open(feed_url).read
+        @content = open(feed_url).read
       end
-      true
     rescue Exception => e
       errors.add(:feed_url, "Flödet kunde inte hämtas.")
       logger.info "Couldn't fetch feed #{id} #{feed_url}: #{e}"
@@ -41,15 +38,15 @@ class Feed < ActiveRecord::Base
   # Parse a feed file w/Feedzirra
   def parse
     begin
-      self.parsed_feed = Feedzirra::Feed.parse(content)
-      self.title = parsed_feed.title || "Utan titel"
-      self.url = parsed_feed.url
+      @parsed_feed = Feedzirra::Feed.parse(@content)
+      self.title = @parsed_feed.title || "Utan titel"
+      self.url = @parsed_feed.url
       self.fetched_at = Time.now
       previous_checksum = checksum
-      self.checksum = Digest::MD5.hexdigest(content)
+      self.checksum = Digest::MD5.hexdigest(@content)
 
       # Is the feed updated since last fetch?
-      self.updated = previous_checksum != checksum
+      @updated = previous_checksum != checksum
       true
     rescue Exception => e
       # Parsing failed
@@ -70,8 +67,8 @@ class Feed < ActiveRecord::Base
   private
     # Create or update feed entries for the feed
     def save_feed_entries
-      if updated
-        parsed_feed.entries.each do |parsed_entry|
+      if @updated
+        @parsed_feed.entries.each do |parsed_entry|
           # # Find or initialize new entry
           entry = FeedEntry.where(guid: parsed_entry.entry_id, feed_id: id).first_or_initialize
           entry.published      = parsed_entry.published
