@@ -3,12 +3,12 @@ class FeedWorker
   # Most of the code are conditionals for counters for statistics
   def self.update_all
     started_at = Time.now.to_f
-    failed = succeeded = updated = skipped = 0
+    failed = succeeded  = skipped = 0
 
     # Process feeds in shuffled order in smaller chunks
     Feed.all.shuffle.each_slice(APP_CONFIG['feed_worker_concurrency']) do |feeds|
       threads = []
-      fetched_feeds = []
+      succeded_feeds = []
       failed_feeds = []
       feeds.each do |feed|
         # Penalty: Skip fetching of the feed in this round if it has enough of bad reputation
@@ -20,8 +20,8 @@ class FeedWorker
 
         # Threaded fetching of the feeds
         threads << Thread.new do
-          if feed.fetch
-            fetched_feeds << feed
+          if feed.fetch_and_parse
+            succeded_feeds << feed
           else
             failed_feeds << feed
           end
@@ -29,28 +29,20 @@ class FeedWorker
       end
       threads.each {|t| t.join }
 
-      # Parse and save the chunk of fetched feed
-      fetched_feeds.each do |fetched_feed|
-        if fetched_feed.parse
-          succeeded += 1
-          if fetched_feed.updated
-            updated += 1
-          elsif fetched_feed.recent_failures == 0 # Save only if prev fetch failed
-            next
-          end
-          fetched_feed.recent_failures = 0
-          fetched_feed.save(validate: false)
-        else
-          failed_feeds << fetched_feed
-        end
+      # Save the chunk of fetched feeds
+      succeded_feeds.each do |feed|
+        succeeded += 1
+        feed.recent_failures = 0
+        feed.map_feed_attributes
+        feed.save(validate: false)
       end
 
-      # Save stats for failed feed
-      failed_feeds.each do |failed_feed|
+      # Save stats for failed feeds
+      failed_feeds.each do |feed|
         failed += 1
-        failed_feed.recent_failures += 1
-        failed_feed.total_failures += 1
-        failed_feed.save(validate: false)
+        feed.recent_failures += 1
+        feed.total_failures += 1
+        feed.save(validate: false)
       end
       sleep APP_CONFIG['feed_worker_batch_pause']
     end
@@ -60,7 +52,6 @@ class FeedWorker
     Rails.logger.warn "    Succeeded: #{succeeded}"
     Rails.logger.warn "    Failed: #{failed}"
     Rails.logger.warn "    Skipped: #{skipped}"
-    Rails.logger.warn "    Updated: #{updated}"
     Rails.logger.warn "    Total: #{failed + succeeded + skipped}"
 
     sleep APP_CONFIG['feed_worker_cycle_pause']

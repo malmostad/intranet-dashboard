@@ -3,6 +3,7 @@
 # News feeds
 class Feed < ActiveRecord::Base
   attr_accessible :title, :feed_url, :category, :role_ids
+  attr_reader :parsed_feed
 
   CATEGORIES = {
     "news" => "nyheter",
@@ -18,10 +19,7 @@ class Feed < ActiveRecord::Base
   before_validation do
     # Fetch and parse feed, to get appropriate validation messages
     if fetch_and_parse
-      self.title = @parsed_feed.title || "Utan titel"
-      self.url = @parsed_feed.url
-      self.fetched_at = Time.now
-      self.feed_entries << fresh_feed_entries
+      map_feed_attributes
     end
   end
 
@@ -40,6 +38,22 @@ class Feed < ActiveRecord::Base
     end
   end
 
+  # Create or update feed entries for the feed
+  def fresh_feed_entries
+    @parsed_feed.entries.map do |parsed_entry|
+      entry = FeedEntry.where(guid: parsed_entry.entry_id, feed_id: id).first_or_initialize
+      entry.published      = parsed_entry.published
+      entry.url            = parsed_entry.url
+      entry.title          = parsed_entry.title
+      entry.summary        = parsed_entry.summary
+      entry.count_comments = parsed_entry.count_comments
+      entry.image          = parsed_entry.image
+      entry.image_medium   = parsed_entry.image_medium
+      entry.image_large    = parsed_entry.image_large
+      entry
+    end
+  end
+
   def refresh_entries
     feed_entries.delete_all
     # Force validation, fetch, parse and save feed entries
@@ -48,23 +62,14 @@ class Feed < ActiveRecord::Base
     self.save
   end
 
-  private
-    # Create or update feed entries for the feed
-    def fresh_feed_entries
-      @parsed_feed.entries.map do |parsed_entry|
-        entry = FeedEntry.where(guid: parsed_entry.entry_id, feed_id: id).first_or_initialize
-        entry.published      = parsed_entry.published
-        entry.url            = parsed_entry.url
-        entry.title          = parsed_entry.title
-        entry.summary        = parsed_entry.summary
-        entry.count_comments = parsed_entry.count_comments
-        entry.image          = parsed_entry.image
-        entry.image_medium   = parsed_entry.image_medium
-        entry.image_large    = parsed_entry.image_large
-        entry
-      end
-    end
+  def map_feed_attributes
+    self.title = @parsed_feed.title || "Utan titel"
+    self.url = @parsed_feed.url
+    self.fetched_at = Time.now
+    self.feed_entries << fresh_feed_entries
+  end
 
+  private
     # Pre-parsing and fixing of a feed url, manipulate it for some special cases
     def fix_url
       # Remove Safari’s pseudo protocol
