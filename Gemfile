@@ -60,15 +60,13 @@ group :local_test do
   gem 'rb-fsevent'
   gem 'launchy'
   gem 'database_cleaner'
-  gem 'vcr'
-  gem 'webmock', '1.15.2'
 end
 
 group :assets do
   gem 'sass-rails', '3.2.6'
   gem 'coffee-rails', '3.2.2'
-  gem 'uglifier', '2.4.0'
-  gem 'therubyracer', '0.12.0', require: 'v8'
+  gem 'uglifier', '2.5.0'
+  gem 'therubyracer', '0.12.1', require: 'v8'
 end
 
 group :production do

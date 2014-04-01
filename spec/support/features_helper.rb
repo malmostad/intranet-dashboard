@@ -17,23 +17,14 @@ def login_ldap_user
 end
 
 def create_feeds_for_user(user)
-  feed_urls = %w[
-    https://github.com/rspec/rspec/commits.atom
-    https://github.com/ariya/phantomjs/commits.atom
-    https://github.com/guard/guard-rspec/commits.atom
-    http://rss.cnn.com/rss/cnn_topstories.rss
-    http://www.engadget.com/rss.xml
-    http://www.whitehouse.gov/feed/blog/white-house
-  ]
+  feed_urls = Dir.glob(Rails.root.join("spec", "samples", "feeds") + "*.xml")
 
-  VCR.use_cassette('feeds') do
-    feed_urls.each_with_index do |feed_url, i|
-      f = build(:feed,
-        category: Feed::CATEGORIES.keys[i % Feed::CATEGORIES.size],
-        feed_url: feed_url
-      )
-      f.save
-    end
+  feed_urls.each_with_index do |feed_url, i|
+    f = build(:feed,
+      category: Feed::CATEGORIES.keys[i % Feed::CATEGORIES.size],
+      feed_url: "file://#{feed_url}"
+    )
+    f.save
   end
 
   Feed.all.each { |f| f.role_ids = user.roles.each.map(&:id) }

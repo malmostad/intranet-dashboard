@@ -16,7 +16,7 @@ class Feed < ActiveRecord::Base
   has_many :feed_entries, dependent: :destroy
 
   before_validation do
-    fix_url
+    # Fetch and parse feed, to get appropriate validation messages
     if fetch_and_parse
       self.title = @parsed_feed.title || "Utan titel"
       self.url = @parsed_feed.url
@@ -26,6 +26,7 @@ class Feed < ActiveRecord::Base
   end
 
   def fetch_and_parse
+    fix_url
     begin
       @parsed_feed = Feedjira::Feed.fetch_and_parse(feed_url, timeout: 5, compress: true)
 
@@ -82,9 +83,9 @@ class Feed < ActiveRecord::Base
       elsif feed_url.present? && !feed_url.match(/[\.\/]/)
         self.feed_url = "http://webapps04.malmo.se/blogg/author/#{URI.escape(feed_url)}/feed/"
 
-      # Add http:// if not there
+      # Add http:// if not there. Allow file:// for specs
       else
-        self.feed_url = "http://#{feed_url}" unless feed_url.match(/^https?:\/\//)
+        self.feed_url = "http://#{feed_url}" unless feed_url.match(/^(https?|file):\/\//)
       end
     end
 end

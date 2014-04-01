@@ -34,52 +34,54 @@ describe Feed do
     build(:feed).should respond_to :title
   end
 
-  it "should have a title" do
-    create(:feed).title.should be_present
+  describe "creation" do
+    let(:feed) { create(:feed) }
+    it "should have a title" do
+      feed.title.should be_present
+    end
+
+    it "should have a feed_url" do
+      feed.feed_url.should be_present
+    end
+
+    it "should have a feed_url" do
+      feed.feed_url.should be_present
+    end
+
+    it "should have an url" do
+      feed.url.should be_present
+    end
+
+    it "should have feed entries" do
+      expect { create(:feed) }.to change(FeedEntry, :count).by_at_least(10)
+    end
+
+    it "should have a valid category" do
+      Feed::CATEGORIES.should have_key(feed.category)
+    end
+
+    it "should have feed_entries after clear and reload feed" do
+      feed.refresh_entries
+      feed.feed_entries.count.should > 0
+    end
+
+    it "should change updated_at on clear and reload feed" do
+      updated_at = feed.updated_at
+      feed.refresh_entries
+      feed.updated_at.should > updated_at
+    end
   end
 
-  it "should have a feed_url" do
-    create(:feed).feed_url.should be_present
-  end
+  describe "destruction" do
+    it "should be destroyed" do
+      feed = create(:feed)
+      expect { feed.destroy }.to change(Feed, :count).by(-1)
+    end
 
-  it "should have a feed_url" do
-    create(:feed).feed_url.should be_present
-  end
-
-  it "should have an url" do
-    create(:feed).url.should be_present
-  end
-
-  it "should have feed entries" do
-    expect { create(:feed) }.to change(FeedEntry, :count).by_at_least(10)
-  end
-
-  it "should have a valid category" do
-    feed = create(:feed)
-    Feed::CATEGORIES.should have_key(feed.category)
-  end
-
-  it "should be destroyed" do
-    feed = create(:feed)
-    expect { feed.destroy }.to change(Feed, :count).by(-1)
-  end
-
-  it "should destroy associated feed_entries" do
-    feed = create(:feed)
-    items = feed.feed_entries.size
-    expect { feed.destroy }.to change(FeedEntry, :count).by(-items)
-  end
-
-  it "should have feed_entries after clear and reload feed" do
-    feed = create(:feed)
-    feed.refresh_entries
-    feed.feed_entries.count.should > 0
-  end
-
-  it "should change updated_at on clear and reload feed" do
-    feed = create(:feed)
-    updated_at = feed.updated_at
-    feed.refresh_entries
-    feed.updated_at.should > updated_at
+    it "should destroy associated feed_entries" do
+      feed = create(:feed)
+      items = feed.feed_entries.size
+      expect { feed.destroy }.to change(FeedEntry, :count).by(-items)
+    end
   end
 end
