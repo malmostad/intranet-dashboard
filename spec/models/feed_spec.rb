@@ -50,10 +50,6 @@ describe Feed do
     create(:feed).url.should be_present
   end
 
-  it "should have a checksum" do
-    create(:feed).checksum.should be_present
-  end
-
   it "should have feed entries" do
     expect { create(:feed) }.to change(FeedEntry, :count).by_at_least(10)
   end
