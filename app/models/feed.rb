@@ -58,7 +58,6 @@ class Feed < ActiveRecord::Base
     feed_entries.delete_all
     # Force validation, fetch, parse and save feed entries
     self.fetched_at = nil
-    self.checksum = nil
     self.save
   end
 
