@@ -72,23 +72,17 @@ class Feed < ActiveRecord::Base
     def save_feed_entries
       if updated
         parsed_feed.entries.each do |parsed_entry|
-          # We found some feeds without id (guids) in the entries, use url in those cases
-          parsed_entry.id ||= parsed_entry.url unless parsed_entry.url.blank?
-          parsed_entry.published ||= parsed_entry.updated unless parsed_entry.updated.blank?
-
-          # Don't save urls for non-ssl media if not allowed in config
-          if !APP_CONFIG["allow_non_ssl_media"] && parsed_entry.respond_to?(:image) &&
-              parsed_entry.image.present? && parsed_entry.image.match(%q(^http://))
-            parsed_entry.image = nil
-            parsed_entry.image_medium = nil
-            parsed_entry.image_large = nil
-          end
-
-          # Find or initialize new entry
-          entry = FeedEntry.where(guid: parsed_entry.id, feed_id: id).first_or_initialize
-
-          # Slice those attributes from fetched_feed that we have FeedENtry columns for
-          entry.update_attributes parsed_entry.to_h.slice(*FeedEntry.column_names)
+          # # Find or initialize new entry
+          entry = FeedEntry.where(guid: parsed_entry.entry_id, feed_id: id).first_or_initialize
+          entry.published      = parsed_entry.published
+          entry.url            = parsed_entry.url
+          entry.title          = parsed_entry.title
+          entry.summary        = parsed_entry.summary
+          entry.image          = parsed_entry.image
+          entry.image_medium   = parsed_entry.image_medium
+          entry.image_large    = parsed_entry.image_large
+          entry.count_comments = parsed_entry.count_comments
+          entry.save
         end
       end
     end
