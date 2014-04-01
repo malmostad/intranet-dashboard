@@ -67,7 +67,7 @@ class Feed < ActiveRecord::Base
   private
     # Create or update feed entries for the feed
     def save_feed_entries
-      if @updated
+      if !errors && @updated
         @parsed_feed.entries.each do |parsed_entry|
           # # Find or initialize new entry
           entry = FeedEntry.where(guid: parsed_entry.entry_id, feed_id: id).first_or_initialize
