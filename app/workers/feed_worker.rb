@@ -3,7 +3,7 @@ class FeedWorker
   # Most of the code are conditionals for counters for statistics
   def self.update_all
     started_at = Time.now.to_f
-    failed = succeeded  = skipped = 0
+    failed = succeeded = not_modified = penalized = 0
 
     # Process feeds in shuffled order in smaller chunks
     Feed.all.shuffle.each_slice(APP_CONFIG['feed_worker_concurrency']) do |feeds|
@@ -14,16 +14,19 @@ class FeedWorker
         # Penalty: Skip fetching of the feed in this round if it has enough of bad reputation
         if feed.recent_failures**2 > feed.recent_skips
           feed.update_attribute("recent_skips", feed.recent_skips + 1)
-          skipped += 1
+          penalized += 1
           next
         end
 
         # Threaded fetching of the feeds
         threads << Thread.new do
-          if feed.fetch_and_parse
-            succeded_feeds << feed
-          else
+          feed.fetch_and_parse
+          if feed.parsed_feed === 304
+            not_modified += 1
+          elsif feed.parsed_feed.is_a?(Fixnum) || feed.parsed_feed.blank?
             failed_feeds << feed
+          else
+            succeded_feeds << feed
           end
         end
       end
@@ -32,7 +35,6 @@ class FeedWorker
       # Save the chunk of fetched feeds
       succeded_feeds.each do |feed|
         succeeded += 1
-        feed.recent_failures = 0
         feed.map_feed_attributes
         feed.save(validate: false)
       end
@@ -49,10 +51,11 @@ class FeedWorker
 
     # Log stats
     Rails.logger.warn "    FeedWorker updated feeds in #{(Time.now.to_f - started_at).ceil} seconds."
-    Rails.logger.warn "    Succeeded: #{succeeded}"
+    Rails.logger.warn "    Updated: #{succeeded}"
+    Rails.logger.warn "    Not modified: #{not_modified}"
     Rails.logger.warn "    Failed: #{failed}"
-    Rails.logger.warn "    Skipped: #{skipped}"
-    Rails.logger.warn "    Total: #{failed + succeeded + skipped}"
+    Rails.logger.warn "    Penalized: #{penalized}"
+    Rails.logger.warn "    Total: #{succeeded + not_modified + failed + penalized}"
 
     sleep APP_CONFIG['feed_worker_cycle_pause']
   end

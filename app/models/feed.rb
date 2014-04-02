@@ -18,7 +18,7 @@ class Feed < ActiveRecord::Base
 
   before_validation do
     # Fetch and parse feed, to get appropriate validation messages
-    if fetch_and_parse && @parsed_feed != 304
+    if fetch_and_parse
       map_feed_attributes
     end
   end
@@ -27,10 +27,14 @@ class Feed < ActiveRecord::Base
     fix_url
     begin
       @parsed_feed = Feedjira::Feed.fetch_and_parse(feed_url, http_options)
-
-      # Raise if we don't get a feedjira object or 304 (not modified)
-      raise "Failed fetching" if @parsed_feed != 304 && @parsed_feed.is_a?(Fixnum) || @parsed_feed.blank?
-      true
+      if @parsed_feed === 304
+        false
+      elsif @parsed_feed.is_a?(Fixnum) || @parsed_feed.blank?
+        errors.add(:feed_url, "Flödet kunde inte hämtas eller var ogiltigt. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
+        false
+      else
+        true
+      end
     rescue Exception => e
       errors.add(:feed_url, "Flödet kunde inte hämtas eller var ogiltigt. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
       logger.info "Feedjira: #{e}. Feed id: #{id}, #{feed_url}"
@@ -54,6 +58,17 @@ class Feed < ActiveRecord::Base
     end
   end
 
+  def map_feed_attributes
+    self.title            =  @parsed_feed.title || "Utan titel"
+    self.url              =  @parsed_feed.url
+    self.fetched_at       =  Time.now
+    self.last_modified    =  @parsed_feed.last_modified
+    self.etag             =  @parsed_feed.etag
+    self.recent_skips     =  0
+    self.recent_failures  =  0
+    self.feed_entries     << fresh_feed_entries
+  end
+
   # Delete feed_entries, fetch, parse and save
   def refresh_entries
     feed_entries.delete_all
@@ -61,15 +76,6 @@ class Feed < ActiveRecord::Base
     self.etag = nil
     self.last_modified = nil
     self.save
-  end
-
-  def map_feed_attributes
-    self.title         =  @parsed_feed.title || "Utan titel"
-    self.url           =  @parsed_feed.url
-    self.fetched_at    =  Time.now
-    self.last_modified =  @parsed_feed.last_modified
-    self.etag          =  @parsed_feed.etag
-    self.feed_entries  << fresh_feed_entries
   end
 
   private
