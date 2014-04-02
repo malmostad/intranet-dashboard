@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140331162711) do
+ActiveRecord::Schema.define(:version => 20140402084537) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -85,8 +85,9 @@ ActiveRecord::Schema.define(:version => 20140331162711) do
     t.datetime "updated_at",                     :null => false
     t.datetime "fetched_at"
     t.text     "url"
-    t.string   "checksum"
     t.integer  "recent_skips",    :default => 0
+    t.string   "etag"
+    t.datetime "last_modified"
   end
 
   create_table "feeds_roles", :id => false, :force => true do |t|

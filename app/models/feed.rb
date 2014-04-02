@@ -18,7 +18,7 @@ class Feed < ActiveRecord::Base
 
   before_validation do
     # Fetch and parse feed, to get appropriate validation messages
-    if fetch_and_parse
+    if fetch_and_parse && @parsed_feed != 304
       map_feed_attributes
     end
   end
@@ -26,10 +26,10 @@ class Feed < ActiveRecord::Base
   def fetch_and_parse
     fix_url
     begin
-      @parsed_feed = Feedjira::Feed.fetch_and_parse(feed_url, timeout: 5, compress: true)
+      @parsed_feed = Feedjira::Feed.fetch_and_parse(feed_url, http_options)
 
-      # Raise if we get HTTP error code or nil instead of feedjira object
-      raise "Failed fetching" if @parsed_feed.is_a? Fixnum || @parsed_feed.blank?
+      # Raise if we don't get a feedjira object or 304 (not modified)
+      raise "Failed fetching" if @parsed_feed != 304 && @parsed_feed.is_a?(Fixnum) || @parsed_feed.blank?
       true
     rescue Exception => e
       errors.add(:feed_url, "Flödet kunde inte hämtas eller var ogiltigt. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
@@ -54,18 +54,22 @@ class Feed < ActiveRecord::Base
     end
   end
 
+  # Delete feed_entries, fetch, parse and save
   def refresh_entries
     feed_entries.delete_all
-    # Force validation, fetch, parse and save feed entries
     self.fetched_at = nil
+    self.etag = nil
+    self.last_modified = nil
     self.save
   end
 
   def map_feed_attributes
-    self.title = @parsed_feed.title || "Utan titel"
-    self.url = @parsed_feed.url
-    self.fetched_at = Time.now
-    self.feed_entries << fresh_feed_entries
+    self.title         =  @parsed_feed.title || "Utan titel"
+    self.url           =  @parsed_feed.url
+    self.fetched_at    =  Time.now
+    self.last_modified =  @parsed_feed.last_modified
+    self.etag          =  @parsed_feed.etag
+    self.feed_entries  << fresh_feed_entries
   end
 
   private
@@ -91,5 +95,15 @@ class Feed < ActiveRecord::Base
       else
         self.feed_url = "http://#{feed_url}" unless feed_url.match(/^(https?|file):\/\//)
       end
+    end
+
+    def http_options
+      options = {
+        timeout: 5,
+        compress: true
+      }
+      options[:if_none_match] = etag if etag?
+      options[:if_modified_since] = last_modified if last_modified?
+      options
     end
 end
