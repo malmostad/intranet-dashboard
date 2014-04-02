@@ -21,6 +21,7 @@ class SessionsController < ApplicationController
       if ldap.authenticate(params[:username], params[:password])
         user = User.unscoped.where(username: params[:username]).first_or_initialize
         session[:user_id] = user.id
+        Rails.logger.debug { "LDAP authenticated user #{current_user.id}" }
         finalize_login
         redirect_after_login
       else
@@ -61,6 +62,7 @@ class SessionsController < ApplicationController
             UserAgent.where(id: cookies.signed[:user_agent][:id]).first : false
         if user_agent && user_agent.authenticate(cookies.signed[:user_agent][:token])
           session[:user_id] = user_agent.user_id
+          Rails.logger.debug { "'Remember me' authenticated user #{current_user.id}" }
           return true
         end
       end
@@ -83,6 +85,7 @@ class SessionsController < ApplicationController
       user = User.where(username: username).first
       if user
         session[:user_id] = user.id
+        Rails.logger.debug { "Stubbed authenticated user #{current_user.id}" }
         redirect_after_login
       else
         @login_failed = "Användarnamnet finns inte"

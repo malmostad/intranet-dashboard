@@ -17,7 +17,6 @@ class Portwise
         false
       end
     else
-      Rails.logger.error "Portwise not trusted"
       false
     end
   end
