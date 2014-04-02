@@ -63,7 +63,7 @@ class SessionsController < ApplicationController
         user_agent = cookies.signed[:user_agent].present? ?
             UserAgent.where(id: cookies.signed[:user_agent][:id]).first : false
 
-        logger.debug "UserAgent: #{user_agent}"
+        logger.debug "UserAgent: #{user_agent.inspect}"
 
         if user_agent && user_agent.authenticate(cookies.signed[:user_agent][:token])
           session[:user_id] = user_agent.user_id
