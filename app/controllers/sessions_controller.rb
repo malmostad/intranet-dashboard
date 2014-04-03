@@ -52,27 +52,29 @@ class SessionsController < ApplicationController
     def direct_auth?(request)
       if APP_CONFIG['portwise']['enabled'] # Try Portwise authentication
         portwise = Portwise.new(request)
+        logger.debug { "Trying Portwise auth" }
         if portwise.authenticate?
           user = User.unscoped.where(username: username).first_or_initialize
           session[:user_id] = user.id
           return true
         end
-      else # Try "remember me" authentication
-        logger.debug "Trying remember me auth"
-        logger.debug "user_agent cookie present: #{cookies.signed[:user_agent].present?}"
-        user_agent = cookies.signed[:user_agent].present? ?
-            UserAgent.where(id: cookies.signed[:user_agent][:id]).first : false
-
-        logger.debug "UserAgent: #{user_agent.inspect}"
-
-        if user_agent && user_agent.authenticate(cookies.signed[:user_agent][:token])
-          session[:user_id] = user_agent.user_id
-          logger.debug "Authenticated: #{user_agent.authenticate(cookies.signed[:user_agent][:token])}"
-          logger.debug { "'Remember me' authenticated user #{current_user.id}" }
-          return true
-        end
       end
-      return false
+      # Try "remember me" authentication
+      logger.debug { "Trying remember me auth" }
+      logger.debug { "user_agent cookie present: #{cookies.signed[:user_agent].present?}" }
+      user_agent = cookies.signed[:user_agent].present? ?
+          UserAgent.where(id: cookies.signed[:user_agent][:id]).first : false
+
+      logger.debug { "UserAgent: #{user_agent.inspect}" }
+
+      if user_agent && user_agent.authenticate(cookies.signed[:user_agent][:token])
+        session[:user_id] = user_agent.user_id
+        logger.debug { "Authenticated: #{user_agent.authenticate(cookies.signed[:user_agent][:token])}" }
+        logger.debug { "'Remember me' authenticated user #{current_user.id}" }
+        true
+      else
+        false
+      end
     end
 
     def finalize_login

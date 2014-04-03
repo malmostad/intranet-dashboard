@@ -22,7 +22,7 @@ class Portwise
   end
 
   def request?
-    trust_proxy? && @xuid.present?
+    @xuid.present? && trust_proxy?
   end
 
   private
