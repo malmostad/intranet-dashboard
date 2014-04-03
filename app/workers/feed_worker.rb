@@ -50,12 +50,12 @@ class FeedWorker
     end
 
     # Log stats
-    Rails.logger.warn "    FeedWorker updated feeds in #{(Time.now.to_f - started_at).ceil} seconds."
-    Rails.logger.warn "    Updated: #{succeeded}"
-    Rails.logger.warn "    Not modified: #{not_modified}"
-    Rails.logger.warn "    Failed: #{failed}"
-    Rails.logger.warn "    Penalized: #{penalized}"
-    Rails.logger.warn "    Total: #{succeeded + not_modified + failed + penalized}"
+    Rails.logger.warn "FeedWorker updated feeds in #{(Time.now.to_f - started_at).ceil} seconds."
+    Rails.logger.warn "  Updated:      #{succeeded}"
+    Rails.logger.warn "  Not modified: #{not_modified}"
+    Rails.logger.warn "  Failed:       #{failed}"
+    Rails.logger.warn "  Penalized:    #{penalized}"
+    Rails.logger.warn "  Total:        #{succeeded + not_modified + failed + penalized}"
 
     sleep APP_CONFIG['feed_worker_cycle_pause']
   end
