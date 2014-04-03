@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
     tracker_id = cookies.signed[:user_agent].present? ? cookies.signed[:user_agent][:id] : nil
 
     # Get or create tracker from the UserAgent model
-    tracker = UserAgent.track(current_user.id, tracker_id, params[:remember_me], request.env['HTTP_USER_AGENT'] )
+    tracker = UserAgent.track(current_user.id, tracker_id, params[:remember_me], request.env['HTTP_USER_AGENT'])
 
     # Set tracker in browser
     cookies.permanent.signed[:user_agent] = {

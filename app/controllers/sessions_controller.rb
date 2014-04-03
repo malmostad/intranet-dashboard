@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
     begin
       # Reset user agent ("remember me" auth)
       user_agent = UserAgent.find(cookies.signed[:user_agent][:id])
-      user_agent.update_attributes( remember_me: false )
+      user_agent.update_attributes(remember_me: false)
     rescue
       logger.warn { "'Remember me' for user couldn't be reset on logout" }
     end

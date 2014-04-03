@@ -28,18 +28,23 @@ class UserAgent < ActiveRecord::Base
     updated_at < Date.today - APP_CONFIG['remember_me_days'].days
   end
 
-  # Save UA remember me token
+  # Save UA 'remember me' token
   def self.track(user_id, tracker_id, remember_me, tag)
     user_agent = where(id: tracker_id).first_or_initialize
 
     # Create a new token every time it is set for the user agent
-    token = Array.new(64).map { (65 + rand(58)).chr }.join
-    user_agent.update_attributes({
+    token = SecureRandom.urlsafe_base64(64)
+    attributes = {
       user_id: user_id,
       user_agent_tag: tag,
-      remember_me: remember_me,
       remember_me_hash: BCrypt::Password.create(token)
-    })
+    }
+    # Don't change remember_me on non-form based login
+    attributes[:remember_me] = remember_me unless remember_me.nil?
+
+    # Update user_agent
+    user_agent.update_attributes(attributes)
+
     { id: user_agent.id, token: token }
   end
 end
