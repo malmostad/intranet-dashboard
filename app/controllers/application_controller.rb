@@ -183,4 +183,12 @@ class ApplicationController < ActionController::Base
   def mailer_set_url_options
     ActionMailer::Base.default_url_options[:host] = request.env["HTTP_HOST"] + root_path.slice(0..-2)
   end
+
+  # IE bug fix: redirect to same action and add utf8="✓" if its not present but other query params are
+  def ie_utf_fix
+    if !request.xhr? && params[:action].present? &&
+          params.except(:action, :controller).present? && params[:utf8].blank?
+      return redirect_to({ action: params[:action], utf8: "✓"}.merge(params.except(:action, :controller)))
+    end
+  end
 end
