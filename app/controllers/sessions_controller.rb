@@ -52,7 +52,6 @@ class SessionsController < ApplicationController
     def direct_auth?(request)
       if APP_CONFIG['portwise']['enabled'] # Try Portwise authentication
         portwise = Portwise.new(request)
-        logger.debug { "Trying Portwise auth" }
         if portwise.authenticate?
           user = User.unscoped.where(username: username).first_or_initialize
           session[:user_id] = user.id

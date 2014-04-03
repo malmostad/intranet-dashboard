@@ -7,6 +7,7 @@ class Portwise
   end
 
   def authenticate?
+    Rails.logger.debug { "Trying Portwise auth" }
     if trust_proxy?
       if @xuid.present?
         Rails.logger.debug { "Portwise authenticated user #{@xuid}" }
@@ -17,6 +18,7 @@ class Portwise
         false
       end
     else
+      Rails.logger.debug { "Didn't trust Portwise" }
       false
     end
   end
