@@ -10,7 +10,7 @@ class SiteSearchController < ApplicationController
     if @terms.present?
       begin
         raw_results = Rails.cache.fetch(["search-raw-results", params], expires_in: 12.hours) do
-          client = SiteseekerNormalizer::Client.new(APP_CONFIG['siteseeker']['account'], APP_CONFIG['siteseeker']['index'], encoding: "UTF-8")
+          client = SiteseekerNormalizer::Client.new(APP_CONFIG['siteseeker']['account'], APP_CONFIG['siteseeker']['index'], read_timeout: 10)
           client.fetch(params.except(:action, :controller))
         end
         @results = SiteseekerNormalizer::Parse.new(raw_results, encoding: "UTF-8")
