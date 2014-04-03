@@ -1,7 +1,7 @@
 defaults: &defaults
-  auth_method: "ldap" # portwise, ldap or saml
   secret_token: "FILL_IN" # rake secret
   ldap:
+    enabled: true
     host: "ldap.example.org"
     port: "636"
     base_dn: "FILL_IN"
@@ -9,11 +9,20 @@ defaults: &defaults
     proxy_password: "FILL_IN"
     diff_log: "reports/ldap_diff.xlsx"
   portwise:
-    enabled: false
+    enabled: true
     ip_address: "FILL_IN"
     token: "FILL_IN"
     require_ssl: true
     signout_url: "https://example.org/wa/logout"
+  saml:
+    enabled: false
+    issuer: "http://www.local.example.org:3000/"
+    idp_sso_target_url: "http://idp.test.example.org/auth"
+    assertion_consumer_service_url: "http://www.local.example.org:3000/saml/consume"
+    idp_cert_fingerprint: "FILL_IN"
+    name_identifier_format: "urn:oasis:names:tc:SAML:2.0:nameid-format:emailAddress"
+    authn_context: "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
+    username_key: "cn"
   allow_non_ssl_media: false
   site_search_query_url: "http://ACCOUNT.appliance.siteseeker.se/search/INDEX/"
   siteseeker:
@@ -34,6 +43,7 @@ defaults: &defaults
 
 development:
   <<: *defaults
+  stub_auth: true
   title_suffix: "Dashboard (development)"
   # Full base system path to avatar storage
   avatar_base_path: "~/workspaces/dashboard/public/system/avatars/"
@@ -42,15 +52,6 @@ development:
   # Full url to default avatar service, omit protocol
   avatar_default_url: "//assets.example.org/avatars/default.jpg"
   assets_url_base: "//www.local.example.org:3001/assets/"
-  saml:
-    issuer: "http://www.local.example.org:3000/"
-    idp_sso_target_url: "http://idp.test.example.org/auth"
-    assertion_consumer_service_url: "http://www.local.example.org:3000/saml/consume"
-    idp_cert_fingerprint: "FILL_IN"
-    name_identifier_format: "urn:oasis:names:tc:SAML:2.0:nameid-format:emailAddress"
-    authn_context: "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
-    username_key: "cn"
-  stub_auth: true
 
 test:
   <<: *defaults
@@ -63,6 +64,7 @@ test:
   avatar_default_url: "//assets.example.org/avatars/default.jpg"
   assets_url_base: "//www.local.example.org:3001/assets/"
   saml:
+    enabled: true
     issuer: "http://www.local.example.org:3000/"
     idp_sso_target_url: "http://idp.test.example.org/auth"
     assertion_consumer_service_url: "http://www.local.example.org:3000/saml/consume"
@@ -79,6 +81,7 @@ production:
   avatar_default_url: "//example.org/avatars/default.jpg"
   assets_url_base: "//assets.example.org/internal/3.0/"
   saml:
+    enabled: true
     issuer: "https://www.example.org/dashboard"
     idp_sso_target_url: "https://idp.example.org/wa/auth/saml/"
     assertion_consumer_service_url: "https://www.example.org/dashboard/saml/consume"

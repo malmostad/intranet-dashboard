@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'spec_helper'
 
-if APP_CONFIG["auth_method"] == "ldap"
+if APP_CONFIG["ldap"]["enabled"]
   describe "LDAP authentication" do
     before(:each) do
       # Disable stub for ldap specs

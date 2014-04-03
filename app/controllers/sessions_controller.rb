@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     if direct_auth?(request) # Portwise or remember me auth
       finalize_login
       redirect_after_login
-    elsif APP_CONFIG['auth_method'] == "saml" # SAML Auth has its own controller
+    elsif APP_CONFIG['saml']['enabled'] # SAML Auth has its own controller
       redirect_to saml_new_path
     else # Render the standard form for LDAP login
       render :new
@@ -53,7 +53,7 @@ class SessionsController < ApplicationController
       if APP_CONFIG['portwise']['enabled'] # Try Portwise authentication
         portwise = Portwise.new(request)
         if portwise.authenticate?
-          user = User.unscoped.where(username: username).first_or_initialize
+          user = User.unscoped.where(username: portwise.username).first_or_initialize
           session[:user_id] = user.id
           return true
         end

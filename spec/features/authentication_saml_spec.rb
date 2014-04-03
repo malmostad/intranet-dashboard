@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'spec_helper'
 
-if APP_CONFIG["auth_method"] == "saml"
+if APP_CONFIG["saml"]["enabled"]
   describe "SAML authentication" do
     it "should redirect the user to the IdP login page" do
       visit root_path
