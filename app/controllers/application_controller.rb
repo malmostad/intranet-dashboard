@@ -49,14 +49,15 @@ class ApplicationController < ActionController::Base
   end
 
   unless Rails.application.config.consider_all_requests_local
-    rescue_from Exception, with: lambda { |exception|
+    rescue_from Exception do |exception|
       if exception.is_a?(ArgumentError) && exception.message == "invalid byte sequence in UTF-8"
+        # Silent rescue from IE9 UTF-8 url hacking bug, strip query and redirect to requested resource
         logger.warn "<=IE9 UTF-8 bug rescued"
-        redirect_to controller: params[:controller], action: params[:action];
+        redirect_to controller: params[:controller], action: params[:action]
       else
         server_error(exception.message)
       end
-    }
+    end
     rescue_from ActionController::RoutingError,
         ActionController::UnknownController,
         ::AbstractController::ActionNotFound,
