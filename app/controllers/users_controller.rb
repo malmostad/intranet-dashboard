@@ -2,7 +2,6 @@
 class UsersController < ApplicationController
 
   before_filter { add_body_class('employee') }
-  before_filter :ie_utf_fix, only: [:index, :search]
   before_filter :require_user, except: [:suggest]
   before_filter :require_admin_or_myself, only: [:edit, :update]
   before_filter :require_admin, only: :destroy

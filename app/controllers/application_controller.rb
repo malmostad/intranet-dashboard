@@ -49,8 +49,19 @@ class ApplicationController < ActionController::Base
   end
 
   unless Rails.application.config.consider_all_requests_local
-    rescue_from Exception, with: lambda { |exception| server_error(exception) }
-    rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, ActiveRecord::RecordNotFound, with: lambda { |exception| not_found(exception) }
+    rescue_from Exception, with: lambda { |exception|
+      if exception.is_a?(ArgumentError) && exception.message == "invalid byte sequence in UTF-8"
+        logger.warn "<=IE9 UTF-8 bug rescued"
+        redirect_to controller: params[:controller], action: params[:action];
+      else
+        server_error(exception.message)
+      end
+    }
+    rescue_from ActionController::RoutingError,
+        ActionController::UnknownController,
+        ::AbstractController::ActionNotFound,
+        ActiveRecord::RecordNotFound,
+      with: lambda { |exception| not_found(exception) }
   end
 
   protected
@@ -182,13 +193,5 @@ class ApplicationController < ActionController::Base
   # action mailer config so we need to do it here
   def mailer_set_url_options
     ActionMailer::Base.default_url_options[:host] = request.env["HTTP_HOST"] + root_path.slice(0..-2)
-  end
-
-  # IE bug fix: redirect to same action and add utf8="✓" if its not present but other query params are
-  def ie_utf_fix
-    if !request.xhr? && params[:action].present? &&
-          params.except(:action, :controller).present? && params[:utf8].blank?
-      return redirect_to({ action: params[:action], utf8: "✓"}.merge(params.except(:action, :controller)))
-    end
   end
 end

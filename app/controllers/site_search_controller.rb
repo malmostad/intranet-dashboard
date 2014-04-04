@@ -3,7 +3,6 @@ require 'open-uri'
 
 class SiteSearchController < ApplicationController
   before_filter { add_body_class "site-search" }
-  before_filter :ie_utf_fix, only: :index
 
   def index
     @terms = params[:q]
