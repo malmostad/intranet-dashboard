@@ -12,6 +12,7 @@ $ ->
 
     # Autocomplete
     if $searchField.length
+      $searchField.focus()
       $searchField.autocomplete
         source: (request, response) ->
           $.ajax
@@ -65,18 +66,3 @@ $ ->
         # Track clicks on editors choich in the results list
         if $a.closest(".categories").length > 0
           _gaq.push(['_trackEvent', 'SearchClickCategory', GAAction,  GALabel])
-
-    # Override user agents and scroll to search box on narrow devices
-    $searchField.focus ->
-      $("body").css("min-height", $(document).height() + $searchField.offset().top)
-      y = $searchField.offset().top - 6
-      times = 0
-      i = setInterval ->
-        window.scrollTo(0, y)
-        if times++ > 20
-          clearInterval(i)
-      , 2
-
-    # Set focus on search field if not a narrow device and if a search isn't already made
-    if $(document).width() >= 600
-      $searchField.focus() unless $searchField.val().length
