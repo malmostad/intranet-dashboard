@@ -4,7 +4,6 @@ class SessionsController < ApplicationController
 
   def new
     if direct_auth?(request) # Portwise or remember me auth
-      finalize_login
       redirect_after_login
     elsif APP_CONFIG['saml']['enabled'] # SAML Auth has its own controller
       redirect_to saml_new_path
@@ -20,9 +19,9 @@ class SessionsController < ApplicationController
       ldap = Ldap.new
       if ldap.authenticate(params[:username], params[:password])
         user = User.unscoped.where(username: params[:username]).first_or_initialize
-        session[:user_id] = user.id
-        logger.debug { "LDAP authenticated user #{current_user.id}" }
-        finalize_login
+        logger.debug { "LDAP authenticated user" }
+
+        finalize_login(user)
         redirect_after_login
       else
         @login_failed = "Fel användarnamn eller lösenord. Vänligen försök igen."
@@ -54,7 +53,7 @@ class SessionsController < ApplicationController
         portwise = Portwise.new(request)
         if portwise.authenticate?
           user = User.unscoped.where(username: portwise.username).first_or_initialize
-          session[:user_id] = user.id
+          finalize_login(user)
           return true
         end
       end
@@ -67,23 +66,23 @@ class SessionsController < ApplicationController
       logger.debug { "UserAgent: #{user_agent.inspect}" }
 
       if user_agent && user_agent.authenticate(cookies.signed[:user_agent][:token])
-        session[:user_id] = user_agent.user_id
-        logger.debug { "Authenticated: #{user_agent.authenticate(cookies.signed[:user_agent][:token])}" }
-        logger.debug { "'Remember me' authenticated user #{current_user.id}" }
+        finalize_login(user_agent.user)
+        logger.debug { "'Remember me' authenticated user" }
         true
       else
         false
       end
     end
 
-    def finalize_login
-      # Update user attributes from LDAP
-      Ldap.new.update_user_profile(current_user)
-
+    def finalize_login(user)
       # Update timestamp
-      current_user.update_attribute("last_login", Time.now)
+      user.update_attribute("last_login", Time.now)
+
+      # Update user attributes from LDAP
+      Ldap.new.update_user_profile(user)
 
       # Set cookies
+      session[:user_id] = user.id
       set_profile_cookie
       track_user_agent
     end
