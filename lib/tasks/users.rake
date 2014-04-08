@@ -17,7 +17,7 @@ namespace :users do
           updated += 1 if ldap.user_profile_changed
         else
           # User is deactivated in the LDAP
-          if user.deactivated? && user.deactivated_at > Time.now + 45.days
+          if user.deactivated? && user.deactivated_at < 45.days.ago
             # Delete the user if it has been deactivated in the Dashboard for 45 days
             user.destroy
           elsif !user.deactivated?
