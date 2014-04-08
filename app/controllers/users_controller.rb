@@ -135,7 +135,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       current_user.status_message = params[:status_message]
       current_user.status_message_updated_at = Time.now
-      if current_user.save
+      if current_user.save(validate: false)
         format.html { redirect_to root_path }
         format.json { render json: { response: "ok", status_message: User.find(current_user.id).status_message }, status: 200 }
       else
