@@ -180,7 +180,6 @@ class User < ActiveRecord::Base
     query[:q] ||=  query[:term]
     if query[:q].present?
       q = "#{query[:q]}%"
-      # NOTE: this LIKE query is still used by the API, web search is using Elasticsearch in EmployeeSearch
       users = users.where("username LIKE ? OR first_name LIKE ? OR last_name LIKE ? OR
           concat_ws(' ', first_name, last_name) LIKE ? OR email LIKE ?", q, q, q, q, q)
     else
