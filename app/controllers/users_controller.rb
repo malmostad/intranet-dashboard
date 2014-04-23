@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_filter :require_admin_or_myself, only: [:edit, :update]
   before_filter :require_admin, only: :destroy
 
-  # List users matching a tag (skills, languages etc)
+  # List users matching a tag (department, skills, languages etc)
   def index
     # Redirect to full search if no query
     if params.except(:controller, :action, :q, :utf8).empty?
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
       @has_more = @total.present? ? (@offset + @limit < @total) : false
 
       if request.xhr?
-        render :_results, layout: false
+        render :_tag_results, layout: false
       else
         render :index
       end
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
     end
     @has_more = @total.present? ? (@offset + @limit < @total) : false
     if request.xhr?
-      render :_results, layout: false
+      render :_search_results, layout: false
     else
       render :search
     end

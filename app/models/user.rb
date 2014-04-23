@@ -180,14 +180,16 @@ class User < ActiveRecord::Base
     query[:q] ||=  query[:term]
     if query[:q].present?
       q = "#{query[:q]}%"
+      # NOTE: this LIKE query is still used by the API, web search is using Elasticsearch in EmployeeSearch
       users = users.where("username LIKE ? OR first_name LIKE ? OR last_name LIKE ? OR
           concat_ws(' ', first_name, last_name) LIKE ? OR email LIKE ?", q, q, q, q, q)
+    else
+      users = users.where(company: query[:company]) if query[:company].present?
+      users = users.where(department: query[:department]) if query[:department].present?
+      users = users.where("skills.name" => query[:skill]).includes(:skills) if query[:skill].present?
+      users = users.where("activities.name" => query[:activity]).includes(:activities) if query[:activity].present?
+      users = users.where("languages.name" => query[:language]).includes(:languages) if query[:language].present?
     end
-    users = users.where(company: query[:company]) if query[:company].present?
-    users = users.where(department: query[:department]) if query[:department].present?
-    users = users.where("skills.name" => query[:skill]).includes(:skills) if query[:skill].present?
-    users = users.where("activities.name" => query[:activity]).includes(:activities) if query[:activity].present?
-    users = users.where("languages.name" => query[:language]).includes(:languages) if query[:language].present?
     { users: users.order(:first_name).limit(limit).offset(offset), total: users.count }
   end
 
