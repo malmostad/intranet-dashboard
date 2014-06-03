@@ -14,8 +14,7 @@ module EmployeeSearch
 
     mappings dynamic: 'false' do
       indexes :username, analyzer: 'simple'
-      indexes :displayname, analyzer: 'simple'
-      indexes :name_suggest, index_analyzer: 'name_suggest_index', search_analyzer: 'name_suggest_search'
+      indexes :displayname, index_analyzer: 'name_suggest_index', search_analyzer: 'name_suggest_search'
       indexes :phone, analyzer: 'phone_number'
       indexes :cell_phone, analyzer: 'phone_number'
       indexes :company_short, analyzer: 'simple'
@@ -31,8 +30,7 @@ module EmployeeSearch
       company_short: company_short,
       department: department,
       phone: phone,
-      cell_phone: cell_phone,
-      name_suggest: "#{first_name}#{last_name} #{last_name}#{first_name} #{username}"
+      cell_phone: cell_phone
     }.as_json
   end
 
@@ -77,7 +75,7 @@ module EmployeeSearch
             should: [
               {
                 match: {
-                  name_suggest: {
+                  displayname: {
                     query: query,
                     fuzziness: 2,
                     prefix_length: 0
@@ -86,9 +84,17 @@ module EmployeeSearch
               },
               {
                 match: {
-                  name_suggest: {
+                  displayname: {
                     query: query,
                     fuzziness: 0,
+                    prefix_length: 0
+                  }
+                }
+              },
+              {
+                match: {
+                  username: {
+                    query: query,
                     prefix_length: 0
                   }
                 }

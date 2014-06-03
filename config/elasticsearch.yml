@@ -2,36 +2,35 @@ analysis:
   analyzer:
     name_suggest_index:
       tokenizer: edge_ngram_2
-      filter:
-      - lowercase
-      - name_synonyms
       char_filter:
+      - phonetic_mappings
       - hyphen
-      - phonetic_mappings
+      filter:
+      - lowercase
+      - name_synonyms
     name_suggest_search:
-      tokenizer: keyword
+      tokenizer: standard
       filter:
       - lowercase
       - name_synonyms
       char_filter:
-      - hyphen_space
       - phonetic_mappings
+      - hyphen
     phone_number:
       tokenizer: keyword
       filter:
       - phone_number
       char_filter:
       - phone_number
+
   tokenizer:
     edge_ngram_2:
       type: edgeNGram
-      min_gram: 2
+      min_gram: 1
       max_gram: 50
       token_chars:
       - letter
-      - digit
-      - symbol
-      - punctuation
+
   filter:
     phone_number:
       type: edgeNGram
