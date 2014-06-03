@@ -43,14 +43,12 @@ module EmployeeSearch
         from: 0, size: 10
       }.merge(options)
       begin
-        Rails.cache.fetch(["employee_fuzzy_search", query, settings], expires_in: 12.hours) do
-          response = __elasticsearch__.search fuzzy_query(query, settings[:from], settings[:size])
+        response = __elasticsearch__.search fuzzy_query(query, settings[:from], settings[:size])
 
-          { employees: response.records.to_a, # to_a is need to be able to serealize for memcached
-            total: response.results.total,
-            took: response.took
-          }
-        end
+        { employees: response.records.to_a, # to_a is needed to be able to serialize for memcached
+          total: response.results.total,
+          took: response.took
+        }
       rescue Exception => e
         logger.error "Elasticsearch: #{e}"
         false
@@ -59,10 +57,8 @@ module EmployeeSearch
 
     def fuzzy_suggest(query)
       begin
-        Rails.cache.fetch(["employee_fuzzy_suggest", query], expires_in: 12.hours) do
-          response = __elasticsearch__.search fuzzy_query(query, 0, 10)
-          response.map(&:_source)
-        end
+        response = __elasticsearch__.search fuzzy_query(query, 0, 10)
+        response.map(&:_source)
       rescue Exception => e
         logger.error "Elasticsearch: #{e}"
         false
