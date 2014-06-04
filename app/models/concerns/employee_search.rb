@@ -14,6 +14,7 @@ module EmployeeSearch
 
     mappings dynamic: 'false' do
       indexes :username, analyzer: 'simple'
+      indexes :displayname_phrase, analyzer: "simple"
       indexes :displayname, index_analyzer: 'name_suggest_index', search_analyzer: 'name_suggest_search'
       indexes :phone, analyzer: 'phone_number'
       indexes :cell_phone, analyzer: 'phone_number'
@@ -27,6 +28,7 @@ module EmployeeSearch
       id: id,
       username: username,
       displayname: displayname,
+      displayname_phrase: displayname,
       company_short: company_short,
       department: department,
       phone: phone,
@@ -73,7 +75,7 @@ module EmployeeSearch
         query: {
           bool: {
             should: [
-              {
+              { # very fuzzy
                 match: {
                   displayname: {
                     query: query,
@@ -82,12 +84,19 @@ module EmployeeSearch
                   }
                 }
               },
-              {
+              { # boost exact match
                 match: {
                   displayname: {
-                    query: query,
-                    fuzziness: 0,
-                    prefix_length: 0
+                    boost: 5,
+                    query: query
+                  }
+                }
+              },
+              { # boost exact phrase
+                match_phrase_prefix: {
+                  displayname_phrase: {
+                    boost: 10,
+                    query: query
                   }
                 }
               },

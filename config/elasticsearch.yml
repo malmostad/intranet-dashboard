@@ -26,7 +26,7 @@ analysis:
   tokenizer:
     edge_ngram_2:
       type: edgeNGram
-      min_gram: 1
+      min_gram: 2
       max_gram: 50
       token_chars:
       - letter
