@@ -1,6 +1,6 @@
 analysis:
   analyzer:
-    name_suggest_index:
+    name_index:
       tokenizer: edge_ngram_2
       char_filter:
       - phonetic_mappings
@@ -8,7 +8,7 @@ analysis:
       filter:
       - lowercase
       - name_synonyms
-    name_suggest_search:
+    name_search:
       tokenizer: standard
       filter:
       - lowercase
