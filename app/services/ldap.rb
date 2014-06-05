@@ -73,12 +73,12 @@ class Ldap
     ldap_user = @client.search(base: APP_CONFIG['ldap']['base_dn'], filter: "cn=#{username}").first
     if ldap_user.present?
       Rails.logger.info ldap_user.inspect
-      puts "displayname: #{ldap_user['displayname'].first}"
-      puts "division: #{ldap_user['division'].first}"
-      puts "roomnumber: #{ldap_user['roomnumber'].first}"
-      puts "streetaddress: #{ldap_user['streetaddress'].first}"
-      puts "extensionattribute1: #{ldap_user['extensionattribute1'].first}"
+      puts "user: #{username}"
+      puts "company: #{ldap_user['company'].first}"
       puts "department: #{ldap_user['department'].first}"
+      puts "division: #{ldap_user['division'].first}"
+      puts "houseIdentifier: #{ldap_user['houseIdentifier'].first}"
+      puts "physicalDeliveryOfficeName: #{ldap_user['physicalDeliveryOfficeName'].first}"
     else
       Rails.logger.debug  "No user #{username}"
     end
