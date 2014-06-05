@@ -74,13 +74,19 @@ class UsersController < ApplicationController
 
   def show
     @user = User.where(username: params[:username]).includes(:subordinates).first
-
     if @user.present?
-      @colleagueship = current_user.colleagueships.where(colleague_id: @user.id).first
-      if request.xhr?
-        render layout: false
-      else
-        render layout: true
+      respond_to do |format|
+        format.html {
+          @colleagueship = current_user.colleagueships.where(colleague_id: @user.id).first
+          if request.xhr?
+            render layout: false
+          else
+            render layout: true
+          end
+        }
+        format.vcard {
+          render text: @user.to_vcard
+        }
       end
     else
       not_found

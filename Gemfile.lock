@@ -300,6 +300,7 @@ GEM
       json (>= 1.8.0)
     uuid (2.3.7)
       macaddr (~> 1.0)
+    vcardigan (0.0.3)
     wasabi (3.3.0)
       httpi (~> 2.0)
       mime-types (< 2.0.0)
@@ -358,4 +359,5 @@ DEPENDENCIES
   therubyracer (= 0.12.1)
   thin
   uglifier (= 2.5.0)
+  vcardigan
   whenever
