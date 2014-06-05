@@ -66,11 +66,6 @@ class User < ActiveRecord::Base
     update_attribute(:cmg_id, AastraCWI.get_cmg_id(self))
   end
 
-  # Convenience callback for Elastic re-indexing
-  after_touch do
-    __elasticsearch__.index_document
-  end
-
   validates_attachment_content_type :avatar,
     content_type: ['image/tiff', 'image/jpeg', 'image/pjpeg', 'image/jp2'],
     message: "Fel bildformat. Du kan ladda upp en jpeg- eller tiff-bild"

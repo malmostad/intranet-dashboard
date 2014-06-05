@@ -5,8 +5,35 @@ module EmployeeSearch
     include Elasticsearch::Model
     settings Rails.application.config.elasticsearch
 
-    after_commit -> { __elasticsearch__.index_document  }, if: :persisted?
-    after_commit -> { __elasticsearch__.delete_document }, on: :destroy
+    after_create do
+      __elasticsearch__.index_document
+    end
+
+    after_touch do
+      __elasticsearch__.index_document
+    end
+
+    after_update do
+      # If the user is deactivated, delete ES document
+      if deactivated?
+        delete_document
+      else
+        __elasticsearch__.index_document
+      end
+    end
+
+    after_destroy do
+      delete_document
+    end
+
+    def delete_document
+      # ES document might already be deleted, so we do not log errors unless debug
+      begin
+        __elasticsearch__.delete_document
+      rescue Exception => e
+        logger.debug { "Document could not be deleted: #{e}" }
+      end
+    end
 
     # Override model name
     index_name    "employees_#{Rails.env}"
