@@ -239,31 +239,40 @@ class UsersController < ApplicationController
 
   def to_vcard
     vcard = VCardigan.create
-    vcard.uid "urn:uuid:malmo-stad-#{@user.id}"
+    vcard.uid "urn:uuid:malmo-stad-#{@user.username}"
     vcard.name @user.last_name, @user.first_name
     vcard.fullname @user.displayname
-    vcard.org "Malmö stad"
+    vcard.org "Malmö stad;#{@user.company};#{@user.department}"
     vcard.title @user.title
+    vcard.adr "#{@user.room};#{@user.address};#{@user.post_code};#{@user.postal_town}", type: "work"
+    vcard.geo "geo:#{@user.geo_position_x},#{@user.geo_position_y}", type: "sweref991330"
+    vcard.note "@user.professional_bio", type: "work"
+    vcard.expertise @user.skills.map(&:name).join(","), type: "work"
     vcard.tel type: "WORK,VOICE", value: "uri:tel:#{@user.phone}"
     vcard.tel type: "WORK,CELL", value: "uri:tel:#{@user.cell_phone}"
     vcard.photo "https:#{@user.avatar.url(:large, timestamp: false)}", mediatype: @user.avatar_content_type
-    vcard.email @user.email, type: "PREF,INTERNET"
+    vcard.email @user.email, type: "INTERNET"
     vcard.homepage "#{root_url}users/#{@user.username}", type: "work"
     vcard.homepage @user.homepage, type: "home"
     vcard.add "X-TWITTER", "https://twitter.com/#{@user.twitter}", type: "home"
-    vcard.add "X-SKYPE", @user.skype, type: "home"
+    vcard.add "X-SKYPE", "skype:#{@user.skype}", type: "home"
+    vcard.related "urn:uuid:malmo-stad-#{@user.manager.username}", type: "manager"
+    vcard.add "ORG-DIRECTORY", "#{root_url}users/"
+    vcard.add "INTEREST", @user.private_bio
+    vcard.source "#{root_url}users/#{@user.username}.vcard"
+    vcard.rev @user.updated_at.iso8601
     vcard.to_s
   end
 end
 
 # id: 111
-# username: jesbyl
-# first_name: Jesper
-# last_name: Bylund
-# email: jesper.bylund@malmo.se
-# phone: 040-342091
-# cell_phone:
-# title: Enhetschef
+# X username: jesbyl
+# X first_name: Jesper
+# X last_name: Bylund
+# X email: jesper.bylund@malmo.se
+# X phone: 040-342091
+# X cell_phone:
+# X title: Enhetschef
 # professional_bio: Utvecklingsansvarig Komin. // Enhetschef för kanalenheten på kommunikationsavdelningen,
 #   stadskontoret. Kanaleneheten fokuserar på malmo.se, Vårt Malmö, Komin, personalvin,
 #   digitala utskick och mobilsatsningar.
