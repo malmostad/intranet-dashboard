@@ -239,12 +239,50 @@ class UsersController < ApplicationController
 
   def to_vcard
     vcard = VCardigan.create
+    vcard.uid "urn:uuid:malmo-stad-#{@user.id}"
     vcard.name @user.last_name, @user.first_name
     vcard.fullname @user.displayname
-    vcard.photo "https://#{@user.avatar.url(:large, timestamp: false)}", type: 'uri'
-    vcard.email @user.email, type: ['work', 'internet'], preferred: 1
-    vcard[:item1].url user_url(@user)
-    vcard[:item1].label 'URL'
+    vcard.org "Malmö stad"
+    vcard.title @user.title
+    vcard.tel type: "WORK,VOICE", value: "uri:tel:#{@user.phone}"
+    vcard.tel type: "WORK,CELL", value: "uri:tel:#{@user.cell_phone}"
+    vcard.photo "https:#{@user.avatar.url(:large, timestamp: false)}", mediatype: @user.avatar_content_type
+    vcard.email @user.email, type: "PREF,INTERNET"
+    vcard.homepage "#{root_url}users/#{@user.username}", type: "work"
+    vcard.homepage @user.homepage, type: "home"
+    vcard.add "X-TWITTER", "https://twitter.com/#{@user.twitter}", type: "home"
+    vcard.add "X-SKYPE", @user.skype, type: "home"
     vcard.to_s
   end
 end
+
+# id: 111
+# username: jesbyl
+# first_name: Jesper
+# last_name: Bylund
+# email: jesper.bylund@malmo.se
+# phone: 040-342091
+# cell_phone:
+# title: Enhetschef
+# professional_bio: Utvecklingsansvarig Komin. // Enhetschef för kanalenheten på kommunikationsavdelningen,
+#   stadskontoret. Kanaleneheten fokuserar på malmo.se, Vårt Malmö, Komin, personalvin,
+#   digitala utskick och mobilsatsningar.
+# status_message: Möte om chefsflik asd
+# displayname: Jesper Bylund
+# company: 102 Stadskontoret
+# avatar_file_name: jesperbylundsvv.jpg
+# avatar_content_type: image/jpeg
+# twitter: jesperby
+# skype: jesperbylund
+# private_bio: Dalbybo, norrlänning från början men nu skåning, även om jag inte låter
+#   som en sådan. Gillar Storbritannien. Trebarnspappa, så jag vet inte om det kanske
+#   är mer stressigt hemma än på jobbet.
+# department: Kommunikationsavdelningen
+# homepage: http://jesperby.com
+# room: '6093'
+# address: August Palms plats 1
+# geo_position_x: 118943
+# geo_position_y: 6163918
+# district: Norr
+# post_code: 211 52
+# postal_town: Malmö
