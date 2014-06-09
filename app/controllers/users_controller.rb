@@ -238,24 +238,26 @@ class UsersController < ApplicationController
   end
 
   def to_vcard
-    vcard = VCardigan.create
+    vcard = VCardigan.create(version: "4.0")
     vcard.uid "urn:uuid:malmo-stad-#{@user.username}"
     vcard.name @user.last_name, @user.first_name
     vcard.fullname @user.displayname
     vcard.org "Malmö stad;#{@user.company};#{@user.department}"
     vcard.title @user.title
-    vcard.adr "#{@user.room};#{@user.address};#{@user.post_code};#{@user.postal_town}", type: "work"
+    vcard.adr "#{@user.address};#{@user.post_code};#{@user.postal_town}", type: "WORK"
     vcard.geo "geo:#{@user.geo_position_x},#{@user.geo_position_y}", type: "sweref991330"
-    vcard.note "@user.professional_bio", type: "work"
-    vcard.expertise @user.skills.map(&:name).join(","), type: "work"
+    vcard[:item1].label "room"
+    vcard[:item1].value @user.room
+    vcard.note "@user.professional_bio", type: "WORK"
+    vcard.expertise @user.skills.map(&:name).join(","), type: "WORK"
     vcard.tel type: "WORK,VOICE", value: "uri:tel:#{@user.phone}"
     vcard.tel type: "WORK,CELL", value: "uri:tel:#{@user.cell_phone}"
     vcard.photo "https:#{@user.avatar.url(:large, timestamp: false)}", mediatype: @user.avatar_content_type
     vcard.email @user.email, type: "INTERNET"
-    vcard.homepage "#{root_url}users/#{@user.username}", type: "work"
-    vcard.homepage @user.homepage, type: "home"
-    vcard.add "X-TWITTER", "https://twitter.com/#{@user.twitter}", type: "home"
-    vcard.add "X-SKYPE", "skype:#{@user.skype}", type: "home"
+    vcard.homepage "#{root_url}users/#{@user.username}", type: "WORK"
+    vcard.homepage @user.homepage, type: "HOME"
+    vcard.add "X-TWITTER", "https://twitter.com/#{@user.twitter}", type: "HOME"
+    vcard.add "X-SKYPE", "skype:#{@user.skype}", type: "HOME"
     vcard.related "urn:uuid:malmo-stad-#{@user.manager.username}", type: "manager"
     vcard.add "ORG-DIRECTORY", "#{root_url}users/"
     vcard.add "INTEREST", @user.private_bio
