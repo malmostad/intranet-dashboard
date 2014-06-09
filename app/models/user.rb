@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
   include EmployeeSearch
-  include Vcard
+  # include Vcard
 
   attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
       :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,

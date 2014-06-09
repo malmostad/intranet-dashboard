@@ -6,7 +6,7 @@ module Vcard
       vcard = VCardigan.create
       vcard.name last_name, first_name
       vcard.fullname displayname
-      vcard.photo "https://webapps06.malmo.se/avatars/#{username}", type: 'uri'
+      vcard.photo "https://#{APP_CONFIG['avatar_base_url']}/#{username}/large.jpg", type: 'uri'
       vcard.email email, type: ['work', 'internet'], preferred: 1
       vcard[:item1].url 'https://webapps06.malmo.se/dashboard'
       vcard[:item1].label 'URL'

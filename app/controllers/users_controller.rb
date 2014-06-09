@@ -85,7 +85,7 @@ class UsersController < ApplicationController
           end
         }
         format.vcard {
-          render text: @user.to_vcard
+          render text: to_vcard
         }
       end
     else
@@ -235,5 +235,16 @@ class UsersController < ApplicationController
   # Clear the users key/value ttl cache for shortcuts
   def clear_shortcut_cache(category)
     Rails.cache.delete("shortcuts-#{current_user.id}-#{category}")
+  end
+
+  def to_vcard
+    vcard = VCardigan.create
+    vcard.name @user.last_name, @user.first_name
+    vcard.fullname @user.displayname
+    vcard.photo "https://#{@user.avatar.url(:large, timestamp: false)}", type: 'uri'
+    vcard.email @user.email, type: ['work', 'internet'], preferred: 1
+    vcard[:item1].url user_url(@user)
+    vcard[:item1].label 'URL'
+    vcard.to_s
   end
 end
