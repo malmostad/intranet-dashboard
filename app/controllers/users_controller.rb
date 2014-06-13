@@ -267,9 +267,8 @@ class UsersController < ApplicationController
 
     vcard[:item2].add "X-ABLabel", "Twitter"
     vcard[:item2].url "http\://twitter.com/test"
-    vcard[:item3].add "X-ABLabel", "Fnitter"
-    vcard[:item3].text "flöden"
-
+    vcard[:item3].add "X-ABLabel", "_$!<Fnitter>!$_"
+    vcard[:item3].url "flöden"
 
     vcard.source "#{root_url}users/#{@user.username}.vcard"
     vcard.rev @user.updated_at.iso8601
