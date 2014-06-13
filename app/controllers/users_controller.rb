@@ -258,8 +258,9 @@ class UsersController < ApplicationController
     vcard.add "X-SOCIALPROFILE;TYPE=TWITTER;TYPE=HOME", @user.twitter
     vcard.add "IMPP;X-SERVICE-TYPE=SKYPE;TYPE=HOME", "skype:#{@user.skype}"
     vcard.add "X-SKYPE;TYPE=HOME", "skype:#{@user.skype}"
-
-    vcard.photo Base64.strict_encode64(File.open(@user.avatar.path(:medium_quadrat)).read), type: "JPEG", encoding: "BASE64"
+    begin
+      vcard.photo Base64.strict_encode64(File.open(@user.avatar.path(:medium_quadrat)).read), type: "JPEG", encoding: "BASE64"
+    rescue;end
     vcard.rev @user.updated_at.iso8601
     vcard.to_s
   end
