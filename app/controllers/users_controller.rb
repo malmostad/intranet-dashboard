@@ -252,14 +252,14 @@ class UsersController < ApplicationController
     vcard.add "TEL;TYPE=WORK;TYPE=VOICE;TYPE=CELL", @user.cell_phone
     vcard.email @user.email, type: "INTERNET"
     vcard.homepage "#{root_url}users/#{@user.username}", type: "WORK"
-    vcard[:item1].url "http://www.example.com"
+    vcard[:item1].url "#{root_url}users/#{@user.username}"
     vcard[:item1].add "X-ABLabel","_$!<HomePage>!$_"
     vcard.related "malmo-stad-#{@user.manager.username}", type: "MANAGER"
     vcard.add "X-SOCIALPROFILE;TYPE=TWITTER;TYPE=HOME", @user.twitter
     vcard.add "IMPP;X-SERVICE-TYPE=SKYPE;TYPE=HOME", "skype:#{@user.skype}"
     vcard.add "X-SKYPE;TYPE=HOME", "skype:#{@user.skype}"
 
-    vcard.photo "https:#{@user.avatar.url(:large, timestamp: false)}", type: "JPEG", encoding: "BASE64"
+    vcard.photo Base64.strict_encode64(File.open(@user.avatar.path(:medium_quadrat)).read), type: "JPEG", encoding: "BASE64"
     vcard.rev @user.updated_at.iso8601
     vcard.to_s
   end
