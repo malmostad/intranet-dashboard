@@ -248,12 +248,13 @@ class UsersController < ApplicationController
     vcard.org "Malmö stad;#{@user.company_short};#{@user.department}", type: "WORK", charset: "UTF-8"
     vcard.title @user.title, type: "WORK", charset: "UTF-8"
     vcard.adr "#{@user.address};#{@user.post_code};#{@user.postal_town}", type: "WORK", charset: "UTF-8"
-    vcard.add "TYPE=WORK;TYPE=VOICE", @user.phone
-    vcard.add "TYPE=WORK;TYPE=VOICE;TYPE=CELL", @user.cell_phone
+    vcard.add "TEL;TYPE=WORK;TYPE=VOICE", @user.phone
+    vcard.add "TEL;TYPE=WORK;TYPE=VOICE;TYPE=CELL", @user.cell_phone
     vcard.email @user.email, type: "INTERNET"
     vcard.homepage "#{root_url}users/#{@user.username}", type: "WORK"
+    vcard[:item1].url "http://www.example.com"
+    vcard[:item1].add "X-ABLabel","_$!<HomePage>!$_"
     vcard.related "malmo-stad-#{@user.manager.username}", type: "MANAGER"
-
     vcard.add "X-SOCIALPROFILE;TYPE=TWITTER;TYPE=HOME", @user.twitter
     vcard.add "IMPP;X-SERVICE-TYPE=SKYPE;TYPE=HOME", "skype:#{@user.skype}"
     vcard.add "X-SKYPE;TYPE=HOME", "skype:#{@user.skype}"
