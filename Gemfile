@@ -50,7 +50,7 @@ group :development, :local_test do
 end
 
 group :local_test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 2.14.2'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'rack-test'
