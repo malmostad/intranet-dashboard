@@ -242,67 +242,24 @@ class UsersController < ApplicationController
 
   def to_vcard
     vcard = VCardigan.create(version: "3.0")
-    vcard.uid "urn:uuid:malmo-stad-#{@user.username}"
-    vcard.name @user.last_name, @user.first_name, type: "WORK"
-    vcard.fullname @user.displayname
-    vcard.org "Malmö stad;#{@user.company_short};#{@user.department}", type: "WORK"
-    vcard.title @user.title, type: "WORK"
-    vcard.adr "#{@user.address};#{@user.post_code};#{@user.postal_town}", type: "WORK"
-    vcard.geo "geo:#{@user.geo_position_x},#{@user.geo_position_y}", type: "sweref991330"
-    vcard[:item1].label "room", type: "WORK"
-    vcard[:item1].value @user.room, type: "WORK"
-    vcard.note @user.professional_bio, type: "WORK"
-    vcard.expertise @user.skills.map(&:name).join(","), type: "WORK"
-    vcard.add "tel;type=WORK;type=VOICE", @user.phone
-    vcard.add "tel;type=CELL;type=WORK;type=VOICE", @user.cell_phone
-    vcard.photo "https:#{@user.avatar.url(:large, timestamp: false)}", mediatype: @user.avatar_content_type
+    vcard.uid "malmo-stad-#{@user.username}"
+    vcard.name @user.last_name, @user.first_name, charset: "UTF-8"
+    vcard.fullname @user.displayname, charset: "UTF-8"
+    vcard.org "Malmö stad;#{@user.company_short};#{@user.department}", type: "WORK", charset: "UTF-8"
+    vcard.title @user.title, type: "WORK", charset: "UTF-8"
+    vcard.adr "#{@user.address};#{@user.post_code};#{@user.postal_town}", type: "WORK", charset: "UTF-8"
+    vcard.add "TYPE=WORK;TYPE=VOICE", @user.phone
+    vcard.add "TYPE=WORK;TYPE=VOICE;TYPE=CELL", @user.cell_phone
     vcard.email @user.email, type: "INTERNET"
     vcard.homepage "#{root_url}users/#{@user.username}", type: "WORK"
-    vcard.homepage @user.homepage, type: "HOME"
-    vcard.add "X-TWITTER", "https\://twitter.com/#{@user.twitter}", type: "HOME"
-    vcard.add "X-SKYPE", "skype:#{@user.skype}", type: "HOME"
-    vcard.related "urn:uuid:malmo-stad-#{@user.manager.username}", type: "manager"
-    vcard.add "ORG-DIRECTORY", "#{root_url}users/"
-    vcard.add "INTEREST", @user.private_bio
+    vcard.related "malmo-stad-#{@user.manager.username}", type: "MANAGER"
 
-    vcard[:item2].add "X-ABLabel", "Twitter"
-    vcard[:item2].url "http\://twitter.com/test"
-    vcard[:item3].add "X-ABLabel", "_$!<Fnitter>!$_"
-    vcard[:item3].url "flöden"
+    vcard.add "X-SOCIALPROFILE;TYPE=TWITTER;TYPE=HOME", @user.twitter
+    vcard.add "IMPP;X-SERVICE-TYPE=SKYPE;TYPE=HOME", "skype:#{@user.skype}"
+    vcard.add "X-SKYPE;TYPE=HOME", "skype:#{@user.skype}"
 
-    vcard.source "#{root_url}users/#{@user.username}.vcard"
+    vcard.photo "https:#{@user.avatar.url(:large, timestamp: false)}", type: "JPEG", encoding: "BASE64"
     vcard.rev @user.updated_at.iso8601
     vcard.to_s
   end
 end
-
-# id: 111
-# X username: jesbyl
-# X first_name: Jesper
-# X last_name: Bylund
-# X email: jesper.bylund@malmo.se
-# X phone: 040-342091
-# X cell_phone:
-# X title: Enhetschef
-# professional_bio: Utvecklingsansvarig Komin. // Enhetschef för kanalenheten på kommunikationsavdelningen,
-#   stadskontoret. Kanaleneheten fokuserar på malmo.se, Vårt Malmö, Komin, personalvin,
-#   digitala utskick och mobilsatsningar.
-# status_message: Möte om chefsflik asd
-# displayname: Jesper Bylund
-# company: 102 Stadskontoret
-# avatar_file_name: jesperbylundsvv.jpg
-# avatar_content_type: image/jpeg
-# twitter: jesperby
-# skype: jesperbylund
-# private_bio: Dalbybo, norrlänning från början men nu skåning, även om jag inte låter
-#   som en sådan. Gillar Storbritannien. Trebarnspappa, så jag vet inte om det kanske
-#   är mer stressigt hemma än på jobbet.
-# department: Kommunikationsavdelningen
-# homepage: http://jesperby.com
-# room: '6093'
-# address: August Palms plats 1
-# geo_position_x: 118943
-# geo_position_y: 6163918
-# district: Norr
-# post_code: 211 52
-# postal_town: Malmö
