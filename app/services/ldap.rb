@@ -38,18 +38,20 @@ class Ldap
     if ldap_user.present?
       @address = { dashboard: user.address, ldap: ldap_user['streetaddress'].first }
 
-      user.first_name     = ldap_user['givenname'].first || user.username
-      user.last_name      = ldap_user['sn'].first || user.username
-      user.displayname    = ldap_user['displayname'].first || user.username
-      user.title          = ldap_user['title'].first
-      user.email          = ldap_user['mail'].first || "#{user.username}@malmo.se"
-      user.company        = ldap_user['company'].first
-      user.department     = ldap_user['division'].first
-      user.address        = ldap_user['streetaddress'].first if user.address.blank? # Selective sync
-      user.room           = ldap_user['roomnumber'].first if user.room.blank? # Selective sync
-      user.manager        = User.where(username: extract_cn(ldap_user["manager"].first)).first
-      user.phone          = phone ||= ldap_user['telephonenumber'].first
-      user.cell_phone     = cell_phone ||= ldap_user['mobile'].first
+      user.first_name                    = ldap_user['givenname'].first || user.username
+      user.last_name                     = ldap_user['sn'].first || user.username
+      user.displayname                   = ldap_user['displayname'].first || user.username
+      user.title                         = ldap_user['title'].first
+      user.email                         = ldap_user['mail'].first || "#{user.username}@malmo.se"
+      user.company                       = ldap_user['company'].first
+      user.department                    = ldap_user['division'].first
+      user.house_identifier              = ldap_user['houseIdentifier'].first
+      user.physical_delivery_office_name = ldap_user['physicalDeliveryOfficeName'].first
+      user.address                       = ldap_user['streetaddress'].first if user.address.blank? # Selective sync
+      user.room                          = ldap_user['roomnumber'].first if user.room.blank? # Selective sync
+      user.manager                       = User.where(username: extract_cn(ldap_user["manager"].first)).first
+      user.phone                         = phone ||= ldap_user['telephonenumber'].first
+      user.cell_phone                    = cell_phone ||= ldap_user['mobile'].first
 
       # Activate the user if previsously deactivated
       user.deactivated    = false
@@ -75,7 +77,6 @@ class Ldap
       Rails.logger.info ldap_user.inspect
       puts "user: #{username}"
       puts "company: #{ldap_user['company'].first}"
-      puts "department: #{ldap_user['department'].first}"
       puts "division: #{ldap_user['division'].first}"
       puts "houseIdentifier: #{ldap_user['houseIdentifier'].first}"
       puts "physicalDeliveryOfficeName: #{ldap_user['physicalDeliveryOfficeName'].first}"

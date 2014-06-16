@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140402084537) do
+ActiveRecord::Schema.define(:version => 20140616121500) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -229,17 +229,17 @@ ActiveRecord::Schema.define(:version => 20140402084537) do
 
   create_table "users", :force => true do |t|
     t.string   "username"
-    t.string   "first_name",                :default => "Förnamn saknas"
-    t.string   "last_name",                 :default => "Efternamn saknas"
-    t.string   "email",                     :default => "E-post saknas"
+    t.string   "first_name",                    :default => "Förnamn saknas"
+    t.string   "last_name",                     :default => "Efternamn saknas"
+    t.string   "email",                         :default => "E-post saknas"
     t.string   "phone"
     t.string   "cell_phone"
     t.string   "title"
     t.text     "professional_bio"
     t.string   "status_message"
-    t.boolean  "admin",                     :default => false,              :null => false
-    t.datetime "created_at",                                                :null => false
-    t.datetime "updated_at",                                                :null => false
+    t.boolean  "admin",                         :default => false,              :null => false
+    t.datetime "created_at",                                                    :null => false
+    t.datetime "updated_at",                                                    :null => false
     t.string   "displayname"
     t.string   "company"
     t.datetime "last_login"
@@ -259,13 +259,15 @@ ActiveRecord::Schema.define(:version => 20140402084537) do
     t.string   "address"
     t.integer  "geo_position_x"
     t.integer  "geo_position_y"
-    t.string   "cmg_id",                    :default => "0"
-    t.boolean  "deactivated",               :default => false
+    t.string   "cmg_id",                        :default => "0"
+    t.boolean  "deactivated",                   :default => false
     t.datetime "deactivated_at"
-    t.boolean  "contacts_editor",           :default => false
+    t.boolean  "contacts_editor",               :default => false
     t.string   "district"
     t.string   "post_code"
     t.string   "postal_town"
+    t.string   "house_identifier"
+    t.string   "physical_delivery_office_name"
   end
 
   add_index "users", ["manager_id"], :name => "index_users_on_manager_id"
