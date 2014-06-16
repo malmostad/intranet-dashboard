@@ -17,7 +17,7 @@
             - else
               %button.btn.btn-primary.btn-mini.add{ data: { path: colleagueships_path, "user-id" => @user.id }} Följ
         - if current_user.early_adopter?
-          .vcard= link_to "VCard", "#{user_path(@user.username)}.vcf", class: "btn btn-mini"
+          .add-contact= link_to "VCard", "#{user_path(@user.username)}.vcf", class: "btn btn-mini"
 
         %h2.fn= "#{@user.first_name} #{@user.last_name}"
         %p.org

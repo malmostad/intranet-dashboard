@@ -322,13 +322,22 @@
       }
     }
   }
+
   .login section#feature {
     margin: 0 .7em 1em;
   }
 
   .show.user {
-    section.vcard a.edit span {
-      display: none;
+    section.vcard {
+     .add-contact {
+        clear: right;
+      }
+      .colleagueship {
+        margin-bottom: .5em;
+      }
+      a.edit span {
+        display: none;
+      }
     }
     .employee-column-1,
     .employee-column-2 {
