@@ -248,15 +248,14 @@ class UsersController < ApplicationController
     vcard.org "Malmö stad;#{@user.company_short};#{@user.department}", type: "WORK", charset: "utf-8"
     vcard.title @user.title, type: "WORK", charset: "utf-8"
     vcard.adr ";;#{@user.address};#{@user.postal_town};;#{@user.post_code};", type: "WORK", charset: "utf-8", label: "\"#{@user.address}\\n#{@user.post_code} #{@user.postal_town}\""
-    vcard.add "TEL;TYPE=WORK;TYPE=VOICE", @user.phone
-    vcard.add "TEL;TYPE=WORK;TYPE=VOICE;TYPE=CELL", @user.cell_phone
+    vcard.add "TEL;TYPE=WORK", @user.phone
+    vcard.add "TEL;TYPE=CELL", @user.cell_phone
     vcard.email @user.email, type: "INTERNET"
     vcard.url "#{root_url}users/#{@user.username}", type: "WORK"
-    vcard.related "malmo-stad-#{@user.manager.username}", type: "MANAGER"
-    vcard.add "X-SOCIALPROFILE;TYPE=TWITTER", @user.twitter
-    vcard.add "IMPP;X-SERVICE-TYPE=SKYPE", "skype:#{@user.skype}"
+    vcard.add "X-SOCIALPROFILE;TYPE=Twitter", @user.twitter
+    vcard.add "IMPP;X-SERVICE-TYPE=Skype", "skype:#{@user.skype}"
     begin
-      vcard.photo Base64.strict_encode64(File.open(@user.avatar.path(:medium_quadrat)).read), type: "JPEG", encoding: "BASE64"
+      vcard.photo Base64.strict_encode64(File.open(@user.avatar.path(:large_quadrat)).read), type: "JPEG", encoding: "BASE64"
     rescue;end
     vcard.rev @user.updated_at.iso8601
     vcard.to_s
