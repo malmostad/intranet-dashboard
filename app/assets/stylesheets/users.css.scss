@@ -92,6 +92,14 @@
       margin: 0 0 .5em;
     }
   }
+  .main-card .vcard {
+    float: right;
+    margin-right: 1em;
+    a {
+      padding-right: 1.5em;
+      padding-left: 1.5em;
+    }
+  }
   .colleagueship {
     float: right;
     button {
