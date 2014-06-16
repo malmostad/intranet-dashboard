@@ -241,7 +241,7 @@ class UsersController < ApplicationController
   end
 
   def to_vcard
-    vcard = VCardigan.create(version: "3.0")
+    vcard = VCardigan.create(version: "4.0")
     vcard.uid "malmo-stad-#{@user.username}"
     vcard.name @user.last_name, @user.first_name, charset: "utf-8"
     vcard.fullname @user.displayname, charset: "utf-8"
@@ -252,8 +252,7 @@ class UsersController < ApplicationController
     vcard.add "TEL;TYPE=WORK;TYPE=VOICE;TYPE=CELL", @user.cell_phone
     vcard.email @user.email, type: "INTERNET"
     vcard.homepage "#{root_url}users/#{@user.username}", type: "WORK"
-    vcard[:item1].url "#{root_url}users/#{@user.username}"
-    vcard[:item1].add "X-ABLabel","_$!<HomePage>!$_"
+    vcard.url "#{root_url}users/#{@user.username}", type: "WORK"
     vcard.related "malmo-stad-#{@user.manager.username}", type: "MANAGER"
     vcard.add "X-SOCIALPROFILE;TYPE=TWITTER;TYPE=HOME", @user.twitter
     vcard.add "IMPP;X-SERVICE-TYPE=SKYPE;TYPE=HOME", "skype:#{@user.skype}"
