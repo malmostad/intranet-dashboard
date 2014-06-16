@@ -251,12 +251,10 @@ class UsersController < ApplicationController
     vcard.add "TEL;TYPE=WORK;TYPE=VOICE", @user.phone
     vcard.add "TEL;TYPE=WORK;TYPE=VOICE;TYPE=CELL", @user.cell_phone
     vcard.email @user.email, type: "INTERNET"
-    vcard.homepage "#{root_url}users/#{@user.username}", type: "WORK"
     vcard.url "#{root_url}users/#{@user.username}", type: "WORK"
     vcard.related "malmo-stad-#{@user.manager.username}", type: "MANAGER"
-    vcard.add "X-SOCIALPROFILE;TYPE=TWITTER;TYPE=HOME", @user.twitter
-    vcard.add "IMPP;X-SERVICE-TYPE=SKYPE;TYPE=HOME", "skype:#{@user.skype}"
-    vcard.add "X-SKYPE;TYPE=HOME", "skype:#{@user.skype}"
+    vcard.add "X-SOCIALPROFILE;TYPE=TWITTER", @user.twitter
+    vcard.add "IMPP;X-SERVICE-TYPE=SKYPE", "skype:#{@user.skype}"
     begin
       vcard.photo Base64.strict_encode64(File.open(@user.avatar.path(:medium_quadrat)).read), type: "JPEG", encoding: "BASE64"
     rescue;end
