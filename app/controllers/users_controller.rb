@@ -247,7 +247,7 @@ class UsersController < ApplicationController
     vcard.fullname @user.displayname, charset: "utf-8"
     vcard.org "Malmö stad;#{@user.company_short};#{@user.department}", type: "WORK", charset: "utf-8"
     vcard.title @user.title, type: "WORK", charset: "utf-8"
-    vcard.adr "#{@user.address};#{@user.post_code};#{@user.postal_town}", type: "WORK", charset: "utf-8"
+    vcard.adr ";;#{@user.address};#{@user.postal_town};;#{@user.post_code};", type: "WORK", charset: "utf-8", label: "\"#{@user.address}\\n#{@user.post_code} #{@user.postal_town}\""
     vcard.add "TEL;TYPE=WORK;TYPE=VOICE", @user.phone
     vcard.add "TEL;TYPE=WORK;TYPE=VOICE;TYPE=CELL", @user.cell_phone
     vcard.email @user.email, type: "INTERNET"
