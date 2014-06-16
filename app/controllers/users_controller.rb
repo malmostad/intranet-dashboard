@@ -243,11 +243,11 @@ class UsersController < ApplicationController
   def to_vcard
     vcard = VCardigan.create(version: "3.0")
     vcard.uid "malmo-stad-#{@user.username}"
-    vcard.name @user.last_name, @user.first_name, charset: "UTF-8"
-    vcard.fullname @user.displayname, charset: "UTF-8"
-    vcard.org "Malmö stad;#{@user.company_short};#{@user.department}", type: "WORK", charset: "UTF-8"
-    vcard.title @user.title, type: "WORK", charset: "UTF-8"
-    vcard.adr "#{@user.address};#{@user.post_code};#{@user.postal_town}", type: "WORK", charset: "UTF-8"
+    vcard.name @user.last_name, @user.first_name, charset: "utf-8"
+    vcard.fullname @user.displayname, charset: "utf-8"
+    vcard.org "Malmö stad;#{@user.company_short};#{@user.department}", type: "WORK", charset: "utf-8"
+    vcard.title @user.title, type: "WORK", charset: "utf-8"
+    vcard.adr "#{@user.address};#{@user.post_code};#{@user.postal_town}", type: "WORK", charset: "utf-8"
     vcard.add "TEL;TYPE=WORK;TYPE=VOICE", @user.phone
     vcard.add "TEL;TYPE=WORK;TYPE=VOICE;TYPE=CELL", @user.cell_phone
     vcard.email @user.email, type: "INTERNET"
