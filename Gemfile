@@ -31,7 +31,7 @@ gem 'whenever', require: false
 
 gem 'jbuilder', '2.0.7'
 gem 'axlsx', '2.0.1'
-gem 'vcardigan'
+gem 'vcardigan', '~> 0.0.3'
 
 gem 'macaddr', '1.7.1'
 gem 'net-ssh', '2.7.0' # No prompt for pw in 2.8.0

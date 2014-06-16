@@ -355,5 +355,5 @@ DEPENDENCIES
   therubyracer (= 0.12.1)
   thin
   uglifier (= 2.5.0)
-  vcardigan
+  vcardigan (~> 0.0.3)
   whenever
