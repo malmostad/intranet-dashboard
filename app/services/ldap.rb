@@ -33,7 +33,8 @@ class Ldap
 
     # Fetch user attributes
     ldap_user = @client.search(base: APP_CONFIG['ldap']['base_dn'], filter: "cn=#{user.username}",
-        attributes: %w(cn givenname sn displayname mail telephonenumber mobile title company manager extensionattribute1 division roomnumber streetaddress)).first
+        attributes: %w(cn givenname sn displayname mail telephonenumber mobile
+            title company physicalDeliveryOfficeName houseIdentifier manager extensionattribute1 division roomnumber streetaddress)).first
 
     if ldap_user.present?
       @address = { dashboard: user.address, ldap: ldap_user['streetaddress'].first }

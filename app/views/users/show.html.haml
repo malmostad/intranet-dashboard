@@ -24,9 +24,14 @@
           - if @user.title.present?
             %span.title= "#{@user.title}, "
           - if @user.company.present?
-            %span.department= link_to "#{@user.company_short} ", users_path(company: @user.company)
-          - # if @user.department.present?
-          - # %span.team= link_to @user.department, users_path(department: @user.department)
+            %span= link_to "#{@user.company_short} ", users_path(company: @user.company)
+          - if current_user.early_adopter?
+            - if @user.department.present?
+              %span= @user.department
+            - if @user.house_identifier.present?
+              %span= @user.house_identifier
+            - if @user.physical_delivery_office_name.present?
+              %span= @user.physical_delivery_office_name
 
         = simple_format @user.professional_bio, class: "professional-bio"
         %p.phone= [@user.phone, @user.cell_phone].reject(&:blank?).join(", ")
