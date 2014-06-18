@@ -15,6 +15,7 @@ class StatisticsController < ApplicationController
     @user_stats["has_title"] = total - User.where(title: [nil, ""]).count
     @user_stats["has_company"] = total - User.where(company: [nil, ""]).count
     @user_stats["has_division"] = total - User.where(department: [nil, ""]).count
+    @user_stats["has_adm_department"] = total - User.where(adm_department: [nil, ""]).count
     @user_stats["has_house_identifier"] = total - User.where(house_identifier: [nil, ""]).count
     @user_stats["physical_delivery_office_name"] = total - User.where(physical_delivery_office_name: [nil, ""]).count
     @user_stats["has_status"] = total - User.where(status_message: [nil, ""]).count

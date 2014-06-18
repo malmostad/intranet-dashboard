@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140616121500) do
+ActiveRecord::Schema.define(:version => 20140618155101) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -268,6 +268,7 @@ ActiveRecord::Schema.define(:version => 20140616121500) do
     t.string   "postal_town"
     t.string   "house_identifier"
     t.string   "physical_delivery_office_name"
+    t.string   "adm_department"
   end
 
   add_index "users", ["manager_id"], :name => "index_users_on_manager_id"

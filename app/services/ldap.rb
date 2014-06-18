@@ -34,7 +34,8 @@ class Ldap
     # Fetch user attributes
     ldap_user = @client.search(base: APP_CONFIG['ldap']['base_dn'], filter: "cn=#{user.username}",
         attributes: %w(cn givenname sn displayname mail telephonenumber mobile
-            title company physicalDeliveryOfficeName houseIdentifier manager extensionattribute1 division roomnumber streetaddress)).first
+            title manager extensionattribute1 roomnumber streetaddress
+            company physicalDeliveryOfficeName houseIdentifier division department)).first
 
     if ldap_user.present?
       @address = { dashboard: user.address, ldap: ldap_user['streetaddress'].first }
@@ -46,6 +47,7 @@ class Ldap
       user.email                         = ldap_user['mail'].first || "#{user.username}@malmo.se"
       user.company                       = ldap_user['company'].first
       user.department                    = ldap_user['division'].first
+      user.adm_department                = ldap_user['department'].first
       user.house_identifier              = ldap_user['houseIdentifier'].first
       user.physical_delivery_office_name = ldap_user['physicalDeliveryOfficeName'].first
       user.address                       = ldap_user['streetaddress'].first if user.address.blank? # Selective sync

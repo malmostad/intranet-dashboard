@@ -30,6 +30,8 @@
           %p.org
             - if @user.department.present?
               %span= "#{@user.department},"
+            - if @user.adm_department.present?
+              %span= "#{@user.adm_department},"
             - if @user.house_identifier.present?
               %span= "#{@user.house_identifier},"
             - if @user.physical_delivery_office_name.present?
