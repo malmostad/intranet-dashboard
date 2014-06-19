@@ -1,7 +1,20 @@
 - title "#{@user.displayname}"
+
+- if current_user.early_adopter?
+  .warning
+    %ul
+      %li= "company: #{@user.company}"
+      %li= "division: #{@user.department}"
+      %li= "department: #{@user.adm_department}"
+      %li= "house_identifier: #{@user.house_identifier}"
+      %li= "physical_delivery_office_name: #{@user.physical_delivery_office_name}"
+
 %section.box.show.user{ class: admin_or_myself? ? "edit-controls" : ""}
   %h1.box-title= h1
   .box-content.form-horizontal.form-data
+
+
+
     %section.vcard
       .photo
         = image_tag @user.avatar.url(:large), alt: "Profilbild"
@@ -21,20 +34,9 @@
         %h2.fn= "#{@user.first_name} #{@user.last_name}"
         %p.org
           - if @user.title.present?
-            %span.title= "#{@user.title}"
-
-          %p.org
-            - if @user.company.present?
-              %span= link_to "#{@user.company_short} ", users_path(company: @user.company)
-            - if current_user.early_adopter?
-              - if @user.department.present?
-                %span= "#{@user.department},"
-              - if @user.adm_department.present?
-                %span= "#{@user.adm_department},"
-              - if @user.house_identifier.present?
-                %span= "#{@user.house_identifier},"
-              - if @user.physical_delivery_office_name.present?
-                %span= @user.physical_delivery_office_name
+            %span.title= "#{@user.title}, "
+          - if @user.company.present?
+            %span.department= link_to "#{@user.company_short} ", users_path(company: @user.company)
 
         = simple_format @user.professional_bio, class: "professional-bio"
         %p.phone= [@user.phone, @user.cell_phone].reject(&:blank?).join(", ")
