@@ -1,13 +1,23 @@
 - title "#{@user.displayname}"
 
 - if current_user.early_adopter?
-  .warning
-    %ul
-      %li= "company: #{@user.company}"
-      %li= "division: #{@user.department}"
-      %li= "department: #{@user.adm_department}"
-      %li= "house_identifier: #{@user.house_identifier}"
-      %li= "physical_delivery_office_name: #{@user.physical_delivery_office_name}"
+  %table
+    %tbody
+      %tr
+        %td company
+        %td= @user.company
+      %tr
+        %td division
+        %td= @user.department
+      %tr
+        %td department
+        %td= @user.adm_department
+      %tr
+        %td houseIdentifier
+        %td= @user.house_identifier
+      %tr
+        %td physicalDeliveryOfficeName
+        %td= @user.physical_delivery_office_name
 
 %section.box.show.user{ class: admin_or_myself? ? "edit-controls" : ""}
   %h1.box-title= h1
