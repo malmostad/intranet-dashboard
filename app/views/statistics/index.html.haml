@@ -4,21 +4,23 @@
   .box-content
     %h2.form-group-title Användare
     %ul.user-stats
-      %li= "Är aktiva i kontakboken: #{@user_stats['total_users']}"
+      %li= "Är aktiva i kontakboken: #{@user_stats[:total]}"
       %li= "Är deaktiverade: #{@user_stats["deactivated"]}"
-      %li= "Har tillkommit senaste sju dagarna: #{@user_stats['registered_last_week_users']}"
-      %li= "Har loggat in senaste sju dagarna: #{@user_stats['last_week_users']}"
-      %li= "Har HR-titel: #{@user_stats['has_title']}"
-      %li= "Har company: #{@user_stats['has_company']}"
-      %li= "Har division: #{@user_stats['has_division']}"
-      %li= "Har adm_department: #{@user_stats['has_adm_department']}"
-      %li= "Har houseIdentifier: #{@user_stats['has_house_identifier']}"
-      %li= "Har physicalDeliveryOfficeName: #{@user_stats['physical_delivery_office_name']}"
-      %li= "Har adress: #{@user_stats['has_address']}"
-      %li= "Har rum: #{@user_stats['has_room']}"
-      %li= "Har ett mappat ID i CMG: #{@user_stats['has_cmg_id']}"
-      %li= "Har om mig: #{@user_stats['has_professional_bio']}"
-      %li= "Har statusmeddelande: #{@user_stats['has_status']}"
-      %li= "Har profilbild: #{@user_stats['has_avatar']}"
+      %li= "Har tillkommit senaste sju dagarna: #{@user_stats[:registered_last_week_users]}"
+      %li= "Har loggat in senaste sju dagarna: #{@user_stats[:last_week_users]}"
+
+      %li= "Har HR-titel: #{@user_stats[:title][:has]}, #{@user_stats[:title][:distinct]} distinkta"
+      %li= "Har company: #{@user_stats[:company][:has]}, #{@user_stats[:company][:distinct]} distinkta"
+      %li= "Har division: #{@user_stats[:division][:has]}, #{@user_stats[:division][:distinct]} distinkta"
+      %li= "Har adm_department: #{@user_stats[:adm_department][:has]}, #{@user_stats[:adm_department][:distinct]} distinkta"
+      %li= "Har houseIdentifier: #{@user_stats[:house_identifier][:has]}, #{@user_stats[:house_identifier][:distinct]} distinkta"
+      %li= "Har physicalDeliveryOfficeName: #{@user_stats[:physical_delivery_office_name][:has]}, #{@user_stats[:physical_delivery_office_name][:distinct]} distinkta"
+
+      %li= "Har adress: #{@user_stats[:has_address]}"
+      %li= "Har rum: #{@user_stats[:has_room]}"
+      %li= "Har ett mappat ID i CMG: #{@user_stats[:has_cmg_id]}"
+      %li= "Har om mig: #{@user_stats[:has_professional_bio]}"
+      %li= "Har statusmeddelande: #{@user_stats[:has_status]}"
+      %li= "Har profilbild: #{@user_stats[:has_avatar]}"
       - if @user_stats["ldap_diff_mtime"]
         %li= link_to "Adresser som skiljer sig mellan ADM och kontaktboken, rapport genererad #{@user_stats["ldap_diff_mtime"]}.", ldap_diff_statistics_path

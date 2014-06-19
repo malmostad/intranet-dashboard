@@ -5,26 +5,47 @@ class StatisticsController < ApplicationController
   before_filter :require_admin
 
   def index
-    @user_stats = {}
     total = User.count
-    @user_stats["last_week_users"] = User.where("last_login > ?", Time.now - 1.week).count
-    @user_stats["registered_last_week_users"] = User.where("created_at > ?", Time.now - 1.week).count
-    @user_stats["deactivated"] = User.unscoped.where(deactivated: true).count
-    @user_stats["has_address"] = total - User.where(address: [nil, ""]).count
-    @user_stats["has_room"] = total - User.where(room: [nil, ""]).count
-    @user_stats["has_title"] = total - User.where(title: [nil, ""]).count
-    @user_stats["has_company"] = total - User.where(company: [nil, ""]).count
-    @user_stats["has_division"] = total - User.where(department: [nil, ""]).count
-    @user_stats["has_adm_department"] = total - User.where(adm_department: [nil, ""]).count
-    @user_stats["has_house_identifier"] = total - User.where(house_identifier: [nil, ""]).count
-    @user_stats["physical_delivery_office_name"] = total - User.where(physical_delivery_office_name: [nil, ""]).count
-    @user_stats["has_status"] = total - User.where(status_message: [nil, ""]).count
-    @user_stats["has_professional_bio"] = total - User.where(professional_bio: [nil, ""]).count
-    @user_stats["has_cmg_id"] = total - User.where(cmg_id: 0).count
-    @user_stats["has_avatar"] = User.where("avatar_updated_at != ?", "").count
-    @user_stats["ldap_diff_mtime"] = File.exists?(APP_CONFIG["ldap"]["diff_log"]) ? File.mtime(APP_CONFIG["ldap"]["diff_log"]).localtime.to_s[0..18] : false
-    @user_stats["total_users"] = total
-    @user_stats
+    @user_stats = Rails.cache.fetch("user_stats", expires_in: 4.hours) do
+      {
+        total: total,
+        last_week_users: User.where("last_login > ?", Time.now - 1.week).count,
+        registered_last_week_users: User.where("created_at > ?", Time.now - 1.week).count,
+        deactivated: User.unscoped.where(deactivated: true).count,
+        has_address: total - User.where(address: [nil, ""]).count,
+        has_room: total - User.where(room: [nil, ""]).count,
+        title: {
+          has: total - User.where(title: [nil, ""]).count,
+          distinct: User.count(:title, distinct: true)
+        },
+        company: {
+          has: total - User.where(company: [nil, ""]).count,
+          distinct: User.count(:company, distinct: true)
+        },
+        division: {
+          has: total - User.where(department: [nil, ""]).count,
+          distinct: User.count(:department, distinct: true)
+        },
+        adm_department: {
+          has: total - User.where(adm_department: [nil, ""]).count,
+          distinct: User.count(:adm_department, distinct: true)
+        },
+        house_identifier: {
+          has: total - User.where(house_identifier: [nil, ""]).count,
+          distinct: User.count(:house_identifier, distinct: true)
+        },
+        physical_delivery_office_name: {
+          has: total - User.where(physical_delivery_office_name: [nil, ""]).count,
+          distinct: User.count(:physical_delivery_office_name, distinct: true)
+        },
+        has_status: total - User.where(status_message: [nil, ""]).count,
+        has_professional_bio: total - User.where(professional_bio: [nil, ""]).count,
+        has_cmg_id: total - User.where(cmg_id: 0).count,
+        has_avatar: User.where("avatar_updated_at != ?", "").count,
+        ldap_diff_mtime: File.exists?(APP_CONFIG["ldap"]["diff_log"]) ? File.mtime(APP_CONFIG["ldap"]["diff_log"]).localtime.to_s[0..18] : false,
+        total_users: total
+      }
+    end
   end
 
   def ldap_diff
