@@ -15,9 +15,9 @@ Dashboard::Application.routes.draw do
   put "/users/reset_shortcuts/:category" => "users#reset_shortcuts", as: "user_reset_shortcuts"
   put "/users/update_status_message" => "users#update_status_message", as: "user_update_status_message"
   get "/users/activities/:cmg_id" => "users#activities", as: "user_activities"
-  get "/users/suggest" => "users#suggest", as: "users_suggest"
-  get "/users/search" => "users#search", as: "users_search"
-  get "/users/tags" => "users#tags", as: "users_tags"
+  get "/users/suggest"
+  get "/users/search"
+  get "/users/tags"
 
   # Avatars belongs to users but has its own controller
   resources :avatars
