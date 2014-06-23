@@ -2,17 +2,7 @@
 %section.box.index.users
   %h1.box-title= h1
   .box-content.body-copy
-    - if params[:company].present?
-      %h1= "Medarbetare på #{params[:company].gsub(/^[\d\s]*/, "")}"
-    - elsif params[:department].present?
-      %h1= "Medarbetare på #{params[:department]}"
-    - elsif params[:activity].present?
-      %h1= "Medarbetare som arbetar med #{params[:activity]}"
-    - elsif params[:skill].present?
-      %h1= "Medarbetare som kan #{params[:skill]}"
-    - elsif params[:language].present?
-      %h1= "Medarbetare som kan #{params[:language]}"
-
+    %h1= params.except(:controller, :action).map {|k,v| v}.join(", ")
     - if @total.present?
       %div= "#{number_to_words(@total).titlecase} medarbetare matchade din sökning"
 
