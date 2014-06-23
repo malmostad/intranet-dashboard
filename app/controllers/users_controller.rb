@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     @has_more = @total.present? ? (@offset + @limit < @total) : false
 
     if request.xhr?
-      render :_tags_results, layout: false
+      render :_search_results, layout: false
     end
   end
 
