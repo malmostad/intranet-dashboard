@@ -170,28 +170,38 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.tags(query, limit = 50, offset = 0)
+    users = User.scoped
+
+    # Match users tags
+    %w(company department adm_department house_identifier physical_delivery_office_name title).each do |tag|
+      next if query[tag.to_sym].blank?
+      users = users.where(tag.to_sym => query[tag.to_sym])
+    end
+
+    # Match user's associated tags
+    %w(skill activity language).each do |tag|
+      next if query[tag.to_sym].blank?
+      users = users.where("#{tag.pluralize.to_sym}.name" => query[tag.to_sym]).includes(tag.pluralize.to_sym)
+    end
+
+    { users: users.order(:first_name).limit(limit).offset(offset), total: users.count }
+  end
+
   def self.search(query, limit = 25, offset = 0)
     return {} if query.empty?
     users = User.scoped
-    query[:q] ||=  query[:term]
-    if query[:q].present?
-      q = "#{query[:q]}%"
-      users = users.where("username LIKE ? OR first_name LIKE ? OR last_name LIKE ? OR
-          concat_ws(' ', first_name, last_name) LIKE ? OR email LIKE ?", q, q, q, q, q)
-    else
-      users = users.where(company: query[:company]) if query[:company].present?
-      users = users.where(department: query[:department]) if query[:department].present?
-      users = users.where("skills.name" => query[:skill]).includes(:skills) if query[:skill].present?
-      users = users.where("activities.name" => query[:activity]).includes(:activities) if query[:activity].present?
-      users = users.where("languages.name" => query[:language]).includes(:languages) if query[:language].present?
-    end
+    q = "#{query[:q]}%"
+
+    users = users.where("username LIKE ? OR first_name LIKE ? OR last_name LIKE ? OR
+        concat_ws(' ', first_name, last_name) LIKE ? OR email LIKE ?", q, q, q, q, q)
+
     { users: users.order(:first_name).limit(limit).offset(offset), total: users.count }
   end
 
   private
-
-  # Validate avatar before scaling it
-  def validate_avatar_file_size
-    valid? && errors.messages.blank?
-  end
+    # Validate avatar before scaling it
+    def validate_avatar_file_size
+      valid? && errors.messages.blank?
+    end
 end

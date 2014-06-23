@@ -6,32 +6,29 @@ class UsersController < ApplicationController
   before_filter :require_admin_or_myself, only: [:edit, :update]
   before_filter :require_admin, only: :destroy
 
-  # List users matching a tag (department, skills, languages etc)
   def index
-    # Redirect to full search if no query
-    if params.except(:controller, :action, :q, :utf8).empty?
-      redirect_to users_search_path
-    else
-      @limit = 25
-      page = params[:page].present? ? params[:page].to_i : 0
-      @offset = page * @limit
-      results = User.search(params.except(:controller, :action), @limit, @offset)
-      @users = results[:users]
-      @total = results[:total]
-      @has_more = @total.present? ? (@offset + @limit < @total) : false
+    redirect_to users_search_path
+  end
 
-      if request.xhr?
-        render :_tag_results, layout: false
-      else
-        render :index
-      end
+  # List users matching a tag (company, department, skills, languages etc.)
+  def tags
+    @limit = 50
+    @offset = params[:page].to_i * @limit + 1
+    results = User.tags(params.except(:controller, :action), @limit, @offset)
+    @users = results[:users]
+    @total = results[:total]
+    @has_more = @total.present? ? (@offset + @limit < @total) : false
+
+    if request.xhr?
+      render :_tags_results, layout: false
     end
   end
 
   # Full search for users
   def search
     @q = params[:q].present? ? params[:q].dup : ""
-    @limit = 25
+
+    @limit = 50
     @offset = params[:page].to_i * @limit
 
     response = User.fuzzy_search(params[:q], from: @offset, size: @limit)

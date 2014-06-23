@@ -46,7 +46,7 @@
           - if @user.title.present?
             %span.title= "#{@user.title}, "
           - if @user.company.present?
-            %span.department= link_to "#{@user.company_short} ", users_path(company: @user.company)
+            %span.department= link_to "#{@user.company_short} ", users_tags_path(company: @user.company)
 
         = simple_format @user.professional_bio, class: "professional-bio"
         %p.phone= [@user.phone, @user.cell_phone].reject(&:blank?).join(", ")

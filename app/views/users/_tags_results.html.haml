@@ -7,9 +7,9 @@
           %h2.fn= link_to "#{user.first_name} #{user.last_name}", user_path(user.username)
           %p
             - if user.company.present?
-              %span.org= link_to "#{user.company_short}", users_path(company: user.company)
+              %span.org= link_to "#{user.company_short}", users_tags_path(company: user.company)
             - if user.department.present?
-              %span.org= link_to "#{user.department}", users_path(department: user.department)
+              %span.org= link_to "#{user.department}", users_tags_path(department: user.department)
           %p
             %span.phone= user.phone
             - if user.cell_phone.present?
@@ -20,5 +20,5 @@
 
     - if @has_more
       %li.load-more
-        %input.btn.btn-small{ type: "button", value: "Visa fler", "data-path" => users_path(load_more_query)}
+        %input.btn.btn-small{ type: "button", value: "Visa fler", "data-path" => users_tags_path(load_more_query)}
 

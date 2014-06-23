@@ -17,6 +17,7 @@ Dashboard::Application.routes.draw do
   get "/users/activities/:cmg_id" => "users#activities", as: "user_activities"
   get "/users/suggest" => "users#suggest", as: "users_suggest"
   get "/users/search" => "users#search", as: "users_search"
+  get "/users/tags" => "users#tags", as: "users_tags"
 
   # Avatars belongs to users but has its own controller
   resources :avatars
