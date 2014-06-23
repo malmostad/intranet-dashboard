@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   # List users matching a tag (company, department, skills, languages etc.)
   def tags
     @limit = 50
-    @offset = params[:page].to_i * @limit + 1
+    @offset = params[:page].to_i * @limit
     results = User.tags(params.except(:controller, :action), @limit, @offset)
     @users = results[:users]
     @total = results[:total]
