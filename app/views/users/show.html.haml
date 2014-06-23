@@ -5,19 +5,19 @@
     %tbody
       %tr
         %td company
-        %td= @user.company
+        %td= link_to @user.company, users_tags_path(company: @user.company)
       %tr
         %td division
-        %td= @user.department
+        %td= link_to "#{@user.department}", users_tags_path(company: @user.company, department: @user.department)
       %tr
         %td department
-        %td= @user.adm_department
+        %td= link_to "#{@user.adm_department}", users_tags_path(company: @user.company, adm_department: @user.adm_department)
       %tr
         %td houseIdentifier
-        %td= @user.house_identifier
+        %td= link_to "#{@user.house_identifier}", users_tags_path(company: @user.company, house_identifier: @user.house_identifier)
       %tr
         %td physicalDeliveryOfficeName
-        %td= @user.physical_delivery_office_name
+        %td= link_to "#{@user.physical_delivery_office_name}", users_tags_path(company: @user.company, physical_delivery_office_name: @user.physical_delivery_office_name)
 
 %section.box.show.user{ class: admin_or_myself? ? "edit-controls" : ""}
   %h1.box-title= h1
@@ -44,7 +44,7 @@
         %h2.fn= "#{@user.first_name} #{@user.last_name}"
         %p.org
           - if @user.title.present?
-            %span.title= "#{@user.title}, "
+            %span.title= link_to "#{@user.title}, ", users_tags_path(title: @user.title)
           - if @user.company.present?
             %span.department= link_to "#{@user.company_short} ", users_tags_path(company: @user.company)
 
