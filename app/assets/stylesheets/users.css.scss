@@ -81,6 +81,7 @@
   section.org,
   section.address,
   section.competence,
+  section.languages,
   section.activities,
   section.intranet-activities,
   section.personal,
@@ -92,6 +93,42 @@
       margin: 0 0 .5em;
     }
   }
+  section.competence,
+  section.languages,
+  section.activities {
+    li {
+      display: inline;
+      font-size: emize(13);
+      a::after {
+        content: ', ';
+      }
+      &:last-child a::after {
+        content: none;
+      }
+    }
+  }
+  section.intranet-activities li a {
+    font-size: emize(13);
+    display: block;
+    padding: .5em 0;
+  }
+
+  @at-root {
+    body.touch .show.user {
+      section.competence,
+      section.languages,
+      section.activities {
+        a {
+          display: block;
+          padding: .5em 0;
+          &::after {
+            content: none;
+          }
+        }
+      }
+    }
+  }
+
   .add-contact {
     float: right;
     a {

@@ -33,8 +33,6 @@
   %h1.box-title= h1
   .box-content.form-horizontal.form-data
 
-
-
     %section.vcard
       .photo
         = image_tag @user.avatar.url(:large), alt: "Profilbild"
@@ -77,18 +75,31 @@
         #map
 
       %section.competence
-        %h2.form-group-title Kompetensprofil
-        %p= raw "Kunskapsområden: #{skill_link_list @user.skills}"
-        %p= raw "Språkkunskaper: #{language_link_list @user.languages}"
+        %h2.form-group-title Kunskapsområden
+        - if @user.skills.present?
+          %ul
+            - @user.skills.each do |skill|
+              %li= link_to skill.name, users_tags_path(skill: skill.name)
+
+      %section.languages
+        %h2.form-group-title Språkkunskaper
+        - if @user.languages.present?
+          %ul
+            - @user.languages.each do |language|
+              %li= link_to language.name, users_tags_path(language: language.name)
 
       %section.activities
         %h2.form-group-title Projekt & aktiviteter
-        %p= raw "Projekt & aktiviteter: #{activity_link_list @user.activities}"
+        - if @user.activities.present?
+          %ul
+            - @user.activities.each do |activity|
+              %li= link_to activity.name, users_tags_path(activity: activity.name)
 
       %section.intranet-activities
         %h2.form-group-title Kominaktiviteter
-        %p= link_to "Nyheter som #{@user.first_name} skrivit", "https://webapps04.malmo.se/nyheter/author/#{@user.username}"
-        %p= link_to "Blogginlägg som #{@user.first_name} gjort", "https://webapps04.malmo.se/blogg/author/#{@user.username}"
+        %ul
+          %li= link_to "Nyheter som #{@user.first_name} skrivit", "https://webapps04.malmo.se/nyheter/author/#{@user.username}"
+          %li= link_to "Blogginlägg som #{@user.first_name} gjort", "https://webapps04.malmo.se/blogg/author/#{@user.username}"
 
       %section.personal
         %h2.form-group-title Personligt
