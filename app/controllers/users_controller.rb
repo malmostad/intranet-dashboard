@@ -24,8 +24,7 @@ class UsersController < ApplicationController
       format.xlsx {
         # All users without @limit
         @users = User.tags(params.except(:controller, :action), nil)[:users]
-        filename = "#{params.except(:controller, :action, :format).map {|k,v| v }.join(" ").gsub(/\s+/,"_")}_#{Date.today.iso8601}.xlsx"
-        send_data as_xlsx, type: :xlsx, disposition: "attachment", filename: filename
+        send_data as_xlsx, type: :xlsx, disposition: "attachment", filename: I18n.transliterate("#{params.except(:controller, :action, :format).map {|k,v| v }.join(" ").gsub(/\s+/,"_")}_#{Date.today.iso8601}.xlsx", replacement: "")
       }
     end
   end
