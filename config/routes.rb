@@ -18,6 +18,7 @@ Dashboard::Application.routes.draw do
   get "/users/suggest"
   get "/users/search"
   get "/users/tags"
+  get "/users" => "users#search"
 
   # Avatars belongs to users but has its own controller
   resources :avatars

@@ -6,10 +6,6 @@ class UsersController < ApplicationController
   before_filter :require_admin_or_myself, only: [:edit, :update]
   before_filter :require_admin, only: :destroy
 
-  def index
-    redirect_to users_search_path
-  end
-
   # List users matching a tag (company, department, skills, languages etc.)
   def tags
     @limit = 50
