@@ -8,15 +8,25 @@ class UsersController < ApplicationController
 
   # List users matching a tag (company, department, skills, languages etc.)
   def tags
-    @limit = 50
-    @offset = params[:page].to_i * @limit
-    results = User.tags(params.except(:controller, :action), @limit, @offset)
-    @users = results[:users]
-    @total = results[:total]
-    @has_more = @total.present? ? (@offset + @limit < @total) : false
+    respond_to do |format|
+      format.html {
+        @limit = 50
+        @offset = params[:page].to_i * @limit
+        results = User.tags(params.except(:controller, :action), @limit, @offset)
+        @users = results[:users]
+        @total = results[:total]
+        @has_more = @total.present? ? (@offset + @limit < @total) : false
 
-    if request.xhr?
-      render :_search_results, layout: false
+        if request.xhr?
+          render :_search_results, layout: false
+        end
+      }
+      format.xlsx {
+        # All users without @limit
+        @users = User.tags(params.except(:controller, :action), nil)[:users]
+        filename = "#{params.except(:controller, :action, :format).map {|k,v| v }.join(" ").gsub(/\s+/,"_")}_#{Date.today.iso8601}.xlsx"
+        send_data as_xlsx, type: :xlsx, disposition: "attachment", filename: filename
+      }
     end
   end
 
@@ -252,5 +262,19 @@ class UsersController < ApplicationController
     rescue;end
     vcard.rev @user.updated_at.iso8601
     vcard.to_s
+  end
+
+  def as_xlsx
+    axlsx = Axlsx::Package.new
+    heading = axlsx.workbook.styles.add_style font_name: 'Calibri', bg_color: "000000"
+    body = axlsx.workbook.styles.add_style font_name: 'Calibri', fg_color: "000000"
+    axlsx.workbook.add_worksheet do |sheet|
+      sheet.add_row ["Förnamn", "Efternamn", "E-postadress"], style: heading
+      @users.each do |user|
+        user_addr = [user.first_name, user.last_name, user.email]
+        sheet.add_row user_addr, style: body
+      end
+    end
+    axlsx.to_stream.read
   end
 end

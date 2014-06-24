@@ -7,3 +7,5 @@
       %div= "#{number_to_words(@total).titlecase} medarbetare matchade din sökning"
 
   = render partial: "search_results", locals: { data_path: users_tags_path(load_more_query) }
+
+  %div= link_to "Exportera alla till Excel", users_tags_path(params.except(:controller, :action, :page).merge(format: "xlsx"))
