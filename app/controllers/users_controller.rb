@@ -23,7 +23,7 @@ class UsersController < ApplicationController
       format.xlsx {
         # All matching users without @limit
         users = User.tags(params.except(:controller, :action), nil)[:users]
-        send_data EmployeeExport.as_xlsx(users), type: :xlsx, disposition: "attachment", filename: "#{params.except(:controller, :action, :format).map {|k,v| v }.join(" ")} #{Date.today.iso8601}.xlsx"
+        send_data EmployeeExport.group_as_xlsx(users), type: :xlsx, disposition: "attachment", filename: "#{EmployeeExport.filename(params)}.xlsx"
       }
     end
   end

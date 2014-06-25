@@ -20,7 +20,7 @@ class EmployeeExport
     vcard.to_s
   end
 
-  def self.as_xlsx(users)
+  def self.group_as_xlsx(users)
     axlsx = Axlsx::Package.new
     heading = axlsx.workbook.styles.add_style font_name: 'Calibri', bg_color: "000000"
     body = axlsx.workbook.styles.add_style font_name: 'Calibri', fg_color: "000000"
@@ -48,5 +48,9 @@ class EmployeeExport
       end
     end
     axlsx.to_stream.read
+  end
+
+  def self.filename(params)
+    "#{params.except(:controller, :action, :format).map {|k,v| v }.join(" ")} #{Date.today.iso8601}"
   end
 end
