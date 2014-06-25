@@ -3,9 +3,14 @@
   %h1.box-title= h1
   .box-content.body-copy
     %h1= params.except(:controller, :action).map {|k,v| v}.join(", ")
+
     - if @total.present?
       %div= "#{number_to_words(@total).titlecase} medarbetare matchade din sökning"
 
   = render partial: "search_results", locals: { data_path: users_tags_path(load_more_query) }
 
-  %div= link_to "Exportera alla till Excel", users_tags_path(params.except(:controller, :action, :page).merge(format: "xlsx"))
+  .dropdown.box-menu.pull-right
+    %a#users-menu.dropdown-toggle{ "role" => "button", "data-toggle" => "dropdown", "href" => "#" }
+      %span.icon-caret-down.icon-large
+    %menu.dropdown-menu{ "aria-labelledby" => "users-menu" }
+      %li= link_to "Exportera adresser till Excel...", users_tags_path(params.except(:controller, :action, :page).merge(format: "xlsx"))
