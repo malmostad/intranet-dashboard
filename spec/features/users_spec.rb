@@ -26,6 +26,14 @@ describe "Users" do
     page.should have_selector(".user_roles")
   end
 
+  it "should have a VCard" do
+    visit user_path(user.username)
+    click_on "VCard"
+    page.status_code.should eq 200
+    page.html.split("\n").first.should eq "BEGIN:VCARD"
+    page.html.split("\n").last.should eq "END:VCARD"
+  end
+
   it "should save edited contact card" do
     visit edit_user_path(user)
     fill_in :user_professional_bio, with: "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
