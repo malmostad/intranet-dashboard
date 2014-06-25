@@ -101,7 +101,7 @@
     margin-right: 0;
     section.box {
       margin: 0 0 1em;
-      h1 {
+      h1.box-tit {
         padding-left: .8em;
       }
       label.context-menu {
@@ -239,7 +239,7 @@
         border: none;
         @include radius(0);
         margin: 0 0 1em;
-        h1 {
+        h1.box-title {
           padding-left: .8em;
           @include radius(0);
         }
