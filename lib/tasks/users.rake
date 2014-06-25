@@ -37,7 +37,7 @@ namespace :users do
 
     # Log users with diffs between the address in ldap and dashboard in an xlsx file
     axlsx = Axlsx::Package.new
-    heading = axlsx.workbook.styles.add_style font_name: 'Calibri', bg_color: "000000"
+    heading = axlsx.workbook.styles.add_style font_name: 'Calibri', bg_color: "000000", fg_color: "FFFFFF"
     body = axlsx.workbook.styles.add_style font_name: 'Calibri', fg_color: "000000"
     axlsx.workbook.add_worksheet(name: "KB-ADM diff") do |sheet|
       sheet.add_row ["Namn", "Katalognamn", "Adress i kontaktboken", "Adress i ADM", "Kontaktkort"], style: heading
