@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 class UsersController < ApplicationController
-
   before_filter { add_body_class('employee') }
   before_filter :require_user, except: [:suggest]
   before_filter :require_admin_or_myself, only: [:edit, :update]
@@ -23,8 +22,8 @@ class UsersController < ApplicationController
       }
       format.xlsx {
         # All matching users without @limit
-        @users = User.tags(params.except(:controller, :action), nil)[:users]
-        send_data as_xlsx, type: :xlsx, disposition: "attachment", filename: "#{params.except(:controller, :action, :format).map {|k,v| v }.join(" ")} #{Date.today.iso8601}.xlsx"
+        users = User.tags(params.except(:controller, :action), nil)[:users]
+        send_data EmployeeExport.as_xlsx(users), type: :xlsx, disposition: "attachment", filename: "#{params.except(:controller, :action, :format).map {|k,v| v }.join(" ")} #{Date.today.iso8601}.xlsx"
       }
     end
   end
@@ -87,10 +86,10 @@ class UsersController < ApplicationController
           end
         }
         format.vcf {
-          render text: to_vcard
+          render text: EmployeeExport.to_vcard(@user, root_url)
         }
         format.vcard {
-          render text: to_vcard
+          render text: EmployeeExport.to_vcard(@user, root_url)
         }
       end
     else
@@ -240,40 +239,5 @@ class UsersController < ApplicationController
   # Clear the users key/value ttl cache for shortcuts
   def clear_shortcut_cache(category)
     Rails.cache.delete("shortcuts-#{current_user.id}-#{category}")
-  end
-
-  def to_vcard
-    vcard = VCardigan.create(version: "4.0")
-    vcard.uid "malmo-stad-#{@user.username}"
-    vcard.name @user.last_name, @user.first_name, charset: "utf-8"
-    vcard.fullname @user.displayname, charset: "utf-8"
-    vcard.org "Malmö stad;#{@user.company_short};#{@user.department}", type: "WORK", charset: "utf-8"
-    vcard.title @user.title, type: "WORK", charset: "utf-8"
-    vcard.adr ";;#{@user.address};#{@user.postal_town};;#{@user.post_code};", type: "WORK", charset: "utf-8", label: "\"#{@user.address}\\n#{@user.post_code} #{@user.postal_town}\""
-    vcard.add "TEL;TYPE=WORK", @user.phone
-    vcard.add "TEL;TYPE=CELL", @user.cell_phone
-    vcard.email @user.email, type: "INTERNET"
-    vcard.url "#{root_url}users/#{@user.username}", type: "WORK"
-    vcard.add "X-SOCIALPROFILE;TYPE=Twitter", @user.twitter
-    vcard.add "IMPP;X-SERVICE-TYPE=Skype", "skype:#{@user.skype}"
-    begin
-      vcard.photo Base64.strict_encode64(File.open(@user.avatar.path(:large_quadrat)).read), type: "JPEG", encoding: "BASE64"
-    rescue;end
-    vcard.rev @user.updated_at.iso8601
-    vcard.to_s
-  end
-
-  def as_xlsx
-    axlsx = Axlsx::Package.new
-    heading = axlsx.workbook.styles.add_style font_name: 'Calibri', bg_color: "000000"
-    body = axlsx.workbook.styles.add_style font_name: 'Calibri', fg_color: "000000"
-    axlsx.workbook.add_worksheet do |sheet|
-      sheet.add_row ["Förnamn", "Efternamn", "E-postadress"], style: heading
-      @users.each do |user|
-        user_addr = [user.first_name, user.last_name, user.email]
-        sheet.add_row user_addr, style: body
-      end
-    end
-    axlsx.to_stream.read
   end
 end
