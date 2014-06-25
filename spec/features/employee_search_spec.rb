@@ -18,10 +18,11 @@ describe "EmployeeSearch" do
       page.should have_selector 'form #query-employee'
     end
 
-    it "should not have search results (since Elasticsearch is not indexed for test yet...)" do
+    it "should have search results (if Elasticsearch is up and running)" do
+      create(:user)
       fill_in 'query-employee', with: "#{user.first_name} #{user.last_name}"
       click_button "Sök"
-      page.should_not have_selector "ul.results li.vcard"
+      page.should have_selector "ul.results li.vcard"
     end
   end
 end
