@@ -115,7 +115,6 @@
             = link_to @user.homepage, @user.homepage
 
     .employee-column-2
-
       %section.org
         %h2.form-group-title Rapporterar till
         - if @user.manager.present?
@@ -136,6 +135,13 @@
                 .text
                   %p= link_to subordinate.displayname, user_path(subordinate.username)
                   %p= subordinate.title
+
+      %section.organizational
+        %h2.form-group-title Organisationstillhörighet i HR-systemet
+        %ol
+          - [@user.company, @user.adm_department, @user.department, @user.house_identifier, @user.physical_delivery_office_name].each do |org|
+            - if org.present?
+              %li= link_to org, users_tags_path(company: org)
 
       %section.misc
         %h2.form-group-title Övrigt

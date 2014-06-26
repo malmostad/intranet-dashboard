@@ -84,6 +84,7 @@
   section.languages,
   section.activities,
   section.intranet-activities,
+  section.organizational,
   section.personal,
   section.misc {
     @include clearfix();
@@ -107,17 +108,22 @@
       }
     }
   }
-  section.intranet-activities li a {
-    font-size: emize(13);
-    display: block;
-    padding: .5em 0;
+  section.intranet-activities,
+  section.organizational {
+    li a {
+      font-size: emize(13);
+      display: block;
+      padding: 0 0 .4em;
+    }
   }
 
   @at-root {
     body.touch .show.user {
       section.competence,
       section.languages,
-      section.activities {
+      section.activities,
+      section.intranet-activities,
+      section.organizational {
         a {
           display: block;
           padding: .5em 0;
