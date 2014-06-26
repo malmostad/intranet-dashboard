@@ -139,9 +139,11 @@
       %section.organizational
         %h2.form-group-title Organisationstillhörighet i HR-systemet
         %ol
-          - [@user.company, @user.adm_department, @user.department, @user.house_identifier, @user.physical_delivery_office_name].each do |org|
-            - if org.present?
-              %li= link_to org, users_tags_path(company: org)
+          - if @user.company.present?
+            %li= link_to @user.company, users_tags_path(company: @user.company)
+          - ["adm_department", "department", "house_identifier", "physical_delivery_office_name"].each do |org|
+            - if @user.send(org).present?
+              %li= link_to @user.send(org), users_tags_path(company: @user.company, org.to_sym => @user.send(org))
 
       %section.misc
         %h2.form-group-title Övrigt
