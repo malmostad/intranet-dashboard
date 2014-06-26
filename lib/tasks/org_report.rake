@@ -1,25 +1,26 @@
 namespace :org do
   desc "Update all user profiles from LDAP"
-  task report: :environment do
+  task structure: :environment do
     axlsx = Axlsx::Package.new
     heading = axlsx.workbook.styles.add_style font_name: 'Calibri', bg_color: "000000", fg_color: "FFFFFF"
     body = axlsx.workbook.styles.add_style font_name: 'Calibri', fg_color: "000000"
     company_sheet = axlsx.workbook.add_worksheet(name: "company")
-    company_sheet.add_row %w(company Employees Managers), style: heading
+    company_sheet.add_row %w(company Employees Unique Managers), style: heading
 
     department_sheet = axlsx.workbook.add_worksheet(name: "department")
-    department_sheet.add_row %w(company department Employees Managers), style: heading
+    department_sheet.add_row %w(company department Employees Unique Managers), style: heading
 
     division_sheet = axlsx.workbook.add_worksheet(name: "division")
-    division_sheet.add_row %w(company department division Employees Managers), style: heading
+    division_sheet.add_row %w(company department division Employees Unique Managers), style: heading
 
     house_identifier_sheet = axlsx.workbook.add_worksheet(name: "houseIdentifier")
-    house_identifier_sheet.add_row %w(company department division houseIdentifier Employees Managers), style: heading
+    house_identifier_sheet.add_row %w(company department division houseIdentifier Employees Unique Managers), style: heading
 
     physical_delivery_office_name_sheet = axlsx.workbook.add_worksheet(name: "physicalDeliveryOfficeName")
-    physical_delivery_office_name_sheet.add_row %w(company department division houseIdentifier physicalDeliveryOfficeName Employees Managers), style: heading
+    physical_delivery_office_name_sheet.add_row %w(company department division houseIdentifier physicalDeliveryOfficeName Employees Unique Managers), style: heading
 
     User.select(:company).order(:company).uniq.map(&:company).each do |company|
+      puts company
       users = User.where(company: company)
       company_sheet.add_row [company, users.size, users.map(&:manager_id).uniq.size], style: body
       User.where(company: company).select(:adm_department).order(:adm_department).uniq.map(&:adm_department).each do |adm_department|
