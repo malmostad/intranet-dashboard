@@ -22,5 +22,5 @@
       %li= "Har om mig: #{@user_stats[:has_professional_bio]}"
       %li= "Har statusmeddelande: #{@user_stats[:has_status]}"
       %li= "Har profilbild: #{@user_stats[:has_avatar]}"
-      - if @user_stats["ldap_diff_mtime"]
+      - if @user_stats[:ldap_diff_mtime]
         %li= link_to "Adresser som skiljer sig mellan ADM och kontaktboken, rapport genererad #{@user_stats["ldap_diff_mtime"]}.", ldap_diff_statistics_path
