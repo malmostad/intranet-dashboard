@@ -5,7 +5,7 @@
     %h2.form-group-title Användare
     %ul.user-stats
       %li= "Är aktiva i kontakboken: #{@user_stats[:total]}"
-      %li= "Är deaktiverade: #{@user_stats["deactivated"]}"
+      %li= "Är deaktiverade: #{@user_stats[:deactivated]}"
       %li= "Har tillkommit senaste sju dagarna: #{@user_stats[:registered_last_week_users]}"
       %li= "Har loggat in senaste sju dagarna: #{@user_stats[:last_week_users]}"
 
@@ -23,4 +23,4 @@
       %li= "Har statusmeddelande: #{@user_stats[:has_status]}"
       %li= "Har profilbild: #{@user_stats[:has_avatar]}"
       - if @user_stats[:ldap_diff_mtime]
-        %li= link_to "Adresser som skiljer sig mellan ADM och kontaktboken, rapport genererad #{@user_stats["ldap_diff_mtime"]}.", ldap_diff_statistics_path
+        %li= link_to "Adresser som skiljer sig mellan ADM och kontaktboken, rapport genererad #{@user_stats[:ldap_diff_mtime]}.", ldap_diff_statistics_path
