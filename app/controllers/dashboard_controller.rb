@@ -2,7 +2,7 @@
 
 # Model-less controller for dashboard data from other models
 class DashboardController < ApplicationController
-  before_filter :require_user
+  before_action :require_user
 
   def index
     @limit = 5

@@ -2,7 +2,7 @@ module Api
   module V1
     # "Employee" is the best term for the api, the internal model name is "User".
     class EmployeesController < ApiController
-      before_filter :restrict_access
+      before_action :restrict_access
       respond_to :json
 
       def search

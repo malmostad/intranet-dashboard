@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 class ActivitiesController < ApplicationController
-  before_filter { add_body_class('edit') }
-  before_filter { sub_layout("admin") if admin? }
-  before_filter :require_user
-  before_filter :require_admin, except: [:search, :suggest]
+  before_action { add_body_class('edit') }
+  before_action { sub_layout("admin") if admin? }
+  before_action :require_user
+  before_action :require_admin, except: [:search, :suggest]
 
   def index
     # Display search form
@@ -58,7 +58,7 @@ class ActivitiesController < ApplicationController
 
   # Used in the user profile
   def suggest
-    @activities = Activity.where("name like ?", "%#{params[:q]}%").order(:name).limit(50)
+    @activities = Activity.where("name like ?", "%#{params[:q]}%").order(:name).limit(50).to_a
 
     # Let user add new activity
     @activities.unshift Activity.new(name: params[:q])

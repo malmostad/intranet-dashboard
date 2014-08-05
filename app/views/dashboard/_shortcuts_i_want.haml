@@ -15,6 +15,6 @@
       %span.icon-caret-down.icon-large
     %menu.dropdown-menu{ "aria-labelledby" => "shortcuts-i-want-menu" }
       %li= link_to "Hantera dessa genvägar...", user_select_shortcuts_path('i_want')
-      %li= link_to "Återställ dessa genvägar", user_reset_shortcuts_path('i_want'), data: { confirm: 'Vill du återställa alla genvägar för Verkgyt & system?', method: :put }
+      %li= link_to "Återställ dessa genvägar", user_reset_shortcuts_path('i_want'), data: { confirm: 'Vill du återställa alla genvägar för Verkgyt & system?', method: :patch }
       - if admin?
         %li= link_to "Administrera...", shortcuts_path

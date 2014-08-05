@@ -1,7 +1,7 @@
 - title "Slå samman språk"
 %section.box.form
   %h1.box-title= h1
-  = form_for @language, url: languages_merge_path(@language), method: :put, html: { id: "merge-language", class: "form-horizontal merge" } do |f|
+  = form_for @language, url: languages_merge_path(@language), method: :patch, html: { id: "merge-language", class: "form-horizontal merge" } do |f|
     .box-content
       - if @language.errors.any?
         .warning= t 'messages.validation_errors'

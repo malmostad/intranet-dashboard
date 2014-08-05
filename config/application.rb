@@ -2,15 +2,12 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
-if defined?(Bundler)
-  # If you precompile assets before deploying to production, use this line
-  Bundler.require(*Rails.groups(:assets => %w(development local_test)))
-  # If you want your assets lazily compiled in production, use this line
-  # Bundler.require(:default, :assets, Rails.env)
-end
+Bundler.require(:default, Rails.env)
 
 module Dashboard
   class Application < Rails::Application
+    config.active_record.whitelist_attributes = false # TODO: remove after upgrade to 4.1
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -42,12 +39,6 @@ module Dashboard
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
-
-    # Workaround for https://github.com/rails/sass-rails/issues/111
-    Sprockets::Compressors.register_css_compressor(:scss, 'Sass::Rails::CssCompressor', :require => 'sass/rails/compressor')
-
-    # Enable the asset pipeline
-    config.assets.enabled = true
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :init_body_class, :mailer_set_url_options
+  before_action :init_body_class, :mailer_set_url_options
 
   # Set a permanent cookie w/data from the user profile. Used by the masthead in other webapps
   def set_profile_cookie

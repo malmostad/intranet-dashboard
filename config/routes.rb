@@ -8,12 +8,12 @@ Dashboard::Application.routes.draw do
   get "/more_feed_entries/:category/:before" => "dashboard#more_feed_entries", as: "more_feed_entries"
 
   get "/users/select_feeds/:category" => "users#select_feeds", as: "user_select_feeds"
-  put "/users/select_feeds/:category" => "users#update_feeds"
-  put "/users/reset_feeds/:category" => "users#reset_feeds", as: "user_reset_feeds"
+  patch "/users/select_feeds/:category" => "users#update_feeds"
+  patch "/users/reset_feeds/:category" => "users#reset_feeds", as: "user_reset_feeds"
   get "/users/select_shortcuts/:category" => "users#select_shortcuts", as: "user_select_shortcuts"
-  put "/users/select_shortcuts/:category" => "users#update_shortcuts"
-  put "/users/reset_shortcuts/:category" => "users#reset_shortcuts", as: "user_reset_shortcuts"
-  put "/users/update_status_message" => "users#update_status_message", as: "user_update_status_message"
+  patch "/users/select_shortcuts/:category" => "users#update_shortcuts"
+  patch "/users/reset_shortcuts/:category" => "users#reset_shortcuts", as: "user_reset_shortcuts"
+  patch "/users/update_status_message" => "users#update_status_message", as: "user_update_status_message"
   get "/users/activities/:cmg_id" => "users#activities", as: "user_activities"
   get "/users/suggest"
   get "/users/search"
@@ -38,20 +38,20 @@ Dashboard::Application.routes.draw do
 
   resources :shortcuts, :roles, :languages, :skills, :activities, :feeds, :my_own_feeds, except: [:show]
 
-  put "/feeds/refresh_entries/:id" => "feeds#refresh_entries", as: "feeds_refresh_entries"
+  patch "/feeds/refresh_entries/:id" => "feeds#refresh_entries", as: "feeds_refresh_entries"
 
   get "/languages/suggest" => "languages#suggest", as: "languages_suggest"
   get "/languages/search" => "languages#search", as: "languages_search"
   get "/languages/merge/:id" => "languages#edit_merge", as: "languages_edit_merge"
-  put "/languages/merge/:id" => "languages#merge", as: "languages_merge"
+  patch "/languages/merge/:id" => "languages#merge", as: "languages_merge"
   get "/skills/suggest" => "skills#suggest", as: "skills_suggest"
   get "/skills/search" => "skills#search", as: "skills_search"
   get "/skills/merge/:id" => "skills#edit_merge", as: "skills_edit_merge"
-  put "/skills/merge/:id" => "skills#merge", as: "skills_merge"
+  patch "/skills/merge/:id" => "skills#merge", as: "skills_merge"
   get "/activities/suggest" => "activities#suggest", as: "activities_suggest"
   get "/activities/search" => "activities#search", as: "activities_search"
   get "/activities/merge/:id" => "activities#edit_merge", as: "activities_edit_merge"
-  put "/activities/merge/:id" => "activities#merge", as: "activities_merge"
+  patch "/activities/merge/:id" => "activities#merge", as: "activities_merge"
 
   get  "/search" => "site_search#index"
   get  "/search/autocomplete" => "site_search#autocomplete", as: "site_search_autocomplete"
@@ -83,6 +83,6 @@ Dashboard::Application.routes.draw do
   end
 
   unless Rails.application.config.consider_all_requests_local
-    match '*not_found', to: 'errors#error_404'
+    match '*not_found', to: 'errors#error_404', via: :all
   end
 end

@@ -1,7 +1,7 @@
 %section.box#colleagues
   %h1.box-title Mina arbetskamrater
   - has_status = current_user.status_message.present?
-  = form_tag(user_update_status_message_path, method: "put", id: "update-status-form") do
+  = form_tag(user_update_status_message_path, method: :patch, id: "update-status-form") do
     %fieldset.show{ class: has_status ? '' : 'no-status'}
       = label_tag :status_message, "Vad gör du idag?"
       = text_area_tag :status_message, nil, rows: 1, placeholder: "Vad gör du idag?"

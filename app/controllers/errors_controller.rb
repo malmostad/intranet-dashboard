@@ -1,5 +1,5 @@
 class ErrorsController < ApplicationController
-  before_filter { sub_layout(false) }
+  before_action { sub_layout(false) }
 
   def error_404
     not_found

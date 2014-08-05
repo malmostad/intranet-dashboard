@@ -2,7 +2,7 @@ module Api
   class ApiController < ApplicationController
       private
       # Authentication for API calls using ApiApp.authenticate
-      # Use as a callback with before_filter/before_action
+      # Use as a callback with before_action
       def restrict_access
         @api_app = ApiApp.authenticate(params["app_token"], params["app_secret"], request.remote_ip)
         if !protocol_ok?

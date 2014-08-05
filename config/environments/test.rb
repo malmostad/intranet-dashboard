@@ -1,4 +1,5 @@
 Dashboard::Application.configure do
+  config.eager_load = true
 
   config.log_level = :info
   config.consider_all_requests_local = false
@@ -9,13 +10,10 @@ Dashboard::Application.configure do
 
   config.serve_static_assets = true
   config.static_cache_control = "public, max-age=3600"
-  config.assets.compress = true
   config.assets.js_compressor = :uglifier
   config.assets.css_compressor = :scss
   config.assets.compile = false
   config.assets.digest = true
-
-  config.whiny_nils = true
 
   config.action_dispatch.show_exceptions = false
   config.action_controller.allow_forgery_protection    = false
@@ -26,8 +24,6 @@ Dashboard::Application.configure do
   # config.active_record.schema_format = :sql
 
   config.active_support.deprecation = :log
-
-  config.active_record.mass_assignment_sanitizer = :strict
 
   config.action_mailer.default_url_options = { host: 'webapps06.malmo.se' }
   config.action_mailer.delivery_method = :smtp

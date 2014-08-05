@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 class StatisticsController < ApplicationController
-  before_filter { add_body_class('edit') }
-  before_filter { sub_layout("admin") if admin? }
-  before_filter :require_admin
+  before_action { add_body_class('edit') }
+  before_action { sub_layout("admin") if admin? }
+  before_action :require_admin
 
   def index
     total = User.count

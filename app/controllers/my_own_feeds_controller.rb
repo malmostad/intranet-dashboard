@@ -3,8 +3,8 @@
 # Users own feeds, not avaiable to anybody else
 # Those feeds are stored as regular Feed objects with the "my_own" category
 class MyOwnFeedsController < ApplicationController
-  before_filter { add_body_class('edit feeds') }
-  before_filter :require_user, :clear_feed_entries_cache
+  before_action { add_body_class('edit feeds') }
+  before_action :require_user, :clear_feed_entries_cache
 
   def index
     @feeds = Feed.joins(:users).where(category: "my_own", users: { id: current_user.id } )

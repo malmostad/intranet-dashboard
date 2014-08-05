@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :feeds
   has_and_belongs_to_many :shortcuts
   has_many :user_agents, dependent: :destroy
-  has_many :subordinates, class_name: "User", foreign_key: :manager_id, order: :first_name
+  has_many :subordinates, -> { order(:first_name) }, class_name: "User", foreign_key: :manager_id
   belongs_to :manager, class_name: "User"
   has_many :user_languages
   has_many :languages, through: :user_languages
@@ -189,7 +189,7 @@ class User < ActiveRecord::Base
 
   def self.search(query, limit = 25, offset = 0)
     return {} if query.empty?
-    users = User.scoped
+    users = User.all
     q = "#{query[:q]}%"
 
     users = users.where("username LIKE ? OR first_name LIKE ? OR last_name LIKE ? OR

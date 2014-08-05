@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 class LanguagesController < ApplicationController
-  before_filter { add_body_class('edit') }
-  before_filter { sub_layout("admin") if admin? }
-  before_filter :require_user
-  before_filter :require_admin, except: :suggest
+  before_action { add_body_class('edit') }
+  before_action { sub_layout("admin") if admin? }
+  before_action :require_user
+  before_action :require_admin, except: :suggest
 
   def index
     @languages = Language.order(:name)
@@ -46,7 +46,7 @@ class LanguagesController < ApplicationController
   # Returns a json hash with languages
   def suggest
     q = "#{params[:q]}%"
-    @languages = Language.where("name like ?", q).order(:name).limit(20)
+    @languages = Language.where("name like ?", q).order(:name).limit(20).to_a
 
     # Let user create new languages
     @languages.unshift Language.new(name: params[:q].downcase)
@@ -58,7 +58,7 @@ class LanguagesController < ApplicationController
 
   # Same as `suggest` but we do not allow creation
   def search
-    @languages = Language.where("name like ?", "#{params[:into]}%").order(:name).limit(20)
+    @languages = Language.where("name like ?", "#{params[:into]}%").order(:name).limit(20).to_a
     @languages.map! { |l| { id: l.id, value: l.name } }
     render json: @languages
   end

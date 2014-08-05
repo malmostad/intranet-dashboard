@@ -13,6 +13,6 @@
       %span.icon-caret-down.icon-large
     %menu.dropdown-menu{ "aria-labelledby" => "feeds-dialog-menu" }
       %li= link_to "Hantera dessa flöden...", user_select_feeds_path('dialog')
-      %li= link_to "Återställ dessa flöden", user_reset_feeds_path(:dialog), data: { confirm: 'Vill du återställa alla flöden för Mina Komindiskussioner?', method: :put }
+      %li= link_to "Återställ dessa flöden", user_reset_feeds_path(:dialog), data: { confirm: 'Vill du återställa alla flöden för Mina Komindiskussioner?', method: :patch }
       - if admin?
         %li= link_to "Administrera...", feeds_path

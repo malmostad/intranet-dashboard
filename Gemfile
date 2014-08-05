@@ -65,9 +65,7 @@ group :local_test do
   gem 'database_cleaner'
 end
 
-group :assets do
-  gem 'sass-rails', '4.0.3'
-  gem 'coffee-rails', '4.0.1'
-  gem 'uglifier', '2.5.3'
-  gem 'therubyracer', '0.12.1', require: 'v8'
-end
+gem 'sass-rails', '4.0.3'
+gem 'coffee-rails', '4.0.1'
+gem 'uglifier', '2.5.3'
+gem 'therubyracer', '0.12.1', require: 'v8'

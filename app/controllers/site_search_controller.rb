@@ -2,7 +2,7 @@
 require 'open-uri'
 
 class SiteSearchController < ApplicationController
-  before_filter { add_body_class "site-search" }
+  before_action { add_body_class "site-search" }
 
   def index
     @terms = params[:q]

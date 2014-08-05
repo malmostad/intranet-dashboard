@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 class GroupContactsController < ApplicationController
-  before_filter { add_body_class('edit group-contacts') }
-  before_filter { sub_layout("admin") }
-  before_filter :require_contacts_editor
-  before_filter :require_admin, only: :destroy
+  before_action { add_body_class('edit group-contacts') }
+  before_action { sub_layout("admin") }
+  before_action :require_contacts_editor
+  before_action :require_admin, only: :destroy
 
   def index
     # Display search form

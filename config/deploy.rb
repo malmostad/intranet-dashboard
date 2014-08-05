@@ -84,7 +84,7 @@ namespace :assets do
 
   desc "Precompile assets locally"
   task :precompile_locally do
-    run_locally("rake assets:clean RAILS_ENV=#{rails_env} && rake assets:precompile RAILS_ENV=#{rails_env}")
+    run_locally("rake assets:clobber RAILS_ENV=#{rails_env} && rake assets:precompile RAILS_ENV=#{rails_env}")
   end
 
   desc "Don't precompile assets"
@@ -93,7 +93,7 @@ namespace :assets do
 
   desc "Remove locally compiled assets"
   task :cleanup do
-    run_locally("rake assets:clean:all RAILS_ENV=#{rails_env}")
+    run_locally("rake assets:clobber RAILS_ENV=#{rails_env}")
   end
 end
 

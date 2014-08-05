@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class SamlController < ApplicationController
   # No CSRF from IdP POST, so disable the check
-  skip_before_filter :verify_authenticity_token, only: [:consume]
+  skip_before_action :verify_authenticity_token, only: [:consume]
 
   # Create a SAML request and send the user to the IdP
   def new

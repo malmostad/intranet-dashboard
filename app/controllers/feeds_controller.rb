@@ -2,9 +2,9 @@
 
 # News feeds administration
 class FeedsController < ApplicationController
-  before_filter { add_body_class('edit feeds') }
-  before_filter { sub_layout("admin", except: "edit") }
-  before_filter :require_admin
+  before_action { add_body_class('edit feeds') }
+  before_action { sub_layout("admin", except: "edit") }
+  before_action :require_admin
 
   def index
     @feeds = Feed.order("recent_failures desc, total_failures desc").includes(:users)

@@ -11,17 +11,17 @@ class Shortcut < ActiveRecord::Base
 
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :users
-  default_scope order("name ASC")
+  default_scope { order("name ASC") }
 
   attr_accessible :name, :url, :category, :role_ids
 
   validates :name,  :url,
       presence: { is: true, message: "Namnet måste fyllas i." }
   validates :url,
-      format: { with: /^https?:\/\//, message: "URL:en måste starta med http:// eller https://." },
+      format: { with: /\Ahttps?:\/\//, message: "URL:en måste starta med http:// eller https://." },
       length: { minimum: 11, message: "URL:en är inte korrekt." }
 
   before_validation do
-    self.url = "http://#{url}" unless url.match(/^https?:\/\//)
+    self.url = "http://#{url}" unless url.match(/\Ahttps?:\/\//)
   end
 end

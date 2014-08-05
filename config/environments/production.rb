@@ -1,5 +1,5 @@
 Dashboard::Application.configure do
-
+  config.eager_load = true
   config.log_level = :warn
   config.consider_all_requests_local = false
 
@@ -10,7 +10,6 @@ Dashboard::Application.configure do
   config.serve_static_assets = true
   config.static_cache_control = "public, max-age=3600"
 
-  config.assets.compress = true
   config.assets.js_compressor = :uglifier
   config.assets.css_compressor = :scss
   config.assets.compile = false

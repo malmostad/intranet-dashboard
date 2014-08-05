@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class SessionsController < ApplicationController
-  before_filter { add_body_class('login') }
+  before_action { add_body_class('login') }
 
   def new
     if direct_auth?(request) # Portwise or remember me auth

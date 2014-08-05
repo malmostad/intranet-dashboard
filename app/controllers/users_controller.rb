@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 class UsersController < ApplicationController
-  before_filter { add_body_class('employee') }
-  before_filter :require_user, except: [:suggest]
-  before_filter :require_admin_or_myself, only: [:edit, :update]
-  before_filter :require_admin, only: :destroy
+  before_action { add_body_class('employee') }
+  before_action :require_user, except: [:suggest]
+  before_action :require_admin_or_myself, only: [:edit, :update]
+  before_action :require_admin, only: :destroy
 
   # List users matching a tag (company, department, skills, languages etc.)
   def tags

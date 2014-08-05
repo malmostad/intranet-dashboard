@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 class ApiAppsController < ApplicationController
-  before_filter { add_body_class('edit') }
-  before_filter { sub_layout("admin") }
-  before_filter :require_admin
+  before_action { add_body_class('edit') }
+  before_action { sub_layout("admin") }
+  before_action :require_admin
 
   def index
     @api_apps = ApiApp.all

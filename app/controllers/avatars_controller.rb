@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 class AvatarsController < ApplicationController
 
-  before_filter { add_body_class('employee') }
-  before_filter :require_user, except: "show"
-  before_filter :require_admin_or_myself, except: "show"
+  before_action { add_body_class('employee') }
+  before_action :require_user, except: "show"
+  before_action :require_admin_or_myself, except: "show"
 
   # Stream the :usernames's profile picture, or use the fallback avatar.png
   def show
