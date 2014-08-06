@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 # TODO: Remove after switching to strong parameters
 gem 'protected_attributes'
 
-gem 'rails', '4.0.8'
+gem 'rails', github: 'rails/rails', branch: '4-1-stable' # https://github.com/rails/rails/pull/15675 still affecting 4.1.4
 gem 'jquery-rails', '3.1.1'
 gem 'haml', '4.0.5'
 
