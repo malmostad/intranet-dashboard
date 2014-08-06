@@ -2,7 +2,7 @@
 require "spec_helper"
 
 describe "Employees API" do
-  let(:api_app) { ApiApp.create(name: "x", contact: "x", ip_address: "127.0.0.1") }
+  let(:api_app) { create(:api_app) }
   let(:user) { create(:user) }
 
   it "should require authentication" do
