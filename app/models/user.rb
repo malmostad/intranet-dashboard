@@ -136,7 +136,7 @@ class User < ActiveRecord::Base
   # A user has feeds directly and through her roles
   def feeds_in_category(category)
     user_selected = feeds.where(category: category).pluck(:id)
-    through_roles = roles.where('feeds.category' => category).includes(:feeds).select(:id).map {|r| r.feeds.map(&:id) }
+    through_roles = roles.where('feeds.category' => category).includes(:feeds).select('feeds.id').map {|r| r.feeds.map(&:id) }
     (user_selected + through_roles).flatten.uniq
   end
 
