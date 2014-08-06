@@ -13,8 +13,6 @@ Dashboard::Application.configure do
   config.log_level = :debug
 #  config.colorize_logging = false
 
-  config.action_mailer.raise_delivery_errors = false
-
   config.active_support.deprecation = :log
 
   config.assets.debug = true

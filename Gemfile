@@ -1,9 +1,9 @@
 source 'http://rubygems.org'
 
-# Remove after switching to strong parameters
+# TODO: Remove after switching to strong parameters
 gem 'protected_attributes'
 
-gem 'rails', '4.1.4'
+gem 'rails', '4.0.8'
 gem 'jquery-rails', '3.1.1'
 gem 'haml', '4.0.5'
 
