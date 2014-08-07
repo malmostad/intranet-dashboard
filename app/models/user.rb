@@ -8,12 +8,7 @@ class User < ActiveRecord::Base
       :private_bio, :twitter, :skype, :homepage, :company_short,
       :room, :address, :district, :post_code, :postal_town, :geo_position_x, :geo_position_y
 
-  attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
-      :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
-      :language_list, :skill_list, :activity_list,
-      :private_bio, :twitter, :skype, :homepage, :company_short,
-      :room, :address, :district, :post_code, :postal_town, :geo_position_x, :geo_position_y,
-      :admin, :contacts_editor, :early_adopter, as: :admin
+  attr_accessible :admin, :contacts_editor, :early_adopter, as: :admin
 
   attr_accessor :avatar
   attr_reader :avatar_remote_url
