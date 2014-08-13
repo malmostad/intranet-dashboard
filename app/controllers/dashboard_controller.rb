@@ -23,7 +23,7 @@ class DashboardController < ApplicationController
   def more_feed_entries
     @limit = 10
     @category = params[:category]
-    @entries = current_user.feed_entries_in_category(@category, before: Time.at(params[:before].to_i), limit: @limit)
+    @entries = more_of_same(@category, Time.at(params[:before].to_i), @limit)
     if @entries.present?
       render :more_feed_entries, layout: false
     else
@@ -33,12 +33,17 @@ class DashboardController < ApplicationController
 
   private
 
+  # TODO: cache users combined_feed_ids?
+
+  # TODO: give real name to def and cache query
+  def more_of_same(category, before, limit)
+    FeedEntry.from_feeds(current_user.combined_feed_ids(category), before: before, limit: limit)
+  end
+
   # Cache the user’s and her role’s feed entries in a given category
   def cache_users_entries_for(category)
-    key = "feed_entries-#{current_user.id}-#{category}"
-
-    Rails.cache.fetch(key, expires_in: 1.minute) do
-      current_user.feed_entries_in_category(category)
+    Rails.cache.fetch("feed_entries-#{current_user.id}-#{category}", expires_in: 1.minute) do
+      FeedEntry.from_feeds current_user.combined_feed_ids(category)
     end
   end
 

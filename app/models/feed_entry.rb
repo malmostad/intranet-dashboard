@@ -19,4 +19,13 @@ class FeedEntry < ActiveRecord::Base
       self.image_large = nil
     end
   end
+
+  # Get feed entries from an array of feed_ids
+  # Use the `before: Time` option to get older entries
+  def self.from_feeds(feed_ids, options = {})
+    # Don't use the "published < ?" query if not specified to gain performance
+    fe = where(feed_id: feed_ids).group(:guid).order("published DESC").limit(options[:limit] || 5)
+    fe = fe.where("published < ?", options[:before]) if options[:before].present?
+    fe
+  end
 end

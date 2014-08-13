@@ -127,24 +127,17 @@ class User < ActiveRecord::Base
     end.compact
   end
 
-  # Get users feeds in a given category
-  # A user has feeds directly and through her roles
-  def feeds_in_category(category)
-    user_selected = feeds.where(category: category).pluck(:id)
-    through_roles = roles.where('feeds.category' => category).includes(:feeds).select('feeds.id').map {|r| r.feeds.map(&:id) }
-    (user_selected + through_roles).flatten.uniq
-  end
-
-  # Select feed_entries from the users feeds in a given category
-  def feed_entries_in_category(category, options = {})
-    options = { limit: 5, before: Time.now }.merge(options)
-
-    # Select the latest feed_entries. Or (used for "load more") those published before options[:before]
-    FeedEntry.where("feed_id IN (?) AND published < ?", feeds_in_category(category), options[:before])
-      .group(:guid)
-      .includes(:feed)
-      .order("published DESC")
-      .limit(options[:limit])
+  # Get an array of the users feed_ids + feed_ids from the users roles
+  # `category` is optional
+  def combined_feed_ids(category = nil)
+    if category.present?
+      user_selected = feeds.where(category: category).pluck(:id)
+      through_roles = roles.where('feeds.category' => category).includes(:feeds).select('feeds.id')
+    else
+      user_selected = feeds.pluck(:id)
+      through_roles = roles.references(:feeds).includes(:feeds).select('feeds.id')
+    end
+    (user_selected + through_roles.map {|r| r.feeds.map(&:id) }).flatten.uniq
   end
 
   def shortcuts_in_category(category)
