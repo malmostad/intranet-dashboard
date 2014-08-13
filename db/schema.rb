@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140812093631) do
+ActiveRecord::Schema.define(:version => 20140813152301) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(:version => 20140812093631) do
   end
 
   add_index "feeds_roles", ["feed_id", "role_id"], :name => "index_feeds_roles", :unique => true
+  add_index "feeds_roles", ["role_id"], :name => "index_feeds_roles_on_role_id"
 
   create_table "feeds_users", :id => false, :force => true do |t|
     t.integer "feed_id"
@@ -103,6 +104,7 @@ ActiveRecord::Schema.define(:version => 20140812093631) do
   end
 
   add_index "feeds_users", ["feed_id", "user_id"], :name => "index_feeds_user", :unique => true
+  add_index "feeds_users", ["user_id"], :name => "index_feeds_users_on_user_id"
 
   create_table "group_contacts", :force => true do |t|
     t.string   "name"
