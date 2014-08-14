@@ -146,6 +146,7 @@ class User < ActiveRecord::Base
     (my_own.compact + through_roles).flatten.uniq.sort { |a, b| a.name <=> b.name }
   end
 
+  # TODO: refactor to Colleague?
   # Sort colleagues by their status_message_updated_at
   def sorted_colleagues
     # Filter deactivated colleagues (users)
