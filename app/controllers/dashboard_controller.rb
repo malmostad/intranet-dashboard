@@ -33,8 +33,6 @@ class DashboardController < ApplicationController
 
   private
 
-  # TODO: cache users combined_feed_ids?
-
   # TODO: give real name to def and cache query
   def more_of_same(category, before, limit)
     FeedEntry.from_feeds(current_user.combined_feed_ids(category), before: before, limit: limit)
