@@ -5,7 +5,7 @@
         = image_tag(entry.image, alt: '')
       - elsif tweet?(entry)
         %span.icon-twitter
-      - elsif category == 'my_own'
+      - elsif category == 'my_own' || category == 'combined'
         %span.icon-rss
       .text
         %h2= sanitize(entry.title)
@@ -25,4 +25,4 @@
 - elsif entries.size < @limit
   %li.load-more
     .text
-      %p.nomore Det finns inget mer i denna kategori
+      %p.nomore Det finns inga fler nyheter

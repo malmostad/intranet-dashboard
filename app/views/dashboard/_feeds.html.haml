@@ -1,0 +1,19 @@
+%section.box.feeds
+  %h1.box-title Nyheter
+  .box-instructions{ class: @combined_entries.present? ? "" : "show"}
+    %p= raw "Denna box visar nyheter, blogg- och foruminlägg från Min förvaltning och Mitt arbetsfält, baserat på vad du valt i #{link_to "Min profil", edit_user_path(current_user)}."
+    %p Du kan dessutom lägga till fler nyheter, blogg- och foruminlägg genom att klicka på pilen uppe till höger i denna box.
+  %ul.box-content
+    = render "feeds_entries", entries: @combined_entries, category: 'combined'
+
+  %a.toggle-instructions{ "role" => "button", href: "#",  title: "Visa instruktioner"} ?
+
+  .dropdown.box-menu.pull-right
+    %a#feeds-menu.dropdown-toggle{ "role" => "button", "data-toggle" => "dropdown", "href" => "#", "title" => "Anpassa innehållet" }
+      %span.icon-caret-down.icon-large
+    %menu.dropdown-menu{ "aria-labelledby" => "feeds-menu" }
+      %li= link_to "Hantera nyhetsflöden...", user_select_feeds_path('news')
+      %li= link_to "Hantera diskussionsflöden...", user_select_feeds_path('dialog')
+      %li= link_to "Hantera mina egna flöden...", my_own_feeds_path
+      - if admin?
+        %li= link_to "Administrera...", feeds_path

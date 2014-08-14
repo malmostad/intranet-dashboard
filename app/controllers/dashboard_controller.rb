@@ -6,12 +6,15 @@ class DashboardController < ApplicationController
 
   def index
     @limit = 5
+
+    @combined_entries = FeedEntry.from_feeds(current_user.combined_feed_ids, limit: 30)
+
     @feature_entry     = cache_users_entries_for("feature").first
     @feature_feed_url  = Feed.where(category: "feature").first
 
-    @news_entries      = cache_users_entries_for("news")
-    @dialog_entries    = cache_users_entries_for("dialog")
-    @my_own_entries    = cache_users_entries_for("my_own")
+    # @news_entries      = cache_users_entries_for("news")
+    # @dialog_entries    = cache_users_entries_for("dialog")
+    # @my_own_entries    = cache_users_entries_for("my_own")
 
     @tools_and_systems = cache_users_shortcuts_for("tools_and_systems")
     @i_want            = cache_users_shortcuts_for("i_want")
