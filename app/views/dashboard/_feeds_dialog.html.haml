@@ -5,6 +5,7 @@
     %p Du kan dessutom lägga till fler diskussioner genom att klicka på pilen uppe till höger i denna box.
   %ul.box-content
     = render "feeds_entries", entries: @dialog_entries, category: 'dialog'
+    = render "load_more_entries", entries: @dialog_entries, category: 'dialog'
 
   %a.toggle-instructions{ "role" => "button", href: "#",  title: "Visa instruktioner"} ?
 

@@ -22,10 +22,10 @@ class FeedEntry < ActiveRecord::Base
 
   # Get feed entries from an array of feed_ids
   # Use the `before: Time` option to get older entries
-  def self.from_feeds(feed_ids, options = {})
-    query = where(feed_id: feed_ids).group(:guid).order("published DESC").limit(options[:limit] || 5)
-    if options[:before].present?
-      query = query.where("published < ?", options[:before])
+  def self.from_feeds(feed_ids, conditions = {})
+    query = where(feed_id: feed_ids).group(:guid).order("published DESC").limit(conditions[:limit] || 5)
+    if conditions[:before].present?
+      query = query.where("published < ?", conditions[:before])
     end
     query
   end

@@ -5,6 +5,7 @@
     %p Du kan dessutom lägga till fler nyhetsflöden genom att klicka på pilen uppe till höger i denna box.
   %ul.box-content
     = render "feeds_entries", entries: @news_entries, category: 'news'
+    = render "load_more_entries", entries: @news_entries, category: 'news'
 
   %a.toggle-instructions{ "role" => "button", href: "#",  title: "Visa instruktioner"} ?
 

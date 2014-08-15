@@ -4,6 +4,7 @@
     %p Min sida kan visa nyhetsflöden från internet. Klicka på pilen uppe till höger i denna box för att lägga till ett flöde.
   %ul.box-content
     = render "feeds_entries", entries: @my_own_entries, category: 'my_own'
+    = render "load_more_entries", entries: @my_own_entries, category: 'my_own'
 
   %a.toggle-instructions{ "role" => "button", href: "#",  title: "Visa instruktioner"} ?
 

@@ -5,25 +5,23 @@ class DashboardController < ApplicationController
   before_action :require_user
 
   def index
-    @combined_entries = FeedEntry.from_feeds(current_user.combined_feed_ids, limit: 30)
+    @entries_limit = 5
 
-    @feature = featured_news_entry
+    @combined_entries  = FeedEntry.from_feeds(current_user.combined_feed_ids, limit: 30)
+    @news_entries      = feed_entries_from_category("news", limit: @entries_limit)
+    @dialog_entries    = feed_entries_from_category("dialog", limit: @entries_limit)
+    @my_own_entries    = feed_entries_from_category("my_own", limit: @entries_limit)
 
-    # @news_entries      = cache_users_entries_for("news")
-    # @dialog_entries    = cache_users_entries_for("dialog")
-    # @my_own_entries    = cache_users_entries_for("my_own")
-
-    @tools_and_systems = cache_users_shortcuts_for("tools_and_systems")
-    @i_want            = cache_users_shortcuts_for("i_want")
-
+    @feature           = featured_news_entry
+    @tools_and_systems = shortcuts_from_category("tools_and_systems")
+    @i_want            = shortcuts_from_category("i_want")
     @colleagueships    = current_user.sorted_colleagues
   end
 
   # Load more feed entries in requested category
   def more_feed_entries
-    @limit = 10
     @category = params[:category]
-    @entries = more_of_same(@category, Time.at(params[:before].to_i), @limit)
+    @entries = feed_entries_from_category(@category, { before: Time.at(params[:before].to_i), limit: 10} )
     if @entries.present?
       render :more_feed_entries, layout: false
     else
@@ -33,20 +31,13 @@ class DashboardController < ApplicationController
 
   private
 
-  # TODO: give real name to def and cache query
-  def more_of_same(category, before, limit)
-    FeedEntry.from_feeds(current_user.combined_feed_ids(category), before: before, limit: limit)
+  # User’s and her role’s feed entries in a given category
+  def feed_entries_from_category(category, conditions = {})
+    FeedEntry.from_feeds(current_user.combined_feed_ids(category), conditions)
   end
 
-  # Cache the user’s and her role’s feed entries in a given category
-  def cache_users_entries_for(category)
-    Rails.cache.fetch("feed_entries-#{current_user.id}-#{category}", expires_in: 1.minute) do
-      FeedEntry.from_feeds current_user.combined_feed_ids(category)
-    end
-  end
-
-  # Cache the user’s shortcuts and her role’s shortcuts in a given category
-  def cache_users_shortcuts_for(category)
+  # User’s shortcuts and her role’s shortcuts in a given category
+  def shortcuts_from_category(category)
     Rails.cache.fetch("shortcuts-#{current_user.id}-#{category}", expires_in: 10.minute) do
       current_user.shortcuts_in_category(category)
     end

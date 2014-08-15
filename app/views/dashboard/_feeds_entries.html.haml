@@ -3,10 +3,6 @@
     %a{ href: entry.url, rel: "external" }
       - if entry.image.present?
         = image_tag(entry.image, alt: '')
-      - elsif tweet?(entry)
-        %span.icon-twitter
-      - elsif category == 'my_own' || category == 'combined'
-        %span.icon-rss
       .text
         %h2= sanitize(entry.title)
         %p.summary{ class: category }= summary(entry.summary)
@@ -18,11 +14,3 @@
             %span.comments
               = " #{entry.count_comments} #{c}"
               %span.icon-comment-alt
-
-- if entries.size == @limit
-  %li.load-more
-    %input.btn.btn-small{ type: "button", value: "Visa fler", "data-path" => more_feed_entries_path(category, entries.last.published.to_i)}
-- elsif entries.size < @limit
-  %li.load-more
-    .text
-      %p.nomore Det finns inga fler nyheter
