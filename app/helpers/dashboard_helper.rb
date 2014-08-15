@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 module DashboardHelper
   def summary(text)
-    sanitize truncate( strip_tags(text), { separator: ' ', length: 140, omission: ' …' } )
+    truncate( strip_tags(HTMLEntities.new.decode text), { separator: ' ', length: 140, omission: ' …' } )
   end
 
   # Is the feed entry a tweet?
