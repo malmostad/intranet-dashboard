@@ -3,7 +3,7 @@
 class Colleagueship < ActiveRecord::Base
   attr_accessible :colleague_id, :create, :destroy, :user_id
 
-  belongs_to :user
+  belongs_to :user, touch: true
   belongs_to :colleague, class_name: "User"
 
   validates :colleague_id, presence: true
