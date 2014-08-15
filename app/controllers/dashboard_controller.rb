@@ -45,10 +45,11 @@ class DashboardController < ApplicationController
 
   def featured_news_entry
     Rails.cache.fetch("featured-news-entry", expires_in: 2.minute) do
-      {
-        entry: Feed.where(category: "feature").first.feed_entries.order("published desc").first,
-        feed_url: Feed.where(category: "feature").first.feed_url.gsub(/\/feed\/*$/, "")
-      }
+      feed = Feed.where(category: "feature").first
+      if feed.present?
+        { entry: feed.feed_entries.order("published desc").first,
+          feed_url: feed.feed_url.gsub(/\/feed\/*$/, "") }
+      end
     end
   end
 end
