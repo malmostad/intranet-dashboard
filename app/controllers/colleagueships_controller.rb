@@ -32,7 +32,7 @@ class ColleagueshipsController < ApplicationController
   end
 
   def destroy
-    @colleagueship = current_user.colleagueships.find(params[:id])
+    @colleagueship = current_user.colleagueships.where(colleague_id: params[:id]).first
     @colleagueship.destroy
     render json: { status: :deleted }
   end

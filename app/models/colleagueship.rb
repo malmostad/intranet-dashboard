@@ -4,12 +4,12 @@ class Colleagueship < ActiveRecord::Base
   attr_accessible :colleague_id, :create, :destroy, :user_id
 
   belongs_to :user
-  belongs_to :colleague, :class_name => "User"
+  belongs_to :colleague, class_name: "User"
 
   validates :colleague_id, presence: true
 
   # Prevent duplicate entries of colleague_id and user_id
-  validates :colleague_id, :uniqueness => {:scope => :user_id}
+  validates :colleague_id, uniqueness: { scope: :user_id }
 
   def self.search(user, term, max = 20)
     User.where("(username LIKE ? OR

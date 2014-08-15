@@ -15,7 +15,7 @@ class DashboardController < ApplicationController
     @feature           = featured_news_entry
     @tools_and_systems = shortcuts_from_category("tools_and_systems")
     @i_want            = shortcuts_from_category("i_want")
-    @colleagueships    = current_user.sorted_colleagues
+    @colleagues        = current_user.colleagues.order("status_message_updated_at desc")
   end
 
   # Load more feed entries in requested category
@@ -29,8 +29,7 @@ class DashboardController < ApplicationController
     end
   end
 
-  private
-
+private
   # User’s and her role’s feed entries in a given category
   def feed_entries_from_category(category, conditions = {})
     FeedEntry.from_feeds(current_user.combined_feed_ids(category), conditions)

@@ -146,18 +146,6 @@ class User < ActiveRecord::Base
     (my_own.compact + through_roles).flatten.uniq.sort { |a, b| a.name <=> b.name }
   end
 
-  # TODO: refactor to Colleague?
-  # Sort colleagues by their status_message_updated_at
-  def sorted_colleagues
-    # Filter deactivated colleagues (users)
-    c = colleagueships.includes(:colleague).reject { |cs| cs.colleague.blank? }
-
-    c.sort do |a,b|
-      ( b.colleague.status_message_updated_at && a.colleague.status_message_updated_at ) ?
-      b.colleague.status_message_updated_at <=> a.colleague.status_message_updated_at : ( a.colleague.status_message_updated_at ? -1 : 1 )
-    end
-  end
-
   def self.tags(query, limit = 50, offset = 0)
     users = User.scoped
 
