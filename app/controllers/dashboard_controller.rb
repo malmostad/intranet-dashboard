@@ -5,12 +5,9 @@ class DashboardController < ApplicationController
   before_action :require_user
 
   def index
-    @limit = 5
-
     @combined_entries = FeedEntry.from_feeds(current_user.combined_feed_ids, limit: 30)
 
-    @feature_entry     = cache_users_entries_for("feature").first
-    @feature_feed_url  = Feed.where(category: "feature").first
+    @feature = featured_news_entry
 
     # @news_entries      = cache_users_entries_for("news")
     # @dialog_entries    = cache_users_entries_for("dialog")
@@ -52,6 +49,15 @@ class DashboardController < ApplicationController
   def cache_users_shortcuts_for(category)
     Rails.cache.fetch("shortcuts-#{current_user.id}-#{category}", expires_in: 10.minute) do
       current_user.shortcuts_in_category(category)
+    end
+  end
+
+  def featured_news_entry
+    Rails.cache.fetch("featured-news-entry", expires_in: 2.minute) do
+      {
+        entry: Feed.where(category: "feature").first.feed_entries.order("published desc").first,
+        feed_url: Feed.where(category: "feature").first.feed_url.gsub(/\/feed\/*$/, "")
+      }
     end
   end
 end
