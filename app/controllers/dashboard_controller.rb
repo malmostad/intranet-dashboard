@@ -7,7 +7,7 @@ class DashboardController < ApplicationController
   def index
     @entries_limit = 5
 
-    if current_user.feed_stream_type == 'combined'
+    if current_user.combined_feed_stream
       @combined_entries  = FeedEntry.from_feeds(current_user.combined_feed_ids, limit: 30)
     else
       @news_entries      = feed_entries_from_category("news", limit: @entries_limit)

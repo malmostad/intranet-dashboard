@@ -155,6 +155,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def update_feed_stream_type
+    current_user.update(combined_feed_stream: !current_user.combined_feed_stream)
+    redirect_to root_path
+  end
+
   def my_profile
     redirect_to user_path(current_user.username)
   end

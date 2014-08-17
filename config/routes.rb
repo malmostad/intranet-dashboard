@@ -14,6 +14,7 @@ Dashboard::Application.routes.draw do
   patch "/users/select_shortcuts/:category" => "users#update_shortcuts"
   patch "/users/reset_shortcuts/:category" => "users#reset_shortcuts", as: "user_reset_shortcuts"
   patch "/users/update_status_message" => "users#update_status_message", as: "user_update_status_message"
+  patch "/users/update_feed_stream_type"
   get "/users/activities/:cmg_id" => "users#activities", as: "user_activities"
   get "/users/suggest"
   get "/users/search"
