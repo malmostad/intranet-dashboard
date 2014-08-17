@@ -27,6 +27,6 @@ class FeedEntry < ActiveRecord::Base
     if conditions[:before].present?
       query = query.where("published < ?", conditions[:before])
     end
-    query
+    query.includes(:feed)
   end
 end
