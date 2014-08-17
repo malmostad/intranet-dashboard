@@ -7,10 +7,13 @@ class DashboardController < ApplicationController
   def index
     @entries_limit = 5
 
-    @combined_entries  = FeedEntry.from_feeds(current_user.combined_feed_ids, limit: 30)
-    @news_entries      = feed_entries_from_category("news", limit: @entries_limit)
-    @dialog_entries    = feed_entries_from_category("dialog", limit: @entries_limit)
-    @my_own_entries    = feed_entries_from_category("my_own", limit: @entries_limit)
+    if current_user.feed_stream_type == 'combined'
+      @combined_entries  = FeedEntry.from_feeds(current_user.combined_feed_ids, limit: 30)
+    else
+      @news_entries      = feed_entries_from_category("news", limit: @entries_limit)
+      @dialog_entries    = feed_entries_from_category("dialog", limit: @entries_limit)
+      @my_own_entries    = feed_entries_from_category("my_own", limit: @entries_limit)
+    end
 
     @feature           = featured_news_entry
     @tools_and_systems = shortcuts_from_category("tools_and_systems")

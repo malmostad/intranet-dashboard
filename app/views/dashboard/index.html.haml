@@ -1,10 +1,12 @@
 - title "Min sida"
 .group-1
   .column.column-2
-    = render "feeds_news"
-    = render "feeds_dialog"
-    = render "feeds_my_own"
-    = render "feeds"
+    - if @combined_entries.present?
+      = render "feeds"
+    - else
+      = render "feeds_news"
+      = render "feeds_dialog"
+      = render "feeds_my_own"
 
   .column.column-1
     = render "feeds_feature"
