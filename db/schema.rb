@@ -272,7 +272,7 @@ ActiveRecord::Schema.define(version: 20140817094852) do
     t.string   "house_identifier"
     t.string   "physical_delivery_office_name"
     t.string   "adm_department"
-    t.string   "feed_stream_type"
+    t.string   "feed_stream_type",              default: "categorized"
   end
 
   add_index "users", ["manager_id"], name: "index_users_on_manager_id", using: :btree
