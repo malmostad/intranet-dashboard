@@ -2,7 +2,7 @@
 .group-1
   .column.column-2
     .stream-toggle
-      = link_to "Toggle", users_update_feed_stream_type_path, "data-method" => :patch
+      = link_to toggle_feed_stream_text, users_update_feed_stream_type_path, "data-method" => :patch
     - if current_user.combined_feed_stream
       = render "feeds"
     - else

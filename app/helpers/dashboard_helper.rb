@@ -13,4 +13,8 @@ module DashboardHelper
   def possessive(owner)
     owner.match(/[sz]$/) ? owner : "#{owner}s" unless owner.blank?
   end
+
+  def toggle_feed_stream_text
+    current_user.combined_feed_stream ? "Visa kategoriserat" : "Visa sammanslaget"
+  end
 end
