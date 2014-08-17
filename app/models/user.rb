@@ -2,8 +2,13 @@
 class User < ActiveRecord::Base
   include EmployeeSearch
 
+  FEED_STREAM_TYPES = {
+    "combined" => "kombinerad",
+    "categorized" => "uppdelad"
+  }
+
   attr_accessible :phone, :cell_phone, :professional_bio, :status_message, :avatar,
-      :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts,
+      :role_ids, :feed_ids, :feeds, :shortcut_ids, :shortcuts, :feed_stream_type,
       :language_list, :skill_list, :activity_list,
       :private_bio, :twitter, :skype, :homepage, :company_short,
       :room, :address, :district, :post_code, :postal_town, :geo_position_x, :geo_position_y

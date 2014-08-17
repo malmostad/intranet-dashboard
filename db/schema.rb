@@ -9,56 +9,56 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140813152301) do
+ActiveRecord::Schema.define(version: 20140817094852) do
 
-  create_table "activities", :force => true do |t|
+  create_table "activities", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "activities", ["name"], :name => "index_activities_on_name"
+  add_index "activities", ["name"], name: "index_activities_on_name", using: :btree
 
-  create_table "api_apps", :force => true do |t|
+  create_table "api_apps", force: true do |t|
     t.string   "name"
     t.string   "contact"
     t.string   "app_token"
     t.string   "ip_address"
     t.string   "password_digest"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
-  add_index "api_apps", ["app_token"], :name => "index_api_apps_on_app_token"
+  add_index "api_apps", ["app_token"], name: "index_api_apps_on_app_token", using: :btree
 
-  create_table "colleagueships", :force => true do |t|
+  create_table "colleagueships", force: true do |t|
     t.integer  "user_id"
     t.integer  "colleague_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
-  add_index "colleagueships", ["user_id", "colleague_id"], :name => "index_colleagueships_on_user_id_and_colleague_id", :unique => true
+  add_index "colleagueships", ["user_id", "colleague_id"], name: "index_colleagueships_on_user_id_and_colleague_id", unique: true, using: :btree
 
-  create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",   :default => 0, :null => false
-    t.integer  "attempts",   :default => 0, :null => false
-    t.text     "handler",                   :null => false
+  create_table "delayed_jobs", force: true do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
     t.text     "last_error"
     t.datetime "run_at"
     t.datetime "locked_at"
     t.datetime "failed_at"
     t.string   "locked_by"
     t.string   "queue"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
-  create_table "feed_entries", :force => true do |t|
+  create_table "feed_entries", force: true do |t|
     t.datetime "published"
     t.text     "guid"
     t.integer  "feed_id"
@@ -73,40 +73,40 @@ ActiveRecord::Schema.define(:version => 20140813152301) do
     t.integer  "count_comments"
   end
 
-  add_index "feed_entries", ["feed_id"], :name => "index_feed_entries_on_feed_id"
+  add_index "feed_entries", ["feed_id"], name: "index_feed_entries_on_feed_id", using: :btree
 
-  create_table "feeds", :force => true do |t|
+  create_table "feeds", force: true do |t|
     t.string   "title"
     t.text     "feed_url"
     t.string   "category"
-    t.integer  "recent_failures", :default => 0
-    t.integer  "total_failures",  :default => 0
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.integer  "recent_failures", default: 0
+    t.integer  "total_failures",  default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.datetime "fetched_at"
     t.text     "url"
-    t.integer  "recent_skips",    :default => 0
+    t.integer  "recent_skips",    default: 0
     t.string   "etag"
     t.datetime "last_modified"
   end
 
-  create_table "feeds_roles", :id => false, :force => true do |t|
+  create_table "feeds_roles", id: false, force: true do |t|
     t.integer "feed_id"
     t.integer "role_id"
   end
 
-  add_index "feeds_roles", ["feed_id", "role_id"], :name => "index_feeds_roles", :unique => true
-  add_index "feeds_roles", ["role_id"], :name => "index_feeds_roles_on_role_id"
+  add_index "feeds_roles", ["feed_id", "role_id"], name: "index_feeds_roles", unique: true, using: :btree
+  add_index "feeds_roles", ["role_id"], name: "index_feeds_roles_on_role_id", using: :btree
 
-  create_table "feeds_users", :id => false, :force => true do |t|
+  create_table "feeds_users", id: false, force: true do |t|
     t.integer "feed_id"
     t.integer "user_id"
   end
 
-  add_index "feeds_users", ["feed_id", "user_id"], :name => "index_feeds_user", :unique => true
-  add_index "feeds_users", ["user_id"], :name => "index_feeds_users_on_user_id"
+  add_index "feeds_users", ["feed_id", "user_id"], name: "index_feeds_user", unique: true, using: :btree
+  add_index "feeds_users", ["user_id"], name: "index_feeds_users_on_user_id", using: :btree
 
-  create_table "group_contacts", :force => true do |t|
+  create_table "group_contacts", force: true do |t|
     t.string   "name"
     t.string   "email"
     t.string   "phone"
@@ -124,125 +124,125 @@ ActiveRecord::Schema.define(:version => 20140813152301) do
     t.string   "visitors_address_geo_position_y"
     t.string   "visitors_district"
     t.string   "visiting_hours"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.datetime "last_request"
     t.integer  "last_request_by"
     t.string   "legacy_dn"
   end
 
-  add_index "group_contacts", ["name"], :name => "index_group_contacts_on_name", :unique => true
+  add_index "group_contacts", ["name"], name: "index_group_contacts_on_name", unique: true, using: :btree
 
-  create_table "languages", :force => true do |t|
+  create_table "languages", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "languages", ["name"], :name => "index_languages_on_name"
+  add_index "languages", ["name"], name: "index_languages_on_name", using: :btree
 
-  create_table "roles", :force => true do |t|
+  create_table "roles", force: true do |t|
     t.string   "name"
     t.string   "category"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "homepage_url"
   end
 
-  add_index "roles", ["name"], :name => "index_roles_on_name", :unique => true
+  add_index "roles", ["name"], name: "index_roles_on_name", unique: true, using: :btree
 
-  create_table "roles_shortcuts", :id => false, :force => true do |t|
+  create_table "roles_shortcuts", id: false, force: true do |t|
     t.integer "role_id"
     t.integer "shortcut_id"
   end
 
-  add_index "roles_shortcuts", ["role_id", "shortcut_id"], :name => "index_roles_shortcuts", :unique => true
+  add_index "roles_shortcuts", ["role_id", "shortcut_id"], name: "index_roles_shortcuts", unique: true, using: :btree
 
-  create_table "roles_users", :id => false, :force => true do |t|
+  create_table "roles_users", id: false, force: true do |t|
     t.integer "role_id"
     t.integer "user_id"
   end
 
-  add_index "roles_users", ["role_id", "user_id"], :name => "index_roles_users", :unique => true
-  add_index "roles_users", ["user_id"], :name => "index_roles_users_on_user_id"
+  add_index "roles_users", ["role_id", "user_id"], name: "index_roles_users", unique: true, using: :btree
+  add_index "roles_users", ["user_id"], name: "index_roles_users_on_user_id", using: :btree
 
-  create_table "shortcuts", :force => true do |t|
+  create_table "shortcuts", force: true do |t|
     t.string   "name"
     t.string   "url"
     t.string   "category"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "shortcuts_users", :id => false, :force => true do |t|
+  create_table "shortcuts_users", id: false, force: true do |t|
     t.integer "shortcut_id"
     t.integer "user_id"
   end
 
-  add_index "shortcuts_users", ["shortcut_id", "user_id"], :name => "index_shortcuts_user", :unique => true
+  add_index "shortcuts_users", ["shortcut_id", "user_id"], name: "index_shortcuts_user", unique: true, using: :btree
 
-  create_table "skills", :force => true do |t|
+  create_table "skills", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "skills", ["name"], :name => "index_skills_on_name"
+  add_index "skills", ["name"], name: "index_skills_on_name", using: :btree
 
-  create_table "user_activities", :force => true do |t|
+  create_table "user_activities", force: true do |t|
     t.integer  "activity_id"
     t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
-  add_index "user_activities", ["activity_id"], :name => "index_user_activities_on_activity_id"
-  add_index "user_activities", ["user_id"], :name => "index_user_activities_on_user_id"
+  add_index "user_activities", ["activity_id"], name: "index_user_activities_on_activity_id", using: :btree
+  add_index "user_activities", ["user_id"], name: "index_user_activities_on_user_id", using: :btree
 
-  create_table "user_agents", :force => true do |t|
+  create_table "user_agents", force: true do |t|
     t.integer  "user_id"
-    t.boolean  "remember_me",      :default => false
+    t.boolean  "remember_me",      default: false
     t.string   "remember_me_hash"
     t.string   "user_agent_tag"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
-  add_index "user_agents", ["id", "user_id"], :name => "index_user_agents_on_id_and_user_id", :unique => true
+  add_index "user_agents", ["id", "user_id"], name: "index_user_agents_on_id_and_user_id", unique: true, using: :btree
 
-  create_table "user_languages", :force => true do |t|
+  create_table "user_languages", force: true do |t|
     t.integer  "language_id"
     t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
-  add_index "user_languages", ["language_id"], :name => "index_user_languages_on_language_id"
-  add_index "user_languages", ["user_id"], :name => "index_user_languages_on_user_id"
+  add_index "user_languages", ["language_id"], name: "index_user_languages_on_language_id", using: :btree
+  add_index "user_languages", ["user_id"], name: "index_user_languages_on_user_id", using: :btree
 
-  create_table "user_skills", :force => true do |t|
+  create_table "user_skills", force: true do |t|
     t.integer  "skill_id"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "user_skills", ["skill_id"], :name => "index_user_skills_on_skill_id"
-  add_index "user_skills", ["user_id"], :name => "index_user_skills_on_user_id"
+  add_index "user_skills", ["skill_id"], name: "index_user_skills_on_skill_id", using: :btree
+  add_index "user_skills", ["user_id"], name: "index_user_skills_on_user_id", using: :btree
 
-  create_table "users", :force => true do |t|
+  create_table "users", force: true do |t|
     t.string   "username"
-    t.string   "first_name",                    :default => "Förnamn saknas"
-    t.string   "last_name",                     :default => "Efternamn saknas"
-    t.string   "email",                         :default => "E-post saknas"
+    t.string   "first_name",                    default: "Förnamn saknas"
+    t.string   "last_name",                     default: "Efternamn saknas"
+    t.string   "email",                         default: "E-post saknas"
     t.string   "phone"
     t.string   "cell_phone"
     t.string   "title"
     t.text     "professional_bio"
     t.string   "status_message"
-    t.boolean  "admin",                         :default => false,              :null => false
-    t.datetime "created_at",                                                    :null => false
-    t.datetime "updated_at",                                                    :null => false
+    t.boolean  "admin",                         default: false,              null: false
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
     t.string   "displayname"
     t.string   "company"
     t.datetime "last_login"
@@ -262,19 +262,20 @@ ActiveRecord::Schema.define(:version => 20140813152301) do
     t.string   "address"
     t.integer  "geo_position_x"
     t.integer  "geo_position_y"
-    t.string   "cmg_id",                        :default => "0"
-    t.boolean  "deactivated",                   :default => false
+    t.string   "cmg_id",                        default: "0"
+    t.boolean  "deactivated",                   default: false
     t.datetime "deactivated_at"
-    t.boolean  "contacts_editor",               :default => false
+    t.boolean  "contacts_editor",               default: false
     t.string   "district"
     t.string   "post_code"
     t.string   "postal_town"
     t.string   "house_identifier"
     t.string   "physical_delivery_office_name"
     t.string   "adm_department"
+    t.string   "feed_stream_type"
   end
 
-  add_index "users", ["manager_id"], :name => "index_users_on_manager_id"
-  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
+  add_index "users", ["manager_id"], name: "index_users_on_manager_id", using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
 end
