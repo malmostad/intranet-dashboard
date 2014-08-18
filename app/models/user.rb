@@ -148,7 +148,7 @@ class User < ActiveRecord::Base
   end
 
   def self.tags(query, limit = 50, offset = 0)
-    users = User.scoped
+    users = User.all
 
     # Match users tags
     %w(company department adm_department house_identifier physical_delivery_office_name title).each do |tag|
