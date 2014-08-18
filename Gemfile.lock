@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/rails/rails.git
-  revision: 999bed074e915216d97b4b1eef9e10df61cbd3b5
+  revision: 28c1a81f9a06c8bc268881771ffc1b678cf944a4
   branch: 4-1-stable
   specs:
     actionmailer (4.1.4)
@@ -211,7 +211,7 @@ GEM
       websocket-driver (>= 0.2.0)
     protected_attributes (1.0.8)
       activemodel (>= 4.0.1, < 5.0)
-    pry (0.10.0)
+    pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
@@ -295,7 +295,7 @@ GEM
     thread_safe (0.3.4)
     tilt (1.4.1)
     timers (1.1.0)
-    tzinfo (1.2.1)
+    tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.5.3)
       execjs (>= 0.3.0)
