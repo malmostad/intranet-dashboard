@@ -15,6 +15,6 @@ module DashboardHelper
   end
 
   def toggle_feed_stream_text
-    current_user.combined_feed_stream ? "Visa kategoriserat" : "Visa sammanslaget"
+    current_user.combined_feed_stream ? "Visas sammanslaget" : "Visas kategoriserat"
   end
 end

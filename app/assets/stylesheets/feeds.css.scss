@@ -1,3 +1,11 @@
+.feed-stream-toggle {
+  text-align: right;
+  display: block;
+  font-family: $sansSerif;
+  font-size: emize(15);
+  margin-bottom: .5em;
+}
+
 section.box.feeds {
   h1 {
     margin-bottom: 0;
@@ -80,7 +88,8 @@ section.box.feeds {
   }
 }
 
-section.box#feeds-news {
+section.box#feeds-news,
+section.box#combined {
   .box-content {
     li {
       img {
