@@ -27,7 +27,7 @@ describe "Feeds" do
     all("#feeds-feature .box-content li").count.should == 1
   end
 
-  it "should load more news feed entries", :js => true do
+  it "should load more news feed entries", js: true do
     before = all("#feeds-news .box-content li").count
     find("#feeds-news .box-content li.load-more input").value.should == "Visa fler"
     find("#feeds-news .box-content li.load-more input").click
@@ -35,6 +35,24 @@ describe "Feeds" do
 
     sleep 1
     before.should < all("#feeds-news .box-content li").count
+  end
+
+  it "should switch to combined news and back again", js: true do
+    first(".feed-stream-toggle a").click
+    page.should have_selector('h1', text: "Nyheter, diskussioner och mina egna flöden")
+    @user.reload.combined_feed_stream?.should == true
+    first(".feed-stream-toggle a").click
+    page.should have_selector('h1', text: "Mina Kominnyheter")
+    @user.reload.combined_feed_stream?.should == false
+  end
+
+  it "should lazy load more combined news feed entries", js: true do
+    first(".feed-stream-toggle a").click
+    before = all("#combined .box-content li").count
+    find("#combined li.load-more input").value.should == "Visa fler"
+    page.execute_script("window.scrollTo(0, 10000)")
+    find("#combined .box-content li.load-more input").value.should == "Hämtar fler..."
+    before.should < all("#combined .box-content li").count
   end
 
   it "administration should require and administrator" do
