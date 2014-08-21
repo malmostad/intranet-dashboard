@@ -106,7 +106,8 @@ class Feed < ActiveRecord::Base
     def http_options
       options = {
         timeout: 5,
-        compress: true
+        compress: true,
+        nosignal: true
       }
       options[:if_none_match] = etag if etag?
       options[:if_modified_since] = last_modified if last_modified?
