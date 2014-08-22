@@ -1,0 +1,41 @@
+%section.box.feeds
+  %h1.box-title Mitt nyhetsflöde
+  .box-instructions{ class: @combined_entries.present? || @news_entries.present? ? "" : "show"}
+    %p= raw "Denna box visar nyheter, blogg- och foruminlägg från Min förvaltning och Mitt arbetsfält, baserat på vad du valt i #{link_to "Min profil", edit_user_path(current_user)}."
+    %p Du kan dessutom lägga till fler nyheter, blogg- och foruminlägg genom att klicka på Anpassa
+
+  - if current_user.combined_feed_stream
+    = render "feeds_entries", entries: @combined_entries, category: 'combined', more_text: "Visa fler nyheter"
+  - else
+    %section
+      %h1 Nyheter
+      = render "feeds_entries", entries: @news_entries, category: 'news', more_text: "Visa fler nyheter"
+    %section
+      %h1 Diskussioner
+      = render "feeds_entries", entries: @dialog_entries, category: 'dialog', more_text: "Visa fler diskussioner"
+    %section
+      %h1 Egna flöden
+      = render "feeds_entries", entries: @my_own_entries, category: 'my_own', more_text: "Visa fler egna flöden"
+
+  .dropdown.box-menu.pull-right
+    %a#feeds-menu.dropdown-toggle.extended{ "role" => "button", "data-toggle" => "dropdown", "href" => "#", "title" => "Anpassa innehållet" }
+      %span.text Anpassa
+      %span.icon-caret-down.icon-large
+    %menu.dropdown-menu{ "aria-labelledby" => "feeds-menu" }
+      %li
+        %a{ href: users_update_feed_stream_type_path, "data-method" => :patch }
+          = "✓ " if current_user.combined_feed_stream?
+          = "Visa sammanslaget"
+      %li
+        %a{ href: users_update_feed_stream_type_path, "data-method" => :patch }
+          = "✓ " if !current_user.combined_feed_stream?
+          = "Visa kategoriserat"
+      %li.divider
+      %li= link_to "Hantera nyhetskällor...", user_select_feeds_path('news')
+      %li= link_to "Hantera diskussionskällor...", user_select_feeds_path('dialog')
+      %li= link_to "Hantera egna källor...", my_own_feeds_path
+      - if admin?
+        %li.divider
+        %li= link_to "Administrera...", feeds_path
+      %li.divider
+      %li.help= link_to "Hjälp...", "#"
