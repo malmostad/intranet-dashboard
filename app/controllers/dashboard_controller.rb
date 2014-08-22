@@ -31,9 +31,13 @@ class DashboardController < ApplicationController
     if @category == "combined"
       @entries_limit = COMBINED_FEED_ENTRIES_LIMIT
       @entries = FeedEntry.from_feeds(current_user.combined_feed_ids, { before: Time.at(params[:before].to_i), limit: COMBINED_FEED_ENTRIES_LIMIT } )
+      @more_text = "Visa fler"
     else
       @entries_limit = CATEGORY_FEED_ENTRIES_LIMIT
       @entries = feed_entries_from_category(@category, { before: Time.at(params[:before].to_i), limit: CATEGORY_FEED_ENTRIES_LIMIT } )
+      @more_text = "Visa fler nyheter" if @category == "news"
+      @more_text = "Visa fler diskussioner" if @category == "dialog"
+      @more_text = "Visa fler egna flöden" if @category == "my_own"
     end
 
     if @entries.present?
