@@ -1,1 +1,7 @@
-= render "feeds_entries", entries: @entries, category: @category, more_text: @more_text
+- if @entries.present?
+  = render "feeds_entries", entries: @entries, category: @category, more_text: @more_text
+- else
+  %li.load-more
+    .text
+      %p.summary Det finns inget mer i dessa flöden
+

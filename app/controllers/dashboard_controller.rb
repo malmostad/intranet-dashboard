@@ -39,12 +39,7 @@ class DashboardController < ApplicationController
       @more_text = "Visa fler diskussioner" if @category == "dialog"
       @more_text = "Visa fler egna flöden" if @category == "my_own"
     end
-
-    if @entries.present?
-      render :more_feed_entries, layout: false
-    else
-      render :no_more_feed_entries, layout: false
-    end
+    render :more_feed_entries, layout: false
   end
 
 private
