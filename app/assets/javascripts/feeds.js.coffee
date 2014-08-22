@@ -5,10 +5,13 @@ $ ->
     getMore $(@)
 
   # Lazy loading more news when combined news is displayed
-  if $('#combined').length
+  if $('section.combined').length
     currentlyLoading = false
     $(window).on 'DOMContentLoaded load resize scroll', () ->
-      if $('#combined')[0].getBoundingClientRect().bottom <= $(window).height() + 100 and not currentlyLoading
+      rect = $('section.combined')[0].getBoundingClientRect()
+      # Lazy load when rect.bottom is visible AND if feeds box hasn't a box to the right,
+      # i.e. only in one column layout
+      if $(window).width() - rect.right > 50 and rect.bottom <= $(window).height() + 100 and not currentlyLoading
         getMore $(".load-more input")
 
 
