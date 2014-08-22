@@ -5,7 +5,7 @@
     %p Du kan dessutom lägga till fler nyheter, blogg- och foruminlägg genom att klicka på Anpassa
 
   - if current_user.combined_feed_stream
-    = render "feeds_entries", entries: @combined_entries, category: 'combined', more_text: "Visa fler nyheter"
+    = render "feeds_entries", entries: @combined_entries, category: 'combined', more_text: "Visa fler"
   - else
     %section
       %h1 Nyheter
