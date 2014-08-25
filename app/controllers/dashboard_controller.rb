@@ -4,7 +4,7 @@
 class DashboardController < ApplicationController
   before_action :require_user
 
-  COMBINED_FEED_ENTRIES_LIMIT = 30
+  COMBINED_FEED_ENTRIES_LIMIT = 15
   CATEGORY_FEED_ENTRIES_LIMIT = 5
 
   def index
