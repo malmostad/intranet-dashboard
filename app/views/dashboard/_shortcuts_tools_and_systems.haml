@@ -13,6 +13,8 @@
     %menu.dropdown-menu{ "aria-labelledby" => "shortcuts-tools-menu" }
       %li= link_to "Hantera dessa genvägar...", user_select_shortcuts_path('tools_and_systems')
       %li= link_to "Återställ dessa genvägar", user_reset_shortcuts_path(:tools_and_systems), data: { confirm: 'Vill du återställa alla genvägar för Verkgyt & system?', method: :patch }
-      %li.help= link_to "Hjälp...", root_path
       - if admin?
+        %li.divider
         %li= link_to "Administrera...", shortcuts_path
+      %li.divider
+      %li.help= link_to "Hjälp...", root_path
