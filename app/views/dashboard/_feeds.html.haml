@@ -10,18 +10,22 @@
 
   - if current_user.combined_feed_stream
     %section.combined
-      = render "feeds_entries", entries: @combined_entries, category: 'combined', more_text: "Visa fler"
+      %ul.box-content
+        = render "feeds_entries", entries: @combined_entries, category: 'combined', more_text: "Visa fler"
   - elsif has_news?
     %section.news
       %h1 Nyheter
-      = render "feeds_entries", entries: @news_entries, category: 'news', more_text: "Visa fler nyheter"
+      %ul.box-content
+        = render "feeds_entries", entries: @news_entries, category: 'news', more_text: "Visa fler nyheter"
     %section.dialog
       %h1 Diskussioner
-      = render "feeds_entries", entries: @dialog_entries, category: 'dialog', more_text: "Visa fler diskussioner"
+      %ul.box-content
+        = render "feeds_entries", entries: @dialog_entries, category: 'dialog', more_text: "Visa fler diskussioner"
     %section.my_own
       %h1 Egna flöden
       - if @my_own_entries.present?
-        = render "feeds_entries", entries: @my_own_entries, category: 'my_own', more_text: "Visa fler egna flöden"
+        %ul.box-content
+          = render "feeds_entries", entries: @my_own_entries, category: 'my_own', more_text: "Visa fler egna flöden"
       - else
         = link_to "Lägg till källor", my_own_feeds_path, class: "btn btn-default btn-small"
 

@@ -1,20 +1,19 @@
-%ul.box-content
-  - entries.each do |entry|
-    %li
-      %a{ href: entry.url, rel: "external" }
-        - if entry.image.present?
-          = image_tag(entry.image, alt: '')
-        .text
-          %h2= sanitize(entry.title)
-          %p.summary{ class: category }= summary(entry.summary)
-          %p.meta
-            = "#{distance_of_time_in_words_to_now(entry.published).humanize()} sen från "
-            = entry.feed.title
-            - if entry.count_comments.to_i > 0
-              - c = entry.count_comments.to_i == 1 ? "kommentar" : "kommentarer"
-              %span.comments
-                = " #{entry.count_comments} #{c}"
-                %span.icon-comment-alt
-  - if entries.size == @entries_limit
-    %li.load-more
-      %input.btn.btn-small{ type: "button", value: more_text, "data-path" => more_feed_entries_path(category, entries.last.published.to_i)}
+- entries.each do |entry|
+  %li
+    %a{ href: entry.url, rel: "external" }
+      - if entry.image.present?
+        = image_tag(entry.image, alt: '')
+      .text
+        %h2= sanitize(entry.title)
+        %p.summary{ class: category }= summary(entry.summary)
+        %p.meta
+          = "#{distance_of_time_in_words_to_now(entry.published).humanize()} sen från "
+          = entry.feed.title
+          - if entry.count_comments.to_i > 0
+            - c = entry.count_comments.to_i == 1 ? "kommentar" : "kommentarer"
+            %span.comments
+              = " #{entry.count_comments} #{c}"
+              %span.icon-comment-alt
+- if entries.size == @entries_limit
+  %li.load-more
+    %input.btn.btn-small{ type: "button", value: more_text, "data-path" => more_feed_entries_path(category, entries.last.published.to_i)}
