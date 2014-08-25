@@ -10,13 +10,13 @@
     %section.combined
       = render "feeds_entries", entries: @combined_entries, category: 'combined', more_text: "Visa fler"
   - else
-    %section
+    %section.news
       %h1 Nyheter
       = render "feeds_entries", entries: @news_entries, category: 'news', more_text: "Visa fler nyheter"
-    %section
+    %section.dialog
       %h1 Diskussioner
       = render "feeds_entries", entries: @dialog_entries, category: 'dialog', more_text: "Visa fler diskussioner"
-    %section
+    %section.my_own
       %h1 Egna flöden
       = render "feeds_entries", entries: @my_own_entries, category: 'my_own', more_text: "Visa fler egna flöden"
 
