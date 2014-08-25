@@ -22,7 +22,7 @@
       %ul.box-content
         = render "feeds_entries", entries: @dialog_entries, category: 'dialog', more_text: "Visa fler diskussioner"
     %section.my_own
-      %h1 Egna flöden
+      %h1 Egna källor
       - if @my_own_entries.present?
         %ul.box-content
           = render "feeds_entries", entries: @my_own_entries, category: 'my_own', more_text: "Visa fler egna flöden"
