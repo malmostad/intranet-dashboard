@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140817132131) do
+ActiveRecord::Schema.define(version: 20140825080209) do
 
   create_table "activities", force: true do |t|
     t.string   "name"
@@ -273,6 +273,7 @@ ActiveRecord::Schema.define(version: 20140817132131) do
     t.string   "physical_delivery_office_name"
     t.string   "adm_department"
     t.boolean  "combined_feed_stream",          default: false
+    t.string   "linkedin"
   end
 
   add_index "users", ["manager_id"], name: "index_users_on_manager_id", using: :btree

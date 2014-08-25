@@ -6,7 +6,7 @@ Bundler.require(:default, Rails.env)
 
 module Dashboard
   class Application < Rails::Application
-    config.active_record.whitelist_attributes = false # TODO: remove after upgrade to 4.1
+    config.active_record.whitelist_attributes = true
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

@@ -78,7 +78,14 @@
           = "Twitter:"
           - if @user.twitter.present?
             = link_to "@#{@user.twitter}", "https://twitter.com/#{@user.twitter}"
+
         %p.skype= "Skype: #{@user.skype}"
+
+        %p.linkedin
+          = "LinkedIn:"
+          - if @user.linkedin.present?
+            = link_to @user.linkedin, @user.linkedin
+
         %p.homepage
           = "Privat hemsida:"
           - if @user.homepage.present?

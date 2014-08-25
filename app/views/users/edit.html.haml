@@ -69,6 +69,8 @@
         %span.add-on @
         = f.input_field :twitter
 
+      = f.input :linkedin, input_html: { class: 'input-wide' }
+
       = f.input :homepage, input_html: { class: 'input-wide' }
 
       - if admin?

@@ -1,6 +1,5 @@
 source 'http://rubygems.org'
 
-# TODO: Remove after switching to strong parameters
 gem 'protected_attributes'
 
 gem 'rails', '4.1.5' # github: 'rails/rails', branch: '4-1-stable' # https://github.com/rails/rails/pull/15675 still affecting 4.1.4

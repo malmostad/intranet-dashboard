@@ -34,6 +34,7 @@ sv-SE:
         homepage: Hemsida
         admin: Administratör
         contacts_editor: Kontaktboksredaktör
+        linkedin: LinkedIn
       api_app:
         name: Namn
         contact: Kontakt
@@ -58,6 +59,7 @@ sv-SE:
         visiting_hours: Besökstider
 
     placeholders:
+      user:
       group_contact:
         visitors_address_zip_code: ange besöksadress först
         visitors_address_postal_town: ange besöksadress först
@@ -83,4 +85,5 @@ sv-SE:
         private_bio: "Om du vill kan du skriva en personlig presentation om dig. <em>Observera:</em> yrkespresentationen om dig skriver du in i fältet ”Om mig” högre upp på sidan."
         homepage: "Om du vill kan du ange vilken privat hemsida du har."
         twitter: "Om du vill kan du ange vilken Twitteradress du har."
+        linkedin: "Om du har en LinkedIn-profil kan du ange adressen till din profilsida."
         search_address: "Sök upp och välj en gatuadress ovan för att ändra besöksadressen nedan."
