@@ -1,15 +1,17 @@
 %section.box.feeds
   %h1.box-title Mitt nyhetsflöde
-  .box-instructions{ class: @combined_entries.present? || @news_entries.present? ? "" : "show"}
+  .box-instructions{ class: has_news? ? "" : "show"}
     %p= raw "Denna box visar nyheter, blogg- och foruminlägg från Min förvaltning och Mitt arbetsfält, baserat på vad du valt i #{link_to "Min profil", edit_user_path(current_user)}."
     %p
       Du kan dessutom lägga till fler källor under
       %em Anpassa-menyn.
+    - unless has_news?
+      = link_to "Välj profil", edit_user_path(current_user), class: "btn btn-default"
 
   - if current_user.combined_feed_stream
     %section.combined
       = render "feeds_entries", entries: @combined_entries, category: 'combined', more_text: "Visa fler"
-  - else
+  - elsif has_news?
     %section.news
       %h1 Nyheter
       = render "feeds_entries", entries: @news_entries, category: 'news', more_text: "Visa fler nyheter"
@@ -18,7 +20,11 @@
       = render "feeds_entries", entries: @dialog_entries, category: 'dialog', more_text: "Visa fler diskussioner"
     %section.my_own
       %h1 Egna flöden
-      = render "feeds_entries", entries: @my_own_entries, category: 'my_own', more_text: "Visa fler egna flöden"
+      - if @my_own_entries.present?
+        = render "feeds_entries", entries: @my_own_entries, category: 'my_own', more_text: "Visa fler egna flöden"
+      - else
+        = link_to "Lägg till källor", my_own_feeds_path, class: "btn btn-default btn-small"
+
 
   .dropdown.box-menu.pull-right
     %a#feeds-menu.dropdown-toggle.extended{ "role" => "button", "data-toggle" => "dropdown", "href" => "#", "title" => "Anpassa innehållet" }

@@ -88,6 +88,13 @@ section.box.feeds {
       }
     }
   }
+  .box-instructions a.btn {
+    margin: 1em 0;
+  }
+  section.my_own a.btn {
+    margin: 1em 1em;
+    display: inline-block;
+  }
 }
 
 section.box#feeds-news,

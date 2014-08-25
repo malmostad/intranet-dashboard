@@ -10,4 +10,8 @@ module UsersHelper
   def load_more_query
     { page: params[:page].to_i + 1 }.merge(params.except(:controller, :action, :page))
   end
+
+  def has_news?
+    @combined_entries.present? || @news_entries.present?
+  end
 end
