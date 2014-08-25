@@ -7,13 +7,12 @@
     - @tools_and_systems.each do |shortcut|
       %li= link_to shortcut.name, shortcut.url
 
-  %a.toggle-instructions{ "role" => "button", href: "#",  title: "Visa instruktioner"} ?
-
   .dropdown.box-menu.pull-right
     %a#shortcuts-tools-menu.dropdown-toggle{ "role" => "button", "data-toggle" => "dropdown", "href" => "#", "title" => "Anpassa denna box" }
       %span.icon-caret-down.icon-large
     %menu.dropdown-menu{ "aria-labelledby" => "shortcuts-tools-menu" }
       %li= link_to "Hantera dessa genvägar...", user_select_shortcuts_path('tools_and_systems')
       %li= link_to "Återställ dessa genvägar", user_reset_shortcuts_path(:tools_and_systems), data: { confirm: 'Vill du återställa alla genvägar för Verkgyt & system?', method: :patch }
+      %li.help= link_to "Hjälp...", root_path
       - if admin?
         %li= link_to "Administrera...", shortcuts_path

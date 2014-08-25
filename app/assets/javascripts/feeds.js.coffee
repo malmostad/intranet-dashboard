@@ -30,10 +30,3 @@ $ ->
       complete: ->
         currentlyLoading = false
         $trigger.val("Visa fler").removeClass('disabled')
-
-
-  $toggleInstructions = $('.box-menu .help')
-  if $toggleInstructions.length
-    $toggleInstructions.click (event) ->
-      event.preventDefault()
-      $(@).closest('.box').find('.box-instructions').slideToggle(100)
