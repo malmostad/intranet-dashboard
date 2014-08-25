@@ -12,15 +12,15 @@ describe "Feeds" do
   end
 
   it "should have news feed entries box" do
-    page.should have_selector('h1', text: "Mina Kominnyheter")
+    page.should have_selector('h1', text: "Nyheter")
   end
 
   it "should have news feed entries" do
-    all("#feeds-news .box-content li").count.should > 1
+    all("section.news .box-content li").count.should > 1
   end
 
   it "should have dialog feed entries" do
-    all("#feeds-dialog .box-content li").count.should > 1
+    all("section.dialog .box-content li").count.should > 1
   end
 
   it "should have one feature feed entry" do
@@ -29,30 +29,31 @@ describe "Feeds" do
 
   it "should load more news feed entries", js: true do
     before = all("#feeds-news .box-content li").count
-    find("#feeds-news .box-content li.load-more input").value.should == "Visa fler"
-    find("#feeds-news .box-content li.load-more input").click
-    find("#feeds-news .box-content li.load-more input").value.should == "Hämtar fler..."
-
-    sleep 1
-    before.should < all("#feeds-news .box-content li").count
+    find("section.news .box-content li.load-more input").value.should == "Visa fler nyheter"
+    find("section.news .box-content li.load-more input").click
+    find("section.news .box-content li.load-more input").value.should == "Hämtar fler..."
+    before.should < all("section.news .box-content li").count
   end
 
   it "should switch to combined news and back again", js: true do
-    first(".feed-stream-toggle a").click
-    page.should have_selector('h1', text: "Nyheter, diskussioner och mina egna flöden")
+    first(".box.feeds .dropdown").click
+    click_link("Visa sammanslaget")
+    page.should_not have_selector('h1', text: "Nyheter")
     @user.reload.combined_feed_stream?.should == true
-    first(".feed-stream-toggle a").click
-    page.should have_selector('h1', text: "Mina Kominnyheter")
+    first(".box.feeds .dropdown").click
+    click_link("Visa kategoriserat")
+    page.should have_selector('h1', text: "Nyheter")
     @user.reload.combined_feed_stream?.should == false
   end
 
   it "should lazy load more combined news feed entries", js: true do
-    first(".feed-stream-toggle a").click
-    before = all("#combined .box-content li").count
-    find("#combined li.load-more input").value.should == "Visa fler"
+    first(".box.feeds .dropdown").click
+    click_link("Visa sammanslaget")
+    before = all(".combined .box-content li").count
+    find("li.load-more input").value.should == "Visa fler"
     page.execute_script("window.scrollTo(0, 10000)")
-    find("#combined .box-content li.load-more input").value.should == "Hämtar fler..."
-    before.should < all("#combined .box-content li").count
+    find(".box-content li.load-more input").value.should == "Hämtar fler..."
+    before.should < all(".combined .box-content li").count
   end
 
   it "administration should require and administrator" do

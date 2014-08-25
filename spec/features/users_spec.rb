@@ -40,6 +40,7 @@ describe "Users" do
     fill_in :user_skill_list, with: "fire fighting, PowerPoint"
     fill_in :user_language_list, with: "Swahili, Italienska"
     fill_in :user_twitter, with: "fox_barx"
+    fill_in :user_linkedin, with: "https://www.linkedin.com/in/fox_barx"
     fill_in :user_private_bio, with: "Lipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt."
     click_button "Spara"
     page.should have_selector(".flash.notice", text: "uppdaterades")

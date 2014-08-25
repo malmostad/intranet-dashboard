@@ -35,6 +35,11 @@ describe User do
     manager.subordinates.should be_present
   end
 
+  it "should have a protocol for the LinkeIn URL" do
+    user.update(linkedin: "www.linkedin.com/in/fox")
+    user.linkedin.should eq("https://www.linkedin.com/in/fox")
+  end
+
   it "should get rid of her manager" do
     manager = create(:user)
     user.update_attribute(:manager, manager)
