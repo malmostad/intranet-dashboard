@@ -3,6 +3,7 @@ require 'open-uri'
 
 class SiteSearchController < ApplicationController
   before_action { add_body_class "site-search" }
+  protect_from_forgery except: :autocomplete
 
   def index
     @terms = params[:q]

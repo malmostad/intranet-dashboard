@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :require_user, except: [:suggest]
   before_action :require_admin_or_myself, only: [:edit, :update]
   before_action :require_admin, only: :destroy
+  protect_from_forgery except: :suggest
 
   # List users matching a tag (company, department, skills, languages etc.)
   def tags
