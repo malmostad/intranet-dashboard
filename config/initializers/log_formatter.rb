@@ -1,5 +1,5 @@
-class Logger::SimpleFormatter
+class ActiveSupport::Logger::SimpleFormatter
   def call(severity, time, progname, msg)
-    "#{Time.now} #{severity} #{msg}\n"
+    "#{time.strftime("%Y-%m-%d %H:%M:%S.") << time.usec.to_s[0..2].rjust(3)} [#{severity}] #{msg}\n"
   end
 end

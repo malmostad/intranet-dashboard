@@ -40,6 +40,8 @@ module Dashboard
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
+    config.log_tags = [:remote_ip, :user_agent]
+
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     config.assets.precompile += %w( legacy/ie7.css legacy/ie9.css legacy/ancient_browser_warning.js )
