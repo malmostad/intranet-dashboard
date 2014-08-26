@@ -44,6 +44,11 @@ module Dashboard
     config.assets.version = '1.0'
     config.assets.precompile += %w( legacy/ie7.css legacy/ie9.css legacy/ancient_browser_warning.js )
 
+    config.action_dispatch.default_headers = {
+      'X-UA-Compatible' => 'IE=edge',
+      'X-XSS-Protection' => '0'
+    }
+
     config.generators do |g|
       g.template_engine :haml
       g.test_framework :rspec
