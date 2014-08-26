@@ -38,11 +38,11 @@ describe "Feeds" do
   it "should switch to combined news and back again", js: true do
     first(".box.feeds .dropdown").click
     click_link("Visa sammanslaget")
-    page.should_not have_selector('h1', text: "Nyheter")
+    page.should_not have_selector('section.news h1', text: "Nyheter")
     @user.reload.combined_feed_stream?.should == true
     first(".box.feeds .dropdown").click
     click_link("Visa kategoriserat")
-    page.should have_selector('h1', text: "Nyheter")
+    page.should have_selector('section.news h1', text: "Nyheter")
     @user.reload.combined_feed_stream?.should == false
   end
 
