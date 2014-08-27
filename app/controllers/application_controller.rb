@@ -158,6 +158,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html { render template: "errors/error_404", status: 404 }
       format.json { render json: { response: "Not Found", status: 404 }, status: 404 }
+      format.js   { render nothing: true, status: 404 }
       format.all  { render nothing: true, status: 404 }
     end
   end
@@ -168,6 +169,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html { render template: "errors/error_500", status: 500}
       format.json { render json: { response: "Server Error", status: 500 }, status: 500 }
+      format.js   { render nothing: true, status: 500 }
       format.all  { render nothing: true, status: 500 }
     end
   end
