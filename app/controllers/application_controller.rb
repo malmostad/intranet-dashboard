@@ -1,7 +1,18 @@
 # -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  protect_from_forgery unless: :js_not_found
   before_action :init_body_class, :mailer_set_url_options
+
+  # Don't log javascript 404:s as CORS errors
+  def js_not_found
+    if params["format"] == "js" && params["not_found"].present?
+      log_response_not_found
+      render js: "", status: 406
+      return true
+    else
+      return false
+    end
+  end
 
   # Set a permanent cookie w/data from the user profile. Used by the masthead in other webapps
   def set_profile_cookie
