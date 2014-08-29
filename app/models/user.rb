@@ -111,11 +111,12 @@ class User < ActiveRecord::Base
     end.compact
   end
 
-  # Aktivity names as tokens
+  # Activity names as tokens
   def activity_list
     activities.map(&:name).join(", ")
   end
 
+  # Assign activity names from tokens
   def activity_list=(names)
     self.activities = names.split(",").map do |n|
       s = Activity.where(name: n.strip).first_or_create
@@ -127,6 +128,11 @@ class User < ActiveRecord::Base
         nil
       end
     end.compact
+  end
+
+  # Add activity by name
+  def add_activity(name)
+    self.activity_list = "#{activity_list}, #{name}"
   end
 
   # Get an array of the users feed_ids + feed_ids from the users roles

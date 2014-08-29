@@ -1,23 +1,30 @@
-- if !@users.blank?
-  %ul.results
-    - @users.each do |user|
-      %li.vcard
-        %div.avatar= link_to image_tag(user.avatar.url(:medium_quadrat), alt: "Profilbild"), user_path(user.username)
-        .info
-          %h2.fn= link_to "#{user.first_name} #{user.last_name}", user_path(user.username)
-          %p
-            - if user.company.present?
-              %span.org= link_to "#{user.company_short}", users_tags_path(company: user.company)
-            - if user.department.present?
-              %span.org= link_to "#{user.department}", users_tags_path(department: user.department)
-          %p
-            %span.phone= user.phone
-            - if user.cell_phone.present?
-              %span.phone= user.cell_phone
-            %span.email= user.email
+= form_tag users_update_activities_multiple_path, method: :patch do
+  - if !@users.blank?
+    %ul.results
+      - @users.each do |user|
+        %li.vcard
+          %div.batch= check_box_tag "user_ids[]", user.id, nil, { id: nil }
+          %div.avatar= link_to image_tag(user.avatar.url(:medium_quadrat), alt: "Profilbild"), user_path(user.username)
+          .info
+            %h2.fn= link_to "#{user.first_name} #{user.last_name}", user_path(user.username)
+            %p
+              - if user.company.present?
+                %span.org= link_to "#{user.company_short}", users_tags_path(company: user.company)
+              - if user.department.present?
+                %span.org= link_to "#{user.department}", users_tags_path(department: user.department)
+            %p
+              %span.phone= user.phone
+              - if user.cell_phone.present?
+                %span.phone= user.cell_phone
+              %span.email= user.email
 
-          %p.note= user.professional_bio
+            %p.note= user.professional_bio
 
-    - if @has_more
-      %li.load-more
-        %input.btn.btn-small{ type: "button", value: "Visa fler", "data-path" => @data_path }
+      - if @has_more
+        %li.load-more
+          %input.btn.btn-small{ type: "button", value: "Visa fler", "data-path" => @data_path }
+
+  .control-group
+    .controls
+      = select_tag :activity, options_for_select([["Aktivitet:", ""], ["Kommunikationsavdelningen"], ["Kansli"]])
+      = submit_tag "Tillämpa", class: "btn btn-primary"

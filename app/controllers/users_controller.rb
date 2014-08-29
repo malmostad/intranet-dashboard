@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :require_user, except: [:suggest]
   before_action :require_admin_or_myself, only: [:edit, :update]
   before_action :require_admin, only: :destroy
+  before_action :require_contacts_editor, only: :update_activities_multiple
   protect_from_forgery except: :suggest
 
   # List users matching a tag (company, department, skills, languages etc.)
@@ -134,6 +135,11 @@ class UsersController < ApplicationController
     else
       render action: 'edit'
     end
+  end
+
+  def update_activities_multiple
+    User.where(id: params[:user_ids]).each { |user| user.add_activity(params[:activity]) }
+    redirect_to users_tags_path(activity: params[:activity]), notice: "Användarna uppdaterades"
   end
 
   def destroy
