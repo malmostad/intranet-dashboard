@@ -139,7 +139,7 @@ class UsersController < ApplicationController
 
   def update_activities_multiple
     User.where(id: params[:user_ids]).each { |user| user.add_activity(params[:activity]) }
-    redirect_to users_tags_path(activity: params[:activity]), notice: "Användarna uppdaterades"
+    redirect_to users_tags_path(activity: params[:activity]), notice: "Medarbetarna tilldelades aktiviteten #{params[:activity]}"
   end
 
   def destroy
