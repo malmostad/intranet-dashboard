@@ -118,3 +118,19 @@ $ ->
     $address.keydown (event) ->
       if event.which is 13
         event.preventDefault()
+
+  # Batch assign an activity/project to a list of users in
+  $batchActivity = $('#batch-activity')
+  $batchActivity.autocomplete
+    source: (request, response) ->
+      $.ajax
+        url: $batchActivity.attr("data-path")
+        dataType: "json"
+        data:
+          q: request.term
+          items: 10
+        success: (data) ->
+          response $.map data, (item) ->
+            value: item.name
+
+    minLength: 2
