@@ -122,6 +122,8 @@ $ ->
   # Batch assign an activity/project to a list of users in
   $batchActivity = $('#batch-activity')
   $batchActivity.autocomplete
+    position:
+      collision: "flip"
     source: (request, response) ->
       $.ajax
         url: $batchActivity.attr("data-path")
