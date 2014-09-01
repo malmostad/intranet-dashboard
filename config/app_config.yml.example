@@ -1,5 +1,4 @@
 defaults: &defaults
-  secret_token: "FILL_IN" # rake secret
   secret_key_base: "FILL_IN" # rake secret
   ldap:
     enabled: true
