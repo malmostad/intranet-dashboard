@@ -11,6 +11,7 @@ Dashboard::Application.configure do
 
   config.consider_all_requests_local = true
   config.log_level = :debug
+  config.log_tags = false
 #  config.colorize_logging = false
 
   config.active_support.deprecation = :log

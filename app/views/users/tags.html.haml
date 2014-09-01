@@ -9,13 +9,13 @@
 
   - if !@users.blank?
     = form_tag users_update_activities_multiple_path, method: :patch do
-      - if contacts_editor?
+      - if @batch_edit
         .batch-assign.checkbox
           %label
             %input#toggle-users{ type: "checkbox" }
             = "Markera alla/ingen"
-      = render partial: "search_results", locals: { data_path: users_tags_path(load_more_query) }
-      - if contacts_editor?
+      = render "search_results"
+      - if @batch_edit
         .batch-assign
           .control-group
             .input-append

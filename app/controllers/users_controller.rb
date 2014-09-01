@@ -17,6 +17,8 @@ class UsersController < ApplicationController
         @users = results[:users]
         @total = results[:total]
         @has_more = @total.present? ? (@offset + @limit < @total) : false
+        @batch_edit = contacts_editor?
+        @more_request = users_tags_path(load_more_query)
 
         if request.xhr?
           render :_search_results, layout: false
@@ -36,6 +38,8 @@ class UsersController < ApplicationController
 
     @limit = 50
     @offset = params[:page].to_i * @limit
+    @batch_edit = false
+    @more_request = users_search_path(load_more_query)
 
     response = User.fuzzy_search(params[:q], from: @offset, size: @limit)
     if response
@@ -242,6 +246,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def load_more_query
+    { page: params[:page].to_i + 1 }.merge(params.except(:controller, :action, :page))
+  end
 
   # Clear the users key/value ttl cache for feed entries
   def clear_feed_entries_cache(category)

@@ -1,8 +1,8 @@
 - if !@users.blank?
-  %ul.results{ class: contacts_editor? ? "batch" : "" }
+  %ul.results{ class: @batch_edit ? "batch" : "" }
     - @users.each do |user|
       %li.vcard
-        - if contacts_editor?
+        - if @batch_edit
           .batch-check= check_box_tag "user_ids[]", user.id, nil, { id: nil }
         .avatar
           = link_to image_tag(user.avatar.url(:medium_quadrat), alt: "Profilbild"), user_path(user.username)
@@ -23,5 +23,4 @@
 
     - if @has_more
       %li.load-more
-        %input.btn.btn-small{ type: "button", value: "Visa fler", "data-path" => @data_path }
-
+        %input.btn.btn-small{ type: "button", value: "Visa fler", "data-path" => @more_request }
