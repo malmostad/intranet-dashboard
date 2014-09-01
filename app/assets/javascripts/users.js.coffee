@@ -134,3 +134,8 @@ $ ->
             value: item.name
 
     minLength: 2
+
+  # Check/uncheck all
+  $toggleUsers = $("#toggle-users")
+  if $toggleUsers.length
+    checkcheck $toggleUsers, $("ul.results")

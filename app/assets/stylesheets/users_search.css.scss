@@ -58,6 +58,34 @@ section.box.index.users {
       margin: 0;
     }
   }
+  ul.results.batch li {
+    .batch-check {
+      @include columns(.7);
+      @media (max-width: 32em) {
+        @include columns(.7);
+      }
+      margin: -.3em 0 0;
+      input {
+        margin: 0;
+      }
+    }
+    .avatar {
+      @include columns(2);
+    }
+    .info {
+      @include columns(9, true);
+    }
+  }
+  .batch-assign {
+    margin: .7em;
+  }
+  .batch-assign.checkbox {
+    margin-top: 1em;
+    label {
+      display: block;
+      margin-bottom: 1em;
+    }
+  }
 }
 
 // Search box for users
