@@ -1,11 +1,11 @@
-- title "Sök medarbetare"
+- title "Medarbetare"
 %section.box.index.users
   %h1.box-title= h1
   .box-content.body-copy
     %h1= params.except(:controller, :action).map {|k,v| v}.join(", ")
 
     - if @total.present?
-      %div= "#{number_to_words(@total).titlecase} medarbetare matchade din sökning"
+      %div= "#{number_to_words(@total).titlecase} medarbetare matchade etiketten"
 
   - if !@users.blank?
     = form_tag users_update_activities_multiple_path, method: :patch do
