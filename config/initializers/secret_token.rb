@@ -4,5 +4,5 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Dashboard::Application.config.secret_token = APP_CONFIG["secret_token"] # TODO: remove after upgrade to Rails 4
+Dashboard::Application.config.secret_token = APP_CONFIG["secret_token"]
 Dashboard::Application.config.secret_key_base = APP_CONFIG["secret_key_base"]

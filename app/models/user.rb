@@ -137,7 +137,6 @@ class User < ActiveRecord::Base
 
   # Get an array of the users feed_ids + feed_ids from the users roles
   # `category` is optional
-  # TODO: cache @user/category feed_ids for 10 min and touch @user on Role and Feed edits
   def combined_feed_ids(category = nil)
     if category.present?
       user_selected = feeds.where(category: category).pluck(:id)
