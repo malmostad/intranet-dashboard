@@ -11,6 +11,8 @@ class FeedEntry < ActiveRecord::Base
     Feedjira::Feed.add_common_feed_entry_element(element[0], element[1])
   end
 
+  validates :published, presence: { message: "Nyheterna i flödet har inga datum" }
+
   before_save do
     # Don't save urls for non-ssl media if not allowed in config
     if !APP_CONFIG["allow_non_ssl_media"] && image? && image.match(%q(^http://))
