@@ -3,9 +3,20 @@
   .box-instructions{ class: @tools_and_systems.present? ? "" : "show"}
     %p= raw "Denna box visar verktyg & system baserat på vad du valt för förvaltning och arbetsfält i #{link_to "Min profil", edit_user_path(current_user)}."
     %p Du kan dessutom lägga till fler verktyg & system genom att klicka på pilen uppe till höger i denna box.
+
+  - if @maintenance_news.present?
+    %section.maintenance
+      %h1 Driftsmeddelanden
+      %ul.box-content
+        - @maintenance_news[:entries].each do |entries|
+          %li= link_to entries.title, entries.url
+        %li= link_to "Fler driftsmeddelanden", @maintenance_news[:first_feed_url]
+
   %ul.box-content
-    - @tools_and_systems.each do |shortcut|
-      %li= link_to shortcut.name, shortcut.url
+    %section.my
+      %h1 Mina verktyg & system
+      - @tools_and_systems.each do |shortcut|
+        %li= link_to shortcut.name, shortcut.url
 
   .dropdown.box-menu.pull-right
     %a#shortcuts-tools-menu.dropdown-toggle{ "role" => "button", "data-toggle" => "dropdown", "href" => "#", "title" => "Anpassa denna box" }

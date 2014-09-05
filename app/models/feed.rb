@@ -9,6 +9,7 @@ class Feed < ActiveRecord::Base
     "news" => "nyheter",
     "dialog" => "diskussioner",
     "feature" => "tema",
+    "maintenance_warnings" => "driftsmeddelanden",
     "my_own" => "användare"
   }
 

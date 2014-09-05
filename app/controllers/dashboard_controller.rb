@@ -6,6 +6,7 @@ class DashboardController < ApplicationController
 
   COMBINED_FEED_ENTRIES_LIMIT = 15
   CATEGORY_FEED_ENTRIES_LIMIT = 5
+  MAINTENANCE_FEED_ENTRIES_LIMIT = 5
 
   def index
     if current_user.combined_feed_stream
@@ -18,10 +19,11 @@ class DashboardController < ApplicationController
       @my_own_entries    = feed_entries_from_category("my_own", limit: @entries_limit)
     end
 
-    @feature           = featured_news_entry
-    @tools_and_systems = shortcuts_from_category("tools_and_systems")
-    @i_want            = shortcuts_from_category("i_want")
-    @colleagues        = current_user.colleagues.order("status_message_updated_at desc")
+    @feature             = featured_news_entry
+    @maintenance_news    = maintenance_news
+    @tools_and_systems   = shortcuts_from_category("tools_and_systems")
+    @i_want              = shortcuts_from_category("i_want")
+    @colleagues          = current_user.colleagues.order("status_message_updated_at desc")
   end
 
   # Load more feed entries in requested category
@@ -61,6 +63,17 @@ private
       if feed.present?
         { entry: feed.feed_entries.order("published desc").first,
           feed_url: feed.feed_url.gsub(/\/feed\/*$/, "") }
+      end
+    end
+  end
+
+  def maintenance_news
+    Rails.cache.fetch("maintenance-entries", expires_in: 2.minute) do
+      feeds = Feed.where(category: "maintenance_warnings")
+      feed_entries = FeedEntry.from_feeds(feeds, limit: MAINTENANCE_FEED_ENTRIES_LIMIT)
+      if feeds.present? && feed_entries.present?
+        { entries: feed_entries,
+          first_feed_url: feeds.first.feed_url.gsub(/\/feed\/*$/, "") }
       end
     end
   end
