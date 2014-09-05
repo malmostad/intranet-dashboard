@@ -1,11 +1,23 @@
 section.box#shortcuts-tools,
 section.box#shortcuts-i-want {
   .box-content {
-    li {
-      margin-bottom: .2em;
+    li a {
+      margin: 0;
+      padding: .3em emize(11, 13);
       font-size: emize(13);
-      line-height: emize(21, 13);
+      line-height: 1.35;
       font-family: $sansSerif;
+    }
+    li:last-child a {
+      border-bottom-width: 0;
+    }
+  }
+  .maintenance .box-content {
+    li:last-child a {
+      border-bottom: transparent solid 1px;
+      &:hover {
+        border-bottom: $border;
+      }
     }
   }
 }
