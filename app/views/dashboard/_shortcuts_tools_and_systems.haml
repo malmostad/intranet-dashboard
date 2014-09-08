@@ -10,7 +10,7 @@
       %ul.box-content
         - @maintenance_news[:entries].each do |entries|
           %li= link_to entries.title, entries.url
-        %li= link_to "Fler driftsmeddelanden", @maintenance_news[:first_feed_url]
+        %li= link_to "Alla driftsmeddelanden", @maintenance_news[:first_feed_url]
 
   %ul.box-content
     %section.my
