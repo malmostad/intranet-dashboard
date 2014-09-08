@@ -66,20 +66,9 @@
     h1.box-title {
       margin-bottom: 0;
     }
-    .box-content {
-      margin: 0;
-      li {
-        margin: 0;
-        a {
-          display: block;
-          margin: 0;
-          padding: .7em;
-          border-bottom: 1px $borderColor solid;
-          &:focus, &:hover, &:active {
-            background-color: $backgroundLight;
-          }
-        }
-      }
+    ul li a {
+      padding-top: .5em;
+      padding-bottom: .5em;
     }
   }
 
