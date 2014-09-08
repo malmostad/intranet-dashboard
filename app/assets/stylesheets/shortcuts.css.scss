@@ -1,5 +1,6 @@
 section.box#shortcuts-tools,
 section.box#shortcuts-i-want {
+  padding-bottom: .4em;
   section h1 {
     font-size: emize(13);
     font-family: $sansSerif;
@@ -31,12 +32,6 @@ section.box#shortcuts-i-want {
   }
 }
 
-section.box#shortcuts-tools .my,
-section.box#shortcuts-i-want {
-  li:last-child a {
-    border-color: transparent;
-  }
-}
 section.box#shortcuts-i-want .box-title {
   margin-bottom: .4em;
 }
