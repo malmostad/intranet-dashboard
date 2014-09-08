@@ -1,5 +1,6 @@
-%section.box.feeds#shortcuts-tools
+%section.box#shortcuts-tools
   %h1.box-title Verktyg & system
+
   .box-instructions{ class: @tools_and_systems.present? ? "" : "show"}
     %p= raw "Denna box visar verktyg & system baserat på vad du valt för förvaltning och arbetsfält i #{link_to "Min profil", edit_user_path(current_user)}."
     %p Du kan dessutom lägga till fler verktyg & system genom att klicka på pilen uppe till höger i denna box.
@@ -7,14 +8,14 @@
   - if @maintenance_news.present?
     %section.maintenance
       %h1 Driftsmeddelanden
-      %ul.box-content
+      %ul
         - @maintenance_news[:entries].each do |entries|
           %li= link_to entries.title, entries.url
         %li= link_to "Alla driftsmeddelanden", @maintenance_news[:first_feed_url]
 
-  %ul.box-content
-    %section.my
-      %h1 Mina verktyg & system
+  %section.my
+    %h1 Mina verktyg & system
+    %ul
       - @tools_and_systems.each do |shortcut|
         %li= link_to shortcut.name, shortcut.url
 
