@@ -18,6 +18,8 @@
     %ul
       - @tools_and_systems.each do |shortcut|
         %li= link_to shortcut.name, shortcut.url
+    - if @tools_and_systems.blank?
+      = link_to "Lägg till", user_select_shortcuts_path('tools_and_systems'), class: "btn btn-default btn-small add"
 
   .dropdown.box-menu.pull-right
     %a#shortcuts-tools-menu.dropdown-toggle{ "role" => "button", "data-toggle" => "dropdown", "href" => "#", "title" => "Anpassa denna box" }
