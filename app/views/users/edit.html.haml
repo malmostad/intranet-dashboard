@@ -62,7 +62,7 @@
       = f.input :activity_list,
         input_html: { "data-path" => activities_suggest_path, "data-load" => @user.activities.map{ |l| { id: l.name, name: l.name }}.to_json, class: "input-wide" }
 
-      %h2.form-group-title Personsligt
+      %h2.form-group-title Personligt
       = f.input :private_bio, input_html: { class: 'input-wide', rows: 7 }
 
       = f.input :twitter, wrapper: :prepend do
