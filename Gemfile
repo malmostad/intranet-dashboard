@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'protected_attributes'
 
-gem 'rails', '4.1.5' # github: 'rails/rails', branch: '4-1-stable' # https://github.com/rails/rails/pull/15675 still affecting 4.1.4
+gem 'rails', '4.1.6' # github: 'rails/rails', branch: '4-1-stable' # https://github.com/rails/rails/pull/15675 still affecting 4.1.4
 gem 'jquery-rails', '3.1.1'
 gem 'haml', '4.0.5'
 
