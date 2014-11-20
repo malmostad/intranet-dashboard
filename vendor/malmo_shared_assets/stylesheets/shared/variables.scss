@@ -1,0 +1,41 @@
+$body-background: #fff;
+$body-color: #000;
+$link-color: #007896;
+
+// Fonts
+$sans-serif: 'OpenSans', 'Droid Sans', 'Verdana', 'DejaVu Sans', 'Bitstream Vera Sans', sans-serif;
+$serif: Georgia, 'Droid Serif', 'DejaVu Serif', 'Bitstream Vera Serif', serif;
+$monospace: Consolas, Inconsolata, 'Droid Sans Mono', 'DejaVu Mono', 'Bitstream Vera Mono', monospace;
+
+// Borders around boxes and underlines
+$border-color: #b5b5b5;
+$border: $border-color 1px solid;
+// Darker border
+$border-color-dark: darken($border-color, 20%);
+$border-dark: $border-color-dark 1px solid;
+
+// Background colors
+$background-light: #f5f5f5;
+// Use it for hover effect when the area is linked
+$background-light-hover: darken($background-light, 5%);
+// Background colors used with inverted text
+$background-dark: #888;
+$background-darker: darken($background-dark, 34%);
+$background-footer: darken($background-light, 5%);
+
+// Title bars for boxes
+$box-title-background: #888;
+$box-title-color: #fff;
+
+$box-shadow: 2px 2px 3px #ccc;
+
+// Status messages
+$success-background: #eafcea;
+$success-color: #359a1a;
+$success-border: 1px solid $success-color;
+$warning-background: #fffcd0;
+$warning-color: #c00;
+$warning-border: 1px solid $warning-color;
+$error-background: #ffeae0;
+$error-border: 1px solid darken($error-background, 40%);
+$danger-color: #c00;

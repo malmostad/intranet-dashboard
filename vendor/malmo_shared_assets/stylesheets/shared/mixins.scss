@@ -1,0 +1,104 @@
+// Used for the 12 column grid system. Supports RWD without specific non-semantic class names.
+// Use it to make a block span over a given number of columns.
+//    $span is the number of columns that the block should span over.
+//    $last specifies if the column is the last in the row, no gutter to the right then.
+//      Optional. Defaults to false. Forced to true if the number of columns is 12 (full width block)
+//    $gutter is the margin to the right of the block in percentage of the full width.
+//      Defaults to 2%.
+@mixin columns($span, $last: false, $gutter: 2%, $total-columns: 12) {
+  // (column width in percentage) minus its (own portion of all the gutters)
+  width: percentage($span / $total-columns) - (($total-columns / $span - 1) * $gutter / ($total-columns / $span));
+
+  // No gutter to the right if the column is last in a row
+  @if not $last {
+    margin-right: $gutter;
+  } @else {
+    margin-right: 0;
+  }
+  @if $span == $total-columns {
+    margin-right: 0;
+    float: none;
+  }
+
+  float: left;
+  @include box-sizing(border-box);
+}
+
+// Use with a media query to disable the hz mode below a breakpoint
+@mixin form-force-vertical() {
+  .mf-v4 form.basic .form-group {
+    .control-label {
+      display: block;
+      width: 100%;
+    }
+    .controls {
+      width: 100%;
+      margin-left: 0;
+      clear: both;
+    }
+  }
+}
+
+@mixin radius($values) {
+  -moz-border-radius: $values;
+  -webkit-border-radius: $values;
+  border-radius: $values;
+}
+
+@mixin linear-gradient($from, $to, $start: 0, $stop: 100%) {
+  filter: none;
+  background: $from;
+  background: -ms-linear-gradient(top, $from $start, $to $stop); /* IE10+ */
+  background: -moz-linear-gradient(top, $from $start, $to $stop);
+  background: -webkit-gradient(linear, 0 0, $start $stop, from($from), to($to));
+  background: -webkit-linear-gradient(top, $from $start, $to $stop);
+  background: -o-linear-gradient(top, $from $start, $to $stop);
+  background: linear-gradient(to bottom, $from $start, $to $stop);
+}
+
+@mixin transition($values) {
+  -webkit-transition: $values;
+  -moz-transition: $values;
+  -o-transition: $values;
+  transition: $values;
+}
+
+@mixin box-shadow($values) {
+  -moz-box-shadow: $values;
+  -webkit-box-shadow: $values;
+  box-shadow: $values;
+}
+
+@mixin opacity($value) {
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=(#{$value * 100}));
+  filter: alpha(opacity=($value * 100));
+  opacity: $value;
+}
+
+@mixin box-sizing($boxmodel) {
+  -ms-box-sizing: $boxmodel;
+  -webkit-box-sizing: $boxmodel;
+  -moz-box-sizing: $boxmodel;
+  box-sizing: $boxmodel;
+}
+
+@mixin rotate($deg) {
+  -webkit-transform: rotate($deg);
+  -moz-transform: rotate($deg);
+  -ms-transform: rotate($deg);
+  -o-transform: rotate($deg);
+  transform: rotate($deg);
+}
+
+@mixin clearfix() {
+  *zoom: 1;
+  &:before,
+  &:after {
+    display: table;
+    content: '';
+    line-height: 0;
+  }
+  &:after {
+    clear: both;
+  }
+}

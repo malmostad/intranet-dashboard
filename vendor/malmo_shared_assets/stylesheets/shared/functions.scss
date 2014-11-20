@@ -1,0 +1,6 @@
+// Convenience function that calulates a size in em's based on the $context
+// $target  = rendering in pixel if the browsers base font setting is 16px
+// $context = the current context’s em size
+@function emize($target, $context: 16) {
+  @return ($target / $context) * 1em;
+}
