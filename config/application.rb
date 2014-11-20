@@ -46,6 +46,12 @@ module Dashboard
     config.assets.version = '1.0'
     config.assets.precompile += %w( legacy/ie7.css legacy/ie9.css legacy/ancient_browser_warning.js )
 
+    config.assets.paths += [
+      Rails.root.join("vendor", "malmo_shared_assets", "stylesheets").to_s,
+      Rails.root.join("vendor", "malmo_shared_assets", "stylesheets", "shared").to_s,
+      Rails.root.join("vendor", "malmo_shared_assets", "stylesheets", "internal").to_s
+    ]
+
     config.action_dispatch.default_headers = {
       'X-UA-Compatible' => 'IE=edge',
       'X-XSS-Protection' => '0'

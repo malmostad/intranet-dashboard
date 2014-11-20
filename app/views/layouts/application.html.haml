@@ -19,7 +19,7 @@
       = stylesheet_link_tag "legacy/ie7", media: 'all'
     %link{ rel: 'icon', type: 'image/x-icon', href: "#{APP_CONFIG['assets_url_base']}favicon.ico" }
     = csrf_meta_tag
-  %body{ class: "#{@body_classes} malmo-form" }
+  %body.mf-v4{ class: @body_classes }
     .wrapper
       - flash.each do |key, value|
         %p{ class: "flash #{key}" }= value

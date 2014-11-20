@@ -23,6 +23,8 @@ $background-dark: #888;
 $background-darker: darken($background-dark, 34%);
 $background-footer: darken($background-light, 5%);
 
+$text-color-dark: $background-dark;
+
 // Title bars for boxes
 $box-title-background: #888;
 $box-title-color: #fff;

@@ -48,7 +48,7 @@
   nav.admin {
     @include columns(3, true);
     margin-bottom: 2em;
-    background: $backgroundLight;
+    background: $background-light;
     h2 {
       @include radius(0);
       margin: 0;
@@ -65,7 +65,7 @@
       &.api_apps .api-apps a,
       &.statistics .statistics a,
       a:hover {
-        background: $backgroundLightHover;
+        background: $background-light-hover;
       }
     }
     li {
@@ -76,10 +76,10 @@
         border-bottom: $border;
         font-size: emize(13);
         line-height: emize(17, 13);
-        font-family: $sansSerif;
-        color: $menuColor;
+        font-family: $sans-serif;
+        color: $body-color;
         &:focus, &:hover {
-          background: $backgroundLightHover;
+          background: $background-light-hover;
         }
       }
     }
@@ -95,7 +95,7 @@
 .danger-zone {
   margin-bottom: 4em;
   h1.box-title {
-    background: $dangerColor;
+    background: $danger-color;
   }
   p {
     font-size: 0.8125em;

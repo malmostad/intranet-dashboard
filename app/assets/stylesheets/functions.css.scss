@@ -1,7 +1,0 @@
-// Convenience function that calulates a size in em's based on the $context
-// Note: Use only for font-size and line-height
-// $target  = rendering in pixel (well, maybe)
-// $context = the DOM context em size
-@function emize($target, $context: 16) {
-  @return ($target / $context) * 1em;
-}
