@@ -11,7 +11,7 @@ gem "feedjira", "1.5.0"
 gem 'savon', '2.8.0'
 gem 'siteseeker_normalizer', '0.1.3'
 
-gem 'net-ldap', '0.9.0' # '0.3.1' works, 0.5 and 0.6 have an encoding issue: https://github.com/ruby-ldap/ruby-net-ldap/pull/82
+gem 'net-ldap', '0.3.1' # '0.3.1' works, 0.5 and 0.6 have an encoding issue: https://github.com/ruby-ldap/ruby-net-ldap/pull/82
 gem 'ruby-saml', '0.7.0' # 0.7.1/2 is broken
 gem 'bcrypt-ruby', '3.1.5'
 
