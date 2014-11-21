@@ -68,7 +68,7 @@ section.box#colleagues {
       }
       &.waiting {
         height: 4em;
-        background-color: white;
+        background-color: #fff;
         background-position: left 40%;
       }
       .warning {
@@ -91,7 +91,7 @@ section.box#colleagues {
         font-size: emize(11);
         font-family: $sans-serif;
         background: $background-darker;
-        color: white;
+        color: #fff;
       }
       .img:hover .change-image {
         display: block;

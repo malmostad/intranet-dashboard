@@ -26,7 +26,7 @@ section.box.feeds {
         display: block;
         @include box-sizing('border-box');
         padding: 0.4em .7em 0;
-        border: solid white;
+        border: solid #fff;
         border-width: 1px 0;
         margin: 0;
         &:hover {
@@ -35,7 +35,7 @@ section.box.feeds {
           border-color: $border-color;
         }
         p.summary, p.meta {
-          color: black;
+          color: #000;
         }
       }
       img, span.icon-twitter, span.icon-rss {
