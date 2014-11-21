@@ -30,11 +30,9 @@
         = link_to "Lägg till källor", my_own_feeds_path, class: "btn btn-default btn-small"
 
 
-  .dropdown.box-menu.pull-right
-    %a#feeds-menu.dropdown-toggle.extended{ "role" => "button", "data-toggle" => "dropdown", "href" => "#", "title" => "Anpassa innehållet" }
-      %span.settings Anpassa
-      %span.icon-caret-down.icon-large
-    %menu.dropdown-menu{ "aria-labelledby" => "feeds-menu" }
+  .dropdown.box-menu
+    %button#feeds-menu.dropdown-toggle{ type: "button", title: "Anpassa innehållet", "data-toggle" => "dropdown" }
+    %menu.dropdown-menu{ "aria-labelledby" => "feeds-menu", "aria-hidden" => true, role: "menu" }
       %li
         %a{ href: users_update_feed_stream_type_path, "data-method" => :patch }
           = "✓ " if current_user.combined_feed_stream?
@@ -51,4 +49,4 @@
         %li.divider
         %li= link_to "Administrera...", feeds_path
       %li.divider
-      %li.help= link_to "Hjälp...", root_path
+      %li.toggle-instructions= link_to "Hjälp...", root_path
