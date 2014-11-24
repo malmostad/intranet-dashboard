@@ -19,8 +19,8 @@
           %tr
             %td= link_to activity.name, edit_activity_path(activity)
             %td= link_to activity.name, users_tags_path(activity: activity.name)
-            %td.delete= link_to delete_icon_text, activity, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini"
+            %td.delete= link_to "Radera", activity, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini"
 
         %tr
           %td{ colspan: 3 }
-            .actions= link_to add_icon_text, new_activity_path, class: "btn btn-primary"
+            .actions= link_to "Lägg till", new_activity_path, class: "btn btn-primary"
