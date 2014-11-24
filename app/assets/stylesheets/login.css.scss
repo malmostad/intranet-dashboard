@@ -28,11 +28,11 @@
   section#login {
     margin-bottom: 2em;
     label {
-      font-size: emize(13);
+      font-size: emize(14);
     }
     input[type="text"],
     input[type="password"] {
-      font-size: emize(15);
+      font-size: emize(16);
     }
     input.btn {
       margin-top: 1em;
@@ -43,8 +43,8 @@
       padding-top: .5em;
       border-top: $border;
       font-style: normal;
-      font-size: emize(15);
-      line-height: emize(19, 15);
+      font-size: emize(17);
+      line-height: 1.3;
       margin-bottom: .5em;
     }
   }

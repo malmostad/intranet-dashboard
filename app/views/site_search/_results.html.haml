@@ -11,7 +11,7 @@
 
       %p.category= entry.category
       - if entry.breadcrumbs.present?
-        %ul.breadcrumb
+        %ul.breadcrumbs
           - entry.breadcrumbs.each do |breadcrumb|
             %li= link_to breadcrumb.text, breadcrumb.url
 
