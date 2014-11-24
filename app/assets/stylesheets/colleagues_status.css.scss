@@ -18,14 +18,13 @@ section.box#colleagues {
       .text {
         overflow: hidden;
         h2.name {
-          font-size: emize(13);
+          font-size: emize(15, 15);
           font-weight: normal;
-          line-height: emize(16, 13);
+          line-height: 1.3;
           margin: 0;
         }
         p.status {
-          font-size: emize(13);
-          line-height: emize(16, 13);
+          line-height: 1.3;
           margin-bottom: 0;
           &.success {
             padding: .1em .3em;
@@ -35,9 +34,9 @@ section.box#colleagues {
         }
         p.updated_at {
           font-family: $sans-serif;
-          font-size: emize(11);
+          font-size: emize(12, 15);
           color: $text-color-dark;
-          line-height: emize(13, 11);
+          line-height: 1.3;
           margin-bottom: 0;
         }
       }
@@ -47,10 +46,10 @@ section.box#colleagues {
         right: 0;
         margin: 0;
         font-family: $sans-serif;
-        font-size: emize(13);
+        font-size: emize(14);
         color: $body-color;
         span {
-          font-size: emize(13);
+          font-size: emize(14);
           @include opacity(.2);
         }
       }
@@ -98,11 +97,11 @@ section.box#colleagues {
       }
     }
     .no-colleagues {
-      font-size: emize(13);
-      line-height: emize(17, 13);
+      font-size: emize(14);
+      line-height: 1.3;
       margin-bottom: 1em;
       label.show {
-        font-size: emize(13, 13);
+        font-size: emize(14, 14);
       }
     }
   }
@@ -111,7 +110,7 @@ section.box#colleagues {
   #change-status-trigger,
   #add-colleague-trigger {
     display: none;
-    font-size: emize(13);
+    font-size: emize(14, 15);
     font-family: $sans-serif;
     &.show {
       display: block;
@@ -125,7 +124,8 @@ section.box#colleagues {
       clear: both;
       padding: 0 0 .4em;
       margin: 0;
-      &.show, .show {
+      &.show,
+      .show {
         display: block;
       }
       label {
@@ -136,7 +136,7 @@ section.box#colleagues {
       #status_message {
         margin-bottom: .3em;
         resize: none;
-        height: 2em;
+        height: 2.4em;
         overflow: hidden;
       }
       #add_colleague {
@@ -155,11 +155,11 @@ section.box#colleagues {
     border-top: $border;
     .count {
       float: right;
-      padding: .1em;
+      padding: .2em;
       width: 2.2em;
       text-align: center;
       font-family: $sans-serif;
-      font-size: emize(11);
+      font-size: emize(14);
       @include radius(3px);
     }
     #cancel-trigger {
