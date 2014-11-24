@@ -25,11 +25,11 @@
     "test",
     "tests"
   ],
-  "_release": "0d060a8f0c",
+  "_release": "9b9f876921",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "0d060a8f0c9b9e8382008d8b19c9d915722af995"
+    "commit": "9b9f876921f60bbfcfb86e274ac2ed587464a995"
   },
   "_source": "git://github.com/malmostad/shared_assets.git",
   "_target": "*",
