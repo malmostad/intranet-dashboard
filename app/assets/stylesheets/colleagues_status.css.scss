@@ -13,7 +13,7 @@ section.box#colleagues {
         width: 46px;
         height: 46px;
         margin: .2em .6em 1em 0;
-        border: none;
+        border: 0;
       }
       .text {
         overflow: hidden;
@@ -108,7 +108,8 @@ section.box#colleagues {
   }
 
   // Change status
-  #change-status-trigger, #add-colleague-trigger {
+  #change-status-trigger,
+  #add-colleague-trigger {
     display: none;
     font-size: emize(13);
     font-family: $sans-serif;
@@ -117,7 +118,8 @@ section.box#colleagues {
     }
   }
 
-  #update-status-form, #add-colleague-form {
+  #update-status-form,
+  #add-colleague-form {
     fieldset {
       display: none;
       clear: both;

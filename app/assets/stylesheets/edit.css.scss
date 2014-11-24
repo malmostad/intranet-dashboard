@@ -1,5 +1,6 @@
 .edit {
-  section.form, section.index, section.show {
+  section.form,section.index,
+  section.show {
     @include columns(9);
     margin-bottom: 2em;
   }
@@ -25,7 +26,8 @@
   table {
     width: 100%;
     td, th {
-      &.url, &.title {
+      &.url,
+      &.title {
         max-width: 16em;
         span {
           display: block;
@@ -40,7 +42,7 @@
       text-align: right;
     }
     tbody tr:last-child td {
-      border-bottom: none;
+      border-bottom: 0;
     }
   }
 
@@ -78,7 +80,8 @@
         line-height: emize(17, 13);
         font-family: $sans-serif;
         color: $body-color;
-        &:focus, &:hover {
+        &:focus,
+        &:hover {
           background: $background-light-hover;
         }
       }

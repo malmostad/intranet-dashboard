@@ -73,7 +73,8 @@
   }
 
   .malmo-form.edit {
-    th.url, td.url {
+    th.url,
+    td.url {
       display: none;
     }
   }
@@ -117,10 +118,13 @@
   }
 
   .malmo-form.edit {
-    section.index, section.show, section.form, nav.admin {
+    section.index, section.show,
+    section.form,
+    nav.admin {
       @include columns(12);
     }
-    th.secondary, td.secondary {
+    th.secondary,
+    td.secondary {
       display: none;
     }
   }
@@ -131,10 +135,14 @@
     nav.admin {
       clear: both;
     }
-    h1, nav.admin h2 {
+    h1,
+    nav.admin h2 {
       @include radius(0);
     }
-    section.form, section.show, section.index, nav.admin {
+    section.form,
+    section.show,
+    section.index,
+    nav.admin {
       width: 100%;
       @include radius(0);
     }
@@ -148,14 +156,17 @@
         margin-left: 0;
       }
     }
-    .avatar-help, .edit_avatar {
+    .avatar-help,
+    .edit_avatar {
       width: 100%;
       clear: both;
     }
   }
   .malmo-form {
     .form-horizontal {
-      .controls, .actions, .text-only {
+      .controls,
+      .actions,
+      .text-only {
         margin-left: 0;
         clear: both;
       }
@@ -165,7 +176,8 @@
     }
     .control-group.text-only {
       margin-bottom: 1em;
-      .control-label, .controls {
+      .control-label,
+      .controls {
         padding: 0;
       }
     }
@@ -189,7 +201,9 @@
       float: none;
       margin-bottom: 0;
       @include columns(12);
-      &.column-1, &.column-2, &.column-3 {
+      &.column-1,
+      &.column-2,
+      &.column-3 {
         margin-right: 0;
         margin-left: 0;
         width: 100%;
@@ -214,7 +228,9 @@
       }
     }
 
-    section.index, section.show, section.form {
+    section.index,
+    section.show,
+    section.form {
       @include radius(0);
       border: none;
       margin-bottom: 0;
@@ -258,7 +274,9 @@
           }
         }
       }
-      section.box#feeds-news, section.box#feeds-dialog, section.box#my_own  {
+      section.box#feeds-news,
+      section.box#feeds-dialog,
+      section.box#my_own  {
         .box-content li {
           a {
             @include clearfix();
@@ -336,7 +354,7 @@
 }
 
 // Force a one column form
-@media ( max-width: 40em ) {
+@media (max-width: 40em) {
   @include form-force-vertical;
 
   section.box.index.users ul.results li p.note {
