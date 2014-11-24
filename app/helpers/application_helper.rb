@@ -26,7 +26,7 @@ module ApplicationHelper
   end
 
   def page_title
-    !@title.nil? ? "#{@title} - #{title_suffix}" : title_suffix
+    !@title.nil? ? "#{@title} – #{title_suffix}" : title_suffix
   end
 
   def tags_whitelist

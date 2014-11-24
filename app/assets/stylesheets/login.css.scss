@@ -1,5 +1,5 @@
 .login {
-   .wrapper {
+  .wrapper {
     margin-top: 6em;
   }
 
@@ -27,15 +27,12 @@
 
   section#login {
     margin-bottom: 2em;
-    label {
-      font-size: emize(14);
-    }
     input[type="text"],
     input[type="password"] {
-      font-size: emize(16);
+      margin-bottom: 1em;
     }
     input.btn {
-      margin-top: 1em;
+      margin-top: .6em;
       clear: both;
     }
     .login-instructions {
@@ -43,8 +40,8 @@
       padding-top: .5em;
       border-top: $border;
       font-style: normal;
-      font-size: emize(17);
-      line-height: 1.3;
+      font-size: emize(15);
+      line-height: 1.4;
       margin-bottom: .5em;
     }
   }
