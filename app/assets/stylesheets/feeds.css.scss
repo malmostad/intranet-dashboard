@@ -29,22 +29,27 @@ section.box.feeds {
         border: solid #fff;
         border-width: 1px 0;
         margin: 0;
-        &:hover {
+        &:hover,
+        &:focus {
           cursor: pointer;
           background-color: $background-light;
           border-color: $border-color;
         }
-        p.summary, p.meta {
+        p.summary,
+        p.meta {
           color: #000;
         }
       }
-      img, span.icon-twitter, span.icon-rss {
+      img,
+      span.icon-twitter,
+      span.icon-rss {
         float: left;
         width: 46px;
         margin: 3px 10px 11px 0;
-        border: none;
+        border: 0;
       }
-      span.icon-twitter, span.icon-rss {
+      span.icon-twitter,
+      span.icon-rss {
         font-size: emize(46);
         color: $background-dark;
         overflow: hidden;
@@ -59,7 +64,8 @@ section.box.feeds {
           line-height: 1.2;
           font-weight: normal;
         }
-        p.summary, p.nomore {
+        p.summary,
+        p.nomore {
           font-size: emize(16);
           line-height: emize(21, 16);
           margin-bottom: .1em;
@@ -74,7 +80,8 @@ section.box.feeds {
           color: $text-color-dark;
           span.comments {
             display: block;
-            .icon-comment, .icon-comment-alt {
+            .icon-comment,
+            .icon-comment-alt {
               font-size: emize(15, 13);
               color: $link-color;
             }
@@ -85,9 +92,6 @@ section.box.feeds {
     li.load-more {
       padding: .2em .8em .8em;
       margin-bottom: .8em;
-      .btn {
-        font-size: emize(13);
-      }
     }
   }
   .box-instructions a.btn {

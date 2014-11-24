@@ -132,15 +132,13 @@ section.box#colleagues {
         font-family: $sans-serif;
       }
       #status_message {
-        width: 93%;
         margin-bottom: .3em;
         resize: none;
-        height: 1.5em;
+        height: 2em;
         overflow: hidden;
       }
       #add_colleague {
-        width: 95%;
-        margin-bottom: .3em;
+        margin: .5em 0 .2em 0;
       }
       .controls {
         display: none;

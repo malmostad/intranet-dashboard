@@ -5,9 +5,9 @@
     = form_tag(user_update_status_message_path, method: :patch, id: "update-status-form") do
       %fieldset.show{ class: has_status ? '' : 'no-status'}
         = label_tag :status_message, "Vad gör du idag?"
-        = text_area_tag :status_message, nil, rows: 1, placeholder: "Vad gör du idag?"
+        = text_area_tag :status_message, nil, rows: 1, placeholder: "Vad gör du idag?", class: "form-control"
         .controls
-          = submit_tag "OK", { class: "btn btn-primary btn-small", disabled: true }
+          = submit_tag "OK", { class: "btn btn-primary btn-sm", disabled: true }
           %p.count.ok 70
     %ul.box-content
       %li#my-status
@@ -40,7 +40,7 @@
         = form_tag(colleagueships_path, method: "post", id: "add-colleague-form") do
           %fieldset.show{ class: @colleagues.present? ? '' : "no-colleagues" }
             = label_tag :add_colleague, "Lägg till en arbetskamrat:", class: "show"
-            = text_field_tag :add_colleague, nil, placeholder: "Sök arbetskamrat", "data-path" => colleagueships_search_path
+            = text_field_tag :add_colleague, nil, placeholder: "Sök arbetskamrat", "data-path" => colleagueships_search_path, class: "form-control"
 
     - if admin?
       .dropdown.box-menu
