@@ -17,7 +17,7 @@
       = render "search_results"
       - if @batch_edit
         .batch-assign
-          .control-group
+          .form-group
             .input-append
               = text_field_tag :activity, nil, "data-path" => activities_suggest_path, placeholder: "Aktivitet/projekt", id: "batch-activity"
               = submit_tag "Applicera på markerade", name: nil, class: "btn btn-primary"

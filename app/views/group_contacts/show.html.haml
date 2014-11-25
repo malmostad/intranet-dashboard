@@ -10,7 +10,7 @@
     = show_attribute("Mobiltelefon", @group_contact.cell_phone)
     = show_attribute("Fax", @group_contact.fax)
 
-    .control-group.text-only
+    .form-group.text-only
       .control-label Postadress:
       .controls
         = @group_contact.address
@@ -18,7 +18,7 @@
         = @group_contact.zip_code
         = @group_contact.postal_town
 
-    .control-group.text-only
+    .form-group.text-only
       .control-label Besöksadress:
       .controls
         = @group_contact.visitors_address
@@ -30,7 +30,7 @@
 
     = show_attribute("Besökstider", @group_contact.visiting_hours)
 
-    .control-group.text-only
+    .form-group.text-only
       .control-label Hemsida:
       .controls
         - if @group_contact.homepage.present?
@@ -43,6 +43,6 @@
       - else
         = show_attribute("Senast efterfrågad", "Aldrig")
 
-    .control-group
+    .form-group
       .controls
         = link_to 'Redigera', edit_group_contact_path(@group_contact), class: "btn"

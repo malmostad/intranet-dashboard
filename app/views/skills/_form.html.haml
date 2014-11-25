@@ -3,14 +3,14 @@
     - if @skill.errors.any?
       .warning= t 'messages.validation_errors'
 
-    .control-group
+    .form-group
       = f.label :name, "Namn:", class: "control-label"
       .controls
         = f.text_field :name, class: 'input-wide'
         - @skill.errors[:name].each do |msg|
           .help-inline.warning= "#{msg}"
 
-    .control-group
+    .form-group
       .controls
         = f.submit t( 'actions.save' ), class: "btn btn-primary"
         - unless @skill.new_record?

@@ -3,7 +3,7 @@
   %h1.box-title= h1
   .box-content.body-copy
     = form_tag(users_search_path, method: "get", class: "basic") do
-      .control-group
+      .form-group
         = label_tag "query-employee", "Sök användare: ", class: "control-label"
         .controls
           .input-append

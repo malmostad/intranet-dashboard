@@ -13,7 +13,7 @@
       - if @user.errors.any?
         .warning= t 'messages.validation_errors'
 
-      .control-group
+      .form-group
         = f.label :avatar, "Ny bild:", class: "control-label"
         .controls
           = f.file_field :avatar, class: "fileupload"
@@ -23,7 +23,7 @@
           - @user.errors[:avatar_content_type].each do |msg|
             .help-inline.warning= "#{msg}"
 
-      .control-group
+      .form-group
         .controls
           = f.submit "Ladda upp", class: "btn btn-primary"
           = link_to t( 'actions.cancel' ), ( session[:referer] || user_path(@user.username) ), class: "btn"

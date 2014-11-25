@@ -8,7 +8,7 @@
     - unless @api_app.new_record?
       = f.input :app_token, as: :text_only
 
-  .control-group
+  .form-group
     .controls
       = f.button :submit, :class => 'btn-primary'
       = link_to t('actions.cancel'), api_apps_path(@api_app), class: "btn"

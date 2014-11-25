@@ -13,7 +13,7 @@
           - @user.errors.messages.each do |msg|
             %li= msg[1].first
 
-      .control-group
+      .form-group
         = hidden_field_tag "user[id]", @user.id
         .control-label= "Flöden:"
         .controls
@@ -27,7 +27,7 @@
                   disabled: is_mandatory )
               = feed.title
 
-      .control-group
+      .form-group
         .controls
           = submit_tag t( "actions.save" ), class: "btn btn-primary"
           = link_to t( 'actions.cancel' ), root_path, class: "btn"

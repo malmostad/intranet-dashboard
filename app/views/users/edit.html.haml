@@ -79,7 +79,7 @@
         = f.input :contacts_editor
         = f.input :admin
 
-      .control-group
+      .form-group
         .controls
           = f.button :submit, :class => 'btn-primary'
           = link_to t('actions.cancel'), user_path(@user.username), class: "btn"

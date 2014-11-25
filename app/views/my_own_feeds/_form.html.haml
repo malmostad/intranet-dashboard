@@ -1,7 +1,7 @@
 - if @feed.errors.any?
   .warning= t 'messages.validation_errors'
 
-.control-group
+.form-group
   = f.label :feed_url, "RSS-adress:", class: "control-label"
   .controls
     = f.text_field :feed_url, class: "input-wide"
@@ -18,7 +18,7 @@
         / %li.instruction= raw "En Twitter-användare, t.ex. <strong>@malmostad</strong>"
         / %li.instruction= raw 'En eller flera Twitter-hashtag(ar), t.ex. <strong>#malmö</strong>'
 
-.control-group
+.form-group
   .controls
     = f.submit value: t( "actions.save" ), class: "btn btn-primary"
     = link_to t('actions.cancel'), my_own_feeds_path, class: "btn"

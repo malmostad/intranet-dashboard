@@ -20,7 +20,7 @@
     = f.input :visiting_hours, input_html: { class: 'input-wide' }
     = f.input :homepage, input_html: { class: 'input-wide' }
 
-  .control-group
+  .form-group
     .controls
-      = f.button :submit, :class => 'btn-primary'
+      = f.button :submit, class: 'btn btn-primary'
       = link_to t('actions.cancel'), group_contacts_path, class: "btn"

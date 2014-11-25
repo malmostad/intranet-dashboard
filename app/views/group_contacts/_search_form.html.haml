@@ -1,7 +1,8 @@
 = form_tag(group_contacts_search_path, method: "get", id: "search-group-contacts", class: "basic", "data-path" => group_contacts_path) do
-  .control-group
+  .form-group
     = label_tag "q", "Sök funktionskontakt: ", class: "control-label"
     .controls
-      .input-append
-        = text_field_tag "q", params[:q]
-        = submit_tag "Sök", { class: "btn", name: nil }
+      .input-group
+        = text_field_tag "q", params[:q], class: "form-control"
+        %span.input-group-btn
+          = submit_tag "Sök", { class: "btn btn-default", name: nil }
