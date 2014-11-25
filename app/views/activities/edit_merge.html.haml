@@ -1,7 +1,7 @@
 - title "Slå samman aktiviteter"
 %section.box.form
   %h1.box-title= h1
-  = form_for @activity, url: activities_merge_path(@activity), method: :patch, html: { id: "merge-activity", class: "form-horizontal merge" } do |f|
+  = form_for @activity, url: activities_merge_path(@activity), method: :patch, html: { id: "merge-activity", class: "basic merge" } do |f|
     .box-content
       - if @activity.errors.any?
         .warning= t 'messages.validation_errors'

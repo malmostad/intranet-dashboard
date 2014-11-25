@@ -2,7 +2,7 @@
 %section.box.form#edit-user
   %h1.box-title= h1
   .box-content
-    = simple_form_for @user, html: { class: "form-horizontal" } do |f|
+    = simple_form_for @user, html: { class: "basic" } do |f|
       = f.error_notification class: "warning"
 
       - if @user.roles.empty? # User is directed here to select roles
@@ -88,7 +88,7 @@
 - if admin? && !@user.admin?
   %section.box.show.user.danger-zone
     %h1.box-title Riskområde
-    .box-content.form-horizontal.form-data
+    .box-content.basic.form-data
       %section.misc
         %p= "Medarbetaren kommer att raderas permanent från Kontaktboken. Detta går inte att ångra."
         .delete= link_to raw("<span class='icon-trash icon-large'></span> Radera #{@user.first_name} #{@user.last_name} permanent"), @user, data: { confirm: 'Är du säker på att du vill radera medarbetaren permanent?', method: :delete }, class: "btn btn-danger btn-small"

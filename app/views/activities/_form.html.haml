@@ -1,4 +1,4 @@
-= form_for @activity, html: { class: "form-horizontal" } do |f|
+= form_for @activity, html: { class: "basic" } do |f|
   .box-content
     - if @activity.errors.any?
       .warning= t 'messages.validation_errors'

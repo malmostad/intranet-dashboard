@@ -1,4 +1,4 @@
-= form_for @shortcut, html: { class: "form-horizontal" } do |f|
+= form_for @shortcut, html: { class: "basic" } do |f|
   .box-content
     - if @shortcut.errors.any?
       .warning= t 'messages.validation_errors'

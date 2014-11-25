@@ -7,7 +7,7 @@
       = 'De länkar som inte går att kryssa ur är obligatoriska baserat på vad du  '
       = link_to "valt i din grundprofil.", edit_user_path(@user)
 
-    = form_for @user, url: user_select_shortcuts_path, html: { class: "form-horizontal" } do |f|
+    = form_for @user, url: user_select_shortcuts_path, html: { class: "basic" } do |f|
       - if @user.errors.any?
         %ul.warning
           - @user.errors.messages.each do |msg|

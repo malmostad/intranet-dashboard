@@ -1,4 +1,4 @@
-= form_for @skill, html: { class: "form-horizontal" } do |f|
+= form_for @skill, html: { class: "basic" } do |f|
   .box-content
     - if @skill.errors.any?
       .warning= t 'messages.validation_errors'

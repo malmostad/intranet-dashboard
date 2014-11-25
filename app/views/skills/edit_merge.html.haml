@@ -1,7 +1,7 @@
 - title "Slå samman kunskapsområde"
 %section.box.form
   %h1.box-title= h1
-  = form_for @skill, url: skills_merge_path(@skill), method: :patch, html: { id: "merge-skill", class: "form-horizontal merge" } do |f|
+  = form_for @skill, url: skills_merge_path(@skill), method: :patch, html: { id: "merge-skill", class: "basic merge" } do |f|
     .box-content
       - if @skill.errors.any?
         .warning= t 'messages.validation_errors'
