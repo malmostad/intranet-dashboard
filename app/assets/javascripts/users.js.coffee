@@ -5,8 +5,8 @@ $ ->
   # Show info for non editable field
   $("#edit-user .show-more-info").click (event) ->
     event.preventDefault()
-    $(@).closest(".control-group").find(".more-info").slideToggle(100)
-    $(@).text( if $(@).text() is "(info)" then "(dölj)" else "(info)" )
+    $(@).closest(".form-group").find(".more-info").toggle()
+    $(@).text( if $(@).text() is " (info)" then " (dölj)" else " (info)" )
 
   # Tokenized input fields
   # Shared options for tokenInput

@@ -87,7 +87,7 @@
       }
     }
     &:last-child {
-      border-bottom: none;
+      border-bottom: 0;
     }
   }
   .btn-sm {
@@ -98,13 +98,19 @@
   }
 }
 
+.mf-v4 {
+  .more-info {
+    display: none;
+  }
+}
+
 .danger-zone {
   margin-bottom: 4em;
   h1.box-title {
     background: $danger-color;
   }
   p {
-    font-size: 0.8125em;
+    font-size: emize(14);
     margin: 0 0 .5em;
   }
 }
