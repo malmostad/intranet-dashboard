@@ -26,4 +26,4 @@
       .form-group
         .controls
           = f.submit "Ladda upp", class: "btn btn-primary"
-          = link_to t( 'actions.cancel' ), ( session[:referer] || user_path(@user.username) ), class: "btn"
+          = link_to t( 'actions.cancel' ), ( session[:referer] || user_path(@user.username) ), class: "btn btn-default"

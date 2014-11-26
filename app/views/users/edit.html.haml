@@ -82,7 +82,7 @@
       .form-group
         .controls
           = f.button :submit, :class => 'btn-primary'
-          = link_to t('actions.cancel'), user_path(@user.username), class: "btn"
+          = link_to t('actions.cancel'), user_path(@user.username), class: "btn btn-default"
           %p.help Tänk på att det du skriver i din profil – precis som nästan allt annat du gör i Malmö stad – blir offentlig handling. Skriv bara sådant du kan stå för.
 
 - if admin? && !@user.admin?

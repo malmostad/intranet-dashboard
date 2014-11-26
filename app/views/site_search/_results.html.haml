@@ -16,4 +16,4 @@
             %li= link_to breadcrumb.text, breadcrumb.url
 
   - if @results.more_query.present?
-    %li#load-more-search-results= link_to "Visa fler träffar", "#{search_path}?#{@results.more_query}", class: "btn"
+    %li#load-more-search-results= link_to "Visa fler träffar", "#{search_path}?#{@results.more_query}", class: "btn btn-default"
