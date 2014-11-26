@@ -36,4 +36,16 @@ SimpleForm.setup do |config|
       ba.use :hint, :wrap_with => { :tag => 'div', :class => 'help-block more-info' }
     end
   end
+
+  config.wrappers :radio_and_checkboxes, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.use :label
+
+    b.wrapper tag: 'div', class: 'controls' do |ba|
+      ba.use :input
+      ba.use :error, wrap_with: { tag: 'span', class: 'help-block' }
+      ba.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+    end
+  end
 end

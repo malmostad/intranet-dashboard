@@ -15,13 +15,13 @@
       = f.input :status_message
 
       %h2.group-title Grundprofil i Komin:
-      = f.association :roles, as: :check_boxes, collection: @roles.select { |r| r.category == "department" }, label: "Förvaltningar:"
-      = f.association :roles, as: :check_boxes, collection: @roles.select { |r| r.category == "working_field" }, label: "Arbetsfält:",
+      = f.association :roles, as: :check_boxes, wrapper: :radio_and_checkboxes, collection: @roles.select { |r| r.category == "department" }, label: "Förvaltningar"
+      = f.association :roles, as: :check_boxes, wrapper: :radio_and_checkboxes, collection: @roles.select { |r| r.category == "working_field" }, label: "Arbetsfält",
           hint: "Här väljer du vilken/vilka förvaltningar/arbetsfält du vill se i Kominflikarna Min förvaltning, Mitt arbetsfält högst upp i Komin."
 
       %h2.group-title Kontakt
       = f.input :search_address do
-        = text_field_tag :user_search_address
+        = text_field_tag :user_search_address, nil,  class: 'form-control'
       = f.input :address, input_html: { readonly: true }
       = f.input :district, as: "hidden"
       = f.input :post_code, input_html: { readonly: true }
@@ -75,9 +75,9 @@
 
       - if admin?
         %h2.group-title Rättigheter
-        = f.input :early_adopter
-        = f.input :contacts_editor
-        = f.input :admin
+        = f.input :early_adopter, wrapper: :radio_and_checkboxes
+        = f.input :contacts_editor, wrapper: :radio_and_checkboxes
+        = f.input :admin, wrapper: :radio_and_checkboxes
 
       .form-group
         %span.no-control-label
