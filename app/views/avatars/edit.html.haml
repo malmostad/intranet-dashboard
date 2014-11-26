@@ -17,13 +17,14 @@
         = f.label :avatar, "Ny bild:", class: "control-label"
         .controls
           = f.file_field :avatar, class: "fileupload"
-          .help-inline= 'Du kan ladda upp en jpeg- eller tiff-bild. Max filstrolek är 4MB.'
+          .help-block= 'Du kan ladda upp en jpeg- eller tiff-bild. Max filstrolek är 4MB.'
           - @user.errors[:avatar_file_size].each do |msg|
-            .help-inline.warning= "#{msg}"
+            .help-block.warning= "#{msg}"
           - @user.errors[:avatar_content_type].each do |msg|
-            .help-inline.warning= "#{msg}"
+            .help-block.warning= "#{msg}"
 
       .form-group
+        %span.no-control-label
         .controls
           = f.submit "Ladda upp", class: "btn btn-primary"
           = link_to t( 'actions.cancel' ), ( session[:referer] || user_path(@user.username) ), class: "btn btn-default"
