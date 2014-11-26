@@ -8,10 +8,10 @@
       - if @user.roles.empty? # User is directed here to select roles
         %p.warning= "Välj en eller flera förvaltningar/arbetsfält nedan."
 
-      = f.input :displayname, as: :text_only_more_info, wrapper: :text_only_more_info
-      = f.input :title, as: :text_only_more_info, wrapper: :text_only_more_info
+      = f.input :displayname, as: :more_info, wrapper: :more_info
+      = f.input :title, as: :more_info, wrapper: :more_info
       = f.input :professional_bio, input_html: { rows: 7 }
-      = f.input :company_short, as: :text_only_more_info, wrapper: :text_only_more_info
+      = f.input :company_short, as: :more_info, wrapper: :more_info
       = f.input :status_message
 
       %h2.group-title Grundprofil i Komin:
@@ -31,8 +31,8 @@
 
       = f.input :room
 
-      = f.input :email, as: :text_only_more_info, wrapper: :text_only_more_info
-      = f.input :phone, wrapper: :text_only_more_info do
+      = f.input :email, as: :more_info, wrapper: :more_info
+      = f.input :phone, wrapper: :more_info do
         = @user.phone
         = link_to "(Info)", "#", class: "show-more-info"
         .more-info
@@ -40,7 +40,7 @@
             = "Ditt fasta telefonnummer finns lagrat i Malmö stads centrala databas över alla anställda. Kontaktboken visar vilket nummer som är knutet till dig. Om det visas fel telefonnummer beställer du en ändring i "
             = link_to "IT-kompassen.", "http://marval.malmo.se/MSMSelfService/Itservice/telefoni-forandring.aspx"
             = "Om du behöver hjälp, kontakta ITS, 040-342727."
-      = f.input :cell_phone, wrapper: :text_only_more_info do
+      = f.input :cell_phone, wrapper: :more_info do
         = @user.cell_phone
         = link_to "(Info)", "#", class: "show-more-info"
         .more-info

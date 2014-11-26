@@ -29,7 +29,7 @@ SimpleForm.setup do |config|
   end
 
   # Control group for display of a record without controls
-  config.wrappers :text_only_more_info, :tag => 'div', :class => 'form-group' do |b|
+  config.wrappers :more_info, :tag => 'div', :class => 'form-group' do |b|
     b.use :label
     b.wrapper :tag => 'div', :class => 'controls' do |ba|
       ba.use :input

@@ -9,7 +9,7 @@ module SimpleForm
     end
 
     # Return the attribute as a string + an <a> tag used by javascript to show more info
-    class TextOnlyMoreInfoInput < TextOnlyInput
+    class MoreInfoInput < TextOnlyInput
       def input
         super + template.content_tag(:a, " (info)", href: "#", class: "show-more-info")
       end
