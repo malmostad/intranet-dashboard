@@ -10,18 +10,18 @@
 
       = f.input :displayname, as: :text_only_more_info, wrapper: :text_only_more_info
       = f.input :title, as: :text_only_more_info, wrapper: :text_only_more_info
-      = f.input :professional_bio, input_html: { class: 'input-wide', rows: 7 }
+      = f.input :professional_bio, input_html: { rows: 7 }
       = f.input :company_short, as: :text_only_more_info, wrapper: :text_only_more_info
-      = f.input :status_message, input_html: { class: 'input-wide' }
+      = f.input :status_message
 
-      %h2.form-group-title Grundprofil i Komin:
+      %h2.group-title Grundprofil i Komin:
       = f.association :roles, as: :check_boxes, collection: @roles.select { |r| r.category == "department" }, label: "Förvaltningar:"
       = f.association :roles, as: :check_boxes, collection: @roles.select { |r| r.category == "working_field" }, label: "Arbetsfält:",
           hint: "Här väljer du vilken/vilka förvaltningar/arbetsfält du vill se i Kominflikarna Min förvaltning, Mitt arbetsfält högst upp i Komin."
 
-      %h2.form-group-title Kontakt
+      %h2.group-title Kontakt
       = f.input :search_address do
-        = text_field_tag :user_search_address, nil,  class: 'input-wide'
+        = text_field_tag :user_search_address
       = f.input :address, input_html: { readonly: true }
       = f.input :district, as: "hidden"
       = f.input :post_code, input_html: { readonly: true }
@@ -51,39 +51,40 @@
 
       = f.input :skype
 
-      %h2.form-group-title Kompetensprofil
+      %h2.group-title Kompetensprofil
       = f.input :skill_list,
-        input_html: { "data-path" => skills_suggest_path, "data-load" => @user.skills.map{ |l| { id: l.name, name: l.name }}.to_json, class: "input-wide" }
+        input_html: { "data-path" => skills_suggest_path, "data-load" => @user.skills.map{ |l| { id: l.name, name: l.name }}.to_json }
 
       = f.input :language_list,
-        input_html: { "data-path" => languages_suggest_path, "data-load" => @user.languages.map{ |l| { id: l.name, name: l.name }}.to_json, class: "input-wide" }
+        input_html: { "data-path" => languages_suggest_path, "data-load" => @user.languages.map{ |l| { id: l.name, name: l.name }}.to_json }
 
-      %h2.form-group-title Projekt & aktiviteter
+      %h2.group-title Projekt & aktiviteter
       = f.input :activity_list,
-        input_html: { "data-path" => activities_suggest_path, "data-load" => @user.activities.map{ |l| { id: l.name, name: l.name }}.to_json, class: "input-wide" }
+        input_html: { "data-path" => activities_suggest_path, "data-load" => @user.activities.map{ |l| { id: l.name, name: l.name }}.to_json }
 
-      %h2.form-group-title Personligt
-      = f.input :private_bio, input_html: { class: 'input-wide', rows: 7 }
+      %h2.group-title Personligt
+      = f.input :private_bio, input_html: { rows: 7 }
 
-      = f.input :twitter, wrapper: :prepend do
-        %span.add-on @
-        = f.input_field :twitter
+      = f.input :twitter, wrapper: :input_group do
+        .input-group-addon @
+        = f.input_field :twitter, class: "form-control"
 
-      = f.input :linkedin, input_html: { class: 'input-wide' }
+      = f.input :linkedin
 
-      = f.input :homepage, input_html: { class: 'input-wide' }
+      = f.input :homepage
 
       - if admin?
-        %h2.form-group-title Rättigheter
+        %h2.group-title Rättigheter
         = f.input :early_adopter
         = f.input :contacts_editor
         = f.input :admin
 
       .form-group
+        %span.no-control-label
         .controls
           = f.button :submit, :class => 'btn-primary'
           = link_to t('actions.cancel'), user_path(@user.username), class: "btn btn-default"
-          %p.help Tänk på att det du skriver i din profil – precis som nästan allt annat du gör i Malmö stad – blir offentlig handling. Skriv bara sådant du kan stå för.
+          %p.help-block Tänk på att det du skriver i din profil – precis som nästan allt annat du gör i Malmö stad – blir offentlig handling. Skriv bara sådant du kan stå för.
 
 - if admin? && !@user.admin?
   %section.box.show.user.danger-zone

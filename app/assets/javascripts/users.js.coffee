@@ -75,7 +75,7 @@ $ ->
   $("section.show.user .colleagueship").on "mouseover focus", ".remove", ->
     $(@).addClass("btn-danger").text("Sluta följ")
   $("section.show.user .colleagueship").on "mouseleave blur", ".remove", ->
-    $(@).removeClass("btn-danger").text("Följer")
+    $(@).addClass("btn-default").removeClass("btn-danger").text("Följer")
 
 
   $address = $("#edit-user #user_search_address")

@@ -7,9 +7,7 @@ SimpleForm.setup do |config|
   config.wrappers :basic, tag: 'div', class: 'form-group', error_class: 'warning' do |b|
     b.use :html5
     b.use :placeholder
-    b.wrapper tag: 'span', class: 'control-label' do |label|
-      label.use :label
-    end
+    b.use :label, class: 'control-label'
     b.wrapper tag: 'div', class: 'controls' do |ba|
       ba.use :input, class: 'form-control'
       ba.use :error, wrap_with: { tag: 'span', class: 'help-block' }
@@ -17,17 +15,25 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :addon, tag: 'div', class: 'form-group', error_class: 'warning' do |b|
+  config.wrappers :input_group, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
-    b.wrapper tag: 'span', class: 'control-label' do |label|
-      label.use :label
-    end
-    b.wrapper tag: 'div', class: 'controls input-group' do |ba|
-      ba.use :input, class: 'form-control'
-      # Breaks BS3 input-group
-      # ba.use :error, wrap_with: { tag: 'span', class: 'help-block' }
+    b.use :label, class: 'control-label'
+    b.wrapper tag: 'div', class: "controls" do |ba|
+      ba.wrapper tag: 'div', class: 'input-group' do |append|
+        append.use :input, class: 'form-control'
+      end
+      ba.use :error, wrap_with: { tag: 'span', class: 'help-block' }
       ba.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+    end
+  end
+
+  # Control group for display of a record without controls
+  config.wrappers :text_only_more_info, :tag => 'div', :class => 'control-group text-only' do |b|
+    b.use :label
+    b.wrapper :tag => 'div', :class => 'controls' do |ba|
+      ba.use :input
+      ba.use :hint, :wrap_with => { :tag => 'div', :class => 'help more-info' }
     end
   end
 end
