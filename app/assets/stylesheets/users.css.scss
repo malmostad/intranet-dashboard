@@ -1,5 +1,6 @@
 // View for user data
 .show.user {
+  font-family: $sans-serif;
   section.vcard {
     @include clearfix();
     .photo {
@@ -25,6 +26,7 @@
       }
       .professional-bio {
         font-family: $serif;
+        font-size: emize(17);
         margin-bottom: .5em;
         line-height: 1.4;
       }
@@ -158,9 +160,9 @@
   }
   section.personal .note p {
     font-family: $serif;
-    font-size: emize(14);
+    font-size: emize(15);
+    line-height: 1.5;
     margin-bottom: .5em;
-    line-height: 1.4;
   }
   a.change {
     margin-left: .4em;

@@ -7,17 +7,17 @@
       .photo
         = image_tag @user.avatar.url(:large), alt: "Profilbild"
         - if admin_or_myself?
-          = link_to(raw("Redigera <span>profil</span>"), edit_user_path(@user), class: "btn btn-sm edit")
-          = link_to "Byt bild", edit_avatar_path(@user), class: "change-avatar btn btn-sm"
+          = link_to(raw("Redigera <span>profil</span>"), edit_user_path(@user), class: "btn btn-default btn-sm")
+          = link_to "Byt bild", edit_avatar_path(@user), class: "btn-default btn btn-sm"
 
       .main-card
         - unless myself?
           .colleagueship
             - if @colleagueship.present?
-              %button.btn.btn-sm.remove{ data: { "colleagueship-id" => @colleagueship.colleague.id, "path" => colleagueships_path, "user-id" => @user.id }} Följer
+              %button.btn.btn-default.btn-sm.remove{ data: { "colleagueship-id" => @colleagueship.colleague.id, "path" => colleagueships_path, "user-id" => @user.id }} Följer
             - else
               %button.btn.btn-primary.btn-sm.add{ data: { path: colleagueships_path, "user-id" => @user.id }} Följ
-        .add-contact= link_to "VCard", "#{user_path(@user.username)}.vcf", class: "btn btn-sm"
+        .add-contact= link_to "VCard", "#{user_path(@user.username)}.vcf", class: "btn btn-default btn-sm"
 
         %h2.fn= "#{@user.first_name} #{@user.last_name}"
         %p.org
@@ -35,7 +35,7 @@
 
     .employee-column-1
       %section.address.vcard
-        %h2.form-group-title Arbetsplats
+        %h2.group-title Arbetsplats
         %p.room
           = "Rumsnummer: #{@user.room}"
         %p.street-address
@@ -45,34 +45,34 @@
         #map
 
       %section.competence
-        %h2.form-group-title Kunskapsområden
+        %h2.group-title Kunskapsområden
         - if @user.skills.present?
           %ul
             - @user.skills.each do |skill|
               %li= link_to skill.name, users_tags_path(skill: skill.name)
 
       %section.languages
-        %h2.form-group-title Språkkunskaper
+        %h2.group-title Språkkunskaper
         - if @user.languages.present?
           %ul
             - @user.languages.each do |language|
               %li= link_to language.name, users_tags_path(language: language.name)
 
       %section.activities
-        %h2.form-group-title Projekt & aktiviteter
+        %h2.group-title Projekt & aktiviteter
         - if @user.activities.present?
           %ul
             - @user.activities.each do |activity|
               %li= link_to activity.name, users_tags_path(activity: activity.name)
 
       %section.intranet-activities
-        %h2.form-group-title Kominaktiviteter
+        %h2.group-title Kominaktiviteter
         %ul
           %li= link_to "Nyheter som #{@user.first_name} skrivit", "https://webapps04.malmo.se/nyheter/author/#{@user.username}"
           %li= link_to "Blogginlägg som #{@user.first_name} gjort", "https://webapps04.malmo.se/blogg/author/#{@user.username}"
 
       %section.personal
-        %h2.form-group-title Personligt
+        %h2.group-title Personligt
         .note= simple_format @user.private_bio
         %p.twitter
           = "Twitter:"
@@ -93,7 +93,7 @@
 
     .employee-column-2
       %section.org
-        %h2.form-group-title Rapporterar till
+        %h2.group-title Rapporterar till
         - if @user.manager.present?
           .photo= link_to image_tag(@user.manager.avatar.url(:tiny_quadrat), alt: "Profilbild"), user_path(@user.manager.username)
           .text
@@ -104,7 +104,7 @@
 
       - if @user.subordinates.present?
         %section.org
-          %h2.form-group-title Linjechef till/ansvarar för
+          %h2.group-title Linjechef till/ansvarar för
           %ul
             - @user.subordinates.each do |subordinate|
               %li
@@ -114,7 +114,7 @@
                   %p= subordinate.title
 
       %section.organizational
-        %h2.form-group-title Organisationstillhörighet i HR-systemet
+        %h2.group-title Organisationstillhörighet i HR-systemet
         %ol
           - if @user.company.present?
             %li= link_to @user.company, users_tags_path(company: @user.company)
@@ -123,7 +123,7 @@
               %li= link_to @user.send(org), users_tags_path(company: @user.company, org.to_sym => @user.send(org))
 
       %section.misc
-        %h2.form-group-title Övrigt
+        %h2.group-title Övrigt
         %p= "Grundprofil i Komin: #{@user.roles.map(&:name).to_sentence}"
         %p= "Användarnamn: #{@user.username}"
 
@@ -139,9 +139,8 @@
           %p= "Senast inloggad: #{l @user.last_login, format: :short}"
 
   - if admin_or_myself?
-    .dropdown.box-menu.pull-right
-      %a#user-menu.dropdown-toggle{ "role" => "button", "data-toggle" => "dropdown", "href" => "#", "title" => "Redigera profilen" }
-        %span.icon-caret-down.icon-large
-      %menu.dropdown-menu{ "aria-labelledby" => "feeds-dialog-menu" }
+    .dropdown.box-menu
+      %button#user-menu.dropdown-toggle{ type: "button", title: "Redigera profilen", "data-toggle" => "dropdown" }
+      %menu.dropdown-menu{ "aria-labelledby" => "feeds-dialog-menu", "aria-hidden" => true, role: "menu" }
         %li= link_to "Redigera profil...", edit_user_path(@user)
         %li= link_to "Byt bild...", edit_avatar_path(@user)
