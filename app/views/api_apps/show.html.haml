@@ -2,36 +2,38 @@
 %section.box.show.api-apps
   %h1.box-title= h1
   .box-content.basic.form-data
+    = simple_form_for @api_app, html: { class: "basic" } do |f|
 
-    .form-group.text-only
-      .control-label Namn:
-      .controls= @api_app.name
-    .form-group.text-only
-      .control-label Kontakt:
-      .controls= @api_app.contact
-    .form-group.text-only
-      .control-label IP-nummer:
-      .controls= @api_app.ip_address
-
-    .form-group.text-only
-      .control-label app_token:
-      .controls.token= @api_app.app_token
-
-    - if @api_app.app_secret.present?
       .form-group.text-only
-        .control-label app_secret:
-        .controls.token
-          = @api_app.app_secret
-          .warning= raw "Kopiera <span class='token'>app_secret</span>. Den sparas inte i klartext och kan inte visas igen."
-
-    - else
+        .control-label Namn:
+        .controls= @api_app.name
       .form-group.text-only
-        .control-label app_secret:
-        .controls#generate-secret
-          %p
-            %button.btn.btn-small{ 'data-path' => create_app_secret_path } Generera ny
-          %p App secret lagras inte i klartext. Generera en ny vid behov.
+        .control-label Kontakt:
+        .controls= @api_app.contact
+      .form-group.text-only
+        .control-label IP-nummer:
+        .controls= @api_app.ip_address
 
-    .form-group
-      .controls
-        = link_to 'Redigera', edit_api_app_path(@api_app), class: "btn btn-default"
+      .form-group.text-only
+        .control-label app_token:
+        .controls.token= @api_app.app_token
+
+      - if @api_app.app_secret.present?
+        .form-group.text-only
+          .control-label app_secret:
+          .controls.token
+            = @api_app.app_secret
+            .warning= raw "Kopiera <span class='token'>app_secret</span>. Den sparas inte i klartext och kan inte visas igen."
+
+      - else
+        .form-group.text-only
+          .control-label app_secret:
+          .controls#generate-secret
+            %p
+              %button.btn.btn-default{ type: "button", 'data-path' => create_app_secret_path } Generera ny
+            %p App secret lagras inte i klartext. Generera en ny vid behov.
+
+      .form-group
+        %span.no-control-label
+        .controls
+          = link_to 'Redigera', edit_api_app_path(@api_app), class: "btn btn-default"
