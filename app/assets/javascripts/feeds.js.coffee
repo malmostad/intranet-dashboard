@@ -1,6 +1,6 @@
 $ ->
   # Load more feed entries async on click
-  $('.feeds').on "click", '.load-more input', (event) ->
+  $('.feeds').on "click", '.load-more button', (event) ->
     event.preventDefault()
     getMore $(@)
 
