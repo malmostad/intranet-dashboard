@@ -30,8 +30,7 @@
             %p.status= colleague.status_message ||= "Jag har ingen status än!"
             - if colleague.status_message_updated_at
               %p.updated_at= "#{distance_of_time_in_words_to_now( colleague.status_message_updated_at ).humanize()} sen"
-          %a.delete{ href: colleagueship_path(colleague.id), "data-method" => "delete", "data-remote" => "true", "rel" => "nofollow", title: "Ta bort #{colleague.first_name}" }
-            %span.icon-remove
+          %a.m-icon-close.remove{ href: colleagueship_path(colleague.id), "data-method" => "delete", "data-remote" => "true", "rel" => "nofollow", title: "Ta bort #{colleague.first_name}" }
 
       %li.add
         - unless @colleagues.present?
