@@ -3,3 +3,9 @@
   %h1.box-title= h1
   .box-content
     = render "search_form"
+
+
+    .form-group
+      .controls
+        .input-group
+          .actions= link_to "Lägg till ny", new_activity_path, class: "btn btn-primary"
