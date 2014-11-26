@@ -6,11 +6,12 @@
     .form-group
       = f.label :name, "Namn:", class: "control-label"
       .controls
-        = f.text_field :name, class: 'input-wide'
+        = f.text_field :name, class: "form-control"
         - @skill.errors[:name].each do |msg|
           .help-inline.warning= "#{msg}"
 
     .form-group
+      %span.no-control-label
       .controls
         = f.submit t( 'actions.save' ), class: "btn btn-primary"
         - unless @skill.new_record?

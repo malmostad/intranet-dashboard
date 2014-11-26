@@ -13,11 +13,12 @@
       .form-group
         = label_tag :into, "Slå samman med:", class: "control-label"
         .controls
-          = text_field_tag :into, nil, class: 'input-wide', 'data-search-path' => skills_search_path
+          = text_field_tag :into, nil, class: "form-control", 'data-search-path' => skills_search_path
           - @skill.errors[:into].each do |msg|
             .help-inline.warning= "#{msg}"
 
       .form-group
+        %span.no-control-label
         .controls
           = f.submit "Slå samman", class: "btn btn-primary"
           = link_to t('actions.cancel'), skills_path, class: "btn btn-default"
