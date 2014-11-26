@@ -3,7 +3,7 @@
   %h1.box-title= h1
   .box-content
     %p.help
-      = "På den här sidan kryssar du i vilka fler länkar du vill visa i boxen #{Shortcut::CATEGORIES[params[:category]]}." 
+      = "På den här sidan kryssar du i vilka fler länkar du vill visa i boxen #{Shortcut::CATEGORIES[params[:category]]}."
       = 'De länkar som inte går att kryssa ur är obligatoriska baserat på vad du  '
       = link_to "valt i din grundprofil.", edit_user_path(@user)
 
@@ -12,9 +12,10 @@
         %ul.warning
           - @user.errors.messages.each do |msg|
             %li= msg[1].first
+
       .form-group
         .control-label= "#{Shortcut::CATEGORIES[params[:category]]}:"
-        .controls
+        .controls.checkbox
           = hidden_field_tag "user[id]", @user.id
           - @shortcuts.each do |shortcut|
             - is_mandatory = @user.role_ids.select { |r| shortcut.role_ids.include?(r) }.present?
@@ -26,6 +27,7 @@
                   disabled: is_mandatory )
               = shortcut.name
       .form-group
+        %span.no-control-label
         .controls
           = submit_tag t( "actions.save" ), class: "btn btn-primary"
           = link_to t( 'actions.cancel' ), root_path, class: "btn btn-default"
