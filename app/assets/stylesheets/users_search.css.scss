@@ -1,23 +1,12 @@
 // Results list for user search
 section.box.index.users {
   margin-bottom: 3em;
-  form {
-    label {
-      display: none;
-    }
-    .controls {
-      margin-left: 0;
-      .input-append {
-        width: 100%;
-      }
-      input#query-employee {
-        width: 35em;
-        max-width: 80% !important;
-      }
-      .help {
-        margin: .4em 0 0;
-      }
-    }
+  form .help-inline {
+    margin: .4em 0 1em;
+  }
+  .summary {
+    font-family: $sans-serif;
+    font-size: emize(14, 16);
   }
   ul.results li {
     @include clearfix();
