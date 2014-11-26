@@ -6,27 +6,27 @@
     .form-group
       = f.label :name, "Namn:", class: "control-label"
       .controls
-        = f.text_field :name, class: "input-wide"
+        = f.text_field :name, class: "form-control"
         - @shortcut.errors[:name].each do |msg|
           .help-inline.warning= "#{msg}"
 
     .form-group
       = f.label :url, "Url:", class: "control-label"
       .controls
-        = f.url_field :url, class: "input-wide", value: (@shortcut.new_record? and @shortcut.url.blank?) ? 'http://' : @shortcut.url
+        = f.url_field :url, class: "form-control", value: (@shortcut.new_record? and @shortcut.url.blank?) ? 'http://' : @shortcut.url
         - @shortcut.errors[:url].each do |msg|
           .help-inline.warning= "#{msg}"
 
     .form-group
       = label_tag 'shortcut_category', "Kategori:", class: "control-label"
-      .controls= select(:shortcut, :category,  Shortcut::CATEGORIES.map { |key, val| [val, key] } )
+      .controls= select(:shortcut, :category,  Shortcut::CATEGORIES.map { |key, val| [val, key] }, {}, { class: "form-control" } )
 
-    %h2.form-group-title Obligatorisk för följande roller
+    %h2.group-title Obligatorisk för följande roller
     - Role::CATEGORIES.each do |key, val|
       .form-group
         .control-label="#{val}:"
         = hidden_field_tag "shortcut[role_ids][]", nil
-        .controls
+        .controls.checkbox
           %label.checkbox
             = check_box_tag("toggle-#{key}s")
             Alla
@@ -39,7 +39,7 @@
                 = role.name
 
     .form-group
+      %span.no-control-label
       .controls
         = f.submit t( 'actions.save' ), class: "btn btn-primary"
-        = link_to t('actions.cancel'), shortcuts_path, class: "btn"
-
+        = link_to t('actions.cancel'), shortcuts_path, class: "btn btn-default"

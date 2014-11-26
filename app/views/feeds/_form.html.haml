@@ -42,7 +42,7 @@
         .form-group
           .control-label= "#{val}:"
           = hidden_field_tag "feed[role_ids][]", nil
-          .controls.radio
+          .controls.checkbox
             %label.checkbox
               = check_box_tag("toggle-#{key}s")
               Alla
