@@ -39,7 +39,7 @@ module ApplicationHelper
     content_tag(:div,
       content_tag(:div, "#{name}:", class: 'control-label') +
       content_tag(:div, value, class: 'controls'),
-      class: 'control-group text-only')
+      class: 'form-group')
   end
 
   def show_on_map(address)
