@@ -7,17 +7,17 @@
       .photo
         = image_tag @user.avatar.url(:large), alt: "Profilbild"
         - if admin_or_myself?
-          = link_to(raw("Redigera <span>profil</span>"), edit_user_path(@user), class: "btn btn-mini edit")
-          = link_to "Byt bild", edit_avatar_path(@user), class: "change-avatar btn btn-mini"
+          = link_to(raw("Redigera <span>profil</span>"), edit_user_path(@user), class: "btn btn-sm edit")
+          = link_to "Byt bild", edit_avatar_path(@user), class: "change-avatar btn btn-sm"
 
       .main-card
         - unless myself?
           .colleagueship
             - if @colleagueship.present?
-              %button.btn.btn-mini.remove{ data: { "colleagueship-id" => @colleagueship.colleague.id, "path" => colleagueships_path, "user-id" => @user.id }} Följer
+              %button.btn.btn-sm.remove{ data: { "colleagueship-id" => @colleagueship.colleague.id, "path" => colleagueships_path, "user-id" => @user.id }} Följer
             - else
-              %button.btn.btn-primary.btn-mini.add{ data: { path: colleagueships_path, "user-id" => @user.id }} Följ
-        .add-contact= link_to "VCard", "#{user_path(@user.username)}.vcf", class: "btn btn-mini"
+              %button.btn.btn-primary.btn-sm.add{ data: { path: colleagueships_path, "user-id" => @user.id }} Följ
+        .add-contact= link_to "VCard", "#{user_path(@user.username)}.vcf", class: "btn btn-sm"
 
         %h2.fn= "#{@user.first_name} #{@user.last_name}"
         %p.org
