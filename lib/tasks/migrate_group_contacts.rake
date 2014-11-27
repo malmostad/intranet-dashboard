@@ -2,14 +2,17 @@ desc "Migrate group contacts from MalmoAut export"
 task migrate_group_contacts: :environment do
 
   # Group contacts in use
-  contact_boxes = File.open(Rails.root.join('import', 'contact_boxes.csv'), 'r').each_line.map do |line|
-    line.split(";").first
-  end
+  # Note: This list is from 2013 and has no value
+  # contact_boxes = File.open(Rails.root.join('import', 'contact_boxes.csv'), 'r').each_line.map do |line|
+  #   line.split(";").first
+  # end
 
   # All group contacts
   File.open( Rails.root.join('import', 'group_contacts.csv'), 'r').each_line do |line|
     group_contact = line.split(";")
-    if contact_boxes.include? group_contact[2]
+    if group_contact[2].empty?
+      puts "No cn for: #{group_contact.join(';')}"
+    else
       GroupContact.create(
         name: group_contact[2],  # cn
         email: group_contact[4],  # MalmoKonEpost
