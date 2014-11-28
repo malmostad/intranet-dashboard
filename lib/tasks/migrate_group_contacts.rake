@@ -22,20 +22,20 @@ task migrate_group_contacts: :environment do
     else
       migrated += 1
       GroupContact.create(
-        name: group_contact[2],  # cn
-        email: group_contact[4],  # MalmoKonEpost
-        phone: group_contact[5],  # MalmoKonTelefonnr
-        fax: group_contact[11], # MalmoKonFaxNr
-        phone_hours: group_contact[10], # MalmoKonTeletid
-        homepage: group_contact[1],  # MalmoKonHemsida
-        address: group_contact[3],  # MalmoKonPostadr
-        zip_code: group_contact[7],  # MalmoKonPostnr
+        name: group_contact[2].strip,          # cn
+        email: group_contact[4].strip,         # MalmoKonEpost
+        phone: group_contact[5].strip,         # MalmoKonTelefonnr
+        fax: group_contact[11].strip,          # MalmoKonFaxNr
+        phone_hours: group_contact[10].strip,  # MalmoKonTeletid
+        homepage: group_contact[1].strip,      # MalmoKonHemsida
+        address: group_contact[3].strip,       # MalmoKonPostadr
+        zip_code: group_contact[7].strip,      # MalmoKonPostnr
 #        postal_town:
-        visitors_address: group_contact[6],  # MalmoKonBesokadr
-        visitors_address_zip_code: group_contact[12], # MalmoKonBesokpostnr
+        visitors_address: group_contact[6].strip,           # MalmoKonBesokadr
+        visitors_address_zip_code: group_contact[12].strip, # MalmoKonBesokpostnr
 #        visitors_address_postal_town:
-        visiting_hours: group_contact[8],  # MalmoKonBesoktid
-        legacy_dn: group_contact[0]  # dn
+        visiting_hours: group_contact[8].strip,             # MalmoKonBesoktid
+        legacy_dn: group_contact[0].strip                   # dn
       )
     end
   end
