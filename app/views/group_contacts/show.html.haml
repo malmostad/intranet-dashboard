@@ -36,13 +36,12 @@
         - if @group_contact.homepage.present?
           = link_to @group_contact.homepage, @group_contact.homepage
 
-    - if contacts_editor?
-      - if @group_contact.last_request.present? && @group_contact.last_request_by_api_app.present?
-        = show_attribute("Senast efterfrågad", l(@group_contact.last_request, format: :short))
-        = show_attribute("Senast efterfrågad av", link_to(@group_contact.last_request_by_api_app.name, api_app_path(@group_contact.last_request_by_api_app.id)))
-      - else
-        = show_attribute("Senast efterfrågad", "Aldrig")
-
     .control-group
       .controls
         = link_to 'Redigera', edit_group_contact_path(@group_contact), class: "btn"
+
+    %h2.form-group-title Statistik
+    = show_attribute("Antal requests", @group_contact.requests)
+    - if @group_contact.last_request.present? && @group_contact.last_request_by_api_app.present?
+      = show_attribute("Senast request", l(@group_contact.last_request, format: :short))
+      = show_attribute("Senaste request av", link_to(@group_contact.last_request_by_api_app.name, api_app_path(@group_contact.last_request_by_api_app.id)))

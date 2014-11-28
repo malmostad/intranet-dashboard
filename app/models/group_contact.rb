@@ -6,7 +6,7 @@ class GroupContact < ActiveRecord::Base
       :visitors_address_geo_position_y, :visitors_address_postal_town, :visitors_address_zip_code,
       :visitors_district, :zip_code,
       :legacy_dn,
-      :last_request, :last_request_by
+      :last_request, :last_request_by, :requests
 
   # Used for logging of last_request from ApiApp consumer
   has_one :last_request_by_api_app, class_name: "ApiApp", foreign_key: "id", primary_key: "last_request_by"
