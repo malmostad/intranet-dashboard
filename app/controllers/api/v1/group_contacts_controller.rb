@@ -11,8 +11,6 @@ module Api
 
       def show
         @group_contact = GroupContact.find(params[:id])
-        logger.debug "@group_contact.requests @group_contact.requests @group_contact.requests @group_contact.requests"
-        logger.debug @group_contact.requests
         @group_contact.update_attributes(
           requests: @group_contact.requests + 1,
           last_request: Time.now,
