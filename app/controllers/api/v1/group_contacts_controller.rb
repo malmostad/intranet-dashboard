@@ -11,7 +11,11 @@ module Api
 
       def show
         @group_contact = GroupContact.find(params[:id])
-        @group_contact.update_attributes(last_request: Time.now, last_request_by: @api_app.id)
+        @group_contact.update_attributes(
+          requests: @group_contact.requests + 1,
+          last_request: Time.now,
+          last_request_by: @api_app.id
+        )
       end
     end
   end

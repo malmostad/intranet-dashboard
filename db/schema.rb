@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140825080209) do
+ActiveRecord::Schema.define(version: 20141128141418) do
 
   create_table "activities", force: true do |t|
     t.string   "name"
@@ -124,11 +124,12 @@ ActiveRecord::Schema.define(version: 20140825080209) do
     t.string   "visitors_address_geo_position_y"
     t.string   "visitors_district"
     t.string   "visiting_hours"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.datetime "last_request"
     t.integer  "last_request_by"
     t.string   "legacy_dn"
+    t.integer  "requests",                        default: 0
   end
 
   add_index "group_contacts", ["name"], name: "index_group_contacts_on_name", unique: true, using: :btree
