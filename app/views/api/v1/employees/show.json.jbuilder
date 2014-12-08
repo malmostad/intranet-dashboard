@@ -1,6 +1,11 @@
 json.catalog_id @employee.username
 json.extract! @employee, :id, :first_name, :last_name, :title,
-    :email, :phone, :cell_phone, :company, :department, :address, :room, :created_at, :updated_at
+    :email, :phone, :cell_phone, :company, :department,
+    :room, :address
+# To align with group contacts name 'zip_code':
+json.zip_code @employee.post_code
+json.extract! @employee, :postal_town, :geo_position_x, :geo_position_y,
+    :created_at, :updated_at
 
 json.roles @employee.roles.map(&:name)
 json.skills @employee.skills.map(&:name)
