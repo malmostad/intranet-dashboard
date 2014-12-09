@@ -99,39 +99,8 @@ section.box.feeds {
   }
 }
 
-section.box#feeds-news,
-section.box#combined {
-  .box-content {
-    li {
-      img {
-        width: 68px;
-        margin-top: .3em;
-      }
-    }
-    li:first-child {
-      a {
-        padding-bottom: 0.4em;
-      }
-      img {
-        width: 120px;
-        margin: .3em 1em 0 0;
-      }
-      h2 {
-        margin: 0;
-        padding: 0;
-        font-size: emize(28);
-        line-height: emize(28, 26);
-        font-weight: normal;
-      }
-      p.summary {
-        font-size: emize(20);
-        line-height: emize(26, 20);
-      }
-      p.meta {
-        font-size: emize(14);
-      }
-    }
-  }
+section.combined .box-content li:first-child {
+  margin-top: .2em;
 }
 
 section.box#feeds-feature {
