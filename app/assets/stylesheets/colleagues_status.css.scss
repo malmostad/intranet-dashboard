@@ -18,13 +18,15 @@ section.box#colleagues {
       .text {
         overflow: hidden;
         h2.name {
-          font-size: emize(15, 15);
+          font-size: emize(14, 15);
+          font-family: $sans-serif;
           font-weight: normal;
           line-height: 1.3;
           margin: 0;
         }
         p.status {
-          font-size: emize(15, 15);
+          font-size: emize(14, 15);
+          font-family: $sans-serif;
           line-height: 1.3;
           margin-bottom: 0;
           &.success {
