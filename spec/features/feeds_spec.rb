@@ -28,10 +28,10 @@ describe "Feeds" do
   end
 
   it "should load more news feed entries", js: true do
-    before = all("#feeds-news .box-content li").count
-    find("section.news .box-content li.load-more button").value.should == "Visa fler nyheter"
-    find("section.news .box-content li.load-more button").click
-    find("section.news .box-content li.load-more button").value.should == "Hämtar fler..."
+    before = all("section.news .box-content li").count
+    find("section.news .box-content li.load-more input").value.should == "Visa fler nyheter"
+    find("section.news .box-content li.load-more input").click
+    find("section.news .box-content li.load-more input").value.should == "Hämtar fler..."
     before.should < all("section.news .box-content li").count
   end
 
@@ -50,9 +50,9 @@ describe "Feeds" do
     first(".box.feeds .dropdown").click
     click_link("Visa sammanslaget")
     before = all(".combined .box-content li").count
-    find("li.load-more button").value.should == "Visa fler"
+    find("li.load-more input").value.should == "Visa fler"
     page.execute_script("window.scrollTo(0, 10000)")
-    find(".box-content li.load-more button").value.should == "Hämtar fler..."
+    find(".box-content li.load-more input").value.should == "Hämtar fler..."
     before.should < all(".combined .box-content li").count
   end
 
