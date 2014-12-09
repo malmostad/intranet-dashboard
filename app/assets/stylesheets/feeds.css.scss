@@ -138,7 +138,7 @@ section.box#feeds-feature {
   .text {
     clear: both;
     h2 {
-      font-size: emize(20);
+      font-size: emize(20, 15);
     }
   }
   .crop {
@@ -156,7 +156,7 @@ section.box#feeds-feature {
   }
   .more a {
     font-family: $sans-serif;
-    font-size: emize(14);
+    font-size: emize(14, 14);
     padding-bottom: .4em;
   }
 }
