@@ -1,29 +1,6 @@
-@media (min-width: 68em) {
-  section.box#feeds-news .box-content li:first-child {
-    h2 {
-      font-size: emize(32);
-    }
-  }
-}
-
 @media (max-width: 68em) {
   body.malmo-masthead-dashboard {
     min-width: 0;
-  }
-  section.box#feeds-news .box-content  {
-    li.first-child  {
-      h2 {
-        font-size: emize(20);
-      }
-      p.summary {
-        font-size: emize(15);
-        line-height: emize(19, 15);
-      }
-      img {
-        width: 68px;
-        margin-top: .3em;
-      }
-    }
   }
   .login section#feature {
     h1 {
@@ -269,13 +246,9 @@
               margin: 0;
               padding: 0;
             }
-            p.meta {
-              font-size: emize(12);
-            }
           }
         }
       }
-      section.box#feeds-news,
       section.box#feeds-dialog,
       section.box#my_own  {
         .box-content li {
@@ -286,19 +259,6 @@
             width: 46px;
             height: 46px;
           }
-        }
-      }
-
-      section.box#feeds-news .box-content li:first-child {
-        img {
-          width: 46px;
-          margin: 3px 10px 11px 0;
-        }
-        h2 {
-          font-size: emize(20);
-        }
-        p.summary {
-          font-size: emize(16);
         }
       }
 
@@ -321,7 +281,7 @@
           clear: none;
           h2 {
             font-family: $serif;
-            font-size: emize(20);
+            font-size: emize(24, 15);
           }
         }
         .more {
