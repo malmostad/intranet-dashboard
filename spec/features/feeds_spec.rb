@@ -28,7 +28,7 @@ describe "Feeds" do
   end
 
   it "should load more news feed entries", js: true do
-    before = all("#feeds-news .box-content li").count
+    before = all("section.news .box-content li").count
     find("section.news .box-content li.load-more input").value.should == "Visa fler nyheter"
     find("section.news .box-content li.load-more input").click
     find("section.news .box-content li.load-more input").value.should == "Hämtar fler..."
