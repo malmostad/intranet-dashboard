@@ -1,4 +1,4 @@
-@media ( min-width: 68em ) {
+@media (min-width: 68em) {
   section.box#feeds-news .box-content li:first-child {
     h2 {
       font-size: emize(32);
@@ -6,7 +6,7 @@
   }
 }
 
-@media ( max-width: 68em ) {
+@media (max-width: 68em) {
   body.malmo-masthead-dashboard {
     min-width: 0;
   }
@@ -17,7 +17,7 @@
       }
       p.summary {
         font-size: emize(15);
-        line-height: emize(19, 15);;
+        line-height: emize(19, 15);
       }
       img {
         width: 68px;
@@ -35,7 +35,7 @@
   }
 }
 
-@media ( max-width: 62em ) {
+@media (max-width: 62em) {
   .group-1 {
     @include columns(12);
     .column-1 {
@@ -80,7 +80,7 @@
   }
 }
 
-@media ( max-width: 51em ) {
+@media (max-width: 51em) {
   body {
     .wrapper {
       margin: 0;
@@ -118,7 +118,8 @@
   }
 
   .malmo-form.edit {
-    section.index, section.show,
+    section.index,
+    section.show,
     section.form,
     nav.admin {
       @include columns(12);
@@ -130,7 +131,7 @@
   }
 }
 
-@media ( max-width: 46em ) {
+@media (max-width: 46em) {
   .malmo-form.edit {
     nav.admin {
       clear: both;
@@ -184,7 +185,7 @@
   }
 }
 
-@media ( max-width: 44em ) {
+@media (max-width: 44em) {
   body {
     margin-left: 0;
     margin-right: 0;
@@ -232,7 +233,7 @@
     section.show,
     section.form {
       @include radius(0);
-      border: none;
+      border: 0;
       margin-bottom: 0;
     }
 
@@ -313,7 +314,7 @@
         .crop {
           overflow: visible;
           margin-bottom: 0;
-          border: none;
+          border: 0;
         }
         .text {
           @include columns(6, true);

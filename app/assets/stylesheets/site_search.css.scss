@@ -16,12 +16,10 @@ section.site-search {
   }
 
   form label {
+    display: block;
     font-family: $serif;
-    font-size: emize(32);
+    font-size: emize(36, 14);
     margin-bottom: .6em;
-  }
-  #q {
-    width: 80%;
   }
   .sort {
     margin: 0 0 .5em;
@@ -43,6 +41,7 @@ section.site-search {
       margin: 0;
     }
     h2 {
+      font-size: emize(24, 17);
       margin-top: 0;
     }
     li {
