@@ -73,6 +73,7 @@ namespace :deploy do
   task :restart_daemons do
     puts "Restarting daemons, this can take a while..."
     run "RAILS_ENV=#{rails_env} #{release_path}/lib/daemons/feed_worker_ctl restart"
+    run "RAILS_ENV=#{rails_env} #{release_path}/bin/delayed_job restart"
   end
 end
 
