@@ -30,10 +30,11 @@ Dashboard::Application.configure do
   config.action_mailer.smtp_settings = {
     :address              => "mail2.malmo.se",
     :domain               => 'malmo.se',
-    :enable_starttls_auto => true
+    :enable_starttls_auto => true,
+    :openssl_verify_mode  => 'none'
   }
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # ImageMagick resize. (Use "which convert" path)
   Paperclip.options[:command_path] = "/usr/bin/"

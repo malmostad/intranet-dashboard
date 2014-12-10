@@ -5,4 +5,4 @@ set :bundle_dir, ""
 set :bundle_flags, ""
 
 before "deploy", 'backup:mysql'
-after 'deploy', "delayed_job:restart", 'deploy:restart_daemons'
+after 'deploy', 'deploy:restart_daemons'
