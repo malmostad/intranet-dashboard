@@ -25,4 +25,31 @@ namespace :stats do
       end
     end
   end
+
+  task departments: :environment do
+    file = File.open("roles.csv", 'w')
+    Role.where(category: "department").each do |role|
+      multiple_roles = 0
+      role.users.each do |user|
+        multiple_roles += 1 if user.roles.where(category: "department").count > 1
+      end
+      file.write "#{role.name}\t#{role.users.count}\t#{multiple_roles}\n"
+    end
+    file.close
+
+    # puts Role.where(category: "department").first.users.joins(:roles).select('roles.name').group('roles.name').having('count(roles.name) > 1').count
+    # Role.where(name: "Centrum").joins(:users).first.users.each { |user| puts user.roles.where(category: "department").count };
+    # role.users.joins(:roles).select('roles.id').group('roles.id').having('count(roles.id) > 1')
+    #
+    # Role.where(category: "department").each do |role|
+    #   multiple_roles = 0
+    #   role.users.each do |user|
+    #     if user.roles.where(category: "department").count > 1
+    #       multiple_roles += 1
+    #     end
+    #   end
+    #   file.write "#{role.name}\t#{role.users.count}\t#{multiple_roles}\n"
+    # end
+    # file.close
+  end
 end
