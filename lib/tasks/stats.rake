@@ -27,7 +27,7 @@ namespace :stats do
   end
 
   task departments: :environment do
-    file = File.open("roles.csv", 'w')
+    file = File.open("log/departments.csv", 'w')
     Role.where(category: "department").each do |role|
       multiple_roles = 0
       role.users.each do |user|
