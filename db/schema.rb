@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141128141418) do
+ActiveRecord::Schema.define(version: 20150107130615) do
 
   create_table "activities", force: true do |t|
     t.string   "name"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20141128141418) do
     t.string   "image"
     t.string   "image_medium"
     t.string   "image_large"
-    t.string   "url"
+    t.text     "url"
     t.string   "title"
     t.text     "summary"
     t.integer  "count_comments"
