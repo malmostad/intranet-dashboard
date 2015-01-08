@@ -6,21 +6,21 @@ describe User do
 
   it "must have a username" do
     user.username = nil
-    user.should_not be_valid
+    expect(user).not_to be_valid
   end
 
   it "should have an email" do
-    user.email.should be_present
+    expect(user.email).to be_present
   end
 
   it "should have a first and last name" do
-    user.first_name.should be_present
-    user.last_name.should be_present
+    expect(user.first_name).to be_present
+    expect(user.last_name).to be_present
   end
 
   it "should have a unique username" do
     create(:user, username: "fox")
-    build(:user, username: "fox").should_not be_valid
+    expect(build(:user, username: "fox")).not_to be_valid
   end
 
   it "should be deleted" do
@@ -31,13 +31,13 @@ describe User do
   it "should get a manager" do
     manager = create(:user)
     user.update_attribute(:manager, manager)
-    user.manager.should be_present
-    manager.subordinates.should be_present
+    expect(user.manager).to be_present
+    expect(manager.subordinates).to be_present
   end
 
   it "should have a protocol for the LinkeIn URL" do
     user.update(linkedin: "www.linkedin.com/in/fox")
-    user.linkedin.should eq("https://www.linkedin.com/in/fox")
+    expect(user.linkedin).to eq("https://www.linkedin.com/in/fox")
   end
 
   it "should get rid of her manager" do
@@ -45,6 +45,6 @@ describe User do
     user.update_attribute(:manager, manager)
     manager.destroy
     user.reload
-    user.manager.should_not be_present
+    expect(user.manager).not_to be_present
   end
 end

@@ -2,7 +2,6 @@ ENV["RAILS_ENV"] ||= 'local_test'
 
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'rspec/autorun'
 require 'capybara/rails'
 require 'capybara/poltergeist'
 require 'database_cleaner'
@@ -16,6 +15,8 @@ Capybara.default_wait_time = 5
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
+  config.raise_errors_for_deprecations!
+
   config.infer_spec_type_from_file_location!
 
   config.mock_with :rspec

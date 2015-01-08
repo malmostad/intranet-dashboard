@@ -8,67 +8,67 @@ describe "SiteseekerNormalizer" do
   end
 
   it "should have a number of hits" do
-    @response.total.should be_a Fixnum
+    expect(@response.total).to be_a Fixnum
   end
 
   it "should have results" do
-    @response.entries.count.should > 0
+    expect(@response.entries.count).to be > 0
   end
 
   describe "result entry" do
     it "should have an order number" do
-      @response.entries.first.number.should eq 1
+      expect(@response.entries.first.number).to eq 1
     end
 
     it "should have a title" do
-      @response.entries.first.title.should be_a String
+      expect(@response.entries.first.title).to be_a String
     end
 
     it "should have an extract" do
-      @response.entries.first.summary.should be_a String
+      expect(@response.entries.first.summary).to be_a String
     end
 
     it "should have a breadcrumb" do
-      @response.entries.first.breadcrumbs.should be_an Array
+      expect(@response.entries.first.breadcrumbs).to be_an Array
     end
 
     it "should have a category" do
-      @response.entries.first.category.should be_a String
+      expect(@response.entries.first.category).to be_a String
     end
 
     it "should have a date string" do
-      @response.entries.first.date.should be_a String
+      expect(@response.entries.first.date).to be_a String
     end
   end
 
   it "should have sorting" do
-    @response.sorting.should be_an Array
+    expect(@response.sorting).to be_an Array
   end
 
   it "should have a first sorting entry with text" do
-    @response.sorting.first.text.should be_a String
+    expect(@response.sorting.first.text).to be_a String
   end
 
   it "should have a second sorting entry with an url" do
-    @response.sorting[1].query.should be_a String
+    expect(@response.sorting[1].query).to be_a String
   end
 
   it "should have a query string for getting more results" do
-    @response.more_query.should be_a String
+    expect(@response.more_query).to be_a String
   end
 
   it "should have a categories" do
-    @response.category_groups.should be_an Array
+    expect(@response.category_groups).to be_an Array
   end
 
   it "should also take an array as a search argument" do
     response = @client.search({q: "barn"})
-    response.total.should > 0
+    expect(response.total).to be > 0
   end
 
   it "should show a spelling suggestions" do
     response = @client.search("barnomsrg")
-    response.suggestions.count.should > 0
+    expect(response.suggestions.count).to be > 0
   end
 
   it "should raise an error for an invalid search url" do

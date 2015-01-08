@@ -5,7 +5,7 @@ describe Role do
   let(:role) { create(:role) }
 
   it "should be valid" do
-    build(:role).should be_valid
+    expect(build(:role)).to be_valid
   end
 
   it "should be created" do
@@ -13,23 +13,23 @@ describe Role do
   end
 
   it "should have a unique name" do
-    build(:role, name: role.name).should_not be_valid
+    expect(build(:role, name: role.name)).not_to be_valid
   end
 
   it "should not be valid without a category" do
-    build(:role, category: nil).should_not be_valid
+    expect(build(:role, category: nil)).not_to be_valid
   end
 
   it "should not be valid without a homepage" do
-    build(:role, homepage_url: nil).should_not be_valid
+    expect(build(:role, homepage_url: nil)).not_to be_valid
   end
 
   it "should have a homepage" do
-    role.homepage_url.should be_present
+    expect(role.homepage_url).to be_present
   end
 
   it "should have a valid category" do
-    Role::CATEGORIES.should have_key(role.category)
+    expect(Role::CATEGORIES).to have_key(role.category)
   end
 
   it "should be destroyed" do

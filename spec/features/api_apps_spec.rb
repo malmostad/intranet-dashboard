@@ -9,7 +9,7 @@ describe "ApiApps" do
 
   it "administration should require and administrator" do
     visit api_apps_path
-    page.should have_selector('.error', text: "Du saknar behörighet")
+    expect(page).to have_selector('.error', text: "Du saknar behörighet")
   end
 
   describe "administration" do
@@ -19,7 +19,7 @@ describe "ApiApps" do
     end
 
     it "should be available for administrators" do
-      page.should have_selector('h1', text: "API-applikationer")
+      expect(page).to have_selector('h1', text: "API-applikationer")
     end
 
     it "should require an api app name" do
@@ -28,7 +28,7 @@ describe "ApiApps" do
       fill_in "api_app_contact", with: "foo"
       fill_in "api_app_ip_address", with: "127.0.0.1"
       click_button "Spara"
-      page.should have_selector(".warning", text: "Vänligen korrigera")
+      expect(page).to have_selector(".warning", text: "Vänligen korrigera")
     end
 
     it "should create api app" do
@@ -37,8 +37,8 @@ describe "ApiApps" do
       fill_in "api_app_contact", with: "foo"
       fill_in "api_app_ip_address", with: "127.0.0.1"
       click_button "Spara"
-      page.should have_selector(".flash.notice", text: "sparades")
-      page.should have_selector(".warning", text: "Kopiera app_secret")
+      expect(page).to have_selector(".flash.notice", text: "sparades")
+      expect(page).to have_selector(".warning", text: "Kopiera app_secret")
     end
 
     it "should update api app" do
@@ -48,7 +48,7 @@ describe "ApiApps" do
       click_on "Redigera"
       fill_in "api_app_name", with: "bar"
       click_button "Spara"
-      page.should have_selector(".flash.notice", text: "uppdaterades")
+      expect(page).to have_selector(".flash.notice", text: "uppdaterades")
     end
 
     it "should delete api app", js: true do
@@ -56,7 +56,7 @@ describe "ApiApps" do
       visit api_apps_path
       first("a.btn-danger").click
       page.evaluate_script("window.confirm()")
-      page.should have_selector(".flash.notice", text: "raderades")
+      expect(page).to have_selector(".flash.notice", text: "raderades")
     end
   end
 end

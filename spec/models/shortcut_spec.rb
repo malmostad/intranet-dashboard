@@ -3,23 +3,23 @@ require 'spec_helper'
 
 describe Shortcut do
   it "should be valid" do
-    build(:shortcut).should be_valid
+    expect(build(:shortcut)).to be_valid
   end
 
   it "should have an url" do
-    build(:shortcut, url: "").should be_invalid
+    expect(build(:shortcut, url: "")).to be_invalid
   end
 
   it "should have a valid url" do
-    build(:shortcut, url: "http://x.y").should be_invalid
+    expect(build(:shortcut, url: "http://x.y")).to be_invalid
   end
 
   it "should have a name" do
-    build(:shortcut, name: "").should be_invalid
+    expect(build(:shortcut, name: "")).to be_invalid
   end
 
   it "should have a name" do
-    create(:shortcut).name.should be_present
+    expect(create(:shortcut).name).to be_present
   end
 
   it "should be created" do
@@ -27,12 +27,12 @@ describe Shortcut do
   end
 
   it "should have a feed_url" do
-    create(:shortcut).url.should be_present
+    expect(create(:shortcut).url).to be_present
   end
 
   it "should have a valid category" do
     shortcut = build(:shortcut)
-    Shortcut::CATEGORIES.should have_key(shortcut.category)
+    expect(Shortcut::CATEGORIES).to have_key(shortcut.category)
   end
 
   it "should be destroyed" do

@@ -6,21 +6,21 @@ describe GroupContact do
   end
 
   it "should be valid" do
-    build(:group_contact).should be_valid
+    expect(build(:group_contact)).to be_valid
   end
 
   it "should require a name" do
-    build(:group_contact, name: "").should_not be_valid
+    expect(build(:group_contact, name: "")).not_to be_valid
   end
 
   it "should have a protocol for the homepage" do
     g = create(:group_contact, homepage: "malmo.se")
-    g.homepage.should eq("http://malmo.se")
+    expect(g.homepage).to eq "http://malmo.se"
   end
 
   it "should have a correct dash in phone" do
     g = create(:group_contact, phone: "040 - 34 10 00")
-    g.phone.should eq("040-34 10 00")
+    expect(g.phone).to eq "040-34 10 00"
   end
 
   it "should be destroyed" do

@@ -3,27 +3,27 @@ require 'spec_helper'
 
 describe Feed do
   it "should be valid" do
-    build(:feed).should be_valid
+    expect(build(:feed)).to be_valid
   end
 
   it "should be invalid" do
-    build(:feed, feed_url: "www.example.com").should be_invalid
+    expect(build(:feed, feed_url: "www.example.com")).to be_invalid
   end
 
   it "should be invalid" do
-    build(:feed, feed_url: "http://www.example.com").should be_invalid
+    expect(build(:feed, feed_url: "http://www.example.com")).to be_invalid
   end
 
   it "should be valid" do
-    build(:feed, feed_url: "feed://www.whitehouse.gov/feed/press").should be_valid
+    expect(build(:feed, feed_url: "feed://www.whitehouse.gov/feed/press")).to be_valid
   end
 
   it "should be valid" do
-    build(:feed, feed_url: "www.whitehouse.gov/feed/press").should be_valid
+    expect(build(:feed, feed_url: "www.whitehouse.gov/feed/press")).to be_valid
   end
 
   it "should not be valid without a feed_url" do
-    build(:feed, feed_url: "").should_not be_valid
+    expect(build(:feed, feed_url: "")).not_to be_valid
   end
 
   it "should be created" do
@@ -31,25 +31,25 @@ describe Feed do
   end
 
   it "should have a title" do
-    build(:feed).should respond_to :title
+    expect(build(:feed)).to respond_to :title
   end
 
   describe "creation" do
     let(:feed) { create(:feed) }
     it "should have a title" do
-      feed.title.should be_present
+      expect(feed.title).to be_present
     end
 
     it "should have a feed_url" do
-      feed.feed_url.should be_present
+      expect(feed.feed_url).to be_present
     end
 
     it "should have a feed_url" do
-      feed.feed_url.should be_present
+      expect(feed.feed_url).to be_present
     end
 
     it "should have an url" do
-      feed.url.should be_present
+      expect(feed.url).to be_present
     end
 
     it "should have feed entries" do
@@ -57,18 +57,18 @@ describe Feed do
     end
 
     it "should have a valid category" do
-      Feed::CATEGORIES.should have_key(feed.category)
+      expect(Feed::CATEGORIES).to have_key(feed.category)
     end
 
     it "should have feed_entries after clear and reload feed" do
       feed.refresh_entries
-      feed.feed_entries.count.should > 0
+      expect(feed.feed_entries.count).to be > 0
     end
 
     it "should change updated_at on clear and reload feed" do
       updated_at = feed.updated_at
       feed.refresh_entries
-      feed.updated_at.should > updated_at
+      expect(feed.updated_at).to be > updated_at
     end
   end
 
