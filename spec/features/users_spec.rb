@@ -50,14 +50,14 @@ describe "Users" do
     visit edit_user_path(user)
     fill_in :user_professional_bio, with: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     click_button "Spara"
-    page.should have_selector(".alert.warning", text: "korrigera")
+    page.should have_selector(".warning", text: "korrigera")
   end
 
   it "should invalidate contact card with huge skill name" do
     visit edit_user_path(user)
     fill_in :user_skill_list, with: "Lorem, ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
     click_button "Spara"
-    page.should have_selector(".alert.warning", text: "korrigera")
+    page.should have_selector(".warning", text: "korrigera")
   end
 
   it "should save room number" do

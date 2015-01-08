@@ -29,30 +29,31 @@ describe "Feeds" do
 
   it "should load more news feed entries", js: true do
     before = all("section.news .box-content li").count
-    find("section.news .box-content li.load-more input").value.should == "Visa fler nyheter"
-    find("section.news .box-content li.load-more input").click
-    find("section.news .box-content li.load-more input").value.should == "Hämtar fler..."
+    find("section.news .box-content li.load-more button").text.should eq "Visa fler nyheter"
+    find("section.news .box-content li.load-more button").click
+    find("section.news .box-content li.load-more button").text.should eq "Hämtar fler..."
+    sleep 1
     before.should < all("section.news .box-content li").count
   end
 
   it "should switch to combined news and back again", js: true do
-    first(".box.feeds .dropdown").click
+    first(".box.feeds .dropdown button").click
     click_link("Visa sammanslaget")
     page.should_not have_selector('section.news h1', text: "Nyheter")
-    @user.reload.combined_feed_stream?.should == true
-    first(".box.feeds .dropdown").click
+    @user.reload.combined_feed_stream?.should eq true
+    first(".box.feeds .dropdown button").click
     click_link("Visa kategoriserat")
     page.should have_selector('section.news h1', text: "Nyheter")
     @user.reload.combined_feed_stream?.should == false
   end
 
   it "should lazy load more combined news feed entries", js: true do
-    first(".box.feeds .dropdown").click
+    first(".box.feeds .dropdown button").click
     click_link("Visa sammanslaget")
     before = all(".combined .box-content li").count
-    find("li.load-more input").value.should == "Visa fler"
+    find("li.load-more button").text.should eq "Visa fler"
     page.execute_script("window.scrollTo(0, 10000)")
-    find(".box-content li.load-more input").value.should == "Hämtar fler..."
+    find(".box-content li.load-more button").text.should eq "Hämtar fler..."
     before.should < all(".combined .box-content li").count
   end
 
