@@ -54,6 +54,7 @@ describe "Feeds" do
     find("li.load-more button").text.should eq "Visa fler"
     page.execute_script("window.scrollTo(0, 10000)")
     find(".box-content li.load-more button").text.should eq "Hämtar fler..."
+    sleep 0.2
     before.should < all(".combined .box-content li").count
   end
 
