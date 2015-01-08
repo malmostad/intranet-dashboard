@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'protected_attributes'
 
-gem 'rails', '4.1.8'
+gem 'rails', '4.1.9'
 gem 'jquery-rails', '3.1.2'
 gem 'haml', '4.0.5'
 
