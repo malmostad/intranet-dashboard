@@ -11,8 +11,8 @@ The Intranet Dashboard, “Min sida”, is City of Malmö’s personalized intra
 For more information about the Intranet Dashboard, contact kominteamet@malmo.se.
 
 ## Dependencies
-* Ruby 1.9.3, 2.0, 2.1
-* Ruby on Rails 3.2
+* Ruby 2.2
+* Ruby on Rails 4.2
 * MySQL or PostgreSQL
 * Elasticsearch >=1.0
 * Memcached or other cache store with ttl support
@@ -96,7 +96,7 @@ Syncing of LDAP attributes for all employees in the system is made with a worker
 The system contains management of employee portraits and is used as an [avatar service for other applications on the intranet](https://github.com/malmostad/intranet-dashboard/wiki/Avatar-Service-API-v1) with a REST API.
 
 ## Contacts API
-A [REST API for employees and group contacts](https://github.com/malmostad/intranet-dashboard/wiki/Contacts-API-v1) is available. 
+A [REST API for employees and group contacts](https://github.com/malmostad/intranet-dashboard/wiki/Contacts-API-v1) is available.
 
 ## Intranet Search Interface
 The system contains an integration with the Siteseeker search engine. The search contains results from all intranet systems.
