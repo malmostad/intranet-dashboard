@@ -12,13 +12,13 @@ $ ->
       # Lazy load when rect.bottom is visible AND if feeds box hasn't a box to the right,
       # i.e. only in one column layout
       if $(window).width() - rect.right > 50 and rect.bottom <= $(window).height() + 100 and not currentlyLoading
-        getMore $(".load-more input")
+        getMore $(".load-more button")
 
 
   # Load and inject more feed entries
   getMore = ($trigger, url) ->
     currentlyLoading = true
-    $trigger.val("Hämtar fler...").addClass('disabled')
+    $trigger.text("Hämtar fler...").addClass('disabled')
 
     $.ajax
       url: $trigger.attr('data-path')
