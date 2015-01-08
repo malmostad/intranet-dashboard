@@ -22,7 +22,7 @@ gem 'elasticsearch-rails', '0.1.6'
 gem 'ansi'
 
 gem 'paperclip', '4.2.1'
-gem 'simple_form', '~> 3.1.0.rc2', :git => 'https://github.com/plataformatec/simple_form'
+gem 'simple_form', '~> 3.1.0'
 gem 'daemons', '1.1.9'
 gem 'daemons-rails', '1.2.1'
 gem 'delayed_job_active_record', '4.0.3'
