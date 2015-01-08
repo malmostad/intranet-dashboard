@@ -2,7 +2,6 @@ module Api
   module V1
     class GroupContactsController < ApiController
       before_action :restrict_access
-      respond_to :json
 
       def search
         paginate

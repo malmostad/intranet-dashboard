@@ -2,8 +2,8 @@ source 'http://rubygems.org'
 
 gem 'protected_attributes'
 
-gem 'rails', '4.1.9'
-gem 'jquery-rails', '3.1.2'
+gem 'rails', '4.2.0'
+gem 'jquery-rails', '4.0.3'
 gem 'haml', '4.0.6'
 
 gem 'nokogiri', '1.6.5'
