@@ -6,7 +6,7 @@ Dashboard::Application.configure do
   config.action_controller.perform_caching = true
 
   config.static_cache_control = "public, max-age=3600"
-  config.serve_static_assets = false
+  config.serve_static_files = false
   config.assets.js_compressor = :uglifier
   config.assets.css_compressor = :yui
   config.assets.compile = false
