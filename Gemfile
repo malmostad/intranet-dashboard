@@ -41,6 +41,7 @@ gem 'net-ssh', '2.7.0' # No prompt for pw in 2.8.0
 group :development do
   gem 'haml-rails'
   gem 'pry-rails'
+  gem 'scss-lint'
 end
 
 group :development, :test do
