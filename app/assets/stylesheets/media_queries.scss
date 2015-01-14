@@ -49,7 +49,7 @@
     }
   }
 
-  .malmo-form.edit {
+  .mf-v4.edit {
     th.url,
     td.url {
       display: none;
@@ -94,7 +94,7 @@
     }
   }
 
-  .malmo-form.edit {
+  .mf-v4.edit {
     section.index,
     section.show,
     section.form,
@@ -109,7 +109,7 @@
 }
 
 @media (max-width: 46em) {
-  .malmo-form.edit {
+  .mf-v4.edit {
     nav.admin {
       clear: both;
     }
@@ -140,7 +140,7 @@
       clear: both;
     }
   }
-  .malmo-form {
+  .mf-v4 {
     .form-horizontal {
       .controls,
       .actions,
