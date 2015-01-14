@@ -7,7 +7,7 @@
         %tr
           %th Namn
           %th Kontakt
-          %th Ip-adress
+          %th.secondary Ip-adress
           %th
 
       %tbody
@@ -15,7 +15,7 @@
           %tr
             %td= link_to api_app.name, api_app_path(api_app)
             %td= api_app.contact
-            %td= api_app.ip_address
+            %td.secondary= api_app.ip_address
             %td.delete= link_to "Radera", api_app, :method => :delete, :data => { :confirm => 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
         %tr
