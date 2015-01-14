@@ -2,7 +2,7 @@
 %section.box.form
   %h1.box-title= h1
   .box-content
-    %p.instruction
+    %p.body-copy
       = "På den här sidan kryssar du i vilka fler flöden du vill visa i boxen Mina Komin#{Feed::CATEGORIES[params[:category]]}."
       = 'De flöden som inte går att kryssa ur är obligatoriska baserat på vad du  '
       = link_to "valt i din grundprofil.", edit_user_path(@user)
