@@ -12,6 +12,19 @@
   }
 }
 
+@media (max-width: 64em) {
+  .mf-v4.edit {
+    th.url,
+    td.url {
+      display: none;
+    }
+    th.secondary,
+    td.secondary {
+      display: none;
+    }
+  }
+}
+
 @media (max-width: 62em) {
   .group-1 {
     @include columns(12);
@@ -46,13 +59,6 @@
     ul li a {
       padding-top: .5em;
       padding-bottom: .5em;
-    }
-  }
-
-  .mf-v4.edit {
-    th.url,
-    td.url {
-      display: none;
     }
   }
 }
@@ -100,10 +106,6 @@
     section.form,
     nav.admin {
       @include columns(12);
-    }
-    th.secondary,
-    td.secondary {
-      display: none;
     }
   }
 }
