@@ -5,6 +5,7 @@ describe "Global assets javascript" do
   let(:user) { create(:user) }
   before(:each) do
     login(user.username, "") # Stubbed auth
+    page.driver.browser.resize(1200, 800)
   end
 
   it "should have injected the masthead", js: true do
