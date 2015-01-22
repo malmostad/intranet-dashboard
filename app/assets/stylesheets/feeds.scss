@@ -52,18 +52,19 @@ section.box.feeds {
         h2 {
           margin: 0 0 .1em;
           padding: 0;
-          font-size: emize(24, 15);
+          font-size: emize(24);
           line-height: 1.2;
           font-weight: normal;
         }
         p.summary,
         p.nomore {
-          font-size: emize(17, 15);
+          font-size: emize(17);
           line-height: emize(21);
           margin-bottom: .1em;
         }
         p.meta {
           font-family: $sans-serif;
+          font-size: emize(14);
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
@@ -107,7 +108,7 @@ section.box#feeds-feature {
   .text {
     clear: both;
     h2 {
-      font-size: emize(20, 15);
+      font-size: emize(20);
     }
   }
   .crop {
