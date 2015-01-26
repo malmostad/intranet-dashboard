@@ -6,9 +6,9 @@ gem 'rails', '4.2.0'
 gem 'jquery-rails', '4.0.3'
 gem 'haml', '4.0.6'
 
-gem 'nokogiri', '1.6.5'
+gem 'nokogiri', '1.6.6.2'
 gem "feedjira", "1.6.0"
-gem 'savon', '2.8.0'
+gem 'savon', '2.8.1'
 gem 'siteseeker_normalizer', '0.1.3'
 
 gem 'net-ldap', '0.3.1' # '0.3.1' works, 0.5 and 0.6 (0.10.1?) have an encoding issue: https://github.com/ruby-ldap/ruby-net-ldap/pull/82
@@ -67,5 +67,5 @@ end
 
 gem 'sass-rails', '5.0.1'
 gem 'coffee-rails', '4.1.0'
-gem 'uglifier', '2.6.1'
+gem 'uglifier', '2.7.0'
 gem 'therubyracer', '0.12.1', require: 'v8'
