@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'protected_attributes'
 
@@ -7,7 +7,7 @@ gem 'jquery-rails', '4.0.3'
 gem 'haml', '4.0.6'
 
 gem 'nokogiri', '1.6.6.2'
-gem "feedjira", "1.6.0"
+gem 'feedjira', '1.6.0'
 gem 'savon', '2.8.1'
 gem 'siteseeker_normalizer', '0.1.3'
 
