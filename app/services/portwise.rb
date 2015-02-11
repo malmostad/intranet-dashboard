@@ -30,7 +30,7 @@ class Portwise
   private
     def trust_proxy?
       # Has portwise the correct IP, token and is the request ssl, if forced in config
-      @request.remote_ip == APP_CONFIG["portwise"]["ip_address"] &&
+      APP_CONFIG["portwise"]["ip_address"].include? @request.remote_ip &&
           @request.headers["X-TOKEN"] == APP_CONFIG["portwise"]["token"] &&
           (@request.ssl? || !APP_CONFIG["portwise"]["require_ssl"])
     end
