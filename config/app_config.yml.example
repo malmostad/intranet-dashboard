@@ -10,7 +10,7 @@ defaults: &defaults
     diff_log: "reports/ldap_diff.xlsx"
   portwise:
     enabled: true
-    ip_address: "FILL_IN"
+    ip_address: ["FILL_IN_ARRAY"]
     token: "FILL_IN"
     require_ssl: true
     signout_url: "https://example.org/wa/logout"
