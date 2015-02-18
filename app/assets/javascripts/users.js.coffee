@@ -5,8 +5,8 @@ $ ->
   # Show info for non editable field
   $("#edit-user .show-more-info").click (event) ->
     event.preventDefault()
-    $(@).closest(".control-group").find(".more-info").slideToggle(100)
-    $(@).text( if $(@).text() is "(info)" then "(dölj)" else "(info)" )
+    $(@).closest(".form-group").find(".more-info").toggle()
+    $(@).text( if $(@).text() is " (info)" then " (dölj)" else " (info)" )
 
   # Tokenized input fields
   # Shared options for tokenInput
@@ -75,7 +75,7 @@ $ ->
   $("section.show.user .colleagueship").on "mouseover focus", ".remove", ->
     $(@).addClass("btn-danger").text("Sluta följ")
   $("section.show.user .colleagueship").on "mouseleave blur", ".remove", ->
-    $(@).removeClass("btn-danger").text("Följer")
+    $(@).addClass("btn-default").removeClass("btn-danger").text("Följer")
 
 
   $address = $("#edit-user #user_search_address")

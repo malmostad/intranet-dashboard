@@ -9,7 +9,7 @@ describe "GroupContacts" do
 
   it "administration should require a contacts_editor" do
     visit group_contacts_path
-    page.should have_selector('.error', text: "Du saknar behörighet")
+    expect(page).to have_selector('.error', text: "Du saknar behörighet")
   end
 
   describe "editing" do
@@ -19,14 +19,14 @@ describe "GroupContacts" do
     end
 
     it "should be available for contacts_editor" do
-      page.should have_selector('h1', text: "Funktionskontakter")
+      expect(page).to have_selector('h1', text: "Funktionskontakter")
     end
 
     it "should create group contact" do
       click_link("Lägg till")
       fill_in "group_contact_name", with: "foo"
       click_button "Spara"
-      page.should have_selector(".flash.notice", text: "skapades")
+      expect(page).to have_selector(".flash.notice", text: "skapades")
     end
 
     it "should update group contact" do
@@ -36,7 +36,7 @@ describe "GroupContacts" do
       click_on "Redigera"
       fill_in "group_contact_name", with: "bar"
       click_button "Spara"
-      page.should have_selector(".flash.notice", text: "uppdaterades")
+      expect(page).to have_selector(".flash.notice", text: "uppdaterades")
     end
 
     it "should delete group contact", js: true do
@@ -45,7 +45,7 @@ describe "GroupContacts" do
       click_button "Sök"
       first("a.btn-danger").click
       page.evaluate_script("window.confirm()")
-      page.should have_selector(".flash.notice", text: "raderades")
+      expect(page).to have_selector(".flash.notice", text: "raderades")
     end
   end
 end

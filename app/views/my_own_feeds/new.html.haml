@@ -2,5 +2,5 @@
 %section.box.form
   %h1.box-title= h1
   .box-content
-    = form_for @feed, url: my_own_feeds_path, html: { class: "form-horizontal" } do |f|
+    = form_for @feed, url: my_own_feeds_path, html: { class: "basic" } do |f|
       = render 'form', f: f

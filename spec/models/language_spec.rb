@@ -7,20 +7,20 @@ describe Language do
   end
 
   it "should be valid" do
-    build(:language).should be_valid
+    expect(build(:language)).to be_valid
   end
 
   it "should require a name" do
-    build(:language, name: "").should_not be_valid
+    expect(build(:language, name: "")).not_to be_valid
   end
 
   it "should validate the length" do
-    build(:language, name: "fox barx " * 10).should_not be_valid
+    expect(build(:language, name: "fox barx " * 10)).not_to be_valid
   end
 
   it "should validate the uniqueness" do
     create(:language, name: "fox")
-    build(:language, name: "fox").should_not be_valid
+    expect(build(:language, name: "fox")).not_to be_valid
   end
 
   it "should be destroyed" do

@@ -26,7 +26,7 @@ module ApplicationHelper
   end
 
   def page_title
-    !@title.nil? ? "#{@title} - #{title_suffix}" : title_suffix
+    !@title.nil? ? "#{@title} – #{title_suffix}" : title_suffix
   end
 
   def tags_whitelist
@@ -39,15 +39,7 @@ module ApplicationHelper
     content_tag(:div,
       content_tag(:div, "#{name}:", class: 'control-label') +
       content_tag(:div, value, class: 'controls'),
-      class: 'control-group text-only')
-  end
-
-  def delete_icon_text
-    raw "#{content_tag(:span, nil, class: 'icon-trash icon-large')} Radera"
-  end
-
-  def add_icon_text
-    raw "#{content_tag(:span, nil, class: 'icon-plus')} Lägg till"
+      class: 'form-group')
   end
 
   def show_on_map(address)

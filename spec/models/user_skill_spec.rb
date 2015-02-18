@@ -7,11 +7,11 @@ describe UserSkill do
 
   it "should associate a skill to a user" do
     UserSkill.create(user_id: user.id, skill_id: skill.id)
-    user.skills.should be_present
+    expect(user.skills).to be_present
   end
 
   it "should remove the association of skill on destroy" do
     skill.destroy
-    user.skills.should_not be_present
+    expect(user.skills).not_to be_present
   end
 end

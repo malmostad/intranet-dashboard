@@ -4,12 +4,12 @@ section.box.feeds {
     margin-bottom: 0;
   }
   section h1 {
-    font-size: emize(13);
-    font-family: $sansSerif;
+    font-size: emize(16);
+    font-family: $sans-serif;
     font-weight: bold;
     line-height: 1.3;
     border-bottom: $border;
-    margin: .7em emize(11, 13) .3em;
+    margin: .7em emize(12, 14) .3em;
     padding: 0 0 .2em;
   }
 
@@ -25,29 +25,26 @@ section.box.feeds {
       a {
         display: block;
         @include box-sizing('border-box');
-        padding: 0.4em .7em 0;
-        border: solid white;
+        padding: .4em .7em 0;
+        border: solid #fff;
         border-width: 1px 0;
         margin: 0;
-        &:hover {
+        &:hover,
+        &:focus {
           cursor: pointer;
-          background-color: $backgroundLight;
-          border-color: $borderColor;
+          background-color: $background-light;
+          border-color: $border-color;
         }
-        p.summary, p.meta {
-          color: black;
+        p.summary,
+        p.meta {
+          color: #000;
         }
       }
-      img, span.icon-twitter, span.icon-rss {
+      img {
         float: left;
         width: 46px;
         margin: 3px 10px 11px 0;
-        border: none;
-      }
-      span.icon-twitter, span.icon-rss {
-        font-size: emize(46);
-        color: $backgroundDark;
-        overflow: hidden;
+        border: 0;
       }
       .text {
         overflow-x: hidden;
@@ -55,29 +52,36 @@ section.box.feeds {
         h2 {
           margin: 0 0 .1em;
           padding: 0;
-          font-size: emize(20);
+          font-size: emize(24);
           line-height: 1.2;
           font-weight: normal;
         }
-        p.summary, p.nomore {
-          font-size: emize(16);
-          line-height: emize(21, 16);
+        p.summary,
+        p.nomore {
+          font-size: emize(17);
+          line-height: emize(21);
           margin-bottom: .1em;
         }
         p.meta {
-          font-family: $sansSerif;
-          font-size: emize(13);
+          font-family: $sans-serif;
+          font-size: emize(14);
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
-          margin: 0;
-          color: $textColorDark;
-          span.comments {
+          margin: .4em 0 0;
+          .comments {
             display: block;
-            .icon-comment, .icon-comment-alt {
-              font-size: emize(15, 13);
-              color: $linkColor;
-            }
+            margin-top: .4em;
+            line-height: 1.2;
+            color: $link-color;
+          }
+          .m-icon-bubbles {
+            display: inline-block;
+            vertical-align: top;
+            background-position: 0 top;
+            width: 1.5em;
+            height: 1.2em;
+            @include opacity(.6);
           }
         }
       }
@@ -85,9 +89,6 @@ section.box.feeds {
     li.load-more {
       padding: .2em .8em .8em;
       margin-bottom: .8em;
-      .btn {
-        font-size: emize(13);
-      }
     }
   }
   .box-instructions a.btn {
@@ -99,39 +100,8 @@ section.box.feeds {
   }
 }
 
-section.box#feeds-news,
-section.box#combined {
-  .box-content {
-    li {
-      img {
-        width: 68px;
-        margin-top: .3em;
-      }
-    }
-    li:first-child {
-      a {
-        padding-bottom: 0.4em;
-      }
-      img {
-        width: 120px;
-        margin: .3em 1em 0 0;
-      }
-      h2 {
-        margin: 0;
-        padding: 0;
-        font-size: emize(28);
-        line-height: emize(28, 26);
-        font-weight: normal;
-      }
-      p.summary {
-        font-size: emize(20);
-        line-height: emize(26, 20);
-      }
-      p.meta {
-        font-size: emize(13);
-      }
-    }
-  }
+section.combined .box-content li:first-child {
+  margin-top: .2em;
 }
 
 section.box#feeds-feature {
@@ -155,8 +125,8 @@ section.box#feeds-feature {
     margin: 0;
   }
   .more a {
-    font-family: $sansSerif;
-    font-size: emize(13);
+    font-family: $sans-serif;
+    font-size: emize(14, 16);
     padding-bottom: .4em;
   }
 }

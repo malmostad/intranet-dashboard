@@ -18,9 +18,9 @@
         - @skills.each do |skill|
           %tr
             %td= link_to skill.name, edit_skill_path(skill)
-            %td= link_to skill.name, users_tags_path(skill: skill.name)
-            %td.delete= link_to delete_icon_text, skill, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini"
+            %td= link_to "Visa", users_tags_path(skill: skill.name)
+            %td.delete= link_to "Radera", skill, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-sm"
 
         %tr
           %td{ colspan: 3 }
-            .actions= link_to add_icon_text, new_skill_path, class: "btn btn-primary"
+            .actions= link_to "Lägg till", new_skill_path, class: "btn btn-primary"

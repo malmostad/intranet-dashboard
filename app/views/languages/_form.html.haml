@@ -1,18 +1,19 @@
-= form_for @language, html: { class: "form-horizontal" } do |f|
+= form_for @language, html: { class: "basic" } do |f|
   .box-content
     - if @language.errors.any?
       .warning= t 'messages.validation_errors'
 
-    .control-group
+    .form-group
       = f.label :name, "Namn:", class: "control-label"
       .controls
-        = f.text_field :name, class: 'input-wide'
+        = f.text_field :name, class: "form-control"
         - @language.errors[:name].each do |msg|
           .help-inline.warning= "#{msg}"
 
-    .control-group
+    .form-group
+      %span.no-control-label
       .controls
         = f.submit t( 'actions.save' ), class: "btn btn-primary"
-        = link_to t('actions.cancel'), languages_path, class: "btn"
+        = link_to t('actions.cancel'), languages_path, class: "btn btn-default"
     - unless @language.new_record?
       .help-inline= link_to "Slå samman med ...", languages_edit_merge_path(@language)

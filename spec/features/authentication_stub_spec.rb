@@ -4,35 +4,35 @@ require 'spec_helper'
 describe " Authentication (stub)" do
   it "should require login for the dashboard" do
     visit root_path
-    current_path.should eq(login_path)
-    page.should have_selector('h1', text: "Logga in")
-    page.should have_field("password")
+    expect(current_path).to eq(login_path)
+    expect(page).to have_selector('h1', text: "Logga in")
+    expect(page).to have_field("password")
   end
 
   it "should require login for profile page" do
     user = create(:user)
     visit user_path(user.username)
-    current_path.should eq(login_path)
-    page.should have_selector('h1', text: "Logga in")
+    expect(current_path).to eq(login_path)
+    expect(page).to have_selector('h1', text: "Logga in")
   end
 
   it "should require login for an admin page" do
     visit roles_path
-    current_path.should eq(login_path)
-    page.should have_selector('h1', text: "Logga in")
+    expect(current_path).to eq(login_path)
+    expect(page).to have_selector('h1', text: "Logga in")
   end
 
   it "should not sign in a user without credentials" do
     login('', '')
-    current_path.should eq(login_path)
-    page.should have_selector('.warning', text: 'Användarnamnet finns inte')
+    expect(current_path).to eq(login_path)
+    expect(page).to have_selector('.warning', text: 'Användarnamnet finns inte')
   end
 
   it "should require admin role" do
     user = create(:user)
     login(user.username, '')
     visit feeds_path
-    page.should have_selector('.error', text: "Du saknar behörighet")
+    expect(page).to have_selector('.error', text: "Du saknar behörighet")
   end
 
   it "should honor admin role" do
@@ -40,17 +40,17 @@ describe " Authentication (stub)" do
     login(user.username, '')
     user.update_attribute(:admin, true)
     visit feeds_path
-    page.should have_selector('h1', text: "Nyhetsflöden")
+    expect(page).to have_selector('h1', text: "Nyhetsflöden")
   end
 
   it "should redirect to requested page after login" do
     user = create(:user)
     visit user_path(user.username)
-    current_path.should eq(login_path)
+    expect(current_path).to eq(login_path)
     fill_in 'username', with: user.username
     fill_in 'password', with: "bar"
     click_button 'Logga in'
-    current_path.should eq(user_path(user.username))
+    expect(current_path).to eq(user_path(user.username))
   end
 
   it "should not register ajax request as request to redirect after login", js: true do
@@ -60,6 +60,6 @@ describe " Authentication (stub)" do
     fill_in 'username', with: user.username
     fill_in 'password', with: "bar"
     click_button 'Logga in'
-    current_path.should eq(user_path(user.username))
+    expect(current_path).to eq(user_path(user.username))
   end
 end

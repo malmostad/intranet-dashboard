@@ -7,7 +7,7 @@ Dashboard::Application.configure do
   config.action_controller.perform_caching = true
   config.cache_store = :dalli_store, '127.0.0.1:11211', { namespace: "dashboard-production" }
 
-  config.serve_static_assets = true
+  config.serve_static_files = true
   config.static_cache_control = "public, max-age=3600"
   config.assets.js_compressor = :uglifier
   config.assets.css_compressor = :scss

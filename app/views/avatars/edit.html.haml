@@ -2,7 +2,7 @@
 %section.box.form.avatar
   %h1.box-title= h1
   .box-content
-    = form_for @user, url: avatar_path(params[:id]), html: { multipart: true, class: "form-horizontal" } do |f|
+    = form_for @user, url: avatar_path(params[:id]), html: { multipart: true, class: "basic" } do |f|
       .edit_avatar
         = image_tag @user.avatar.url(:medium_quadrat), alt: "Profilbild"
       .avatar-help.help
@@ -13,17 +13,18 @@
       - if @user.errors.any?
         .warning= t 'messages.validation_errors'
 
-      .control-group
+      .form-group
         = f.label :avatar, "Ny bild:", class: "control-label"
         .controls
           = f.file_field :avatar, class: "fileupload"
-          .help-inline= 'Du kan ladda upp en jpeg- eller tiff-bild. Max filstrolek är 4MB.'
+          .help-block= 'Du kan ladda upp en jpeg- eller tiff-bild. Max filstrolek är 4MB.'
           - @user.errors[:avatar_file_size].each do |msg|
-            .help-inline.warning= "#{msg}"
+            .help-block.warning= "#{msg}"
           - @user.errors[:avatar_content_type].each do |msg|
-            .help-inline.warning= "#{msg}"
+            .help-block.warning= "#{msg}"
 
-      .control-group
+      .form-group
+        %span.no-control-label
         .controls
           = f.submit "Ladda upp", class: "btn btn-primary"
-          = link_to t( 'actions.cancel' ), ( session[:referer] || user_path(@user.username) ), class: "btn"
+          = link_to t( 'actions.cancel' ), ( session[:referer] || user_path(@user.username) ), class: "btn btn-default"

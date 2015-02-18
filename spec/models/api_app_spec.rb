@@ -6,27 +6,27 @@ describe ApiApp do
   end
 
   it "should be valid" do
-    build(:api_app).should be_valid
+    expect(build(:api_app)).to be_valid
   end
 
   it "should require a name" do
-    build(:api_app, name: "").should_not be_valid
+    expect(build(:api_app, name: "")).not_to be_valid
   end
 
   it "should require a contact" do
-    build(:api_app, contact: "").should_not be_valid
+    expect(build(:api_app, contact: "")).not_to be_valid
   end
 
   it "should require an IP address" do
-    build(:api_app, ip_address: "").should_not be_valid
+    expect(build(:api_app, ip_address: "")).not_to be_valid
   end
 
   it "should have a generated app_token" do
-    create(:api_app).app_token.length.should be(32)
+    expect(create(:api_app).app_token.length).to be(32)
   end
 
   it "should have a generated app_secret" do
-    create(:api_app).app_secret.length.should be(32)
+    expect(create(:api_app).app_secret.length).to be(32)
   end
 
   it "should be destroyed" do

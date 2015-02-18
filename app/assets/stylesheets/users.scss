@@ -1,5 +1,6 @@
 // View for user data
 .show.user {
+  font-family: $sans-serif;
   section.vcard {
     @include clearfix();
     .photo {
@@ -25,12 +26,17 @@
       }
       .professional-bio {
         font-family: $serif;
+        font-size: emize(17);
         margin-bottom: .5em;
         line-height: 1.4;
       }
-      .org, .phone, .email, .status_message, #user-activities {
-        font-family: $sansSerif;
-        font-size: emize(13);
+      .org,
+      .phone,
+      .email,
+      .status_message,
+      #user-activities {
+        font-family: $sans-serif;
+        font-size: emize(14);
         margin: 0;
       }
       .title {
@@ -90,7 +96,7 @@
     @include clearfix();
     margin: 0 0 1em;
     p {
-      font-size: emize(13);
+      font-size: emize(14);
       margin: 0 0 .5em;
     }
   }
@@ -99,7 +105,7 @@
   section.activities {
     li {
       display: inline;
-      font-size: emize(13);
+      font-size: emize(14);
       a::after {
         content: ', ';
       }
@@ -111,7 +117,7 @@
   section.intranet-activities,
   section.organizational {
     li a {
-      font-size: emize(13);
+      font-size: emize(14);
       display: block;
       padding: 0 0 .4em;
     }
@@ -154,9 +160,9 @@
   }
   section.personal .note p {
     font-family: $serif;
-    font-size: emize(14);
+    font-size: emize(15);
+    line-height: 1.5;
     margin-bottom: .5em;
-    line-height: 1.4;
   }
   a.change {
     margin-left: .4em;

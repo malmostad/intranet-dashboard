@@ -12,8 +12,8 @@
         %tr
           %td= link_to shortcut.name, edit_shortcut_path(shortcut)
           %td.secondary= Shortcut::CATEGORIES[shortcut.category]
-          %td= link_to delete_icon_text, shortcut, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-mini"
+          %td.delete= link_to "Radera", shortcut, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-sm"
 
       %tr
         %td{ colspan: 3 }
-          .actions= link_to add_icon_text, new_shortcut_path, class: "btn btn-primary"
+          .actions= link_to "Lägg till", new_shortcut_path, class: "btn btn-primary"

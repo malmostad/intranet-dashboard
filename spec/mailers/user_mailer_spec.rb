@@ -7,13 +7,13 @@ describe UserMailer do
     let(:mail) { UserMailer.switchboard_changes(user, {}) }
 
     it "renders the headers" do
-      mail.subject.should eq("Adressändring")
-      mail.to.first.should match(APP_CONFIG["switchboard_email"])
-      mail.from.first.should match(user.email)
+      expect(mail.subject).to eq("Adressändring")
+      expect(mail.to.first).to match(APP_CONFIG["switchboard_email"])
+      expect(mail.from.first).to match(user.email)
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("Hej televäxeln")
+      expect(mail.body.encoded).to match("Hej televäxeln")
     end
   end
 end

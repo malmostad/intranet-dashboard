@@ -7,7 +7,7 @@ describe "Skills" do
   it "should be protected from regular users" do
     login(user.username, "") # Stubbed auth
     visit skills_path
-    page.should have_selector('.error', text: "Du saknar behörighet")
+    expect(page).to have_selector('.error', text: "Du saknar behörighet")
   end
 
   describe "administration" do
@@ -20,43 +20,43 @@ describe "Skills" do
     end
 
     it "should be available to admins" do
-      page.should have_selector('h1.box-title', text: "Kunskapsområde")
+      expect(page).to have_selector('h1.box-title', text: "Kunskapsområde")
     end
 
     it "should have skills" do
-      page.all('section.box table tr').count.should > 10
+      expect(page.all('section.box table tr').count).to be > 10
     end
 
     it "should have an edit form" do
       first('section.box table tbody td a').click
-      page.should have_selector('h1.box-title', text: "Redigera")
+      expect(page).to have_selector('h1.box-title', text: "Redigera")
     end
 
     it "should create skill" do
       click_on('Lägg till')
       fill_in "skill_name", with: "Excel"
       click_button "Spara"
-      page.should have_selector(".notice", text: "skapades")
+      expect(page).to have_selector(".notice", text: "skapades")
     end
 
     it "should update skill" do
       visit edit_skill_path(Skill.first)
       fill_in "skill_name", with: "PowerPoint"
       click_button "Spara"
-      page.should have_selector(".notice", text: "uppdaterades")
+      expect(page).to have_selector(".notice", text: "uppdaterades")
     end
 
     it "should delete skill", js: true do
       first("a.btn-danger").click
       page.evaluate_script("window.confirm()")
-      page.should have_selector(".notice", text: "raderades")
+      expect(page).to have_selector(".notice", text: "raderades")
     end
 
     it "should not merge skill without a second skill" do
       visit edit_skill_path(Skill.first)
       click_on("Slå samman med")
       click_button "Slå samman"
-      page.should have_selector(".warning", text: "Du måste välja")
+      expect(page).to have_selector(".warning", text: "Du måste välja")
     end
 
     it "should merge skill", js: true do
@@ -64,14 +64,14 @@ describe "Skills" do
       click_on("Slå samman med")
 
       page.execute_script "$('#into').val('#{Skill.limit(2).last.name}').trigger('focus').trigger('keydown')"
-      page.should have_selector("ul.ui-autocomplete li.ui-menu-item a")
+      expect(page).to have_selector("ul.ui-autocomplete li.ui-menu-item a")
 
       item_selector = "ul.ui-autocomplete li.ui-menu-item:last-child a"
-      page.should have_selector(item_selector)
+      expect(page).to have_selector(item_selector)
 
       page.execute_script "$('#{item_selector}').trigger('mouseenter').trigger('click')"
       click_button "Slå samman"
-      page.should have_selector(".notice", text: "har slagits ihop med")
+      expect(page).to have_selector(".notice", text: "har slagits ihop med")
     end
   end
 end

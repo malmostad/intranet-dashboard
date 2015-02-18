@@ -1,47 +1,48 @@
 - title "Funktionskontakt"
 %section.box.show.group-contacts
   %h1.box-title= h1
-  .box-content.form-horizontal.form-data
+  .box-content.basic.form-data
+    = form_for @group_contact, html: { class: "basic" } do |f|
+      = show_attribute("Namn", @group_contact.name)
+      = show_attribute("E-post", @group_contact.email)
+      = show_attribute("Telefon", @group_contact.phone)
+      = show_attribute("Telefontider", @group_contact.phone_hours)
+      = show_attribute("Mobiltelefon", @group_contact.cell_phone)
+      = show_attribute("Fax", @group_contact.fax)
 
-    = show_attribute("Namn", @group_contact.name)
-    = show_attribute("E-post", @group_contact.email)
-    = show_attribute("Telefon", @group_contact.phone)
-    = show_attribute("Telefontider", @group_contact.phone_hours)
-    = show_attribute("Mobiltelefon", @group_contact.cell_phone)
-    = show_attribute("Fax", @group_contact.fax)
+      .form-group.text-only
+        .control-label Postadress:
+        .controls
+          = @group_contact.address
+          %br
+          = @group_contact.zip_code
+          = @group_contact.postal_town
 
-    .control-group.text-only
-      .control-label Postadress:
-      .controls
-        = @group_contact.address
-        %br
-        = @group_contact.zip_code
-        = @group_contact.postal_town
-
-    .control-group.text-only
-      .control-label Besöksadress:
-      .controls
-        = @group_contact.visitors_address
-        %br
-        = @group_contact.visitors_address_zip_code
-        = @group_contact.visitors_address_postal_town
-        %br= @group_contact.visitors_district
+      .form-group.text-only
+        .control-label Besöksadress:
+        .controls
+          = @group_contact.visitors_address
+          %br
+          = @group_contact.visitors_address_zip_code
+          = @group_contact.visitors_address_postal_town
+          %br= @group_contact.visitors_district
 
 
-    = show_attribute("Besökstider", @group_contact.visiting_hours)
+      = show_attribute("Besökstider", @group_contact.visiting_hours)
 
-    .control-group.text-only
-      .control-label Hemsida:
-      .controls
-        - if @group_contact.homepage.present?
-          = link_to @group_contact.homepage, @group_contact.homepage
+      .form-group.text-only
+        .control-label Hemsida:
+        .controls
+          - if @group_contact.homepage.present?
+            = link_to @group_contact.homepage, @group_contact.homepage
 
-    .control-group
-      .controls
-        = link_to 'Redigera', edit_group_contact_path(@group_contact), class: "btn"
+      .form-group
+        %span.no-control-label
+        .controls
+          = link_to 'Redigera', edit_group_contact_path(@group_contact), class: "btn btn-default"
 
-    %h2.form-group-title Statistik
-    = show_attribute("Antal requests", @group_contact.requests)
-    - if @group_contact.last_request.present? && @group_contact.last_request_by_api_app.present?
-      = show_attribute("Senast request", l(@group_contact.last_request, format: :short))
-      = show_attribute("Senaste request av", link_to(@group_contact.last_request_by_api_app.name, api_app_path(@group_contact.last_request_by_api_app.id)))
+      %h2.group-title Statistik
+      = show_attribute("Antal requests", @group_contact.requests)
+      - if @group_contact.last_request.present? && @group_contact.last_request_by_api_app.present?
+        = show_attribute("Senast request", l(@group_contact.last_request, format: :short))
+        = show_attribute("Senaste request av", link_to(@group_contact.last_request_by_api_app.name, api_app_path(@group_contact.last_request_by_api_app.id)))

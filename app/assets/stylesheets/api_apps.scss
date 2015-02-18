@@ -1,6 +1,7 @@
 .edit {
   .control-group.api_app_app_token .controls,
-  .token, .secret  {
+  .token,
+  .secret  {
     font-family: $monospace;
   }
   section.box.show.api-apps {
@@ -10,6 +11,6 @@
   }
   .controls.token .warning {
     margin-top: 1em;
-    font-size: emize(13,13);
+    font-size: emize(14, 14);
   }
 }

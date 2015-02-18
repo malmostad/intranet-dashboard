@@ -6,17 +6,17 @@ describe Colleagueship do
   let(:followed) { create(:user) }
 
   it "should not be set" do
-    follower.colleagueships.should be_blank
+    expect(follower.colleagueships).to be_blank
   end
 
   it "should be set" do
     Colleagueship.create(user_id: follower.id, colleague_id: followed.id)
-    follower.colleagueships.should be_present
+    expect(follower.colleagueships).to be_present
   end
 
   it "should be removed" do
     Colleagueship.create(user_id: follower.id, colleague_id: followed.id)
     followed.destroy
-    follower.colleagueships.should be_blank
+    expect(follower.colleagueships).to be_blank
   end
 end

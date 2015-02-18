@@ -4,11 +4,13 @@
     .search-and-results
       %h1= h1
       = form_tag(search_path, method: "get", id: "full-search") do
-        %fieldset
-          = label_tag "q", "#{h1}: ", class: "control-label"
-          .input-append
-            = text_field_tag :q, @terms, { placeholder: "Ange ett eller flera sökord", "data-autocomplete-path" => site_search_autocomplete_path }
-            = submit_tag "Sök", { class: "btn", name: nil }
+        .form-group
+          = label_tag "q", "#{h1}: "
+          .controls
+            .input-group
+              = text_field_tag :q, @terms, { class: "form-control", placeholder: "Ange ett eller flera sökord", "data-autocomplete-path" => site_search_autocomplete_path }
+              %span.input-group-btn
+                = submit_tag "Sök", { class: "btn btn-default", name: nil }
 
       - if @error.present?
         .error= "Ett fel inträffade med Euroling Siteseeker (#{@error})"

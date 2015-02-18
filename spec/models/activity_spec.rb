@@ -7,20 +7,20 @@ describe Activity do
   end
 
   it "should be valid" do
-    build(:activity).should be_valid
+    expect(build(:activity)).to be_valid
   end
 
   it "should require a name" do
-    build(:activity, name: "").should_not be_valid
+    expect(build(:activity, name: "")).not_to be_valid
   end
 
   it "should validate the length" do
-    build(:activity, name: "fox barx" * 10).should_not be_valid
+    expect(build(:activity, name: "fox barx" * 10)).not_to be_valid
   end
 
   it "should validate the uniqueness" do
     create(:activity, name: "fox")
-    build(:activity, name: "fox").should_not be_valid
+    expect(build(:activity, name: "fox")).not_to be_valid
   end
 
   it "should be destroyed" do

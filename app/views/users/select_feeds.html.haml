@@ -2,21 +2,21 @@
 %section.box.form
   %h1.box-title= h1
   .box-content
-    %p.instruction
-      = "På den här sidan kryssar du i vilka fler flöden du vill visa i boxen Mina Komin#{Feed::CATEGORIES[params[:category]]}." 
+    %p.body-copy
+      = "På den här sidan kryssar du i vilka fler flöden du vill visa i boxen Mina Komin#{Feed::CATEGORIES[params[:category]]}."
       = 'De flöden som inte går att kryssa ur är obligatoriska baserat på vad du  '
       = link_to "valt i din grundprofil.", edit_user_path(@user)
 
-    = form_for @user, url: user_select_feeds_path, html: { class: "form-horizontal" } do |f|
+    = form_for @user, url: user_select_feeds_path, html: { class: "basic" } do |f|
       - if @user.errors.any?
         %ul.warning
           - @user.errors.messages.each do |msg|
             %li= msg[1].first
 
-      .control-group
+      .form-group
         = hidden_field_tag "user[id]", @user.id
         .control-label= "Flöden:"
-        .controls
+        .controls.checkbox
           - @feeds.each do |feed|
             - is_mandatory = @user.role_ids.select { |r| feed.role_ids.include?(r) }.present?
             %label.checkbox
@@ -27,7 +27,8 @@
                   disabled: is_mandatory )
               = feed.title
 
-      .control-group
+      .form-group
+        %span.no-control-label
         .controls
           = submit_tag t( "actions.save" ), class: "btn btn-primary"
-          = link_to t( 'actions.cancel' ), root_path, class: "btn"
+          = link_to t( 'actions.cancel' ), root_path, class: "btn btn-default"

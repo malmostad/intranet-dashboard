@@ -10,7 +10,7 @@ $ ->
 
     # Hide the update form
     resetForm = ->
-      $field.attr('rows', 1).val("").height("1.5em").blur()
+      $field.attr('rows', 1).val("").height(19).blur()
       $controls.hide()
 
     narrow = ->

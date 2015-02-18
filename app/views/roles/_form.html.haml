@@ -1,26 +1,27 @@
-= form_for @role, html: { class: "form-horizontal" } do |f|
+= form_for @role, html: { class: "basic" } do |f|
   .box-content
     - if @role.errors.any?
       .warning= t 'messages.validation_errors'
 
-    .control-group
+    .form-group
       = f.label :name, "Namn:", class: "control-label"
       .controls
-        = f.text_field :name, class: 'input-wide'
+        = f.text_field :name, class: 'form-control'
         - @role.errors[:name].each do |msg|
           .help-inline.warning= "#{msg}"
 
-    .control-group
+    .form-group
       = f.label :homepage_url, "Hemsida:", class: "control-label"
       .controls
-        = f.text_field :homepage_url, value: ( @role.homepage_url.present? ? @role.homepage_url : 'http://' ), class: 'input-wide'
+        = f.text_field :homepage_url, value: ( @role.homepage_url.present? ? @role.homepage_url : 'http://' ), class: 'form-control'
         - @role.errors[:homepage_url].each do |msg|
           .help-inline.warning= "#{msg}"
 
-    .control-group
+    .form-group
       = label_tag 'role_category', "Kategori:", class: "control-label"
-      .controls= select(:role, :category,  Role::CATEGORIES.map { |key, val| [val, key] } )
-    .control-group
+      .controls= select(:role, :category,  Role::CATEGORIES.map { |key, val| [val, key] }, {}, {class: "form-control"} )
+    .form-group
+      %span.no-control-label
       .controls
         = f.submit t( 'actions.save' ), class: "btn btn-primary"
-        = link_to t('actions.cancel'), roles_path, class: "btn"
+        = link_to t('actions.cancel'), roles_path, class: "btn btn-default"

@@ -1,6 +1,6 @@
 section.box#time-report {
- .box-content {
-    font-family: $sansSerif;
+  .box-content {
+    font-family: $sans-serif;
     p {
       margin-bottom: 0;
     }
@@ -9,8 +9,8 @@ section.box#time-report {
       min-height: 1.5em;
       padding: .3em .5em .4em;
       @include radius(3px);
-      @include transition(background 0.6s ease-in-out);
-      font-size: emize(13);
+      @include transition(background .6s ease-in-out);
+      font-size: emize(14);
       background-position: 25% 45%;
       &.default {
         border: #ccc solid 1px;
@@ -22,7 +22,7 @@ section.box#time-report {
     p.hrutan {
       margin-bottom: 0;
       text-align: right;
-      font-size: emize(13);
+      font-size: emize(14);
     }
   }
 }

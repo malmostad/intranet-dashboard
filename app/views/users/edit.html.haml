@@ -2,26 +2,26 @@
 %section.box.form#edit-user
   %h1.box-title= h1
   .box-content
-    = simple_form_for @user, html: { class: "form-horizontal" } do |f|
+    = simple_form_for @user, html: { class: "basic" } do |f|
       = f.error_notification class: "warning"
 
       - if @user.roles.empty? # User is directed here to select roles
         %p.warning= "Välj en eller flera förvaltningar/arbetsfält nedan."
 
-      = f.input :displayname, as: :text_only_more_info, wrapper: :text_only_more_info
-      = f.input :title, as: :text_only_more_info, wrapper: :text_only_more_info
-      = f.input :professional_bio, input_html: { class: 'input-wide', rows: 7 }
-      = f.input :company_short, as: :text_only_more_info, wrapper: :text_only_more_info
-      = f.input :status_message, input_html: { class: 'input-wide' }
+      = f.input :displayname, as: :more_info, wrapper: :more_info
+      = f.input :title, as: :more_info, wrapper: :more_info
+      = f.input :professional_bio, input_html: { rows: 7 }
+      = f.input :company_short, as: :more_info, wrapper: :more_info
+      = f.input :status_message
 
-      %h2.form-group-title Grundprofil i Komin:
-      = f.association :roles, as: :check_boxes, collection: @roles.select { |r| r.category == "department" }, label: "Förvaltningar:"
-      = f.association :roles, as: :check_boxes, collection: @roles.select { |r| r.category == "working_field" }, label: "Arbetsfält:",
+      %h2.group-title Grundprofil i Komin:
+      = f.association :roles, as: :check_boxes, wrapper: :radio_and_checkboxes, collection: @roles.select { |r| r.category == "department" }, label: "Förvaltningar"
+      = f.association :roles, as: :check_boxes, wrapper: :radio_and_checkboxes, collection: @roles.select { |r| r.category == "working_field" }, label: "Arbetsfält",
           hint: "Här väljer du vilken/vilka förvaltningar/arbetsfält du vill se i Kominflikarna Min förvaltning, Mitt arbetsfält högst upp i Komin."
 
-      %h2.form-group-title Kontakt
+      %h2.group-title Kontakt
       = f.input :search_address do
-        = text_field_tag :user_search_address, nil,  class: 'input-wide'
+        = text_field_tag :user_search_address, nil,  class: 'form-control'
       = f.input :address, input_html: { readonly: true }
       = f.input :district, as: "hidden"
       = f.input :post_code, input_html: { readonly: true }
@@ -31,8 +31,8 @@
 
       = f.input :room
 
-      = f.input :email, as: :text_only_more_info, wrapper: :text_only_more_info
-      = f.input :phone, wrapper: :text_only_more_info do
+      = f.input :email, as: :more_info, wrapper: :more_info
+      = f.input :phone, wrapper: :more_info do
         = @user.phone
         = link_to "(Info)", "#", class: "show-more-info"
         .more-info
@@ -40,7 +40,7 @@
             = "Ditt fasta telefonnummer finns lagrat i Malmö stads centrala databas över alla anställda. Kontaktboken visar vilket nummer som är knutet till dig. Om det visas fel telefonnummer beställer du en ändring i "
             = link_to "IT-kompassen.", "http://marval.malmo.se/MSMSelfService/Itservice/telefoni-forandring.aspx"
             = "Om du behöver hjälp, kontakta ITS, 040-342727."
-      = f.input :cell_phone, wrapper: :text_only_more_info do
+      = f.input :cell_phone, wrapper: :more_info do
         = @user.cell_phone
         = link_to "(Info)", "#", class: "show-more-info"
         .more-info
@@ -51,44 +51,45 @@
 
       = f.input :skype
 
-      %h2.form-group-title Kompetensprofil
+      %h2.group-title Kompetensprofil
       = f.input :skill_list,
-        input_html: { "data-path" => skills_suggest_path, "data-load" => @user.skills.map{ |l| { id: l.name, name: l.name }}.to_json, class: "input-wide" }
+        input_html: { "data-path" => skills_suggest_path, "data-load" => @user.skills.map{ |l| { id: l.name, name: l.name }}.to_json }
 
       = f.input :language_list,
-        input_html: { "data-path" => languages_suggest_path, "data-load" => @user.languages.map{ |l| { id: l.name, name: l.name }}.to_json, class: "input-wide" }
+        input_html: { "data-path" => languages_suggest_path, "data-load" => @user.languages.map{ |l| { id: l.name, name: l.name }}.to_json }
 
-      %h2.form-group-title Projekt & aktiviteter
+      %h2.group-title Projekt & aktiviteter
       = f.input :activity_list,
-        input_html: { "data-path" => activities_suggest_path, "data-load" => @user.activities.map{ |l| { id: l.name, name: l.name }}.to_json, class: "input-wide" }
+        input_html: { "data-path" => activities_suggest_path, "data-load" => @user.activities.map{ |l| { id: l.name, name: l.name }}.to_json }
 
-      %h2.form-group-title Personligt
-      = f.input :private_bio, input_html: { class: 'input-wide', rows: 7 }
+      %h2.group-title Personligt
+      = f.input :private_bio, input_html: { rows: 7 }
 
-      = f.input :twitter, wrapper: :prepend do
-        %span.add-on @
-        = f.input_field :twitter
+      = f.input :twitter, wrapper: :input_group do
+        .input-group-addon @
+        = f.input_field :twitter, class: "form-control"
 
-      = f.input :linkedin, input_html: { class: 'input-wide' }
+      = f.input :linkedin
 
-      = f.input :homepage, input_html: { class: 'input-wide' }
+      = f.input :homepage
 
       - if admin?
-        %h2.form-group-title Rättigheter
-        = f.input :early_adopter
-        = f.input :contacts_editor
-        = f.input :admin
+        %h2.group-title Rättigheter
+        = f.input :early_adopter, wrapper: :radio_and_checkboxes
+        = f.input :contacts_editor, wrapper: :radio_and_checkboxes
+        = f.input :admin, wrapper: :radio_and_checkboxes
 
-      .control-group
+      .form-group
+        %span.no-control-label
         .controls
           = f.button :submit, :class => 'btn-primary'
-          = link_to t('actions.cancel'), user_path(@user.username), class: "btn"
-          %p.help Tänk på att det du skriver i din profil – precis som nästan allt annat du gör i Malmö stad – blir offentlig handling. Skriv bara sådant du kan stå för.
+          = link_to t('actions.cancel'), user_path(@user.username), class: "btn btn-default"
+          %p.help-block Tänk på att det du skriver i din profil – precis som nästan allt annat du gör i Malmö stad – blir offentlig handling. Skriv bara sådant du kan stå för.
 
 - if admin? && !@user.admin?
   %section.box.show.user.danger-zone
     %h1.box-title Riskområde
-    .box-content.form-horizontal.form-data
+    .box-content.basic.form-data
       %section.misc
         %p= "Medarbetaren kommer att raderas permanent från Kontaktboken. Detta går inte att ångra."
-        .delete= link_to raw("<span class='icon-trash icon-large'></span> Radera #{@user.first_name} #{@user.last_name} permanent"), @user, data: { confirm: 'Är du säker på att du vill radera medarbetaren permanent?', method: :delete }, class: "btn btn-danger btn-small"
+        .delete= link_to "Radera #{@user.first_name} #{@user.last_name} permanent", @user, data: { confirm: 'Är du säker på att du vill radera medarbetaren permanent?', method: :delete }, class: "btn btn-danger btn-default"

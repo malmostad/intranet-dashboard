@@ -1,20 +1,21 @@
-= form_for @skill, html: { class: "form-horizontal" } do |f|
+= form_for @skill, html: { class: "basic" } do |f|
   .box-content
     - if @skill.errors.any?
       .warning= t 'messages.validation_errors'
 
-    .control-group
+    .form-group
       = f.label :name, "Namn:", class: "control-label"
       .controls
-        = f.text_field :name, class: 'input-wide'
+        = f.text_field :name, class: "form-control"
         - @skill.errors[:name].each do |msg|
           .help-inline.warning= "#{msg}"
 
-    .control-group
+    .form-group
+      %span.no-control-label
       .controls
         = f.submit t( 'actions.save' ), class: "btn btn-primary"
         - unless @skill.new_record?
-          = link_to delete_icon_text, @skill, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger"
-        = link_to t('actions.cancel'), skills_path, class: "btn"
+          = link_to "Radera", @skill, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger"
+        = link_to t('actions.cancel'), skills_path, class: "btn btn-default"
     - unless @skill.new_record?
       .help-inline= link_to "Slå samman med ...", skills_edit_merge_path(@skill)

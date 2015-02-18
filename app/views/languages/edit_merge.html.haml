@@ -1,23 +1,24 @@
 - title "Slå samman språk"
 %section.box.form
   %h1.box-title= h1
-  = form_for @language, url: languages_merge_path(@language), method: :patch, html: { id: "merge-language", class: "form-horizontal merge" } do |f|
+  = form_for @language, url: languages_merge_path(@language), method: :patch, html: { id: "merge-language", class: "basic merge" } do |f|
     .box-content
       - if @language.errors.any?
         .warning= t 'messages.validation_errors'
 
-      .control-group
+      .form-group
         = label_tag :name, "Språk:", class: "control-label"
         .controls= @language.name
 
-      .control-group
+      .form-group
         = label_tag :into, "Slå samman med:", class: "control-label"
         .controls
-          = text_field_tag :into, nil, class: 'input-wide', 'data-search-path' => languages_search_path
+          = text_field_tag :into, nil, class: "form-control", 'data-search-path' => languages_search_path
           - @language.errors[:into].each do |msg|
             .help-inline.warning= "#{msg}"
 
-      .control-group
+      .form-group
+        %span.no-control-label
         .controls
           = f.submit "Slå samman", class: "btn btn-primary"
-          = link_to t('actions.cancel'), languages_path, class: "btn"
+          = link_to t('actions.cancel'), languages_path, class: "btn btn-default"

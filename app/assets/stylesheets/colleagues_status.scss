@@ -13,19 +13,21 @@ section.box#colleagues {
         width: 46px;
         height: 46px;
         margin: .2em .6em 1em 0;
-        border: none;
+        border: 0;
       }
       .text {
         overflow: hidden;
         h2.name {
-          font-size: emize(13);
+          font-size: emize(14, 16);
+          font-family: $sans-serif;
           font-weight: normal;
-          line-height: emize(16, 13);
+          line-height: 1.3;
           margin: 0;
         }
         p.status {
-          font-size: emize(13);
-          line-height: emize(16, 13);
+          font-size: emize(14, 16);
+          font-family: $sans-serif;
+          line-height: 1.3;
           margin-bottom: 0;
           &.success {
             padding: .1em .3em;
@@ -34,46 +36,45 @@ section.box#colleagues {
           }
         }
         p.updated_at {
-          font-family: $sansSerif;
-          font-size: emize(11);
-          color: $textColorDark;
-          line-height: emize(13, 11);
+          font-family: $sans-serif;
+          font-size: emize(12, 16);
+          color: $text-color-dark;
+          line-height: 1.3;
           margin-bottom: 0;
         }
       }
-      a.delete {
+      a.remove {
         position: absolute;
         top: 0;
         right: 0;
         margin: 0;
-        font-family: $sansSerif;
-        font-size: emize(13);
-        color: $menuColor;
-        span {
-          font-size: emize(13);
-          @include opacity(.2);
-        }
+        top: .3em;
+        width: 1em;
+        height: 1em;
+        cursor: pointer;
+        background-size: 10px;
+        width: 1.2em;
+        height: 1.2em;
+        @include opacity(.4);
       }
-      &:hover a.delete {
-        color: $dangerColor;
-        span {
-          @include opacity(1);
-        }
+      &:hover a.remove {
+        @include opacity(1);
       }
       &.add {
         margin-top: .7em;
+        font-size: emize(14, 14);
         .help {
           margin-bottom: .4em;
         }
       }
       &.waiting {
         height: 4em;
-        background-color: white;
+        background-color: #fff;
         background-position: left 40%;
       }
       .warning {
         padding: .5em .8em;
-        font-family: $sansSerif;
+        font-family: $sans-serif;
       }
     }
     li#my-status {
@@ -88,59 +89,60 @@ section.box#colleagues {
         padding: .2em .2em .3em;
         width: 46px;
         text-align: center;
-        font-size: emize(11);
-        font-family: $sansSerif;
-        background: $backgroundDarker;
-        color: white;
+        font-size: emize(12);
+        font-family: $sans-serif;
+        background: $background-darker;
+        color: #fff;
       }
       .img:hover .change-image {
         display: block;
       }
     }
     .no-colleagues {
-      font-size: emize(13);
-      line-height: emize(17, 13);
+      font-size: emize(14);
+      line-height: 1.3;
       margin-bottom: 1em;
       label.show {
-        font-size: emize(13, 13);
+        font-size: emize(14, 14);
       }
     }
   }
 
   // Change status
-  #change-status-trigger, #add-colleague-trigger {
+  #change-status-trigger,
+  #add-colleague-trigger {
     display: none;
-    font-size: emize(13);
-    font-family: $sansSerif;
+    font-size: emize(14);
+    font-family: $sans-serif;
     &.show {
       display: block;
     }
   }
 
-  #update-status-form, #add-colleague-form {
+  #update-status-form,
+  #add-colleague-form {
     fieldset {
       display: none;
       clear: both;
       padding: 0 0 .4em;
       margin: 0;
-      &.show, .show {
+      &.show,
+      .show {
         display: block;
       }
       label {
         display: none;
         margin-bottom: 0.1em;
-        font-family: $sansSerif;
+        font-family: $sans-serif;
       }
       #status_message {
-        width: 93%;
         margin-bottom: .3em;
         resize: none;
-        height: 1.5em;
+        height: 2.4em;
         overflow: hidden;
       }
       #add_colleague {
-        width: 95%;
-        margin-bottom: .3em;
+        margin: .5em 0 .2em 0;
       }
       .controls {
         display: none;
@@ -150,16 +152,16 @@ section.box#colleagues {
   #update-status-form {
     padding: .4em .4em 0;
     margin-bottom: .3em;
-    background: $backgroundLight;
+    background: $background-light;
     border-bottom: $border;
     border-top: $border;
     .count {
       float: right;
-      padding: .1em;
+      padding: .2em;
       width: 2.2em;
       text-align: center;
-      font-family: $sansSerif;
-      font-size: emize(11);
+      font-family: $sans-serif;
+      font-size: emize(14);
       @include radius(3px);
     }
     #cancel-trigger {

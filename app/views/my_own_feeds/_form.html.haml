@@ -1,24 +1,23 @@
 - if @feed.errors.any?
   .warning= t 'messages.validation_errors'
 
-.control-group
+.form-group
   = f.label :feed_url, "RSS-adress:", class: "control-label"
   .controls
-    = f.text_field :feed_url, class: "input-wide"
+    = f.text_field :feed_url, class: "form-control"
     - @feed.errors[:feed_url].each do |msg|
-      .help-inline.warning= "#{msg}"
+      .help-block.warning= "#{msg}"
     - if @feed.errors.messages[:feed_entries].present?
-      .help-inline.warning= "Flödet kunde inte tolkas."
+      .help-block.warning= "Flödet kunde inte tolkas."
 
-    .help-inline
+    .help-block
       = 'Du kan lägga till följande typer:'
       %ul
         %li= raw 'Ett RSS-flöde som startar med <strong>http://</strong>'
         %li= raw 'Ett användarnamn för Komin-bloggen, t.ex. <strong>jesbyl</strong>'
-        / %li.instruction= raw "En Twitter-användare, t.ex. <strong>@malmostad</strong>"
-        / %li.instruction= raw 'En eller flera Twitter-hashtag(ar), t.ex. <strong>#malmö</strong>'
 
-.control-group
+.form-group
+  %span.no-control-label
   .controls
     = f.submit value: t( "actions.save" ), class: "btn btn-primary"
-    = link_to t('actions.cancel'), my_own_feeds_path, class: "btn"
+    = link_to t('actions.cancel'), my_own_feeds_path, class: "btn btn-default"

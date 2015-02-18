@@ -1,12 +1,12 @@
-= form_for @feed, html: { class: "form-horizontal" } do |f|
+= form_for @feed, html: { class: "basic" } do |f|
   .box-content
     - if @feed.errors.any?
       .warning= t 'messages.validation_errors'
 
-    .control-group
+    .form-group
       = f.label :feed_url, "RSS-adress:", class: "control-label"
       .controls
-        = f.text_field :feed_url, class: 'input-wide'
+        = f.text_field :feed_url, class: 'form-control'
         - @feed.errors[:feed_url].each do |msg|
           .help-inline.warning= "#{msg}"
         - if @feed.errors.messages[:feed_entries].present?
@@ -16,35 +16,33 @@
           %ul
             %li= raw 'Ett RSS-flöde som startar med <strong>http://</strong>'
             %li= raw 'Ett användarnamn för Komin-bloggen, t.ex. <strong>jesbyl</strong>'
-            / %li.instruction= raw "En Twitter-användare, t.ex. <strong>@malmostad</strong>"
-            / %li.instruction= raw 'En eller flera Twitter-hashtag(ar), t.ex. <strong>#malmö</strong>'
 
     - if @feed.category != "my_own"
-      .control-group.text-only
+      .form-group
         .control-label Kategori:
-        .controls= select(:feed, :category,  Feed::CATEGORIES.except('my_own').map { |key, val| [val, key] } )
+        .controls= select(:feed, :category,  Feed::CATEGORIES.except('my_own').map { |key, val| [val, key] }, {}, { class: "form-control" } )
     - elsif @feed.users.present?
-      .control-group.text-only
+      .form-group
         .control-label Prenumerant:
         .controls
           = link_to "#{@feed.users.first.first_name} #{@feed.users.first.last_name} (#{@feed.users.first.username})", user_path(@feed.users.first.username)
 
-    .control-group.text-only
+    .form-group
       .control-label Fel på raken:
       .controls
         = @feed.recent_failures
-    .control-group.text-only
+    .form-group
       .control-label Totalt antal fel:
       .controls
         = @feed.total_failures
 
     - if @feed.category != "my_own"
-      %h2.form-group-title Obligatorisk för följande roller
+      %h2.group-title Obligatorisk för följande roller
       - Role::CATEGORIES.each do |key, val|
-        .control-group
+        .form-group
           .control-label= "#{val}:"
           = hidden_field_tag "feed[role_ids][]", nil
-          .controls
+          .controls.checkbox
             %label.checkbox
               = check_box_tag("toggle-#{key}s")
               Alla
@@ -56,7 +54,8 @@
                   = check_box_tag "feed[role_ids][]", role.id, is_checked, id: dom_id(role)
                   = role.name
 
-    .control-group
+    .form-group
+      %span.no-control-label
       .controls
         = f.submit "Spara och hämta", class: "btn btn-primary"
-        = link_to t('actions.cancel'), feeds_path, class: "btn"
+        = link_to t('actions.cancel'), feeds_path, class: "btn btn-default"

@@ -16,12 +16,12 @@ describe "Employees API" do
 
   it "should have an unauthorized message" do
     get "/api/v1/employees/123"
-    json["message"].should match("401 Unauthorized")
+    expect(json["message"]).to match("401 Unauthorized")
   end
 
   it "should require valid app_token" do
     get "/api/v1/employees/#{user.username}?app_token=x&app_secret=#{api_app.app_secret}"
-    response.status.should eq(401)
+    expect(response.status).to eq(401)
   end
 
   it "should require valid app_token" do
