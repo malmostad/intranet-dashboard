@@ -1,4 +1,4 @@
-- if @feature.present?
+- if @feature.present? && @feature[:entry].present?
   %section#feeds-feature.box.feeds
     %h1.box-title Tema
     %ul.box-content
@@ -10,4 +10,3 @@
           .text
             %h2= sanitize( @feature[:entry].title )
         %p.more= link_to "Fler temanyheter", @feature[:feed_url]
-
