@@ -23,11 +23,11 @@ class ColleagueshipsController < ApplicationController
     @colleagueship = current_user.colleagueships.build(colleague_id: params[:colleague_id])
     if @colleagueship.save
       respond_to do |format|
-        format.html { render "created", layout: false }
-        format.json { render json: { colleagueship_id: @colleagueship.id } }
+        format.html { render 'created', layout: false }
+        format.json { render json: { colleagueship_id: @colleagueship.colleague_id } }
       end
     else
-      render "failed", layout: false
+      render 'failed', layout: false
     end
   end
 
