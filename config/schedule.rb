@@ -32,6 +32,6 @@ end
 every :reboot do
   if environment == "production"
     command "sleep 120; RAILS_ENV=#{real_environment} #{path}/lib/daemons/feed_worker_ctl start"
-    command "sleep 120; RAILS_ENV=#{real_environment} #{path}/script/delayed_job start"
+    command "sleep 120; RAILS_ENV=#{real_environment} #{path}/bin/delayed_job start"
   end
 end

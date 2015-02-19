@@ -83,7 +83,7 @@ A feed is always fetched and feed entries are updated when it is added or change
 The Delayed Job worker is also restarted after Capistrano deployment and added as a `@reboot` task to the crontab during deployment by `whenever`. To check the status, start or stop the daemon manually, execute the following in the application root (defaults to `/var/www/dashboard/production/current/` for production):
 
 ```shell
-$ RAILS_ENV=development|test|production script/delayed_job status|start|stop
+$ RAILS_ENV=development|test|production bin/delayed_job status|start|stop
 ```
 
 ## Scheduled Jobs
