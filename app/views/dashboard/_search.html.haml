@@ -1,12 +1,14 @@
-%section.start-search
-  = form_tag(users_search_path, method: "get") do
-    .form-group
-      = label_tag "query-intranet", "Gå direkt till: ", class: "control-label"
-      .controls
-        = text_field_tag "query-intranet", nil, name: "q", "data-autocomplete-url" => users_suggest_path, class: "form-control input-lg", placeholder: "verktyg eller information"
+%section.box.start-search
+  %h1.box-title Snabbnavigering
+  .box-content
+    = form_tag(users_search_path, method: "get") do
+      .form-group
+        = label_tag "query-intranet", "Gå direkt till: ", class: "control-label"
+        .controls
+          = text_field_tag "query-intranet", nil, name: "q", "data-autocomplete-url" => users_suggest_path, class: "form-control input-lg", placeholder: "verktyg eller information"
 
-  = form_tag(users_search_path, method: "get") do
-    .form-group
-      = label_tag "query-employees", "Slå upp kollega: ", class: "control-label"
-      .controls
-        = text_field_tag "query-employees", nil, name: "q", "data-autocomplete-url" => users_suggest_path, class: "form-control input-lg", placeholder: "förnamn, efternamn, telefon eller användarnamn"
+    = form_tag(users_search_path, method: "get") do
+      .form-group
+        = label_tag "query-employees", "Medarbetare: ", class: "control-label"
+        .controls
+          = text_field_tag "query-employees", nil, name: "q", "data-autocomplete-url" => users_suggest_path, class: "form-control input-lg", placeholder: "förnamn, efternamn, telefon eller användarnamn"
