@@ -12,7 +12,7 @@ section.feeds {
     font-weight: bold;
     line-height: 1.3;
     border-bottom: $border;
-    margin: 0 emize(12, 14) .3em;
+    margin: 0 0 .3em;
     padding: 0 0 .2em;
   }
 
@@ -28,7 +28,7 @@ section.feeds {
       a {
         display: block;
         @include box-sizing('border-box');
-        padding: .4em .7em 0;
+        padding: .4em 0 0;
         border: solid #fff;
         border-width: 1px 0;
         margin: 0;

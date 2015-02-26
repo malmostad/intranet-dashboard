@@ -23,17 +23,17 @@ body.employee .wrapper {
 }
 
 .group-1 {
-  @include columns(9.3);
+  @include columns(9.3, false, 3%);
   .column-1 {
-    @include columns(3.48, false, 2.58%);
+    @include columns(3.48, false, 3.87%);
     float: left;
   }
   .column-2 {
-    @include columns(8.52, true, 2.58%);
+    @include columns(8.52, true, 3.87%);
     float: right;
   }
 }
 
 .column-3 {
-  @include columns(2.7, true);
+  @include columns(2.7, true, 3%);
 }
