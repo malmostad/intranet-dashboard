@@ -1,5 +1,8 @@
-section.box.feeds {
+section.feeds {
   padding-bottom: .4em;
+  .box-title {
+    display: none;
+  }
   h1 {
     margin-bottom: 0;
   }
@@ -9,7 +12,7 @@ section.box.feeds {
     font-weight: bold;
     line-height: 1.3;
     border-bottom: $border;
-    margin: .7em emize(12, 14) .3em;
+    margin: 0 emize(12, 14) .3em;
     padding: 0 0 .2em;
   }
 
@@ -98,6 +101,10 @@ section.box.feeds {
     margin: 1em 1em;
     display: inline-block;
   }
+  .box-menu,
+  .box-instructions {
+    display: none;
+  }
 }
 
 section.combined .box-content li:first-child {
@@ -105,6 +112,9 @@ section.combined .box-content li:first-child {
 }
 
 section.box#feeds-feature {
+  .box-title {
+    display: block;
+  }
   .text {
     clear: both;
     h2 {
