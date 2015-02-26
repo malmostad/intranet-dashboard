@@ -1,4 +1,5 @@
 $ ->
+  $('#start-search-intranet').focus()
   if $('#full-search').length
 
     # Load more results async

@@ -1,14 +1,14 @@
 %section.box.start-search
   %h1.box-title Snabbnavigering
   .box-content
-    = form_tag(users_search_path, method: "get") do
+    = form_tag('http://s1.malmo.se/search/', method: "get") do
       .form-group
-        = label_tag "query-intranet", "Gå direkt till: ", class: "control-label"
+        = label_tag "start-search-intranet", "Gå direkt till: ", class: "control-label"
         .controls
-          = text_field_tag "query-intranet", nil, name: "q", "data-autocomplete-url" => users_suggest_path, class: "form-control input-lg", placeholder: "verktyg eller information"
+          = text_field_tag "start-search-intranet", nil, name: "q", "autocapitalize" => "off", "autocorrect" => "off", "data-autocomplete-url" => 'http://s1.malmo.se/search/autocomplete', "data-images-url" => 'http://s1.malmo.se/', "data-caller" => "Masthead", class: "form-control input-lg", placeholder: "verktyg eller information"
 
     = form_tag(users_search_path, method: "get") do
       .form-group
-        = label_tag "query-employees", "Medarbetare: ", class: "control-label"
+        = label_tag "start-search-employees", "Slå upp i kontaktboken: ", class: "control-label"
         .controls
-          = text_field_tag "query-employees", nil, name: "q", "data-autocomplete-url" => users_suggest_path, class: "form-control input-lg", placeholder: "förnamn, efternamn, telefon eller användarnamn"
+          = text_field_tag "start-search-employees", nil, name: "q", "data-autocomplete-url" => users_suggest_path, class: "form-control input-lg", placeholder: "förnamn, efternamn, telefon eller användarnamn"
