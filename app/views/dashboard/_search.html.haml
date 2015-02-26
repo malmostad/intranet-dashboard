@@ -1,0 +1,18 @@
+%section.search
+  = form_tag(users_search_path, method: "get") do
+    .form-group
+      = label_tag "query-intranet", "Sök på Komin: ", class: "control-label"
+      .controls
+        .input-group
+          = text_field_tag "query-intranet", nil, name: "q", "data-autocomplete-url" => users_suggest_path, class: "form-control input-lg", placeholder: "verktyg eller information"
+          %span.input-group-btn
+            = submit_tag "Sök", { class: "btn btn-default btn-lg", name: nil }
+
+  = form_tag(users_search_path, method: "get") do
+    .form-group
+      = label_tag "query-employees", "Sök kollega: ", class: "control-label"
+      .controls
+        .input-group
+          = text_field_tag "query-employees", nil, name: "q", "data-autocomplete-url" => users_suggest_path, class: "form-control input-lg", placeholder: "förnamn, efternamn, telefon eller användarnamn"
+          %span.input-group-btn
+            = submit_tag "Sök", { class: "btn btn-default btn-lg", name: nil }
