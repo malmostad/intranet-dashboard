@@ -8,40 +8,6 @@ $ ->
         $('#load-more-search-results').replaceWith(data)
       $(this).text("Laddar fler...").addClass('disabled')
 
-    $searchField = $('#full-search #q')
-
-    # Autocomplete
-    if $searchField.length
-      $searchField.focus()
-      $searchField.autocomplete
-        source: (request, response) ->
-          $.ajax
-            url: $searchField.attr("data-autocomplete-path")
-            data:
-              q: request.term.toLowerCase()
-              ilang: 'sv'
-            dataType: "jsonp"
-            jsonpCallback: "results"
-            success: (data) ->
-              if data.length
-                response $.map data, (item) ->
-                  return {
-                    hits: item.nHits
-                    suggestionHighlighted: item.suggestionHighlighted
-                    value: item.suggestion
-                  }
-              else
-                $searchField.autocomplete("close")
-        minLength: 2
-        select: (event, ui) ->
-          $searchField.val(ui.item.value)
-          $("#full-search").submit()
-      .data( "ui-autocomplete" )._renderItem = (ul, item) ->
-        return $("<li></li>")
-        .data("ui-autocomplete-item", item)
-        .append("<a><span class='hits'>" + item.hits + "</span>" + item.suggestionHighlighted + "</a>")
-        .appendTo(ul)
-
     # Event tracking of details for selected link in the search results
     if $("section.site-search").length
       $('body').on "click", "section.site-search h2 a, section.site-search .ess-bestbets a, section.site-search ul.breadcrumb a, section.site-search .categories a", (event) ->
