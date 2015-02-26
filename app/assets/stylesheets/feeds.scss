@@ -115,6 +115,9 @@ section.box#feeds-feature {
   .box-title {
     display: block;
   }
+  .box-content li a {
+    padding: 0 .7em 0;
+  }
   .text {
     clear: both;
     h2 {
