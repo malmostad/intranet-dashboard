@@ -23,6 +23,21 @@ body.employee .wrapper {
 }
 
 .group-1 {
+  @include columns(9);
+  .column-1 {
+    @include columns(4, false, 2.68%);
+    float: left;
+  }
+  .column-2 {
+    @include columns(8, true, 2.68%);
+    float: right;
+  }
+}
+.column-3 {
+  @include columns(3, true, 3%);
+}
+
+/* .group-1 {
   @include columns(9.3, false, 3%);
   .column-1 {
     @include columns(3.48, false, 3.87%);
@@ -33,7 +48,7 @@ body.employee .wrapper {
     float: right;
   }
 }
-
 .column-3 {
   @include columns(2.7, true, 3%);
 }
+ */
