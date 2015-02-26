@@ -17,7 +17,7 @@ section.feeds {
   }
 
   .box-content {
-    margin: 0;
+    margin: 0 0 1.5em;
     ul {
       margin: 0;
       padding: 0;
@@ -90,7 +90,7 @@ section.feeds {
       }
     }
     li.load-more {
-      padding: .2em .8em .8em;
+      padding: .2em 0 .8em;
       margin-bottom: .8em;
     }
   }
@@ -114,9 +114,13 @@ section.combined .box-content li:first-child {
 section.box#feeds-feature {
   .box-title {
     display: block;
+    margin: 0;
+  }
+  .box-content {
+    margin-bottom: 0;
   }
   .box-content li a {
-    padding: 0 .7em 0;
+    padding: .55em .7em 0;
   }
   .text {
     clear: both;
@@ -137,10 +141,12 @@ section.box#feeds-feature {
   .more {
     margin: 0;
   }
-  .more a {
+  .box-content li .more a {
     font-family: $sans-serif;
     font-size: emize(14, 14);
+    padding-top: .4em;
     padding-bottom: .4em;
+    margin-bottom: 0;
   }
 }
 

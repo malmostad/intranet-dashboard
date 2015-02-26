@@ -14,9 +14,22 @@
         = render "feeds_entries", entries: @combined_entries, category: 'combined', more_text: "Visa fler"
   - elsif has_news?
     %section.news
-      %h1 Nyheter
+      %h1 Vår kommun
       %ul.box-content
-        = render "feeds_entries", entries: @news_entries, category: 'news', more_text: "Visa fler nyheter"
+        = render "feeds_entries", entries: @news_entries[0..1], category: 'news', more_text: "Visa fler nyheter för Vår kommun"
+
+      %h1 Stadskontoret
+      %ul.box-content
+        = render "feeds_entries", entries: @news_entries[2..3], category: 'news', more_text: "Visa fler nyheter för Stadskontoret"
+
+      %h1 Kommunikationsarbete
+      %ul.box-content
+        = render "feeds_entries", entries: @news_entries[4..5], category: 'news', more_text: "Visa fler nyheter för Kommunikationsarbete"
+
+      %h1 Egna val
+      %ul.box-content
+        = render "feeds_entries", entries: @news_entries[6..7], category: 'news', more_text: "Visa fler egna val"
+
     %section.dialog
       %h1 Diskussioner
       %ul.box-content
