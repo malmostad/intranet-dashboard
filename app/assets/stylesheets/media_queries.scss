@@ -188,6 +188,10 @@
         margin-left: 0;
         width: 100%;
       }
+      &.column-2 {
+        padding-left: 1em;
+        padding-right: 1em;
+      }
     }
 
     section.site-search {
@@ -238,8 +242,11 @@
         height: 46px;
       }
 
-      section.box.feeds {
+      section.feeds {
         .box-content li {
+          img {
+            width: 72px;
+          }
           .summary {
             display: none;
           }
