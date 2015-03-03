@@ -34,7 +34,7 @@ body.employee .wrapper {
   }
 }
 .column-3 {
-  @include columns(3, true, 3%);
+  @include columns(3, true, 4%);
 }
 
 /* .group-1 {
