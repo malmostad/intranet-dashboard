@@ -23,18 +23,18 @@ body.employee .wrapper {
 }
 
 .group-1 {
-  @include columns(9);
+  @include columns(9, false, 3%);
   .column-1 {
-    @include columns(4, false, 2.68%);
+    @include columns(4, false, 4%);
     float: left;
   }
   .column-2 {
-    @include columns(8, true, 2.68%);
+    @include columns(8, true, 4%);
     float: right;
   }
 }
 .column-3 {
-  @include columns(3, true, 4%);
+  @include columns(3, true, 3%);
 }
 
 /* .group-1 {
