@@ -59,6 +59,17 @@ section.feeds {
           line-height: 1.2;
           font-weight: normal;
         }
+        .tag {
+          display: inline-block;
+          padding: .2em .6em .25em;
+          margin: 0 .4em 0 0;
+          @include radius(2px);
+          background: $background-dark;
+          color: #fff;
+          font-family: $sans-serif;
+          font-size: emize(12);
+          line-height: 1;
+        }
         p.summary,
         p.nomore {
           font-size: emize(17);

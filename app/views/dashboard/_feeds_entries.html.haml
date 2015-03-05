@@ -5,7 +5,9 @@
         = image_tag(entry.image, alt: '')
       .text
         %h2= sanitize(entry.title)
-        %p.summary{ class: category }= summary(entry.summary)
+        %p.summary{ class: category }
+          %span.tag= feed_tag entry.feed.title
+          = summary(entry.summary)
         %p.meta
           = "#{distance_of_time_in_words_to_now(entry.published).humanize()} sen från "
           = entry.feed.title

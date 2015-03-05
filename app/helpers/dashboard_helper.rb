@@ -4,6 +4,12 @@ module DashboardHelper
     truncate( strip_tags(HTMLEntities.new.decode text), { separator: ' ', length: 140, omission: ' …' } )
   end
 
+  def feed_tag(text)
+    text = 'Blogg' if text.match(/^\s*Blogg\s+[»>]\s+/)
+    text = 'Forum' if text.match(/^\s*Forum\s+[»>]\s+/)
+    text.sub(/^\s*Nyheter\s+[»>]\s+/, '')
+  end
+
   # Is the feed entry a tweet?
   def tweet?(entry)
     entry.guid.present? && !!entry.guid.match('^http://twitter.com/')
