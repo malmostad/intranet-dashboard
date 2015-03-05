@@ -61,17 +61,21 @@ section.feeds {
         }
         .tag {
           display: inline-block;
-          padding: .2em .6em .25em;
-          margin: 0 .4em 0 0;
+          vertical-align: baseline;
+          padding: .2em .6em .22em;
+          margin: 0 .3em 1px 0;
           @include radius(2px);
           background: $background-dark;
           color: #fff;
           font-family: $sans-serif;
-          font-size: emize(12);
+          font-size: emize(11, 17);
+          text-transform: uppercase;
+          letter-spacing: .1em;
           line-height: 1;
         }
         p.summary,
         p.nomore {
+          vertical-align: baseline;
           font-size: emize(17);
           line-height: emize(21);
           margin-bottom: .1em;
@@ -98,6 +102,14 @@ section.feeds {
             @include opacity(.6);
           }
         }
+      }
+    }
+    li:nth-of-type(n+6) {
+      span.x {
+        display: none;
+      }
+      img {
+        width: 60px;
       }
     }
     li.load-more {

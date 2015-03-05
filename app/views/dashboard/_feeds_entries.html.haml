@@ -7,10 +7,10 @@
         %h2= sanitize(entry.title)
         %p.summary{ class: category }
           %span.tag= feed_tag entry.feed.title
-          = summary(entry.summary)
+          %span.x= summary(entry.summary)
         %p.meta
-          = "#{distance_of_time_in_words_to_now(entry.published).humanize()} sen från "
-          = entry.feed.title
+          = "#{distance_of_time_in_words_to_now(entry.published).humanize()} sen"
+          -# = entry.feed.title
           - if entry.count_comments.to_i > 0
             - c = entry.count_comments.to_i == 1 ? "kommentar" : "kommentarer"
             %span.comments
