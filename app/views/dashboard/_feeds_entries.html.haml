@@ -1,21 +1,24 @@
 - entries.each do |entry|
   %li
     %a{ href: entry.url, rel: "external" }
-      - if entry.image.present?
-        = image_tag(entry.image, alt: '')
-      .text
+      .image
+        - if entry.image.present?
+          = image_tag(entry.image, alt: '')
+    .text
+      %a{ href: entry.url, rel: "external" }
         %h2= sanitize(entry.title)
-        %p.summary{ class: category }
+      %p.summary{ class: category }
+        - if show_tag(entry)
           %span.tag= feed_tag entry.feed.title
-          %span.x= summary(entry.summary)
-        %p.meta
-          = "#{distance_of_time_in_words_to_now(entry.published).humanize()} sen"
-          -# = entry.feed.title
-          - if entry.count_comments.to_i > 0
-            - c = entry.count_comments.to_i == 1 ? "kommentar" : "kommentarer"
-            %span.comments
-              %span.m-icon-bubbles
-              = " #{entry.count_comments} #{c}"
+        %span.summary= summary(entry.summary)
+      %p.meta
+        = "#{distance_of_time_in_words_to_now(entry.published).humanize()} sen"
+        = entry.feed.title
+        - if entry.count_comments.to_i > 0
+          - c = entry.count_comments.to_i == 1 ? "kommentar" : "kommentarer"
+          %span.comments
+            %span.m-icon-bubbles
+            = " #{entry.count_comments} #{c}"
 
 - if entries.size == @entries_limit
   %li.load-more

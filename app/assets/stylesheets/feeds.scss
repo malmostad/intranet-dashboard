@@ -23,30 +23,18 @@ section.feeds {
       padding: 0;
     }
     li {
-      margin: 0;
+      margin: 0 0 1em;
       overflow-x: hidden;
-      a {
-        display: block;
-        @include box-sizing('border-box');
-        padding: .4em 0 0;
-        border: solid #fff;
-        border-width: 1px 0;
-        margin: 0;
-        &:hover,
-        &:focus {
-          cursor: pointer;
-          background-color: $background-light;
-          border-color: $border-color;
-        }
-        p.summary,
-        p.meta {
-          color: #000;
-        }
+      .image {
+        float: left;
+        width: 140px;
+        min-height: 140px;
+        margin: .3em 1em .6em 0;
+        background: $background-light;
       }
       img {
-        float: left;
-        width: 120px;
-        margin: 5px 14px 11px 0;
+        width: 100%;
+        height: auto;
         border: 0;
       }
       .text {
@@ -61,9 +49,13 @@ section.feeds {
         }
         .tag {
           display: inline-block;
-          vertical-align: baseline;
-          padding: .2em .6em .22em;
-          margin: 0 .3em 1px 0;
+          vertical-align: top;
+          max-width: 18em;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          padding: 3px .6em 4px;
+          margin: .3em .3em 0 0;
           @include radius(2px);
           background: $background-dark;
           color: #fff;
@@ -75,7 +67,7 @@ section.feeds {
         }
         p.summary,
         p.nomore {
-          vertical-align: baseline;
+          vertical-align: middle;
           font-size: emize(17);
           line-height: emize(21);
           margin-bottom: .1em;
@@ -105,11 +97,16 @@ section.feeds {
       }
     }
     li:nth-of-type(n+6) {
-      span.x {
-        display: none;
+      p.summary {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* display: none; */
       }
-      img {
-        width: 60px;
+      .image {
+        width: 90px;
+        min-height: 80px;
+        margin: .3em .8em .6em 0;
       }
     }
     li.load-more {
