@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 module DashboardHelper
   def summary(text)
-    truncate(strip_tags(HTMLEntities.new.decode text), separator: ' ', length: 140, omission: ' …')
+    truncate(HTMLEntities.new.decode(strip_tags(text)),
+             separator: ' ', length: 140, omission: ' …')
   end
 
   def feed_tag(text)
