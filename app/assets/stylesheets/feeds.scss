@@ -83,7 +83,6 @@ section.feeds {
             display: block;
             margin-top: .4em;
             line-height: 1.2;
-            color: $link-color;
           }
           .m-icon-bubbles {
             display: inline-block;
@@ -105,7 +104,7 @@ section.feeds {
       }
       .image {
         width: 90px;
-        min-height: 80px;
+        min-height: 90px;
         margin: .3em .8em .6em 0;
       }
     }
@@ -139,7 +138,7 @@ section.box#feeds-feature {
   .box-content {
     margin-bottom: 0;
   }
-  .box-content li a {
+  .box-content li {
     padding: .55em .7em 0;
   }
   .text {
@@ -159,11 +158,12 @@ section.box#feeds-feature {
     }
   }
   .more {
-    margin: 0;
+    font-family: $sans-serif;
+    margin: 0 .7em 0;
+    font-size: emize(14, 16);
   }
   .box-content li .more a {
     font-family: $sans-serif;
-    font-size: emize(14, 14);
     padding-top: .4em;
     padding-bottom: .4em;
     margin-bottom: 0;

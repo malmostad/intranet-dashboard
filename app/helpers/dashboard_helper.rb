@@ -12,7 +12,11 @@ module DashboardHelper
     text.sub(/^\s*Nyheter\s+[»>]\s+/, '')
   end
 
-  def show_tag(entry)
+  def feed_link(feed_entry)
+    feed_entry.feed
+  end
+
+  def show_feed_tag(entry)
     entry.url.match('malmo.se')
   end
 

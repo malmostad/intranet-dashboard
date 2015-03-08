@@ -25,7 +25,7 @@
   }
 }
 
-@media (max-width: 62em) {
+@media (max-width: 64em) {
   .group-1 {
     @include columns(12);
     .column-1 {
@@ -236,66 +236,62 @@
           right: .6em;
         }
       }
+    }
 
-      section.box#colleagues ul.box-content li img {
-        width: 46px;
-        height: 46px;
-      }
+    section.box#colleagues ul.box-content li img {
+      width: 46px;
+      height: 46px;
+    }
 
-      section.feeds {
-        .box-content li {
-          img {
-            width: 72px;
-          }
-          .summary {
-            display: none;
-          }
-          .text {
-            h2 {
-              margin: 0;
-              padding: 0;
-            }
+    section.feeds {
+      .box-content li {
+        .image {
+          width: 90px;
+          min-height: 90px;
+        }
+        .text {
+          h2 {
+            margin: 0;
+            padding: 0;
           }
         }
       }
-      section.box#feeds-dialog,
-      section.box#my_own  {
-        .box-content li {
-          a {
-            @include clearfix();
-          }
-          img {
-            width: 46px;
-            height: 46px;
-          }
-        }
-      }
-
-      section.box#feeds-feature {
+    }
+    section.box#feeds-dialog,
+    section.box#my_own  {
+      .box-content li {
         a {
           @include clearfix();
         }
         img {
-          @include columns(6);
-          max-width: 12em;
-          max-height: 12em;
+          width: 46px;
+          height: 46px;
         }
-        .crop {
-          overflow: visible;
-          margin-bottom: 0;
-          border: 0;
+      }
+    }
+
+    section.box#feeds-feature {
+      img {
+        border: $border;
+      }
+      .crop {
+        @include columns(6);
+        max-width: 12em;
+        max-height: 12em;
+        overflow: visible;
+        margin-bottom: 0;
+        border: 0;
+      }
+      .text {
+        @include columns(6, true);
+        clear: none;
+        h2 {
+          font-family: $serif;
+          font-size: emize(24, 15);
         }
-        .text {
-          @include columns(6, true);
-          clear: none;
-          h2 {
-            font-family: $serif;
-            font-size: emize(24, 15);
-          }
-        }
-        .more {
-          clear: both;
-        }
+      }
+      .more {
+        clear: both;
       }
     }
   }
@@ -333,6 +329,21 @@
 }
 
 @media (max-width: 38em) {
+  body section.feeds {
+    .box-content li {
+      .text h2 {
+        font-size: emize(20)
+      }
+      .image {
+        width: 72px;
+        min-height: 72px;
+      }
+      .preamble {
+        display: none;
+      }
+    }
+  }
+
   // hack to avoid zoom in iOS
   #status_message,
   #add_colleague,

@@ -8,9 +8,9 @@
       %a{ href: entry.url, rel: "external" }
         %h2= sanitize(entry.title)
       %p.summary{ class: category }
-        - if show_tag(entry)
+        - if show_feed_tag(entry)
           %span.tag= feed_tag entry.feed.title
-        %span.summary= summary(entry.summary)
+        %span.preamble= summary(entry.summary)
       %p.meta
         = "#{distance_of_time_in_words_to_now(entry.published).humanize()} sen"
         = entry.feed.title
