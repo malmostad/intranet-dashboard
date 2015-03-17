@@ -1,11 +1,11 @@
 %section.start-search
   -# %h1.box-title Snabbnavigering
   .box-content
-    = form_tag('http://s1.malmo.se/search/', method: "get") do
+    = form_tag('https://srvubuwebhost15.malmo.se/', method: "get") do
       .form-group
         = label_tag "start-search-intranet", "Gå direkt till: ", class: "control-label"
         .controls
-          = text_field_tag "start-search-intranet", nil, name: "q", "autocapitalize" => "off", "autocorrect" => "off", "data-autocomplete-url" => 'http://s1.malmo.se/search/autocomplete', "data-images-url" => 'http://s1.malmo.se/', "data-caller" => "Masthead", class: "form-control input-lg", placeholder: "verktyg, system eller information"
+          = text_field_tag "start-search-intranet", nil, name: "q", "autocapitalize" => "off", "autocorrect" => "off", "data-autocomplete-url" => 'http://s1.malmo.se/search/autocomplete', "data-images-url" => 'https://srvubuwebhost15.malmo.se', "data-caller" => "Masthead", class: "form-control input-lg", placeholder: "verktyg, system eller information"
 
     = form_tag(users_search_path, method: "get") do
       .form-group
