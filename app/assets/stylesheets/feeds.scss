@@ -57,7 +57,7 @@ section.feeds {
           padding: 3px .6em 4px;
           margin: .3em .3em 0 0;
           @include radius(2px);
-          background: #555;
+          background: $background-dark;
           color: #fff;
           font-family: $sans-serif;
           font-size: emize(11, 17);
