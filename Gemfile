@@ -51,6 +51,7 @@ end
 group :development, :local_test do
   gem 'quiet_assets'
   gem 'thin'
+  gem 'scss-lint'
 end
 
 group :local_test do
