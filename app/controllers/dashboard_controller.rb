@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-
 # Model-less controller for dashboard data from other models
 class DashboardController < ApplicationController
   before_action :require_user
 
-  COMBINED_FEED_ENTRIES_LIMIT = 15
-  CATEGORY_FEED_ENTRIES_LIMIT = 5
-  MAINTENANCE_FEED_ENTRIES_LIMIT = 5
+  COMBINED_FEED_ENTRIES_LIMIT = 20
+  MAINTENANCE_FEED_ENTRIES_LIMIT = 3
 
   def index
     @entries_limit = COMBINED_FEED_ENTRIES_LIMIT
@@ -22,18 +19,9 @@ class DashboardController < ApplicationController
   # Load more feed entries in requested category
   def more_feed_entries
     @category = params[:category]
-
-    if @category == "combined"
-      @entries_limit = COMBINED_FEED_ENTRIES_LIMIT
-      @entries = FeedEntry.from_feeds(current_user.combined_feed_ids, { before: Time.at(params[:before].to_i), limit: COMBINED_FEED_ENTRIES_LIMIT } )
-      @more_text = "Visa fler"
-    else
-      @entries_limit = CATEGORY_FEED_ENTRIES_LIMIT
-      @entries = feed_entries_from_category(@category, { before: Time.at(params[:before].to_i), limit: CATEGORY_FEED_ENTRIES_LIMIT } )
-      @more_text = "Visa fler nyheter" if @category == "news"
-      @more_text = "Visa fler diskussioner" if @category == "dialog"
-      @more_text = "Visa fler egna flöden" if @category == "my_own"
-    end
+    @entries_limit = COMBINED_FEED_ENTRIES_LIMIT
+    @entries = FeedEntry.from_feeds(current_user.combined_feed_ids, { before: Time.at(params[:before].to_i), limit: COMBINED_FEED_ENTRIES_LIMIT } )
+    @more_text = "Visa fler"
     render :more_feed_entries, layout: false
   end
 
