@@ -5,7 +5,7 @@
       .form-group
         = label_tag "start-search-intranet", "Gå direkt till: ", class: "control-label"
         .controls
-          = text_field_tag "start-search-intranet", nil, name: "q", "autocapitalize" => "off", "autocorrect" => "off", "data-autocomplete-url" => 'http://s1.malmo.se/search/autocomplete', "data-images-url" => 'https://srvubuwebhost15.malmo.se', "data-caller" => "Masthead", class: "form-control input-lg", placeholder: "verktyg, system eller information"
+          = text_field_tag "start-search-intranet", nil, name: "q", "autocapitalize" => "off", "autocorrect" => "off", "data-autocomplete-url" => 'https://srvubuwebhost15.malmo.se/search/autocomplete', "data-images-url" => 'https://srvubuwebhost15.malmo.se', "data-caller" => "Masthead", class: "form-control input-lg", placeholder: "verktyg, system eller information"
 
     = form_tag(users_search_path, method: "get") do
       .form-group
