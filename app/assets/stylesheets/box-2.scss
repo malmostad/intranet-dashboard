@@ -1,0 +1,139 @@
+.box-2 {
+  position: relative;
+  margin-bottom: 1.4em;
+  .box-title {
+    font-size: emize(16);
+    line-height: emize(18, 16);
+    font-family: $sans-serif;
+    font-weight: bold;
+    margin: 0.7em 0 0.6em;
+    padding: 0 0 .2em;
+    border-bottom: $border;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .box-content {
+    overflow: hidden;
+    margin: .6em 0;
+    padding: 0;
+    p {
+      font-size: emize(17);
+      line-height: 1.5;
+    }
+    ul {
+      margin-left: 0;
+    }
+    ul:last-child {
+      margin-bottom: .5em;
+    }
+  }
+
+  .box-instructions {
+    display: none;
+    margin: .5em .9em .7em;
+    padding: .5em .7em;
+    border: $border;
+    @include radius(3px);
+    h2.no-entries {
+      font-size: emize(24);
+      font-weight: normal;
+      line-height: 1.2;
+      margin: 0 0 .1em;
+    }
+    p {
+      font-size: emize(15);
+      line-height: emize(21, 15);
+      padding: 0;
+      margin: 0;
+    }
+    &.show {
+      display: block;
+    }
+  }
+  button.toggle-instructions {
+    position: absolute;
+    cursor: pointer;
+    right: 2.2em;
+    top: 3px;
+    width: 1.6em;
+    height: 1.45em;
+    line-height: 1;
+    border: 0;
+    font-family: $sans-serif;
+    font-size: emize(16);
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    @include opacity(.8);
+    @include radius(3px);
+    background-color: transparent;
+    &:hover {
+      @include opacity(1);
+    }
+  }
+
+  .box-menu {
+    position: absolute;
+    right: 0;
+    top: 0;
+    button.dropdown-toggle {
+      position: absolute;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+      font-size: 1em;
+      background-color: transparent;
+      background-position: 50%;
+      background-size: 14px;
+      display: inline-block;
+      height: 1.45em;
+      width: 1.6em;
+      line-height: 1;
+      border: 0;
+      @include opacity(.6);
+      &:hover {
+        @include opacity(1);
+        background-color: transparent;
+      }
+      /* &::before {
+        font-family: $sans-serif;
+        font-size: emize(14);
+        position: absolute;
+        content: 'Anpassa';
+        right: 2em;
+        top: .2em;
+        display: block;
+        @include opacity(1);
+      } */
+    }
+    .dropdown-menu {
+      right: 0;
+      left: auto;
+      top: 2.1em;
+    }
+  }
+
+  .box-instructions {
+    display: none;
+    margin: .5em 0 .7em;
+    padding: .5em .7em .8em;
+    border: $border;
+    @include radius(3px);
+    h2.no-entries {
+      font-size: emize(24);
+      font-weight: normal;
+      line-height: 1.2;
+      margin: 0 0 .1em;
+    }
+    p {
+      font-size: emize(15);
+      line-height: emize(21, 15);
+      padding: 0;
+      margin: 0;
+    }
+    &.show {
+      display: block;
+    }
+  }
+}

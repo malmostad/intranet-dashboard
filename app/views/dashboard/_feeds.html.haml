@@ -1,4 +1,4 @@
-%section.feeds
+%section.box-2.feeds
   %h1.box-title Nyheter & diskussioner
   .box-instructions{ class: has_news? ? "" : "show"}
     %p= raw "Denna box visar nyheter, blogg- och foruminlägg från Min förvaltning och Mitt arbetsfält, baserat på vad du valt i #{link_to "Min profil", edit_user_path(current_user)}."
@@ -8,23 +8,12 @@
     - unless has_news?
       = link_to "Välj profil", edit_user_path(current_user), class: "btn btn-default"
 
-  %section.combined
-    %ul.box-content
-      %h1 Nyheter & diskussioner
-      = render "feeds_entries", entries: @combined_entries, category: 'combined', more_text: "Visa fler"
+  %ul.box-content
+    = render "feeds_entries", entries: @combined_entries, category: 'combined', more_text: "Visa fler"
 
   .dropdown.box-menu
     %button#feeds-menu.dropdown-toggle{ type: "button", title: "Anpassa innehållet", "data-toggle" => "dropdown" }
     %menu.dropdown-menu{ "aria-labelledby" => "feeds-menu", "aria-hidden" => true, role: "menu" }
-      %li
-        %a{ href: users_update_feed_stream_type_path, "data-method" => :patch }
-          = "✓ " if current_user.combined_feed_stream?
-          = "Visa sammanslaget"
-      %li
-        %a{ href: users_update_feed_stream_type_path, "data-method" => :patch }
-          = "✓ " if !current_user.combined_feed_stream?
-          = "Visa kategoriserat"
-      %li.divider
       %li= link_to "Hantera nyhetskällor...", user_select_feeds_path('news')
       %li= link_to "Hantera diskussionskällor...", user_select_feeds_path('dialog')
       %li= link_to "Hantera egna källor...", my_own_feeds_path
