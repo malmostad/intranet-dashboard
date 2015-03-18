@@ -20,16 +20,16 @@ $ ->
 
         # Track all clicks in the results list
         if $a.closest(".results").length > 0
-          _gaq.push(['_trackEvent', 'SearchClickPosition', GAAction, GALabel, $(".results > ul > li").index($a.closest("li")) + 1, 10])
+          ga('send', 'event', 'SearchClickPosition', GAAction, GALabel, $(".results > ul > li").index($a.closest("li")) + 1, 10)
 
         # Track clicks on breadcrumbs in the results list
         if $a.closest(".breadcrumb").length > 0
-          _gaq.push(['_trackEvent', 'SearchClickBreadcrumb', GAAction,  GALabel])
+          ga('send', 'event', 'SearchClickBreadcrumb', GAAction,  GALabel)
 
         # Track clicks on editors choich in the results list
         if $a.closest(".editors_choice").length > 0
-          _gaq.push(['_trackEvent', 'SearchClickEditorsChoice', GAAction,  GALabel])
+          ga('send', 'event', 'SearchClickEditorsChoice', GAAction,  GALabel)
 
         # Track clicks on editors choich in the results list
         if $a.closest(".categories").length > 0
-          _gaq.push(['_trackEvent', 'SearchClickCategory', GAAction,  GALabel])
+          ga('send', 'event', 'SearchClickCategory', GAAction,  GALabel)
