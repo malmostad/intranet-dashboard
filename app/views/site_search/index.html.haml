@@ -8,7 +8,7 @@
           = label_tag "q", "#{h1}: "
           .controls
             .input-group
-              = text_field_tag :q, @terms, { class: "form-control", placeholder: "Ange ett eller flera sökord", "data-autocomplete-path" => site_search_autocomplete_path, 'data-caller' => 'Fullpage' }
+              = text_field_tag :q, @terms, { class: "form-control", placeholder: "Ange ett eller flera sökord", "data-autocomplete-url" => site_search_autocomplete_path, 'data-caller' => 'Fullpage' }
               %span.input-group-btn
                 = submit_tag "Sök", { class: "btn btn-default", name: nil }
 
