@@ -1,4 +1,5 @@
 $ ->
+  $('#start-search-intranet').focus()
   if $('#full-search').length
 
     # Load more results async
@@ -7,40 +8,6 @@ $ ->
       $.get $('#load-more-search-results a').attr("href"), (data) ->
         $('#load-more-search-results').replaceWith(data)
       $(this).text("Laddar fler...").addClass('disabled')
-
-    $searchField = $('#full-search #q')
-
-    # Autocomplete
-    if $searchField.length
-      $searchField.focus()
-      $searchField.autocomplete
-        source: (request, response) ->
-          $.ajax
-            url: $searchField.attr("data-autocomplete-path")
-            data:
-              q: request.term.toLowerCase()
-              ilang: 'sv'
-            dataType: "jsonp"
-            jsonpCallback: "results"
-            success: (data) ->
-              if data.length
-                response $.map data, (item) ->
-                  return {
-                    hits: item.nHits
-                    suggestionHighlighted: item.suggestionHighlighted
-                    value: item.suggestion
-                  }
-              else
-                $searchField.autocomplete("close")
-        minLength: 2
-        select: (event, ui) ->
-          $searchField.val(ui.item.value)
-          $("#full-search").submit()
-      .data( "ui-autocomplete" )._renderItem = (ul, item) ->
-        return $("<li></li>")
-        .data("ui-autocomplete-item", item)
-        .append("<a><span class='hits'>" + item.hits + "</span>" + item.suggestionHighlighted + "</a>")
-        .appendTo(ul)
 
     # Event tracking of details for selected link in the search results
     if $("section.site-search").length
@@ -53,16 +20,16 @@ $ ->
 
         # Track all clicks in the results list
         if $a.closest(".results").length > 0
-          _gaq.push(['_trackEvent', 'SearchClickPosition', GAAction, GALabel, $(".results > ul > li").index($a.closest("li")) + 1, 10])
+          ga('send', 'event', 'SearchClickPosition', GAAction, GALabel, $(".results > ul > li").index($a.closest("li")) + 1)
 
         # Track clicks on breadcrumbs in the results list
         if $a.closest(".breadcrumb").length > 0
-          _gaq.push(['_trackEvent', 'SearchClickBreadcrumb', GAAction,  GALabel])
+          ga('send', 'event', 'SearchClickBreadcrumb', GAAction,  GALabel)
 
-        # Track clicks on editors choich in the results list
+        # Track clicks on editors choice in the results list
         if $a.closest(".editors_choice").length > 0
-          _gaq.push(['_trackEvent', 'SearchClickEditorsChoice', GAAction,  GALabel])
+          ga('send', 'event', 'SearchClickEditorsChoice', GAAction,  GALabel)
 
         # Track clicks on editors choich in the results list
         if $a.closest(".categories").length > 0
-          _gaq.push(['_trackEvent', 'SearchClickCategory', GAAction,  GALabel])
+          ga('send', 'event', 'SearchClickCategory', GAAction,  GALabel)
