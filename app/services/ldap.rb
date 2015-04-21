@@ -19,7 +19,10 @@ class Ldap
     return false if username.strip.empty? || password.strip.empty?
 
     bind_user = @client.bind_as(base: APP_CONFIG["ldap"]["base_dn"], filter: "cn=#{username}", password: password )
-    if bind_user.present?
+
+    # We need to check that cn is the same as username
+    # since the the AD binds usernames with non-ascii chars
+    if bind_user.present? && bind_user.first.cn.first == username
       true
     else
       Rails.logger.warn "LDAP: #{username} failed to log in. #{@client.get_operation_result}"
