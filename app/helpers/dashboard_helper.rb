@@ -5,6 +5,21 @@ module DashboardHelper
              separator: ' ', length: 140, omission: ' …')
   end
 
+  def feed_tag(text)
+    # Special text cutting for internal feeds
+    text = 'Blogg' if text.match(/^\s*Blogg\s+[»>]\s+/)
+    text = 'Forum' if text.match(/^\s*Forum\s+[»>]\s+/)
+    text.sub(/^\s*Nyheter\s+[»>]\s+/, '')
+  end
+
+  def feed_link(feed_entry)
+    feed_entry.feed
+  end
+
+  def show_feed_tag(entry)
+    entry.url.match('malmo.se')
+  end
+
   # Is the feed entry a tweet?
   def tweet?(entry)
     entry.guid.present? && !!entry.guid.match('^http://twitter.com/')
@@ -16,6 +31,6 @@ module DashboardHelper
   end
 
   def toggle_feed_stream_text
-    current_user.combined_feed_stream ? "Visas sammanslaget" : "Visas kategoriserat"
+    current_user.combined_feed_stream ? 'Visas sammanslaget' : 'Visas kategoriserat'
   end
 end

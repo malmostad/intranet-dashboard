@@ -10,7 +10,7 @@ body.site-search #malmo-masthead {
 }
 
 .wrapper {
-  max-width: 75em;
+  max-width: 78em;
   margin: 1em auto;
 }
 
@@ -23,17 +23,32 @@ body.employee .wrapper {
 }
 
 .group-1 {
-  @include columns(9);
+  @include columns(9, false, 3%);
   .column-1 {
-    @include columns(4, false, 2.68%);
+    @include columns(4, false, 4%);
     float: left;
   }
   .column-2 {
-    @include columns(8, true, 2.68%);
+    @include columns(8, true, 4%);
     float: right;
   }
 }
-
 .column-3 {
-  @include columns(3, true);
+  @include columns(3, true, 3%);
 }
+
+/* .group-1 {
+  @include columns(9.3, false, 3%);
+  .column-1 {
+    @include columns(3.48, false, 3.87%);
+    float: left;
+  }
+  .column-2 {
+    @include columns(8.52, true, 3.87%);
+    float: right;
+  }
+}
+.column-3 {
+  @include columns(2.7, true, 3%);
+}
+ */
