@@ -1,6 +1,7 @@
 .DS_Store
 .ruby-version
 .bundle
+.vagrant
 log
 tmp
 doc
@@ -12,3 +13,4 @@ import
 reports/*.*
 public/assets
 public/system/avatars
+/config/secrets.yml
