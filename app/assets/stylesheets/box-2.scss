@@ -97,16 +97,6 @@
         @include opacity(1);
         background-color: transparent;
       }
-      /* &::before {
-        font-family: $sans-serif;
-        font-size: emize(14);
-        position: absolute;
-        content: 'Anpassa';
-        right: 2em;
-        top: .2em;
-        display: block;
-        @include opacity(1);
-      } */
     }
     .dropdown-menu {
       right: 0;
