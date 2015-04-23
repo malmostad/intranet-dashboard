@@ -23,20 +23,6 @@ class { '::mcommons::elasticsearch':
   memory  => '48m',
 }
 
--> exec {'Create ElasticSearch index':
-  command => "RAILS_ENV=development rake environment elasticsearch:reindex CLASS='User' ALIAS='employees'; exit 0",
-  user    => $::runner_name,
-  path    => $::runner_path,
-  cwd     => $::app_home,
-}
-
--> exec {'Create ElasticSearch index for test':
-command => "RAILS_ENV=test rake environment elasticsearch:reindex CLASS='User' ALIAS='employees'; exit 0",
-  user    => $::runner_name,
-  path    => $::runner_path,
-  cwd     => $::app_home,
-}
-
 class { '::mcommons::memcached':
   memory => 128,
 }
@@ -45,7 +31,21 @@ class { '::mcommons::ruby':
   version => '2.2.1',
 }
 
-class { 'mcommons::ruby::bundle_install': }
-class { 'mcommons::ruby::rails': }
-class { 'mcommons::ruby::rspec_deps': }
-mcommons::ruby::db_migrate { $::envs: }
+-> class { 'mcommons::ruby::bundle_install': }
+-> class { 'mcommons::ruby::rails': }
+-> class { 'mcommons::ruby::rspec_deps': }
+-> mcommons::ruby::db_load_schema { $::envs: }
+
+-> exec {'Create ElasticSearch index':
+  command => "${::runner_home}/.rbenv/shims/rake RAILS_ENV=development environment elasticsearch:reindex CLASS='User' ALIAS='employees'; exit 0",
+  user    => $::runner_name,
+  path    => $::runner_path,
+  cwd     => $::app_home,
+}
+
+-> exec {'Create ElasticSearch index for test':
+  command => "${::runner_home}/.rbenv/shims/rake RAILS_ENV=test environment elasticsearch:reindex CLASS='User' ALIAS='employees'; exit 0",
+  user    => $::runner_name,
+  path    => $::runner_path,
+  cwd     => $::app_home,
+}
