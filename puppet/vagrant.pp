@@ -31,9 +31,9 @@ class { '::mcommons::ruby':
   version => '2.2.1',
 }
 
--> class { 'mcommons::ruby::bundle_install': }
--> class { 'mcommons::ruby::rails': }
--> class { 'mcommons::ruby::rspec_deps': }
+class { 'mcommons::ruby::bundle_install': }
+class { 'mcommons::ruby::rails': }
+class { 'mcommons::ruby::rspec_deps': }
 -> mcommons::ruby::db_load_schema { $::envs: }
 
 -> exec {'Create ElasticSearch index':
