@@ -18,8 +18,9 @@ describe "EmployeeSearch" do
       expect(page).to have_selector 'form #query-employee'
     end
 
-    it "should have search results (if Elasticsearch is up and running)" do
+    it "should have search results (if Elasticsearch is fast enough at indexing)" do
       create(:user)
+      sleep 1
       fill_in 'query-employee', with: "#{user.first_name} #{user.last_name}"
       click_button "Sök"
       expect(page).to have_selector "ul.results li.vcard"

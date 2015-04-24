@@ -1,4 +1,4 @@
-ENV["RAILS_ENV"] ||= 'test'
+ENV["RAILS_ENV"] ||= 'local_test'
 
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
