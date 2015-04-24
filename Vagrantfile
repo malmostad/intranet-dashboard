@@ -5,6 +5,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = 'www.local.malmo.se'
 
   config.vm.provider :virtualbox do |v|
+    v.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
     v.memory = 1024
     v.cpus = 2
   end
