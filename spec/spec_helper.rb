@@ -10,6 +10,9 @@ require 'yaml'
 
 AUTH_CREDENTIALS = YAML.load_file("#{Rails.root.to_s}/spec/auth_credentials.yml")
 
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, window_size: [1400, 1000])
+end
 Capybara.javascript_driver = :poltergeist
 Capybara.default_wait_time = 5
 
