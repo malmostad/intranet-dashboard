@@ -46,7 +46,7 @@ $ cap staging deploy
 $ cap production deploy
 ```
 
-A database backup is performed on the server before deployment. Database migrations and `bundle` are run before the application i restarted. The Feed Worker daemon is restarted after the application is restarted.
+A database backup is performed on the server before deployment. Database migrations and `bundle` are run before the application is restarted. The Feed Worker daemon is restarted after the application is restarted.
 
 ## Testing
 Run tests before pushing to the repository and performing deployments. The application contains high level integration/feature tests and unit tests using RSpec, Capybara and PhantomJS. To run all test cases:
@@ -87,7 +87,7 @@ $ RAILS_ENV=development|test|production bin/delayed_job status|start|stop
 ```
 
 ## Scheduled Jobs
-The `whenever` gem is used to add database maintenance rake tasks to cron. Change the settings in schedule.rb to match your staging and production environments. Capistrano runs `whenever` during deployment.
+The `whenever` gem is used to add database maintenance rake tasks to cron. Change the settings in `schedule.rb` to match your staging and production environments. Capistrano runs `whenever` during deployment.
 
 ## LDAP Sync Worker
 Syncing of LDAP attributes for all employees in the system is made with a worker and runs as a scheduled job defined in the `whenever` script `schedule.rb`.
