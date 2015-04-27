@@ -22,10 +22,6 @@ describe Feed do
     expect(build(:feed, feed_url: "www.whitehouse.gov/feed/press")).to be_valid
   end
 
-  it "should be atom valid" do
-    expect(build(:feed, feed_url: "www.w3.org/blog/news/feed/atom")).to be_valid
-  end
-
   it "should not be valid without a feed_url" do
     expect(build(:feed, feed_url: "")).not_to be_valid
   end
