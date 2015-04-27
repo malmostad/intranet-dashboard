@@ -20,12 +20,13 @@ describe 'Feeds' do
   end
 
   it 'should lazy load more combined news feed entries', js: true do
+    page.driver.resize_window(1400, 1000)
+
     before = all('.column-2 section.feeds .box-content li').count
     expect(find('.box-content li.load-more button').text).to include 'Visa fler'
     page.execute_script('window.scrollTo(0, 10000)')
-    sleep 0.2
-    # find('.box-content li.load-more button').click
-    save_and_open_page
+
+    sleep 1
     expect(find('.box-content li.load-more button').text).to include 'Visa fler'
     expect(before).to be < all('.column-2 section.feeds .box-content li').count
   end
