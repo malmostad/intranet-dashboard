@@ -10,6 +10,7 @@ json.extract! @employee, :postal_town, :geo_position_x, :geo_position_y,
 json.roles @employee.roles.map(&:name)
 json.skills @employee.skills.map(&:name)
 json.languages @employee.languages.map(&:name)
+json.contact_card user_url(@employee.username)
 
 json.avatars do |avatar|
   base_url = "#{APP_CONFIG['avatar_base_url']}#{@employee.username}"
