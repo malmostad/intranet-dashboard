@@ -15,6 +15,7 @@ set :application, "dashboard_komin"
 
 set :stages, %w(staging production) # 'test' is a reserved word
 set :default_stage, "staging"
+set :deploy_to, "/home/app_runner"
 
 set :shared_children, shared_children + %w{reports}
 
@@ -29,7 +30,6 @@ _cset :assets_role, [:web]
 _cset :normalize_asset_timestamps, true
 set :precompile_assets, "locally" # remote, locally or none
 
-set :server_address, config['server_address']
 server server_address, :web, :app, :db, primary: true
 set :use_sudo, false
 

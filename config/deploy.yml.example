@@ -1,2 +1,3 @@
 server_address: "server.example.org"
-repository_root: "git@github.com:malmostad/intranet-assets.git"
+server_address_staging: "server.example.org"
+repository_root: "git@github.com:malmostad/intranet-dashboard.git"
