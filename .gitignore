@@ -4,7 +4,6 @@
 log
 tmp
 doc
-config/deploy.yml
 config/database.yml
 config/app_config.yml
 spec/auth_credentials.yml

@@ -1,21 +1,19 @@
 # The Capistrano tasks will use your **working copy**, compile the assets and deploy them to the server_address
 # Execute one of the following to deploy into test or production:
-#   $ cap staging deploy
-#   $ cap production deploy
+#   $ bundle exec cap staging deploy
+#   $ bundle exec cap production deploy
 # Rollback one step:
-#   $ cap [staging|production] deploy:rollback
+#   $ bundle exec cap [staging|production] deploy:rollback
 
 require "bundler/capistrano"
 require 'capistrano/ext/multistage'
 require "delayed/recipes"
 
-config = YAML::load_file(File.join(File.dirname(File.expand_path(__FILE__)), 'deploy.yml'))
-
 set :application, "dashboard_komin"
 
 set :stages, %w(staging production) # 'test' is a reserved word
 set :default_stage, "staging"
-set :deploy_to, "/home/app_runner"
+set :deploy_to, "/home/app_runner/dashboard"
 
 set :shared_children, shared_children + %w{reports}
 
@@ -30,7 +28,6 @@ _cset :assets_role, [:web]
 _cset :normalize_asset_timestamps, true
 set :precompile_assets, "locally" # remote, locally or none
 
-server server_address, :web, :app, :db, primary: true
 set :use_sudo, false
 
 set :backup_dir, '/var/www/dump/'
@@ -43,7 +40,6 @@ set :copy_exclude, ["spec", "log/*", "**/.git*", "**/.svn", "tmp/*", "doc", "**/
   ".bundle", ".rspec", ".ruby-version", "data/*"]
 
 # set :scm, :git
-# set :repository_root, config[:repository_root]
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
