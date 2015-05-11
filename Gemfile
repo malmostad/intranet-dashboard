@@ -6,6 +6,10 @@ gem 'rails', '4.2.1'
 gem 'jquery-rails', '4.0.3'
 gem 'haml', '4.0.6'
 
+gem 'sass-rails', '5.0.3'
+gem 'coffee-rails', '4.1.0'
+gem 'uglifier', '2.7.1'
+
 gem 'nokogiri', '1.6.6.2'
 gem 'feedjira', '1.6.0'
 gem 'savon', '2.11.0'
@@ -27,16 +31,18 @@ gem 'daemons', '1.2.2'
 gem 'daemons-rails', '1.2.1'
 gem 'delayed_job_active_record', '4.0.3'
 
-gem 'capistrano', '~> 2.15.5'
-gem 'capistrano-ext'
-gem 'whenever', require: false
+gem 'capistrano', '~> 3.4.0'
+gem 'capistrano-rails', '~> 1.1.2'
+gem 'capistrano-rbenv', '~> 2.0.2'
+gem 'whenever', '~> 0.9.2', require: false
+gem 'highline'
+gem 'execjs'
 
 gem 'jbuilder', '2.2.13'
 gem 'axlsx', '2.0.1'
 gem 'vcardigan', '0.0.9'
 
-gem 'macaddr', '1.7.1'
-gem 'net-ssh', '2.7.0' # No prompt for pw in 2.8.0
+gem 'unicorn', group: [:test, :production]
 
 group :development do
   gem 'haml-rails'
@@ -64,8 +70,3 @@ group :local_test do
   gem 'launchy'
   gem 'database_cleaner'
 end
-
-gem 'sass-rails', '5.0.3'
-gem 'coffee-rails', '4.1.0'
-gem 'uglifier', '2.7.1'
-gem 'therubyracer', '0.12.2', require: 'v8'

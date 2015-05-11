@@ -1,9 +1,5 @@
-set :server_address, 'srvubuwebhost23.malmo.se'
-server server_address, :web, :app, :db, primary: true
-set :rails_env, "production"
-set :bundle_without, [:development, :test]
-set :bundle_dir, ""
-set :bundle_flags, ""
-
-before "deploy", 'backup:mysql'
-after 'deploy', 'deploy:restart_daemons'
+set :rails_env, :production
+set :stage, :production
+set :branch, "master"
+ask(:password, nil, echo: false)
+server 'srvubuwebhost23.malmo.se', user: 'app_runner', port: 22, password: fetch(:password), roles: %w{web app db}
