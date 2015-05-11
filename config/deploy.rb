@@ -13,6 +13,7 @@ set :application, "dashboard_komin"
 
 set :stages, %w(staging production) # 'test' is a reserved word
 set :default_stage, "staging"
+set :user, 'app_runner'
 set :deploy_to, "/home/app_runner/dashboard"
 
 set :shared_children, shared_children + %w{reports}
@@ -30,7 +31,7 @@ set :precompile_assets, "locally" # remote, locally or none
 
 set :use_sudo, false
 
-set :backup_dir, '/var/www/dump/'
+set :backup_dir, '/home/app_runner/deploy_dump/'
 
 set :scm, :none
 set :repository, "."
@@ -43,10 +44,6 @@ set :copy_exclude, ["spec", "log/*", "**/.git*", "**/.svn", "tmp/*", "doc", "**/
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
-
-set(:user) do
-   Capistrano::CLI.ui.ask "\nUsername for #{server_address}: "
-end
 
 before "deploy", "prompt:continue", "assets:precompile_#{precompile_assets}"
 before 'deploy:restart', 'deploy:symlink_config', 'deploy:migrate'
@@ -100,9 +97,7 @@ namespace :prompt do
     puts "\nThis will use your **working copy** and deploy a **#{rails_env}** version to #{server_address} #{releases_path}/#{release_name}"
     puts "Task performed:"
     puts "  * Assets compiled #{precompile_assets}"
-    if rails_env == "production"
-      puts "  * Database dumped to #{backup_dir}"
-    end
+    puts "  * Database dumped to #{backup_dir}"
     puts "  * Migration run"
     puts "  * App restart and linked as current version"
     puts "  * Daemons restart"
