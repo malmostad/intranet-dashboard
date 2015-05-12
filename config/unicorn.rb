@@ -5,6 +5,6 @@ stderr_path "#{root}/log/unicorn.log"
 stdout_path "#{root}/log/unicorn.log"
 
 listen "/tmp/unicorn.dashboard.sock"
-worker_processes 7
+worker_processes 8
 timeout 15
 preload_app false
