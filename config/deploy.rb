@@ -2,6 +2,7 @@ require 'erb'
 I18n.config.enforce_available_locales = false
 
 set :backup_dir, '/home/app_runner/deploy_dump/'
+set :shared_path, -> { shared_path }
 
 set :rbenv_type, :user
 set :rbenv_ruby, '2.2.2'
@@ -28,7 +29,7 @@ namespace :deploy do
   %w[stop start restart upgrade].each do |command|
     desc "#{command} unicorn server"
     task command do
-      on roles(:app), except: {no_release: true} do
+      on roles(:all), except: {no_release: true} do
         execute "/etc/init.d/unicorn_#{fetch(:application)} #{command}"
       end
     end
@@ -36,14 +37,14 @@ namespace :deploy do
 
   desc "Full restart of unicorn server"
   task :full_restart do
-    on roles(:app), except: {no_release: true} do
+    on roles(:all), except: {no_release: true} do
       execute "/etc/init.d/unicorn_#{fetch(:application)} restart"
     end
   end
 
   desc "Make sure local git is in sync with remote."
   task :check_revision do
-    on roles(:app) do
+    on roles(:all) do
       unless `git rev-parse HEAD` == `git rev-parse origin/#{fetch(:branch)}`
         puts "WARNING: HEAD is not the same as origin/#{fetch(:branch)}"
         puts "Run `git push` to sync changes."
@@ -54,7 +55,7 @@ namespace :deploy do
 
   desc "Are you sure?"
   task :are_you_sure do
-    on roles(:app) do |server|
+    on roles(:all) do |server|
       puts ""
       puts "Environment:   \033[0;32m#{fetch(:rails_env)}\033[0m"
       puts "Remote branch: \033[0;32m#{fetch(:branch)}\033[0m"
@@ -73,25 +74,30 @@ namespace :deploy do
 
   desc 'Restart daemons'
   task :restart_daemons do
-    puts "Restarting daemons, this can take a while..."
-    execute "RAILS_ENV=#{rails_env} #{release_path}/lib/daemons/feed_worker_ctl restart"
-    execute "RAILS_ENV=#{rails_env} #{release_path}/bin/delayed_job restart"
+    on roles(:all) do
+      puts "Restarting daemons, this can take a while..."
+      execute "RAILS_ENV=#{fetch(:rails_env)} #{fetch(:release_path)}/lib/daemons/feed_worker_ctl restart"
+      execute "RAILS_ENV=#{fetch(:rails_env)} #{fetch(:release_path)}/bin/delayed_job restart"
+    end
   end
 
   desc 'Perform a backup using mysqldump'
   task :mysql_backup do
-    on roles(:db), only: { primary: true } do
-      filepath = "#{backup_dir}predeploy-#{release_name}.sql.bz2"
-      text = capture "cat #{shared_path}/config/database.yml"
+    on roles(:all) do
+      filepath = "#{fetch(:backup_dir)}predeploy-#{fetch(:release_name)}.sql.bz2"
+      text = capture "cat #{fetch(:shared_path)}/config/database.yml"
       yaml = YAML::load(text)
 
-      execute "mysqldump -u #{yaml[rails_env]['username']} -p #{yaml[rails_env]['database']} | bzip2 -c > #{filepath}" do |ch, stream, out|
-        ch.send_data "#{yaml[rails_env]['password']}\n" if out =~ /^Enter password:/
+      execute "mysqldump -u #{fetch(:yaml)[fetch(:rails_env)]['username']} -p #{fetch(:yaml)[fetch(:rails_env)]['database']} | bzip2 -c > #{fetch(:filepath)}" do |ch, stream, out|
+        ch.send_data "#{fetch(:yaml)[fetch(:rails_env)]['password']}\n" if out =~ /^Enter password:/
       end
     end
   end
 
-  before :starting, "deploy:are_you_sure", "deploy:check_revision", "deploy:mysql_backup"
-  after :published, "deploy:full_restart", "deploy:restart_daemons"
+  before :starting, "deploy:are_you_sure"
+  before :starting, "deploy:check_revision"
+  before :starting, "deploy:mysql_backup"
+  after :published, "deploy:full_restart"
+  after :published, "deploy:restart_daemons"
   after :finishing, "deploy:cleanup"
 end
