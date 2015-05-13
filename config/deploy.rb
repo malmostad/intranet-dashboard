@@ -5,7 +5,7 @@ set :backup_dir, '/home/app_runner/deploy_dump/'
 set :shared_path, -> { shared_path }
 
 set :rbenv_type, :user
-set :rbenv_ruby, '2.2.2'
+set :rbenv_ruby, File.read('.ruby-version').strip
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 
@@ -13,6 +13,7 @@ set :application, 'dashboard'
 set :repo_url, "https://github.com/malmostad/intranet-dashboard.git"
 set :user, 'app_runner'
 set :deploy_to, "/home/#{fetch(:user)}/#{fetch(:application)}"
+
 set :scm, :git
 set :deploy_via, :remote_cache
 
@@ -76,8 +77,9 @@ namespace :deploy do
   task :restart_daemons do
     on roles(:all) do
       puts "Restarting daemons, this can take a while..."
-      execute "RAILS_ENV=#{fetch(:rails_env)} #{fetch(:release_path)}/lib/daemons/feed_worker_ctl restart"
-      execute "RAILS_ENV=#{fetch(:rails_env)} #{fetch(:release_path)}/bin/delayed_job restart"
+      ror_ruby = "cd #{release_path} && RAILS_ENV=#{fetch(:rails_env).to_s} #{fetch(:rbenv_prefix)} bundle exec ruby"
+      execute "#{ror_ruby} lib/daemons/feed_worker_ctl restart"
+      execute "#{ror_ruby} bin/delayed_job restart"
     end
   end
 
@@ -86,11 +88,9 @@ namespace :deploy do
     on roles(:all) do
       filepath = "#{fetch(:backup_dir)}predeploy-#{fetch(:release_name)}.sql.bz2"
       text = capture "cat #{fetch(:shared_path)}/config/database.yml"
-      yaml = YAML::load(text)
+      db_config = YAML::load(text)[fetch(:rails_env).to_s]
 
-      execute "mysqldump -u #{fetch(:yaml)[fetch(:rails_env)]['username']} -p #{fetch(:yaml)[fetch(:rails_env)]['database']} | bzip2 -c > #{fetch(:filepath)}" do |ch, stream, out|
-        ch.send_data "#{fetch(:yaml)[fetch(:rails_env)]['password']}\n" if out =~ /^Enter password:/
-      end
+      execute "mysqldump --user=#{db_config['username']} --password=#{db_config['password']} #{db_config['database']} | bzip2 -c > #{filepath}"
     end
   end
 
