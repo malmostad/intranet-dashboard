@@ -39,7 +39,7 @@ set :scm, :none
 set :repository, "."
 set :deploy_via, :copy # Use local copy, be sure to update to the stuff you want to deploy
 set :copy_exclude, ["spec", "log/*", "**/.git*", "**/.svn", "tmp/*", "doc", "**/.DS_Store",
-  "**/*.example", "config/database.yml*", "config/deploy.yml*", "config/app_config.yml*",
+  "**/*.example", "config/database.yml*", "config/secrets.yml", "config/deploy.yml*", "config/app_config.yml*",
   ".bundle", ".rspec", ".ruby-version", "data/*"]
 
 # set :scm, :git
