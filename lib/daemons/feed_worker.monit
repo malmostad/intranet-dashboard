@@ -1,4 +1,4 @@
 check process feed_worker
   with pidfile /vagrant/log/feed_worker.pid
-  start program "/bin/bash -c '/vagrant/lib/daemons/feed_worker.sh start'" as uid vagrant and gid vagrant
-  stop program  "/bin/bash -c '/vagrant/lib/daemons/feed_worker.sh stop'" as uid vagrant and gid vagrant with timeout 120 seconds
+  start program "/vagrant/lib/run_as_rbenv.sh lib/daemons/feed_worker_ctl start" as uid vagrant and gid vagrant
+  stop program  "/vagrant/lib/run_as_rbenv.sh lib/daemons/feed_worker_ctl stop" as uid vagrant and gid vagrant with timeout 120 seconds
