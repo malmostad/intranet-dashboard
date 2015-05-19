@@ -56,6 +56,7 @@ class { 'mcommons::monit': }
   owner   => 'root',
   group   => 'root',
   mode    => '0700',
+  # Puppet can't read local template files ...
   content  => inline_template('check process feed_worker
     with pidfile <%= @app_home -%>/log/feed_worker.pid
     start program "<%= @app_home -%>/lib/run_with_rbenv.sh lib/daemons/feed_worker_ctl start" as uid <%= @runner_name -%> and gid <%= @runner_group %>
