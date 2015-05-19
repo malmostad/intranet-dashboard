@@ -10,7 +10,7 @@ Signal.trap("TERM") do
   $running = false
 end
 
-# Run the FeedWorker in
+# Run the FeedWorker
 while($running) do
   FeedWorker.update_all
   sleep 5
