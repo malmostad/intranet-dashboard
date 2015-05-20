@@ -96,7 +96,7 @@ namespace :deploy do
 
   before :starting, "deploy:are_you_sure"
   before :starting, "deploy:check_revision"
-  before :starting, "deploy:mysql_backup"
+  before :migrate, "deploy:mysql_backup"
   after :published, "deploy:full_restart"
   after :published, "deploy:restart_daemons"
   after :finishing, "deploy:cleanup"
