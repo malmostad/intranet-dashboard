@@ -6,8 +6,7 @@
 # $ bundle exec whenever --set 'environment=production'
 
 set :output,  "#{path}/log/cron.log"
-set :real_environment, environment == "staging" ? "test" : "production" # 'staging' is a pseudo environment
-job_type :rake, "cd :path && PATH=/usr/local/bin:$PATH RAILS_ENV=:real_environment bundle exec rake :task --silent :output"
+job_type :rake, "cd :path && PATH=/usr/local/bin:$PATH RAILS_ENV=:environment bundle exec rake :task --silent :output"
 
 if environment == "test"
   every :day, :at => '1:30am' do
