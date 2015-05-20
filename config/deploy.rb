@@ -86,7 +86,7 @@ namespace :deploy do
   desc 'Perform a backup using mysqldump'
   task :mysql_backup do
     on roles(:all) do
-      filepath = "#{fetch(:backup_dir)}predeploy-#{fetch(:release_name)}.sql.bz2"
+      filepath = "#{fetch(:backup_dir)}predeploy-#{fetch(:release_timestamp)}.sql.bz2"
       text = capture "cat #{fetch(:shared_path)}/config/database.yml"
       db_config = YAML::load(text)[fetch(:rails_env).to_s]
 
