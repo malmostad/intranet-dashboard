@@ -1,9 +1,9 @@
 # Intranet Dashboard
 
-The Intranet Dashboard, “Min sida”, is City of Malmö’s personalized intranet front. Information and tools on the dashboard are targeted for the employee based on roles and her own preferences. The dashboards core functionality is:
+The Intranet Dashboard, “Min sida”, is City of Malmö’s personalized intranet front. News and tools on the dashboard are targeted for the employee based on roles and her own preferences. The dashboards core functionality is:
 
 * Targeted and user selected news from the organization and external resources.
-* Searchable employee information with data compiled from other systems and a self service interface where the employees can update their information. Integration with Aastra CMG.
+* Staff directory with searchable employee information with data compiled from other systems and a self service interface where the employees can update their information.
 * Direct access to tools and applications based on the user’s roles and profile.
 * User managed portrait pictures. The system acts as an avatar service for other intranet systems.
 
@@ -104,6 +104,7 @@ Run tests before pushing code to the Git repository and before performing deploy
 
 ```shell
 $ bundle exec rspec
+```
 
 ## Feed Worker
 The feed worker daemon updates all news feeds that are in use in the dashboard. It runs as a daemon started and monitored by Monit. The aggressiveness is defined in `app_config.yml`. The daemon is started/restarted by the Capistrano deployment in staging and production. To check the status, use Monit:
