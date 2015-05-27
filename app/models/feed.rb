@@ -27,7 +27,6 @@ class Feed < ActiveRecord::Base
   def fetch_and_parse
     fix_url
     begin
-      Feedjira::Feed.setup_easy
       @parsed_feed = Feedjira::Feed.fetch_and_parse(feed_url, http_options)
       if @parsed_feed === 304
         false
