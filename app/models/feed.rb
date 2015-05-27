@@ -27,6 +27,7 @@ class Feed < ActiveRecord::Base
   def fetch_and_parse
     fix_url
     begin
+      Feedjira::Feed.setup_easy
       @parsed_feed = Feedjira::Feed.fetch_and_parse(feed_url, http_options)
       if @parsed_feed === 304
         false
@@ -108,7 +109,8 @@ class Feed < ActiveRecord::Base
       options = {
         timeout: 5,
         compress: true,
-        nosignal: true
+        nosignal: true,
+        ssl_verify_peer: false,
       }
       options[:if_none_match] = etag if etag?
       options[:if_modified_since] = last_modified if last_modified?
