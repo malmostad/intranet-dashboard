@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
       value: {
         departments:   departments,
         workingfields: workingfields,
-        ua: Digest::SHA256.hexdigest(current_user.id.to_s + Rails.configuration.secret_key_base)
+        ua: Digest::MD5.hexdigest(current_user.id.to_s + Rails.configuration.secret_key_base)
       }.to_json,
       expires: 365*10,
       path: '/',
