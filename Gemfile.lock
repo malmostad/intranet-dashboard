@@ -413,3 +413,6 @@ DEPENDENCIES
   unicorn
   vcardigan (= 0.0.9)
   whenever (~> 0.9.2)
+
+BUNDLED WITH
+   1.10.1
