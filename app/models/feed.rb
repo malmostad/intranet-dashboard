@@ -110,6 +110,7 @@ class Feed < ActiveRecord::Base
         compress: true,
         nosignal: true,
         ssl_verify_peer: false,
+        ssl_verify_host: false
       }
       options[:if_none_match] = etag if etag?
       options[:if_modified_since] = last_modified if last_modified?
