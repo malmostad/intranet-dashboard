@@ -29,6 +29,10 @@ class ApplicationController < ActionController::Base
 
     cookies.permanent[myprofile] = {
       value: {
+        # Singular is for GA
+        department:   departments.present? ? departments.first[:homepage_url].gsub('http://komin.malmo.se/', '') : '',
+        workingfield: workingfields.present? ? workingfields.first[:homepage_url].gsub('http://komin.malmo.se/', '') : '',
+        # Plural for masthead w/dropdowns
         departments:   departments,
         workingfields: workingfields,
         ua: Digest::MD5.hexdigest(current_user.id.to_s + Rails.configuration.secret_key_base)
