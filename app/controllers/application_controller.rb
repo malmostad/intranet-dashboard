@@ -35,7 +35,11 @@ class ApplicationController < ActionController::Base
         # Plural for masthead w/dropdowns
         departments:   departments,
         workingfields: workingfields,
-        ua: Digest::MD5.hexdigest(current_user.id.to_s + Rails.configuration.secret_key_base)
+        ua: Digest::MD5.hexdigest(
+          current_user.id.to_s +
+          current_user.username +
+          current_user.created_at.to_i.to_s
+        )
       }.to_json,
       expires: 365*10,
       path: '/',
