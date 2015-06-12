@@ -1,7 +1,7 @@
 Dashboard::Application.configure do
   config.eager_load = true
 
-  config.log_level = :debug
+  config.log_level = :info
   config.consider_all_requests_local = false
   config.cache_classes = true
   config.action_controller.perform_caching = true
