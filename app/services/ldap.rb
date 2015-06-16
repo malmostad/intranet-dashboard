@@ -16,13 +16,14 @@ class Ldap
   end
 
   def authenticate(username, password)
-    return false if username.strip.empty? || password.strip.empty?
+    username = username.strip.downcase
+    return false if username.empty? || password.empty?
 
     bind_user = @client.bind_as(base: APP_CONFIG["ldap"]["base_dn"], filter: "cn=#{username}", password: password )
 
     # We need to check that cn is the same as username
     # since the the AD binds usernames with non-ascii chars
-    if bind_user.present? && bind_user.first.cn.first == username
+    if bind_user.present? && bind_user.first.cn.first.downcase == username
       true
     else
       Rails.logger.warn "LDAP: #{username} failed to log in. #{@client.get_operation_result}"
@@ -35,7 +36,7 @@ class Ldap
     Paperclip.options[:log] = false
 
     # Fetch user attributes
-    ldap_user = @client.search(base: APP_CONFIG['ldap']['base_dn'], filter: "cn=#{user.username}",
+    ldap_user = @client.search(base: APP_CONFIG['ldap']['base_dn'], filter: "cn=#{user.username.downcase}",
         attributes: %w(cn givenname sn displayname mail telephonenumber mobile
             title manager extensionattribute1 roomnumber streetaddress
             company physicalDeliveryOfficeName houseIdentifier division department)).first
