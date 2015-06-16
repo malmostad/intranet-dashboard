@@ -16,7 +16,6 @@ class Ldap
   end
 
   def authenticate(username, password)
-    username = username.strip.downcase
     return false if username.empty? || password.empty?
 
     bind_user = @client.bind_as(base: APP_CONFIG["ldap"]["base_dn"], filter: "cn=#{username}", password: password )

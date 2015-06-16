@@ -13,12 +13,14 @@ class SessionsController < ApplicationController
   end
 
   def create
+    username = params[:username].strip.downcase
+
     if APP_CONFIG['stub_auth'] # Stubbed authentication
-      stub_auth(params[:username])
+      stub_auth(username)
     else # Authenticate with LDAP
       ldap = Ldap.new
-      if ldap.authenticate(params[:username], params[:password])
-        user = User.unscoped.where(username: params[:username]).first_or_initialize
+      if ldap.authenticate(username, params[:password])
+        user = User.unscoped.where(username: username).first_or_initialize
         logger.debug { "LDAP authenticated user" }
 
         finalize_login(user)
