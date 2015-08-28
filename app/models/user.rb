@@ -148,12 +148,6 @@ class User < ActiveRecord::Base
     (user_selected + through_roles.map {|r| r.feeds.map(&:id) }).flatten.uniq
   end
 
-  def shortcuts_in_category(category)
-    through_roles = roles.where('shortcuts.category' => category).includes(:shortcuts).map {|r| r.shortcuts }
-    my_own = shortcuts.map { |s| s if s.category == category }
-    (my_own.compact + through_roles).flatten.uniq.sort { |a, b| a.name <=> b.name }
-  end
-
   def self.tags(query, limit = 50, offset = 0)
     users = User.all
 

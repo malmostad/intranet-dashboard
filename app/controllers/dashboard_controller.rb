@@ -13,8 +13,8 @@ class DashboardController < ApplicationController
 
     @feature             = featured_news_entry
     @maintenance_news    = maintenance_news
-    @tools_and_systems   = shortcuts_from_category("tools_and_systems")
-    @i_want              = shortcuts_from_category("i_want")
+    @tools_and_systems   = current_user.shortcuts.where(category: "tools_and_systems")
+    @i_want              = current_user.shortcuts.where(category: "i_want")
     @colleagues          = current_user.colleagues.order("status_message_updated_at desc")
   end
 
@@ -31,13 +31,6 @@ private
   # User’s and her role’s feed entries in a given category
   def feed_entries_from_category(category, conditions = {})
     FeedEntry.from_feeds(current_user.combined_feed_ids(category), conditions)
-  end
-
-  # User’s shortcuts and her role’s shortcuts in a given category
-  def shortcuts_from_category(category)
-    Rails.cache.fetch("shortcuts-#{current_user.id}-#{category}", expires_in: 10.minute) do
-      current_user.shortcuts_in_category(category)
-    end
   end
 
   def featured_news_entry
