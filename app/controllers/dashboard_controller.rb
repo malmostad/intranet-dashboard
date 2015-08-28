@@ -13,8 +13,8 @@ class DashboardController < ApplicationController
 
     @feature             = featured_news_entry
     @maintenance_news    = maintenance_news
-    @tools_and_systems   = current_user.shortcuts.where(category: "tools_and_systems")
-    @i_want              = current_user.shortcuts.where(category: "i_want")
+    @tools_and_systems   = current_user.shortcuts.select { |s| s.category == "tools_and_systems" }
+    @i_want              = current_user.shortcuts.select { |s| s.category == "i_want" }
     @colleagues          = current_user.colleagues.order("status_message_updated_at desc")
   end
 
