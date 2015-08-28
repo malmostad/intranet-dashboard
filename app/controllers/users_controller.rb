@@ -223,7 +223,6 @@ class UsersController < ApplicationController
     # Set **all** the users shortcuts
     current_user.shortcut_ids = other_categories_shortcuts + ( params[:user][:shortcut_ids] or [] )
 
-    clear_shortcut_cache(params[:category])
     redirect_to root_url, notice: "Dina #{Shortcut::CATEGORIES[params[:category]]} uppdaterades"
   end
 
@@ -232,7 +231,6 @@ class UsersController < ApplicationController
     # Get users shortcuts ids for **all other** shortcut categories so we don't delete them
     current_user.shortcut_ids = current_user.shortcuts.where("category != ?", params[:category]).pluck(:id)
 
-    clear_shortcut_cache(params[:category])
     redirect_to root_url, notice: "Inställningarna för #{Shortcut::CATEGORIES[params[:category]]} återställdes"
   end
 
@@ -254,10 +252,5 @@ class UsersController < ApplicationController
   # Clear the users key/value ttl cache for feed entries
   def clear_feed_entries_cache(category)
     Rails.cache.delete("feed_entries-#{current_user.id}-#{category}")
-  end
-
-  # Clear the users key/value ttl cache for shortcuts
-  def clear_shortcut_cache(category)
-    Rails.cache.delete("shortcuts-#{current_user.id}-#{category}")
   end
 end
