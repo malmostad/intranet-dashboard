@@ -216,6 +216,13 @@ class UsersController < ApplicationController
     @shortcuts = Shortcut.where(category: params[:category]).includes(:roles)
   end
 
+  # User detach shortcut
+  def detach_shortcut
+    #TODO: remove shortcut relation
+    current_user.shortcuts #.where(shortcut_id: params[:id]).first.destroy
+    render json: { status: :deleted }
+  end
+
   def update_shortcuts
     # Get users shortcuts ids for **all other** shortcut categories so we don't delete them
     other_categories_shortcuts = current_user.shortcuts.where("category != ?", params[:category]).pluck(:id)
