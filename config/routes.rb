@@ -40,7 +40,7 @@ Dashboard::Application.routes.draw do
 
   resources :shortcuts, :roles, :languages, :skills, :activities, :feeds, :my_own_feeds, except: [:show]
 
-  delete "/users/detach_shortcut/:id" => "users#detach_shortcut"
+  delete "/users/shortcuts/:id" => "users#shortcuts", as: "users_shortcuts"
 
   patch "/feeds/refresh_entries/:id" => "feeds#refresh_entries", as: "feeds_refresh_entries"
 

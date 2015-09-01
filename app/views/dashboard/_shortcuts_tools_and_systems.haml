@@ -19,7 +19,7 @@
       - @tools_and_systems.each do |shortcut|
         %li
           = link_to shortcut.name, shortcut.url
-          %a.m-icon-close.remove{ href: shortcut.url, "data-method" => "delete", "data-remote" => "true", "rel" => "nofollow", title: "Ta bort #{shortcut.name}" }
+          %a.m-icon-close.remove{ href: users_shortcuts_path(shortcut.id), "data-method" => "delete", "data-remote" => "true", "rel" => "nofollow", title: "Ta bort #{shortcut.name}" }
     - if @tools_and_systems.blank?
       = link_to "Lägg till", user_select_shortcuts_path('tools_and_systems'), class: "btn btn-default btn-small add"
 
