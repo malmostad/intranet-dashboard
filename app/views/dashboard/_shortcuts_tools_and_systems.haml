@@ -2,8 +2,7 @@
   %h1.box-title Verktyg & system
 
   .box-instructions{ class: @tools_and_systems.present? ? "" : "show"}
-    %p= raw "Denna box visar verktyg & system baserat på vad du valt för förvaltning och arbetsfält i #{link_to "Min profil", edit_user_path(current_user)}."
-    %p Du kan dessutom lägga till fler verktyg & system genom att klicka på pilen uppe till höger i denna box.
+    %p Ta bort genvägar genom att klicka på krysset till höger om namnet. Välj fler genvägar genom att klicka på pilen uppe till höger i denna box.
 
   - if @maintenance_news.present?
     %section.maintenance
@@ -26,8 +25,7 @@
   .dropdown.box-menu
     %button#shortcuts-tools-menu.dropdown-toggle{ type: "button", title: "Anpassa innehållet", "data-toggle" => "dropdown" }
     %menu.dropdown-menu{ "aria-labelledby" => "shortcuts-tools-menu", "aria-hidden" => true, role: "menu" }
-      %li= link_to "Hantera dessa genvägar...", user_select_shortcuts_path('tools_and_systems')
-      %li= link_to "Återställ dessa genvägar", user_reset_shortcuts_path(:tools_and_systems), data: { confirm: 'Vill du återställa alla genvägar för Verkgyt & system?', method: :patch }
+      %li= link_to "Lägg till genvägar...", user_select_shortcuts_path('tools_and_systems')
       - if admin?
         %li.divider
         %li= link_to "Administrera...", shortcuts_path
