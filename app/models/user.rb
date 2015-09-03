@@ -75,6 +75,25 @@ class User < ActiveRecord::Base
     company.gsub(/^[\d\s]*/, "") if company.present?
   end
 
+  def reset_shortcuts_in_category(category)
+    # Detach users shortcuts in given category
+    shortcuts.where(category: category).each do |shortcut|
+      shortcuts.delete(shortcut)
+    end
+
+    _shortcuts = shortcuts
+
+    # Collect shortcuts from users roles in category
+    roles.includes(:shortcuts).each do |role|
+      _shortcuts += role.shortcuts.where(category: category)
+    end
+
+    self.shortcuts = _shortcuts.uniq
+  end
+
+  def assign_shortcuts_from_roles(roles)
+  end
+
   # language names as tokens
   def language_list
     languages.map(&:name).join(", ")

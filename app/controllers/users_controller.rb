@@ -239,10 +239,10 @@ class UsersController < ApplicationController
 
   # Reset user shortcuts to default for one params[:category]
   def reset_shortcuts
-    # Get users shortcuts ids for **all other** shortcut categories so we don't delete them
-    current_user.shortcut_ids = current_user.shortcuts.where("category != ?", params[:category]).pluck(:id)
+    # Detach users shortcuts in :category
+    current_user.reset_shortcuts_in_category(params[:category])
 
-    redirect_to root_url, notice: "Inställningarna för #{Shortcut::CATEGORIES[params[:category]]} återställdes"
+    redirect_to root_url, notice: "Genvägarna för #{Shortcut::CATEGORIES[params[:category]]} återställdes"
   end
 
   def add_colleague

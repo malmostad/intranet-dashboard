@@ -34,3 +34,7 @@
         .controls
           = submit_tag t( "actions.save" ), class: "btn btn-primary"
           = link_to t( 'actions.cancel' ), root_path, class: "btn btn-default"
+      .form-group
+        %span.no-control-label
+        .controls
+          = link_to "Återställ genvägar", user_reset_shortcuts_path(params[:category]), method: :patch, class: "btn btn-default"
