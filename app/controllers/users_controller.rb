@@ -216,7 +216,7 @@ class UsersController < ApplicationController
     @shortcuts = Shortcut.where(category: params[:category]).includes(:roles)
   end
 
-  # Detach a user shortcut
+  # Detach a shortcut link from the user
   def shortcuts
     shortcut = current_user.shortcuts.find(params[:id])
     if shortcut
