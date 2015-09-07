@@ -54,6 +54,7 @@ class User < ActiveRecord::Base
     if roles.where(category: "department").empty?
       errors.add(:department, "Du måste välja minst en förvaltning")
     end
+
     if roles.where(category: "working_field").empty?
       errors.add(:working_field, "Du måste välja minst ett arbetsfält")
     end
