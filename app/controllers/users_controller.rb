@@ -216,17 +216,6 @@ class UsersController < ApplicationController
     @shortcuts = Shortcut.where(category: params[:category]).includes(:roles)
   end
 
-  # Detach a shortcut link from the user
-  def shortcuts
-    shortcut = current_user.shortcuts.find(params[:id])
-    if shortcut
-      current_user.shortcuts.delete(shortcut)
-      render json: { status: "Deleted" }
-    else
-      render json: { status: "Server Error" }, status: 500
-    end
-  end
-
   def update_shortcuts
     # Get users shortcuts ids for **all other** shortcut categories so we don't delete them
     other_categories_shortcuts = current_user.shortcuts.where("category != ?", params[:category]).pluck(:id)
@@ -243,6 +232,17 @@ class UsersController < ApplicationController
     current_user.reset_shortcuts_in_category(params[:category])
 
     redirect_to root_url, notice: "Genvägarna för #{Shortcut::CATEGORIES[params[:category]]} återställdes"
+  end
+
+  # Detach a shortcut link from the user
+  def detach_shortcut
+    shortcut = current_user.shortcuts.find(params[:id])
+    if shortcut
+      current_user.shortcuts.delete(shortcut)
+      render json: { status: "Deleted" }
+    else
+      render json: { status: "Server Error" }, status: 500
+    end
   end
 
   def add_colleague
