@@ -39,7 +39,6 @@ class User < ActiveRecord::Base
   before_post_process :validate_avatar_file_size
 
   validates_uniqueness_of :username
-  validates :roles, presence: { message: "Du måste välja minst en förvaltning och ett arbetsfält" }
   validates_presence_of :username
   validates_length_of :professional_bio, :private_bio, maximum: 400
   validates_length_of :skype, :twitter, :linkedin, :room, :address, maximum: 64
@@ -52,6 +51,13 @@ class User < ActiveRecord::Base
   end
 
   after_validation do
+    if roles.where(category: "department").empty?
+      errors.add(:department, "Du måste välja minst en förvaltning")
+    end
+    if roles.where(category: "working_field").empty?
+      errors.add(:working_field, "Du måste välja minst ett arbetsfält")
+    end
+
     # Explicit validation for accociated models. `validates_associated` will not do.
     errors.add(:skill_list, "Max 48 tecken per kompetensområde") if @skill_errors
     errors.add(:activity_list, "Max 48 tecken per aktivitet") if @activity_errors

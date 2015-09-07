@@ -15,7 +15,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :input_group, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :input_group, tag: 'div', class: 'form-group', error_class: 'warning' do |b|
     b.use :html5
     b.use :placeholder
     b.use :label
@@ -37,7 +37,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :radio_and_checkboxes, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :radio_and_checkboxes, tag: 'div', class: 'form-group', error_class: 'warning' do |b|
     b.use :html5
     b.optional :readonly
     b.use :label
