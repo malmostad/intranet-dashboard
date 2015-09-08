@@ -40,9 +40,20 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :username
   validates_presence_of :username
+  validate :validate_roles, on: :update
   validates_length_of :professional_bio, :private_bio, maximum: 400
   validates_length_of :skype, :twitter, :linkedin, :room, :address, maximum: 64
   validates_length_of :homepage, maximum: 255
+
+  def validate_roles
+    if roles.where(category: "department").empty?
+      errors.add(:department, "Du måste välja minst en förvaltning")
+    end
+
+    if roles.where(category: "working_field").empty?
+      errors.add(:working_field, "Du måste välja minst ett arbetsfält")
+    end
+  end
 
   before_validation do
     self.homepage = "http://#{homepage}" unless homepage.blank? || homepage.match(/^https?:\/\//)
@@ -51,14 +62,6 @@ class User < ActiveRecord::Base
   end
 
   after_validation do
-    if roles.where(category: "department").empty?
-      errors.add(:department, "Du måste välja minst en förvaltning")
-    end
-
-    if roles.where(category: "working_field").empty?
-      errors.add(:working_field, "Du måste välja minst ett arbetsfält")
-    end
-
     # Explicit validation for accociated models. `validates_associated` will not do.
     errors.add(:skill_list, "Max 48 tecken per kompetensområde") if @skill_errors
     errors.add(:activity_list, "Max 48 tecken per aktivitet") if @activity_errors
