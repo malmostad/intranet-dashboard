@@ -70,6 +70,19 @@ class User < ActiveRecord::Base
     update_attribute(:cmg_id, AastraCWI.get_cmg_id(self))
   end
 
+  before_save do
+    # Assign shortcuts to user the first time she selects a role in each category
+    if !departments_setuped && roles.where(category: "department").present?
+      add_shortcuts_from_roles("department")
+      self.departments_setuped = true
+    end
+
+    if !working_fields_setuped && roles.where(category: "working_field").present?
+      add_shortcuts_from_roles("working_field")
+      self.working_fields_setuped = true
+    end
+  end
+
   validates_attachment_content_type :avatar,
     content_type: ['image/tiff', 'image/jpeg', 'image/pjpeg', 'image/jp2'],
     message: "Fel bildformat. Du kan ladda upp en jpeg- eller tiff-bild"
@@ -98,7 +111,8 @@ class User < ActiveRecord::Base
     self.shortcuts = _shortcuts.uniq
   end
 
-  def assign_shortcuts_from_roles(roles)
+  def add_shortcuts_from_roles(role_category)
+    self.shortcuts = (shortcuts + roles.where(category: role_category).map { |r| r.shortcuts }.flatten).uniq
   end
 
   # language names as tokens
