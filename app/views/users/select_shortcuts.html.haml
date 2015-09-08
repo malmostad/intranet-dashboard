@@ -38,3 +38,4 @@
         %span.no-control-label
         .controls
           = link_to "Återställ genvägar", user_reset_shortcuts_path(params[:category]), method: :patch, class: "btn btn-default"
+          .help-block= "Återställer dina genvägar för #{Shortcut::CATEGORIES[params[:category]]} utifrån de roller du valt."
