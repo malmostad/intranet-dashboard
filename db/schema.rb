@@ -167,16 +167,6 @@ ActiveRecord::Schema.define(version: 20150908094004) do
   add_index "roles_users", ["role_id", "user_id"], name: "index_roles_users", unique: true, using: :btree
   add_index "roles_users", ["user_id"], name: "index_roles_users_on_user_id", using: :btree
 
-  create_table "sessions", force: :cascade do |t|
-    t.string   "session_id", limit: 255,   null: false
-    t.text     "data",       limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", using: :btree
-  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
-
   create_table "shortcuts", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "url",        limit: 255
