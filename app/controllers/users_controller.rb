@@ -119,6 +119,10 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @roles = Role.all
+    # Keep roles existens before saving, there's no *_was for associations
+    @user.department_was_set = @user.roles.where(category: "department").present?
+    @user.working_field_was_set = @user.roles.where(category: "working_field").present?
+
     notify_switchboard = (params[:user][:address].present? && params[:user][:address] != @user.address) ||
       (params[:user][:room].present? && params[:user][:room] != @user.room)
 

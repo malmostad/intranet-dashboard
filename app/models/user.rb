@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   attr_accessible :admin, :contacts_editor, :early_adopter, as: :admin
   accessible_attributes(:admin).merge(accessible_attributes)
 
-  attr_accessor :avatar
+  attr_accessor :avatar, :department_was_set, :working_field_was_set
   attr_reader :avatar_remote_url
 
   default_scope { where(deactivated: false) }
@@ -74,15 +74,13 @@ class User < ActiveRecord::Base
   end
 
   before_save do
-    # Assign shortcuts to user the first time she selects a role in each category
-    if !departments_setuped && roles.where(category: "department").present?
+    # Assign shortcuts to user the first time s/he selects a role in each category
+    if !department_was_set && roles.where(category: "department").present?
       add_shortcuts_from_roles("department")
-      self.departments_setuped = true
     end
 
-    if !working_fields_setuped && roles.where(category: "working_field").present?
+    if !working_field_was_set && roles.where(category: "working_field").present?
       add_shortcuts_from_roles("working_field")
-      self.working_fields_setuped = true
     end
   end
 

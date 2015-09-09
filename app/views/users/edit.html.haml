@@ -7,9 +7,9 @@
 
       - # Special case where the user is directed here due to lack of roles
       - if f.error_notification.nil?
-        - if @user.roles.where(category: "department").empty?
+        - if !@user.roles.where(category: "department").present?
           .warning= "Välj en förvaltning nedan"
-        - if @user.roles.where(category: "working_field").empty?
+        - if !@user.roles.where(category: "working_field").present?
           .warning= "Välj ett arbetsfält nedan"
 
       = f.input :displayname, as: :more_info, wrapper: :more_info
