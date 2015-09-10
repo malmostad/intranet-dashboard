@@ -70,7 +70,6 @@ describe "Users" do
   it "should suggest visiting address", js: true do
     visit edit_user_path(user)
     page.execute_script "$('#user_search_address').val('Storgatan').trigger('focus').trigger('keydown')"
-    print page.html
     item_selector = "ul.ui-autocomplete li.ui-menu-item a"
     expect(page).to have_selector(item_selector)
 
