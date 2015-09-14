@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   attr_accessible :admin, :contacts_editor, :early_adopter, as: :admin
   accessible_attributes(:admin).merge(accessible_attributes)
 
-  attr_accessor :avatar
+  attr_accessor :avatar, :department_was_set, :working_field_was_set
   attr_reader :avatar_remote_url
 
   default_scope { where(deactivated: false) }
@@ -39,11 +39,21 @@ class User < ActiveRecord::Base
   before_post_process :validate_avatar_file_size
 
   validates_uniqueness_of :username
-  validates :roles, presence: { message: "Du måste välja minst en förvaltning och ett arbetsfält" }
   validates_presence_of :username
+  validate :validate_roles, on: :update
   validates_length_of :professional_bio, :private_bio, maximum: 400
   validates_length_of :skype, :twitter, :linkedin, :room, :address, maximum: 64
   validates_length_of :homepage, maximum: 255
+
+  def validate_roles
+    if roles.where(category: "department").empty?
+      errors.add(:department, "Du måste välja minst en förvaltning")
+    end
+
+    if roles.where(category: "working_field").empty?
+      errors.add(:working_field, "Du måste välja minst ett arbetsfält")
+    end
+  end
 
   before_validation do
     self.homepage = "http://#{homepage}" unless homepage.blank? || homepage.match(/^https?:\/\//)
@@ -63,6 +73,17 @@ class User < ActiveRecord::Base
     update_attribute(:cmg_id, AastraCWI.get_cmg_id(self))
   end
 
+  before_save do
+    # Assign shortcuts to user the first time s/he selects a role in each category
+    if !department_was_set && roles.where(category: "department").present?
+      add_shortcuts_from_roles("department")
+    end
+
+    if !working_field_was_set && roles.where(category: "working_field").present?
+      add_shortcuts_from_roles("working_field")
+    end
+  end
+
   validates_attachment_content_type :avatar,
     content_type: ['image/tiff', 'image/jpeg', 'image/pjpeg', 'image/jp2'],
     message: "Fel bildformat. Du kan ladda upp en jpeg- eller tiff-bild"
@@ -73,6 +94,26 @@ class User < ActiveRecord::Base
 
   def company_short
     company.gsub(/^[\d\s]*/, "") if company.present?
+  end
+
+  def reset_shortcuts_in_category(category)
+    # Detach users shortcuts in given category
+    shortcuts.where(category: category).each do |shortcut|
+      shortcuts.delete(shortcut)
+    end
+
+    _shortcuts = shortcuts
+
+    # Collect shortcuts from users roles in category
+    roles.includes(:shortcuts).each do |role|
+      _shortcuts += role.shortcuts.where(category: category)
+    end
+
+    self.shortcuts = _shortcuts.uniq
+  end
+
+  def add_shortcuts_from_roles(role_category)
+    self.shortcuts = (shortcuts + roles.where(category: role_category).map { |r| r.shortcuts }.flatten).uniq
   end
 
   # language names as tokens
@@ -146,12 +187,6 @@ class User < ActiveRecord::Base
       through_roles = roles.references(:feeds).includes(:feeds).select('feeds.id')
     end
     (user_selected + through_roles.map {|r| r.feeds.map(&:id) }).flatten.uniq
-  end
-
-  def shortcuts_in_category(category)
-    through_roles = roles.where('shortcuts.category' => category).includes(:shortcuts).map {|r| r.shortcuts }
-    my_own = shortcuts.map { |s| s if s.category == category }
-    (my_own.compact + through_roles).flatten.uniq.sort { |a, b| a.name <=> b.name }
   end
 
   def self.tags(query, limit = 50, offset = 0)

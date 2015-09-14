@@ -6,4 +6,3 @@ FactoryGirl.define do
     category Shortcut::CATEGORIES.keys.first
   end
 end
-

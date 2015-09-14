@@ -54,10 +54,6 @@ describe "SiteSearch" do
       expect(page).to have_selector(".results > ul > li:first-child .category")
     end
 
-    it "should have a results entry a breadcrumb" do
-      expect(page).to have_selector(".results .breadcrumbs li")
-    end
-
     it "should have a load more link" do
       expect(page).to have_selector("#load-more-search-results", text: "Visa fler")
     end

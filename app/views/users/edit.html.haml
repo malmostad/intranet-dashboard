@@ -5,8 +5,12 @@
     = simple_form_for @user, html: { class: "basic" } do |f|
       = f.error_notification class: "warning"
 
-      - if @user.roles.empty? # User is directed here to select roles
-        %p.warning= "Välj en eller flera förvaltningar/arbetsfält nedan."
+      - # Special case where the user is directed here due to lack of roles
+      - if f.error_notification.nil?
+        - if !@user.roles.where(category: "department").present?
+          .warning= "Välj en förvaltning nedan"
+        - if !@user.roles.where(category: "working_field").present?
+          .warning= "Välj ett arbetsfält nedan"
 
       = f.input :displayname, as: :more_info, wrapper: :more_info
       = f.input :title, as: :more_info, wrapper: :more_info
@@ -15,9 +19,10 @@
       = f.input :status_message
 
       %h2.group-title Grundprofil i Komin:
+      = f.error(:department, class: "warning")
       = f.association :roles, as: :check_boxes, wrapper: :radio_and_checkboxes, collection: @roles.select { |r| r.category == "department" }, label: "Förvaltningar"
-      = f.association :roles, as: :check_boxes, wrapper: :radio_and_checkboxes, collection: @roles.select { |r| r.category == "working_field" }, label: "Arbetsfält",
-          hint: "Här väljer du vilken/vilka förvaltningar/arbetsfält du vill se i Kominflikarna Min förvaltning, Mitt arbetsfält högst upp i Komin."
+      = f.error(:working_field, class: "warning")
+      = f.association :roles, as: :check_boxes, wrapper: :radio_and_checkboxes, collection: @roles.select { |r| r.category == "working_field" }, label: "Arbetsfält"
 
       %h2.group-title Kontakt
       = f.input :search_address do

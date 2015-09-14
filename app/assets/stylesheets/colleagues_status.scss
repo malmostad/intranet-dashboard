@@ -7,7 +7,7 @@ section.box#colleagues {
     li {
       position: relative;
       clear: both;
-      margin: .2em .6em 1em;
+      margin: .2em .2em 1em .6em;
       img {
         float: left;
         width: 46px;
@@ -45,19 +45,16 @@ section.box#colleagues {
       }
       a.remove {
         position: absolute;
-        top: 0;
         right: 0;
         margin: 0;
         top: .3em;
-        width: 1em;
-        height: 1em;
         cursor: pointer;
         background-size: 10px;
         width: 1.2em;
         height: 1.2em;
         @include opacity(.4);
       }
-      &:hover a.remove {
+      a.remove:hover {
         @include opacity(1);
       }
       &.add {

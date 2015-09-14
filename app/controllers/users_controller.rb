@@ -119,6 +119,10 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @roles = Role.all
+    # Keep roles existens before saving, there's no *_was for associations
+    @user.department_was_set = @user.roles.where(category: "department").present?
+    @user.working_field_was_set = @user.roles.where(category: "working_field").present?
+
     notify_switchboard = (params[:user][:address].present? && params[:user][:address] != @user.address) ||
       (params[:user][:room].present? && params[:user][:room] != @user.room)
 
@@ -223,17 +227,26 @@ class UsersController < ApplicationController
     # Set **all** the users shortcuts
     current_user.shortcut_ids = other_categories_shortcuts + ( params[:user][:shortcut_ids] or [] )
 
-    clear_shortcut_cache(params[:category])
     redirect_to root_url, notice: "Dina #{Shortcut::CATEGORIES[params[:category]]} uppdaterades"
   end
 
   # Reset user shortcuts to default for one params[:category]
   def reset_shortcuts
-    # Get users shortcuts ids for **all other** shortcut categories so we don't delete them
-    current_user.shortcut_ids = current_user.shortcuts.where("category != ?", params[:category]).pluck(:id)
+    # Detach users shortcuts in :category
+    current_user.reset_shortcuts_in_category(params[:category])
 
-    clear_shortcut_cache(params[:category])
-    redirect_to root_url, notice: "Inställningarna för #{Shortcut::CATEGORIES[params[:category]]} återställdes"
+    redirect_to root_url, notice: "Genvägarna för #{Shortcut::CATEGORIES[params[:category]]} återställdes"
+  end
+
+  # Detach a shortcut link from the user
+  def detach_shortcut
+    shortcut = current_user.shortcuts.find(params[:id])
+    if shortcut
+      current_user.shortcuts.delete(shortcut)
+      render json: { status: "Deleted" }
+    else
+      render json: { status: "Server Error" }, status: 500
+    end
   end
 
   def add_colleague
@@ -254,10 +267,5 @@ class UsersController < ApplicationController
   # Clear the users key/value ttl cache for feed entries
   def clear_feed_entries_cache(category)
     Rails.cache.delete("feed_entries-#{current_user.id}-#{category}")
-  end
-
-  # Clear the users key/value ttl cache for shortcuts
-  def clear_shortcut_cache(category)
-    Rails.cache.delete("shortcuts-#{current_user.id}-#{category}")
   end
 end

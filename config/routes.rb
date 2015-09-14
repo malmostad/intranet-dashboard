@@ -10,9 +10,12 @@ Dashboard::Application.routes.draw do
   get "/users/select_feeds/:category" => "users#select_feeds", as: "user_select_feeds"
   patch "/users/select_feeds/:category" => "users#update_feeds"
   patch "/users/reset_feeds/:category" => "users#reset_feeds", as: "user_reset_feeds"
+
   get "/users/select_shortcuts/:category" => "users#select_shortcuts", as: "user_select_shortcuts"
   patch "/users/select_shortcuts/:category" => "users#update_shortcuts"
   patch "/users/reset_shortcuts/:category" => "users#reset_shortcuts", as: "user_reset_shortcuts"
+  delete "/users/shortcuts/:id" => "users#detach_shortcut", as: "users_detach_shortcut"
+
   patch "/users/update_status_message" => "users#update_status_message", as: "user_update_status_message"
   patch "/users/update_feed_stream_type"
   patch "/users/update_activities_multiple"

@@ -12,19 +12,31 @@ section.box#shortcuts-i-want {
   }
 
   ul li {
+    position: relative;
+    display: block;
+    margin: .4em .4em .5em emize(12, 14);
     a {
       display: block;
-      margin: 0;
-      padding: .3em emize(12, 14);
+      margin-right: 1.4em;
+      overflow: hidden;
       font-size: emize(14);
       line-height: 1.35;
       font-family: $sans-serif;
-      border-top: 1px solid transparent;
-      border-bottom: 1px solid transparent;
-      &:hover {
-        background: $background-light;
-        border-color: $border-color;
-      }
+    }
+    a.remove {
+      position: absolute;
+      display: block;
+      width: 1.2em;
+      height: 1.2em;
+      right: 0;
+      margin: 0;
+      top: .3em;
+      cursor: pointer;
+      background-size: 10px;
+      @include opacity(.4);
+    }
+    a.remove:hover  {
+      @include opacity(1);
     }
   }
   .btn.add {
