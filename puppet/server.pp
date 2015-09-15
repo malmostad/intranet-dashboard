@@ -15,7 +15,7 @@ class { '::mcommons::mysql':
 }
 
 class { '::mcommons::elasticsearch':
-  version => '1.5',
+  version => '1.7',
   memory  => '1g',
 }
 
@@ -26,7 +26,7 @@ class { '::mcommons::memcached':
 class { '::mcommons::nginx': }
 
 class { '::mcommons::ruby':
-  version => '2.2.2',
+  version => '2.2.3',
 }
 
 class { 'mcommons::ruby::unicorn': }
