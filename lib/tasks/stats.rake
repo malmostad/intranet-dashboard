@@ -1,5 +1,21 @@
 # -*- coding: utf-8 -*-
 namespace :stats do
+  task all_users_roles: :environment do
+    file = File.open("log/all_users_roles.csv", 'w')
+    roles = Role.all
+
+    file.write "Username\t#{roles.map(&:name).join("\t")}\tChanged shortcuts\n"
+    User.includes(:roles).find_each do |user|
+      row = "#{user.username}\t"
+      roles.each do |role|
+        row += "#{user.roles.include?(role)}\t"
+        # row += "#{user.changed_shortcuts}"
+      end
+      file.write "#{row}\n"
+    end
+    file.close
+  end
+
   task roles: :environment do
     roles = {}
     [:total, :department, :working_field].each { |category| roles[category] = {} }
