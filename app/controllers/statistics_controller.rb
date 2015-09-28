@@ -42,6 +42,7 @@ class StatisticsController < ApplicationController
         has_professional_bio: total - User.where(professional_bio: [nil, ""]).count,
         has_cmg_id: total - User.where(cmg_id: 0).count,
         has_avatar: User.where("avatar_updated_at != ?", "").count,
+        changed_shortcuts: User.where(changed_shortcuts: true).count,
         ldap_diff_mtime: File.exists?(APP_CONFIG["ldap"]["diff_log"]) ? File.mtime(APP_CONFIG["ldap"]["diff_log"]).localtime.to_s[0..18] : false,
         total_users: total
       }

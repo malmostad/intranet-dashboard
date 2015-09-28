@@ -226,6 +226,7 @@ class UsersController < ApplicationController
 
     # Set **all** the users shortcuts
     current_user.shortcut_ids = other_categories_shortcuts + ( params[:user][:shortcut_ids] or [] )
+    current_user.update_attribute(:changed_shortcuts, true)
 
     redirect_to root_url, notice: "Dina #{Shortcut::CATEGORIES[params[:category]]} uppdaterades"
   end
@@ -243,6 +244,7 @@ class UsersController < ApplicationController
     shortcut = current_user.shortcuts.find(params[:id])
     if shortcut
       current_user.shortcuts.delete(shortcut)
+      current_user.update_attribute(:changed_shortcuts, true)
       render json: { status: "Deleted" }
     else
       render json: { status: "Server Error" }, status: 500
