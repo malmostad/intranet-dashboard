@@ -16,27 +16,27 @@ class StatisticsController < ApplicationController
         has_room: total - User.where(room: [nil, ""]).count,
         title: {
           has: total - User.where(title: [nil, ""]).count,
-          distinct: User.count(:title, distinct: true)
+          distinct: User.uniq.count(:title)
         },
         company: {
           has: total - User.where(company: [nil, ""]).count,
-          distinct: User.count(:company, distinct: true)
+          distinct: User.uniq.count(:company)
         },
         division: {
           has: total - User.where(department: [nil, ""]).count,
-          distinct: User.count(:department, distinct: true)
+          distinct: User.uniq.count(:department)
         },
         adm_department: {
           has: total - User.where(adm_department: [nil, ""]).count,
-          distinct: User.count(:adm_department, distinct: true)
+          distinct: User.uniq.count(:adm_department)
         },
         house_identifier: {
           has: total - User.where(house_identifier: [nil, ""]).count,
-          distinct: User.count(:house_identifier, distinct: true)
+          distinct: User.uniq.count(:house_identifier)
         },
         physical_delivery_office_name: {
           has: total - User.where(physical_delivery_office_name: [nil, ""]).count,
-          distinct: User.count(:physical_delivery_office_name, distinct: true)
+          distinct: User.uniq.count(:physical_delivery_office_name)
         },
         has_status: total - User.where(status_message: [nil, ""]).count,
         has_professional_bio: total - User.where(professional_bio: [nil, ""]).count,
