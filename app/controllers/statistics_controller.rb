@@ -38,7 +38,10 @@ class StatisticsController < ApplicationController
           has: total - User.where(physical_delivery_office_name: [nil, ""]).count,
           distinct: User.uniq.count(:physical_delivery_office_name)
         },
-        has_status: total - User.where(status_message: [nil, ""]).count,
+        status: {
+          has: User.where.not(status_message: [nil, ""]).count,
+          distinct: User.uniq.count(:status_message)
+        },
         has_professional_bio: total - User.where(professional_bio: [nil, ""]).count,
         has_cmg_id: total - User.where(cmg_id: 0).count,
         has_avatar: User.where("avatar_updated_at != ?", "").count,
