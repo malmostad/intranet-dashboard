@@ -24,14 +24,18 @@ if environment == "production"
     rake "users:update_profiles"
   end
 
+  every :sunday, :at => '5:15am' do
+    rake "users:map_cmg_ids"
+  end
+
   every :day, :at => '4:13am' do
     rake "delete_old_feed_entries"
   end
 end
 
-every :reboot do
-  if environment == "production"
-    command "sleep 120; RAILS_ENV=#{real_environment} #{path}/lib/daemons/feed_worker_ctl start"
-    command "sleep 120; RAILS_ENV=#{real_environment} #{path}/bin/delayed_job start"
-  end
-end
+# every :reboot do
+#   if environment == "production"
+#     command "sleep 120; RAILS_ENV=#{real_environment} #{path}/lib/daemons/feed_worker_ctl start"
+#     command "sleep 120; RAILS_ENV=#{real_environment} #{path}/bin/delayed_job start"
+#   end
+# end
