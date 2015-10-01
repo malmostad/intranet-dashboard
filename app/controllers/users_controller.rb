@@ -244,8 +244,13 @@ class UsersController < ApplicationController
     shortcut = current_user.shortcuts.find(params[:id])
     if shortcut
       current_user.shortcuts.delete(shortcut)
-      current_user.update_attribute(:changed_shortcuts, true)
-      render json: { status: "Deleted" }
+      current_user.changed_shortcuts = true
+      # FIXME: users old shortcuts are saved
+      if current_user.save
+        render json: { status: "Deleted" }
+      else
+        render json: { status: "Server Error" }, status: 500
+      end
     else
       render json: { status: "Server Error" }, status: 500
     end
