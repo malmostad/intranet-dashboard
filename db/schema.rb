@@ -202,7 +202,7 @@ ActiveRecord::Schema.define(version: 20150928130540) do
 
   create_table "user_agents", force: :cascade do |t|
     t.integer  "user_id",          limit: 4
-    t.boolean  "remember_me",      limit: 1,   default: false
+    t.boolean  "remember_me",                  default: false
     t.string   "remember_me_hash", limit: 255
     t.string   "user_agent_tag",   limit: 255
     t.datetime "created_at",                                   null: false
@@ -241,7 +241,7 @@ ActiveRecord::Schema.define(version: 20150928130540) do
     t.string   "title",                         limit: 255
     t.text     "professional_bio",              limit: 65535
     t.string   "status_message",                limit: 255
-    t.boolean  "admin",                         limit: 1,     default: false,              null: false
+    t.boolean  "admin",                                       default: false,              null: false
     t.datetime "created_at",                                                               null: false
     t.datetime "updated_at",                                                               null: false
     t.string   "displayname",                   limit: 255
@@ -252,7 +252,7 @@ ActiveRecord::Schema.define(version: 20150928130540) do
     t.integer  "avatar_file_size",              limit: 4
     t.datetime "avatar_updated_at"
     t.datetime "status_message_updated_at"
-    t.boolean  "early_adopter",                 limit: 1
+    t.boolean  "early_adopter"
     t.string   "twitter",                       limit: 255
     t.string   "skype",                         limit: 255
     t.text     "private_bio",                   limit: 65535
@@ -264,18 +264,18 @@ ActiveRecord::Schema.define(version: 20150928130540) do
     t.integer  "geo_position_x",                limit: 4
     t.integer  "geo_position_y",                limit: 4
     t.string   "cmg_id",                        limit: 255,   default: "0"
-    t.boolean  "deactivated",                   limit: 1,     default: false
+    t.boolean  "deactivated",                                 default: false
     t.datetime "deactivated_at"
-    t.boolean  "contacts_editor",               limit: 1,     default: false
+    t.boolean  "contacts_editor",                             default: false
     t.string   "district",                      limit: 255
     t.string   "post_code",                     limit: 255
     t.string   "postal_town",                   limit: 255
     t.string   "house_identifier",              limit: 255
     t.string   "physical_delivery_office_name", limit: 255
     t.string   "adm_department",                limit: 255
-    t.boolean  "combined_feed_stream",          limit: 1,     default: false
+    t.boolean  "combined_feed_stream",                        default: false
     t.string   "linkedin",                      limit: 255
-    t.boolean  "changed_shortcuts",             limit: 1,     default: false
+    t.boolean  "changed_shortcuts",                           default: false
   end
 
   add_index "users", ["manager_id"], name: "index_users_on_manager_id", using: :btree
