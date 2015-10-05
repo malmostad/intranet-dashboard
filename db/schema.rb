@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150928130540) do
+ActiveRecord::Schema.define(version: 20151005113432) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -276,6 +276,8 @@ ActiveRecord::Schema.define(version: 20150928130540) do
     t.boolean  "combined_feed_stream",                        default: false
     t.string   "linkedin",                      limit: 255
     t.boolean  "changed_shortcuts",                           default: false
+    t.boolean  "department_selected",                         default: false
+    t.boolean  "working_field_selected",                      default: false
   end
 
   add_index "users", ["manager_id"], name: "index_users_on_manager_id", using: :btree
