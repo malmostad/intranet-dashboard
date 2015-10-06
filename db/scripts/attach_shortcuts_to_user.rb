@@ -8,6 +8,8 @@ class AttachShortcutsToUser
         shortcuts += role.shortcuts
       end
       user.shortcuts = shortcuts.uniq
+      user.department_selected = true
+      user.working_field_selected = true
     end
   end
 end
