@@ -119,9 +119,6 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @roles = Role.all
-    # Keep roles existens before saving, there's no *_was for associations
-    @user.department_was_set = @user.roles.where(category: "department").present?
-    @user.working_field_was_set = @user.roles.where(category: "working_field").present?
 
     notify_switchboard = (params[:user][:address].present? && params[:user][:address] != @user.address) ||
       (params[:user][:room].present? && params[:user][:room] != @user.room)
@@ -226,6 +223,7 @@ class UsersController < ApplicationController
 
     # Set **all** the users shortcuts
     current_user.shortcut_ids = other_categories_shortcuts + ( params[:user][:shortcut_ids] or [] )
+    current_user.update_attribute(:changed_shortcuts, true)
 
     redirect_to root_url, notice: "Dina #{Shortcut::CATEGORIES[params[:category]]} uppdaterades"
   end
@@ -241,8 +239,9 @@ class UsersController < ApplicationController
   # Detach a shortcut link from the user
   def detach_shortcut
     shortcut = current_user.shortcuts.find(params[:id])
-    if shortcut
-      current_user.shortcuts.delete(shortcut)
+    current_user.shortcuts.delete(shortcut)
+    current_user.changed_shortcuts = true
+    if current_user.save(validate: false)
       render json: { status: "Deleted" }
     else
       render json: { status: "Server Error" }, status: 500
@@ -251,7 +250,7 @@ class UsersController < ApplicationController
 
   def add_colleague
     @user = User.where(username: params[:add_colleague]).first
-    render :layout => false
+    render layout: false
   end
 
   def user_roles

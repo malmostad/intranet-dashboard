@@ -18,14 +18,7 @@ describe 'Users shortcuts' do
     expect(page).not_to have_selector('#shortcuts-i-want ul li')
   end
 
-  describe 'attach shortcuts to user' do
-    let(:user_2) {
-      u = create(:user)
-      u.shortcuts << tools_and_systems
-      u.shortcuts << i_want
-      u
-    }
-
+  describe 'user changing shortcuts' do
     before(:each) {
       login(user_2.username, '') # Stubbed auth
       visit root_path
@@ -47,6 +40,23 @@ describe 'Users shortcuts' do
     it "should remove an 'I want' shortcut", js: true do
       find('#shortcuts-i-want .remove').click
       expect(page).not_to have_selector('#shortcuts-i-want ul li')
+    end
+
+    it "user should not be marked as 'changed shortcuts'" do
+      expect(user.changed_shortcuts).to be false
+    end
+
+    it "user deleting a shortcut should set 'changed shortcuts' to true", js: true do
+      find("#shortcuts-i-want .remove").click
+      sleep 1
+      expect(user.reload.changed_shortcuts).to be true
+    end
+
+    it "user editing shortcuts should set 'changed shortcuts' to true" do
+      visit user_select_shortcuts_path(category: 'tools_and_systems')
+      expect(user.reload.changed_shortcuts).to be false
+      click_button 'Spara'
+      expect(user.reload.changed_shortcuts).to be true
     end
   end
 end

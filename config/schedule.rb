@@ -23,6 +23,10 @@ if environment == "production"
     rake "users:update_profiles"
   end
 
+  every :sunday, :at => '5:15am' do
+    rake "users:map_cmg_ids"
+  end
+
   every :day, :at => '4:13am' do
     rake "delete_old_feed_entries"
   end

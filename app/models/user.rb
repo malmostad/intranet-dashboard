@@ -74,13 +74,15 @@ class User < ActiveRecord::Base
   end
 
   before_save do
-    # Assign shortcuts to user the first time s/he selects a role in each category
-    if !department_was_set && roles.where(category: "department").present?
+    # # Assign shortcuts to user the first time s/he selects a role in each category
+    if !department_selected? && roles.where(category: "department").present?
       add_shortcuts_from_roles("department")
+      self.department_selected = true
     end
 
-    if !working_field_was_set && roles.where(category: "working_field").present?
+    if !working_field_selected? && roles.where(category: "working_field").present?
       add_shortcuts_from_roles("working_field")
+      self.working_field_selected = true
     end
   end
 
