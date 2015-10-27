@@ -1,0 +1,20 @@
+section.refugees {
+  a {
+    display: block;
+    margin-right: 1.4em;
+    overflow: hidden;
+    font-size: emize(14);
+    line-height: 1.35;
+    font-family: $sans-serif;
+  }
+}
+
+section.announcement.small {
+  a {
+    font-size: emize(16);
+    line-height: emize(21);
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
