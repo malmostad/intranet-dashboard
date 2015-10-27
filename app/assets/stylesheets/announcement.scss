@@ -1,0 +1,10 @@
+section.announcement.small {
+  a {
+    margin: 0 0 emize(22.4);
+    font-size: emize(16);
+    line-height: emize(21);
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
