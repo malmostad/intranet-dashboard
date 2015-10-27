@@ -220,6 +220,17 @@
       margin-bottom: 0;
     }
 
+    section.announcement.small {
+      :before {
+        @include radius(0);
+      }
+      a {
+        @include radius(0);
+        border-width: 1px 0;
+      }
+    }
+
+
     &.malmo-masthead-dashboard {
       padding: 0;
       margin-right: 0;
