@@ -47,7 +47,6 @@ gem 'unicorn', group: [:test, :production]
 group :development do
   gem 'haml-rails'
   gem 'pry-rails'
-  gem 'scss_lint'
 end
 
 group :development, :test do
