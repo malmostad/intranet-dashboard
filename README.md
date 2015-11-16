@@ -116,7 +116,7 @@ $ sudo monit status
 You can use the following Rails console command to run the feed updates once:
 
 ```shell
-$ rails c development|test|production
+$ bundle exec rails c development|test|production
 $ FeedWorker.update_all
 ```
 
