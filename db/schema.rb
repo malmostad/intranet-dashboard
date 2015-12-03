@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151005113432) do
+ActiveRecord::Schema.define(version: 20151203114722) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 20151005113432) do
     t.string   "image_medium",   limit: 255
     t.string   "image_large",    limit: 255
     t.text     "url",            limit: 65535
-    t.string   "title",          limit: 255
+    t.text     "title",          limit: 65535
     t.text     "summary",        limit: 65535
     t.integer  "count_comments", limit: 4
   end
@@ -240,7 +240,7 @@ ActiveRecord::Schema.define(version: 20151005113432) do
     t.string   "cell_phone",                    limit: 255
     t.string   "title",                         limit: 255
     t.text     "professional_bio",              limit: 65535
-    t.string   "status_message",                limit: 255
+    t.string   "status_message",                limit: 191
     t.boolean  "admin",                                       default: false,              null: false
     t.datetime "created_at",                                                               null: false
     t.datetime "updated_at",                                                               null: false
