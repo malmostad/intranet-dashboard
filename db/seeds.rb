@@ -12,7 +12,13 @@ r.save(validate: false)
 
 u = User.create
 u.username = 'user1'
-u.displayname = 'user1'
+u.displayname = 'user 1'
+u.save(validate: false)
+
+u = User.create
+u.username = 'admin1'
+u.displayname = 'admin 1'
+u.admin = true
 u.save(validate: false)
 
 @bios = [
