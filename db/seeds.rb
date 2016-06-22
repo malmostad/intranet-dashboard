@@ -1,4 +1,26 @@
 # -*- coding: utf-8 -*-
+
+r = Role.create
+r.name = 'Avdelningsroll 1'
+r.category = 'department'
+r.save(validate: false)
+
+r = Role.create
+r.name = 'Arbetsfältroll 1'
+r.category = 'working_field'
+r.save(validate: false)
+
+u = User.create
+u.username = 'user1'
+u.displayname = 'user 1'
+u.save(validate: false)
+
+u = User.create
+u.username = 'admin1'
+u.displayname = 'admin 1'
+u.admin = true
+u.save(validate: false)
+
 @bios = [
   "Semper recusabo eleifend vis ad, ad ipsum delicata nam, nonumy denique mel in. Eu placerat neglegentur eos, ea doctus nominati sit. Facer bonorum fabellas ut mel. Sea no congue senserit, nec ut cetero efficiantur, pri te tritani conceptam reformidans. Cu mea natum urbanitas appellantur.",
   "At albucius volutpat has, utamur lobortis sea an. Dolorem perfecto mea at, postulant gubergren ea nec. Ad qui agam labitur. Has modo eloquentiam ei. Ad bonorum complectitur eos, laoreet mediocritatem an vix. Vidit vocent ei nam, copiosae prodesset cu mei.",
