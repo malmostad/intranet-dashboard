@@ -1,5 +1,6 @@
 .DS_Store
 .bundle
+/vendor/bundle/
 .vagrant
 log
 tmp
