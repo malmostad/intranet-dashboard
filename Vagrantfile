@@ -6,8 +6,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider :virtualbox do |v|
     v.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
-    v.memory = 2048
-    v.cpus = 2
+    v.memory = 4096
+    v.cpus = 4
   end
   config.vm.provider :vmware_fusion
   config.vm.provider :vmware_workstation

@@ -50,6 +50,16 @@ $ cd /vagrant
 $ rails s -b 0.0.0.0
 ```
 
+#--------------
+You might need to run the following commands in Terminal if you get errors:
+$ sudo apt-get install nodejs
+$ cd /vagrant/config
+$ cp app_config.yml.example app_config.yml
+
+$ rake db:schema:load ($bundle install first on you get errors)
+#--------------
+
+
 Point a browser on your host system to http://127.0.0.1:3031. Editing of the project files on your host system will be reflected when you hit reload in your browser.
 
 When you run the `vagrant up` command for the first time it creates an Ubuntu 14.04 based Vagrant box with a ready-to-use development environment for the application. This will take some time. Vagrant will launch fast after the first run.
