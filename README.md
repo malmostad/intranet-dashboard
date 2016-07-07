@@ -50,15 +50,12 @@ $ cd /vagrant
 $ rails s -b 0.0.0.0
 ```
 
-#--------------
-You might need to run the following commands in Terminal if you get errors:
+You might need to run some of the following commands if you get errors:
+
+```shell
 $ sudo apt-get install nodejs
-$ cd /vagrant/config
-$ cp app_config.yml.example app_config.yml
-
 $ rake db:schema:load ($bundle install first on you get errors)
-#--------------
-
+```
 
 Point a browser on your host system to http://127.0.0.1:3031. Editing of the project files on your host system will be reflected when you hit reload in your browser.
 
