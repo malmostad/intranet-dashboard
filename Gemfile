@@ -31,9 +31,8 @@ gem 'daemons', '1.2.3'
 gem 'daemons-rails', '1.2.1'
 gem 'delayed_job_active_record', '4.0.3'
 
-gem 'capistrano', '~> 3.4.0'
-gem 'capistrano-rails', '~> 1.1.2'
-gem 'capistrano-rbenv', '~> 2.0.2'
+gem 'capistrano', '~> 2.15.5'
+gem 'capistrano-ext'
 gem 'whenever', '~> 0.9.2', require: false
 gem 'highline'
 gem 'execjs'

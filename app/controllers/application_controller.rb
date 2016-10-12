@@ -90,16 +90,17 @@ class ApplicationController < ActionController::Base
       false
     end
   end
+  helper_method :current_user
 
   def contacts_editor?
     current_user && (current_user.contacts_editor? || current_user.admin?)
   end
-  helper_method :admin?, :contacts_editor?, :current_user
+  helper_method :contacts_editor?
 
   def admin?
     current_user && current_user.admin?
   end
-  helper_method :admin?, :current_user
+  helper_method :admin?
 
   def require_user
     if !current_user
@@ -129,6 +130,10 @@ class ApplicationController < ActionController::Base
 
   def require_admin_or_myself
     not_authorized unless admin? || editing_myself?
+  end
+
+  def require_admin_or_contacts_editor_or_myself
+    not_authorized unless admin? || editing_myself? || contacts_editor?
   end
 
   def not_authorized(msg = "Du saknar behörighet för detta" )

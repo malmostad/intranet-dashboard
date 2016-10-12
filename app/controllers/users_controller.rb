@@ -2,7 +2,8 @@
 class UsersController < ApplicationController
   before_action { add_body_class('employee') }
   before_action :require_user, except: [:suggest]
-  before_action :require_admin_or_myself, only: [:edit, :update]
+  #before_action :require_admin_or_myself, only: [:edit, :update]
+  before_action :require_admin_or_contacts_editor_or_myself, only: [:edit, :update]
   before_action :require_admin, only: :destroy
   before_action :require_contacts_editor, only: :update_activities_multiple
   protect_from_forgery except: :suggest

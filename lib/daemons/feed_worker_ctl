@@ -15,7 +15,7 @@ config = {
   dir: "#{ENV["APP_ROOT"]}/log", # `daemons` put log and pid in same dir
   multiple: false,
   backtrace: true,
-  monitor: false,
+  monitor: true,
   ontop: false
 }
 
