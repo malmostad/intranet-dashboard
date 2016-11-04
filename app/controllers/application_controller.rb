@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
 
     cookies.permanent[myprofile] = {
       value: {
-        hr_department: current_user.company_short,
+        hr_department: current_user.company,
         # Singular is for GA
         department:   departments.present? ? departments.first[:homepage_url].gsub('http://komin.malmo.se/', '') : '',
         workingfield: workingfields.present? ? workingfields.first[:homepage_url].gsub('http://komin.malmo.se/', '') : '',
