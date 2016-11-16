@@ -99,7 +99,7 @@ class PhoneNumberFormat
   end
 
   def too_short?
-    @number.size <= 10
+    @number.size < 9
   end
 
   def starts_without_zero?
