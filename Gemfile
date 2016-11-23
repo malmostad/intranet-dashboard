@@ -1,8 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'protected_attributes'
+gem 'ruby_dep', '~> 1.3.1' # version required by Ruby 2.2.3
 
-gem 'rails', '4.2.4'
+gem 'protected_attributes', '1.1.3'
+
+gem 'rails', '4.2.7.1'
 gem 'jquery-rails', '4.0.5'
 gem 'haml', '4.0.7'
 
@@ -31,7 +33,7 @@ gem 'daemons', '1.2.3'
 gem 'daemons-rails', '1.2.1'
 gem 'delayed_job_active_record', '4.0.3'
 
-gem 'capistrano', '~> 2.15.5'
+gem 'capistrano', '~> 2.15.8'
 gem 'capistrano-ext'
 gem 'whenever', '~> 0.9.2', require: false
 gem 'highline'
@@ -58,7 +60,7 @@ group :development, :local_test do
 end
 
 group :local_test do
-  gem 'rspec-rails', '3.3.3'
+  gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'rack-test'
