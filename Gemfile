@@ -52,6 +52,7 @@ end
 
 group :development, :test do
   # gem 'rack-mini-profiler'
+  gem 'listen', '~> 3.0.8' # Remove Gem when Ruby is >= 2.2.3
 end
 
 group :development, :local_test do
