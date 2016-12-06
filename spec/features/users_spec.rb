@@ -14,7 +14,7 @@ describe "Users" do
     expect(page).to have_selector("h2", text: "Kunskapsområden")
     expect(page).to have_selector("h2", text: "Språkkunskaper")
     expect(page).to have_selector("h2", text: "Rapporterar till")
-    expect(page).to have_selector("p.email", text: user.email)
+    expect(page).to have_selector("p.email", text: 'E-postadress saknas')
   end
 
   it "should have an edit form for the contact card" do
