@@ -83,6 +83,8 @@ class UsersController < ApplicationController
   def show
     @user = User.where(username: params[:username]).includes(:subordinates).first
     if @user.present?
+      replace_fake_email
+
       respond_to do |format|
         format.html {
           @colleagueship = current_user.colleagueships.where(colleague_id: @user.id).first
@@ -107,6 +109,7 @@ class UsersController < ApplicationController
   def edit
     @user = User.where(id: params[:id]).includes(:roles).first
     if @user.present?
+      replace_fake_email
       @user_roles = user_roles
       @roles = Role.order(:name)
       if request.xhr?
@@ -259,6 +262,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def replace_fake_email
+    @user.email = 'E-postadress saknas' if @user.email =~ /^#{@user.username}@/
+  end
 
   def load_more_query
     { page: params[:page].to_i + 1 }.merge(params.except(:controller, :action, :page))
