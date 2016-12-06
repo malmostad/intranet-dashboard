@@ -1,8 +1,5 @@
-set :rails_env, "production"
-set :deploy_to, "/var/www/dashboard/production"
-set :bundle_without, [:development, :test]
-set :bundle_dir, ""
-set :bundle_flags, ""
-
-before "deploy", 'backup:mysql'
-after 'deploy', 'deploy:restart_daemons'
+set :rails_env, :production
+set :stage, :production
+set :branch, "master"
+ask(:password, 'for app_runner', echo: false)
+server 'srvubuwebhost23.malmo.se', user: 'app_runner', port: 22, password: fetch(:password), roles: %w{web app db}
