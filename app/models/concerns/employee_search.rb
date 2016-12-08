@@ -42,7 +42,7 @@ module EmployeeSearch
     mappings dynamic: 'false' do
       indexes :username, analyzer: 'simple'
       indexes :displayname_phrase, analyzer: "simple"
-      indexes :displayname, index_analyzer: 'name_index', search_analyzer: 'name_search'
+      indexes :displayname, analyzer: 'name_index', search_analyzer: 'name_search'
       indexes :phone, analyzer: 'phone_number'
       indexes :cell_phone, analyzer: 'phone_number'
       indexes :company_short, analyzer: 'simple'
