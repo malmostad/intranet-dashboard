@@ -29,7 +29,6 @@
         = simple_format @user.professional_bio, class: "professional-bio"
         %p.phone= [@user.phone, @user.cell_phone].reject(&:blank?).join(", ")
         %p.email= @user.email
-        %p.status_message= "Statusmeddelande: #{@user.status_message || "Jag har ingen status än"}"
         - unless @user.cmg_id == "0"
           #user-activities.hide{ "data-path" => user_activities_path(@user.cmg_id) }
 
