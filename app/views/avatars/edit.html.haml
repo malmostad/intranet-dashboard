@@ -2,7 +2,7 @@
 %section.box.form.avatar
   %h1.box-title= h1
   .box-content
-    = form_for @user, url: avatar_path(params[:id]), html: { multipart: true, class: "basic" } do |f|
+    = form_for @user, url: update_avatar_path(params[:id]), html: { multipart: true, class: "basic" } do |f|
       .edit_avatar
         = image_tag @user.avatar.url(:medium_quadrat), alt: "Profilbild"
       .avatar-help.help
