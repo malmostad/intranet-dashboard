@@ -22,7 +22,6 @@ describe "Users" do
     click_on "Redigera profil"
     expect(page).to have_selector("h1", text: "Redigera profil för #{user.displayname}")
     expect(page).to have_selector("#user_professional_bio")
-    expect(page).to have_selector("#user_status_message")
     expect(page).to have_selector(".user_roles")
   end
 
