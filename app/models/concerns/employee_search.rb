@@ -40,13 +40,13 @@ module EmployeeSearch
     document_type "employee"
 
     mappings dynamic: 'false' do
-      indexes :username, analyzer: 'simple'
-      indexes :displayname_phrase, analyzer: "simple"
-      indexes :displayname, analyzer: 'name_index', search_analyzer: 'name_search'
-      indexes :phone, analyzer: 'phone_number'
-      indexes :cell_phone, analyzer: 'phone_number'
-      indexes :company_short, analyzer: 'simple'
-      indexes :department, analyzer: 'simple'
+      indexes :username, analyzer: 'simple', type: 'text'
+      indexes :displayname_phrase, analyzer: "simple", type: 'text'
+      indexes :displayname, analyzer: 'name_index', search_analyzer: 'name_search', type: 'text'
+      indexes :phone, analyzer: 'phone_number', type: 'text'
+      indexes :cell_phone, analyzer: 'phone_number', type: 'text'
+      indexes :company_short, analyzer: 'simple', type: 'text'
+      indexes :department, analyzer: 'simple', type: 'text'
     end
   end
 
