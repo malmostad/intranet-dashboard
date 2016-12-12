@@ -79,7 +79,7 @@ class ApplicationController < ActionController::Base
         ActionController::UnknownController,
         ::AbstractController::ActionNotFound,
         ActiveRecord::RecordNotFound,
-      with: lambda { |exception| not_found(exception) }
+      with: lambda { |exception| not_found(exception.message) }
   end
 
   protected

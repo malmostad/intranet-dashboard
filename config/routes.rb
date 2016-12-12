@@ -89,7 +89,6 @@ Dashboard::Application.routes.draw do
     end
   end
 
-  unless Rails.application.config.consider_all_requests_local
-    match '*not_found', to: 'errors#error_404', via: :all
-  end
+  match '404', to: 'application#not_found', via: :all
+  match ':status', to: 'application#server_error', constraints: { status: /\d{3}/ }, via: :all
 end
