@@ -74,21 +74,32 @@ class Ldap
 
   # Extract username from a ldap cn record
   def extract_cn(dn)
-    dn[/cn=(.+?),/i, 1] unless dn.blank?
+    dn[/cn=(.+?),/i, 1].to_s unless dn.blank?
   end
 
   def find_user(username)
     ldap_user = @client.search(base: APP_CONFIG['ldap']['base_dn'], filter: "cn=#{username}").first
     if ldap_user.present?
       Rails.logger.info ldap_user.inspect
-      puts "user: #{username}"
-      puts "company: #{ldap_user['company'].first}"
-      puts "division: #{ldap_user['division'].first}"
-      puts "houseIdentifier: #{ldap_user['houseIdentifier'].first}"
-      puts "physicalDeliveryOfficeName: #{ldap_user['physicalDeliveryOfficeName'].first}"
+      puts "ldap_user['givenname']: #{ldap_user['givenname']}"
+      puts "ldap_user['sn']: #{ldap_user['sn']}"
+      puts "ldap_user['displayname']: #{ldap_user['displayname']}"
+      puts "ldap_user['title']: #{ldap_user['title']}"
+      puts "ldap_user['mail']: #{ldap_user['mail']}"
+      puts "ldap_user['company']: #{ldap_user['company']}"
+      puts "ldap_user['division']: #{ldap_user['division']}"
+      puts "ldap_user['department']: #{ldap_user['department']}"
+      puts "ldap_user['houseIdentifier']: #{ldap_user['houseIdentifier']}"
+      puts "ldap_user['physicalDeliveryOffic']: #{ldap_user['physicalDeliveryOffic']}"
+      puts "ldap_user['streetaddress']: #{ldap_user['streetaddress']}"
+      puts "ldap_user['roomnumber']: #{ldap_user['roomnumber']}"
+      puts "ldap_user['telephonenumber']: #{ldap_user['telephonenumber']}"
+      puts "ldap_user['mobile']: #{ldap_user['mobile']}"
+      puts "ldap_user['manager']: #{ldap_user['manager']}"
+      puts "extracted mnager cn: #{extract_cn(ldap_user['manager'].first)}"
     else
-      Rails.logger.debug  "No user #{username}"
+      Rails.logger.debug "No user #{username}"
     end
-    Rails.logger.debug  @client.get_operation_result
+    Rails.logger.debug @client.get_operation_result
   end
 end
