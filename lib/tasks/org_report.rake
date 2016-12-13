@@ -13,11 +13,11 @@ namespace :org do
     division_sheet = axlsx.workbook.add_worksheet(name: "division")
     division_sheet.add_row %w(company department division Employees Unique Managers), style: heading
 
-    house_identifier_sheet = axlsx.workbook.add_worksheet(name: "houseIdentifier")
-    house_identifier_sheet.add_row %w(company department division houseIdentifier Employees Unique Managers), style: heading
+    house_identifier_sheet = axlsx.workbook.add_worksheet(name: "houseidentifier")
+    house_identifier_sheet.add_row %w(company department division houseidentifier Employees Unique Managers), style: heading
 
-    physical_delivery_office_name_sheet = axlsx.workbook.add_worksheet(name: "physicalDeliveryOfficeName")
-    physical_delivery_office_name_sheet.add_row %w(company department division houseIdentifier physicalDeliveryOfficeName Employees Unique Managers), style: heading
+    physical_delivery_office_name_sheet = axlsx.workbook.add_worksheet(name: "physicaldeliveryofficename")
+    physical_delivery_office_name_sheet.add_row %w(company department division houseidentifier physicaldeliveryofficename Employees Unique Managers), style: heading
 
     User.select(:company).order(:company).uniq.map(&:company).each do |company|
       puts company
