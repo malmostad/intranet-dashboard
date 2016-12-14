@@ -96,7 +96,7 @@ class Feed < ActiveRecord::Base
 
       # Convert shortnames to a Komin blog feed
       elsif feed_url.present? && !feed_url.match(/[\.\/]/)
-        self.feed_url = "http://webapps04.malmo.se/blogg/author/#{URI.escape(feed_url)}/feed/"
+        self.feed_url = "http://kominblogg.malmo.se/author/#{URI.escape(feed_url)}/feed/"
 
       # Add http:// if not there. Allow file:// for specs
       else
