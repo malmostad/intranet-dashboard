@@ -96,7 +96,7 @@ class Ldap
       puts "ldap_user['telephonenumber']: #{ldap_user['telephonenumber'].first}"
       puts "ldap_user['mobile']: #{ldap_user['mobile'].first}"
       puts "ldap_user['manager']: #{ldap_user['manager'].first}"
-      puts "extracted manager cn: #{extract_cn(ldap_user['manager'].first).first}"
+      puts "extracted manager cn: #{extract_cn(ldap_user['manager'].first)}"
     else
       Rails.logger.debug "No user #{username}"
     end
