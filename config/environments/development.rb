@@ -24,4 +24,10 @@ Dashboard::Application.configure do
 
   # ImageMagick resize. (Use "which convert" path)
   Paperclip.options[:command_path] = "/usr/local/bin/convert"
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+    Bullet.stacktrace_includes = []
+  end
 end

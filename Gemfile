@@ -45,6 +45,7 @@ gem 'vcardigan', '0.0.9'
 gem 'unicorn', group: [:test, :production]
 
 group :development do
+  gem 'bullet'
   gem 'haml-rails'
   gem 'pry-rails'
 end
