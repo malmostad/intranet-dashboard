@@ -26,8 +26,8 @@ class Feed < ActiveRecord::Base
 
   after_update do
     # Remove feed entries that wasn't in the feed anymore
-    if APP_CONFIG['purge_stale_feed_entries'] && @fresh_feed_entries.present?
-      FeedEntry.where(feed_id: id).where.not(id: @fresh_feed_entries.map(&:id)).destroy_all
+    if APP_CONFIG['purge_stale_feed_entries'] && feed_entries.present?
+      FeedEntry.where(feed_id: id).where.not(id: feed_entries.map(&:id)).destroy_all
     end
   end
 
@@ -52,7 +52,7 @@ class Feed < ActiveRecord::Base
 
   # Create or update feed entries for the feed
   def fresh_feed_entries
-    @fresh_feed_entries ||= @parsed_feed.entries.map do |parsed_entry|
+    @parsed_feed.entries.map do |parsed_entry|
       entry = FeedEntry.where(guid: parsed_entry.entry_id, feed_id: id).first_or_initialize
       entry.published      = parsed_entry.published
       entry.url            = parsed_entry.url
