@@ -7,7 +7,7 @@ class FeedsController < ApplicationController
   before_action :require_admin
 
   def index
-    @feeds = Feed.order("recent_failures desc, total_failures desc").includes(:users).references(:users)
+    @feeds = Feed.order(:title).includes(:users).references(:users)
   end
 
   def new
