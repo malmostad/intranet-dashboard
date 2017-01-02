@@ -27,13 +27,8 @@ class Feed < ActiveRecord::Base
   after_update do
     # Remove feed entries that wasn't in the feed anymore
     if APP_CONFIG['purge_stale_feed_entries']
-      logger.debug id
-      logger.debug FeedEntry.where(feed_id: id).count
-      logger.debug fresh_feed_entries.map(&:id)
-      logger.debug FeedEntry.where(feed_id: id).where.not(id: fresh_feed_entries.map(&:id)).count
       FeedEntry.where(feed_id: id).where.not(id: @fresh_feed_entries.map(&:id)).destroy_all
-      logger.debug FeedEntry.where(feed_id: id).where.not(id: fresh_feed_entries.map(&:id)).count
-   end
+    end
   end
 
   def fetch_and_parse
