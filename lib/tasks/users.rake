@@ -39,8 +39,8 @@ namespace :users do
     axlsx = Axlsx::Package.new
     heading = axlsx.workbook.styles.add_style font_name: 'Calibri', bg_color: "000000", fg_color: "FFFFFF"
     body = axlsx.workbook.styles.add_style font_name: 'Calibri', fg_color: "000000"
-    axlsx.workbook.add_worksheet(name: "KB-ADM diff") do |sheet|
-      sheet.add_row ["Namn", "Katalognamn", "Adress i kontaktboken", "Adress i ADM", "Kontaktkort"], style: heading
+    axlsx.workbook.add_worksheet(name: "KB-Intra diff") do |sheet|
+      sheet.add_row ["Namn", "Katalognamn", "Adress i kontaktboken", "Adress i Intra", "Kontaktkort"], style: heading
       address_diff.each do |diff|
         diff << "http://webapps06.malmo.se/dashboard/users/#{diff[1]}"
         sheet.add_row diff, style: body
