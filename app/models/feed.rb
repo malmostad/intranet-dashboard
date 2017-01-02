@@ -67,7 +67,7 @@ class Feed < ActiveRecord::Base
   end
 
   def map_feed_attributes
-    self.title            =  @parsed_feed.title || "Utan titel"
+    self.title            =  @parsed_feed.title.present? ? @parsed_feed.title : 'Utan titel'
     self.url              =  @parsed_feed.url
     self.fetched_at       =  Time.now
     self.last_modified    =  @parsed_feed.last_modified
