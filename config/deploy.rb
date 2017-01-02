@@ -98,6 +98,6 @@ namespace :deploy do
   before :starting, "deploy:check_revision"
   before :migrate, "deploy:mysql_backup"
   after :published, "deploy:full_restart"
-  # after :published, "deploy:restart_daemons" # Do it manually if need with `sudo monit restart [feed_worker|delayed_job]`
+  after :published, "deploy:restart_daemons" # Do it manually if needed with `sudo monit restart [feed_worker|delayed_job]`
   after :finishing, "deploy:cleanup"
 end
