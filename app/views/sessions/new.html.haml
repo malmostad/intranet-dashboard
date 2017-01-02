@@ -15,7 +15,7 @@
           = password_field_tag :password, nil, class: "form-control"
           .checkbox
             %label
-              = check_box_tag :remember_me, 1, params[:remember_me], checked: true
+              = check_box_tag :remember_me, 1, params[:remember_me], checked: false
               = 'Kom ihåg mig (ej för delade datorer)'
           = submit_tag "Logga in", class: "btn btn-primary"
       %p.login-instructions Om du kryssar i ”Kom ihåg mig” är du inloggad i 30 dagar. Använd samma användarnamn och lösenord som du loggar in på din dator med.
