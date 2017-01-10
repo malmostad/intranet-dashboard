@@ -29,6 +29,7 @@
       &.url,
       &.title {
         max-width: 16em;
+        overflow: hidden;
         span {
           display: block;
           max-width: 15em;
