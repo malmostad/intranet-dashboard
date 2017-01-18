@@ -3,6 +3,7 @@
 /vendor/bundle/
 .vagrant
 log
+log2
 tmp
 doc
 config/database.yml
