@@ -28,7 +28,7 @@ class { '::mcommons::memcached':
 }
 
 class { '::mcommons::ruby':
-  version => '2.4.0',
+  version => '2.3.3',
 }
 
 -> class { 'mcommons::ruby::bundle_install': }

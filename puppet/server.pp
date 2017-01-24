@@ -26,7 +26,7 @@ class { '::mcommons::memcached':
 class { '::mcommons::nginx': }
 
 class { '::mcommons::ruby':
-  version => '2.4.0',
+  version => '2.3.3',
 }
 
 class { 'mcommons::ruby::unicorn': }
