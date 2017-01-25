@@ -6,7 +6,7 @@ stdout_path "#{root}/log/unicorn.log"
 
 listen "/tmp/unicorn.dashboard.sock"
 worker_processes 8
-timeout 15
+timeout 60
 preload_app true
 
 before_fork do |server, worker|
