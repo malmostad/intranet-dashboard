@@ -3,13 +3,13 @@
 r = Role.create
 r.name = 'Avdelningsroll 1'
 r.category = 'department'
-r.home_page_url = 'http://komin.malmo.se'
+r.homepage_url = 'http://komin.malmo.se'
 r.save(validate: false)
 
 r = Role.create
 r.name = 'Arbetsfältroll 1'
 r.category = 'working_field'
-r.home_page_url = 'http://komin.malmo.se'
+r.homepage_url = 'http://komin.malmo.se'
 r.save(validate: false)
 
 u = User.create
