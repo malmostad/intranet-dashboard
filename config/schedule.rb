@@ -18,7 +18,10 @@ if environment == "test"
   end
 
   every :day, :at => '4:13am' do
-    rake "delete_old_feed_entries"
+    rake "db:delete_old_feed_entries"
+  end
+  every :day, :at => '4:21am' do
+    rake "db:optimize_tables"
   end
 end
 
@@ -32,6 +35,10 @@ if environment == "production"
   end
 
   every :day, :at => '4:13am' do
-    rake "delete_old_feed_entries"
+    rake "db:delete_old_feed_entries"
+  end
+
+  every :day, :at => '4:21am' do
+    rake "db:optimize_tables"
   end
 end
