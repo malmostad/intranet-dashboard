@@ -1,11 +1,11 @@
 %section.box-2.feeds.combined
   %h1.box-title Nyheter & diskussioner
-  .box-instructions{ class: has_news? ? "" : "show"}
+  .box-instructions{ class: current_user.roles.present? ? "" : "show"}
     %p= raw "Denna box visar nyheter, blogg- och foruminlägg från Min förvaltning och Mitt arbetsfält, baserat på vad du valt i #{link_to "Min profil", edit_user_path(current_user)}."
     %p
       Du kan dessutom lägga till fler källor under
       %em Anpassa-menyn.
-    - unless has_news?
+    - if current_user.roles.empty?
       = link_to "Välj profil", edit_user_path(current_user), class: "btn btn-default"
 
   %ul.box-content
