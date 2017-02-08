@@ -5,8 +5,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = 'bento/ubuntu-16.04'
   config.vm.hostname = 'www.local.malmo.se'
 
-  config.vm.define '14.04', autostart: false
-  config.vm.define '16.04', autostart: false
+  # config.vm.define '14.04', autostart: false
+  config.vm.define '16.04', autostart: true
 
   config.vm.provider :virtualbox do |v|
     v.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
