@@ -56,7 +56,7 @@ class Feed < ActiveRecord::Base
       entry = FeedEntry.where(guid: parsed_entry.entry_id, feed_id: id).first_or_initialize
       entry.published      = parsed_entry.published
       entry.url            = parsed_entry.url
-      entry.title          = parsed_entry.title[0...191]
+      entry.title          = parsed_entry.title.present? ? parsed_entry.title[0...191] : 'Utan titel'
       entry.summary        = parsed_entry.summary
       entry.count_comments = parsed_entry.count_comments
       entry.image          = parsed_entry.image
