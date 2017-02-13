@@ -24,6 +24,15 @@ class Feed < ActiveRecord::Base
     end
   end
 
+  after_update :delete_stale_feed_entries
+
+  def delete_stale_feed_entries
+    # Remove feed entries that isn't in the feed anymore
+    if APP_CONFIG['feed_worker']['purge_stale_entries']
+      FeedEntry.where(feed_id: id).where.not(id: fresh_feed_entries.map(&:id)).delete_all
+    end
+  end
+
   def fetch_and_parse
     fix_url
     begin
@@ -70,13 +79,7 @@ class Feed < ActiveRecord::Base
     self.etag             = @parsed_feed.etag
     self.recent_skips     = 0
     self.recent_failures  = 0
-    if APP_CONFIG['feed_worker']['purge_stale_entries']
-      # Delete all feed entries for the feed not in current fetched feed (=)
-      self.feed_entries = fresh_feed_entries
-    else
-      # Add to existing feed entries (<<)
-      self.feed_entries << fresh_feed_entries
-    end
+    self.feed_entries << fresh_feed_entries
   end
 
   # Delete feed_entries, fetch, parse and save
