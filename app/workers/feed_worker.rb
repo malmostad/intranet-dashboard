@@ -1,13 +1,4 @@
 class FeedWorker
-
-  CATEGORIES = {
-    "news" => "nyheter",
-    "dialog" => "diskussioner",
-    "feature" => "tema",
-    "maintenance_warnings" => "driftsmeddelanden",
-    "my_own" => "användare"
-  }
-
   # Called by a background job to update feeds
   # Most of the code are conditionals for counters for statistics
   def self.update(feeds, options = {})
