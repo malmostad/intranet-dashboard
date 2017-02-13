@@ -27,6 +27,8 @@ class FeedWorker
         succeded_feeds << feed
       end
 
+      feed.delete_stale_feed_entries
+
       # Save the chunk of fetched feeds
       succeded_feeds.each do |succeded_feed|
         succeeded += 1
@@ -41,7 +43,7 @@ class FeedWorker
         failed_feed.total_failures += 1
         failed_feed.save(validate: false)
       end
-      sleep options[:feed_pause] || 10
+      sleep options[:feed_pause] || 1
     end
 
     # Log stats
