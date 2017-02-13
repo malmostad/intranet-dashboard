@@ -24,13 +24,6 @@ class Feed < ActiveRecord::Base
     end
   end
 
-  after_update do
-    # Remove feed entries that wasn't in the feed anymore
-    if APP_CONFIG['purge_stale_feed_entries'] && feed_entries.present?
-      FeedEntry.where(feed_id: id).where.not(id: feed_entries.map(&:id)).destroy_all
-    end
-  end
-
   def fetch_and_parse
     fix_url
     begin
@@ -54,7 +47,7 @@ class Feed < ActiveRecord::Base
   def fresh_feed_entries
     @parsed_feed.entries.map do |parsed_entry|
       # Don't store enties that are more than max_age old
-      next if parsed_entry.published > APP_CONFIG['feed_worker']['max_age'].days.ago
+      next if parsed_entry.published < APP_CONFIG['feed_worker']['max_age'].days.ago
 
       entry = FeedEntry.where(guid: parsed_entry.entry_id, feed_id: id).first_or_initialize
       entry.published      = parsed_entry.published
@@ -66,18 +59,24 @@ class Feed < ActiveRecord::Base
       entry.image_medium   = parsed_entry.image_medium
       entry.image_large    = parsed_entry.image_large
       entry
-    end
+    end.compact
   end
 
   def map_feed_attributes
-    self.title            =  @parsed_feed.title.present? ? @parsed_feed.title[0...191] : 'Utan titel'
-    self.url              =  @parsed_feed.url
-    self.fetched_at       =  Time.now
-    self.last_modified    =  @parsed_feed.last_modified
-    self.etag             =  @parsed_feed.etag
-    self.recent_skips     =  0
-    self.recent_failures  =  0
-    self.feed_entries     << fresh_feed_entries
+    self.title            = @parsed_feed.title.present? ? @parsed_feed.title[0...191] : 'Utan titel'
+    self.url              = @parsed_feed.url
+    self.fetched_at       = Time.now
+    self.last_modified    = @parsed_feed.last_modified
+    self.etag             = @parsed_feed.etag
+    self.recent_skips     = 0
+    self.recent_failures  = 0
+    if APP_CONFIG['feed_worker']['purge_stale_entries']
+      # Delete all feed entries for the feed not in current fetched feed (=)
+      self.feed_entries = fresh_feed_entries
+    else
+      # Add to existing feed entries (<<)
+      self.feed_entries << fresh_feed_entries
+    end
   end
 
   # Delete feed_entries, fetch, parse and save
