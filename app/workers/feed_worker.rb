@@ -5,6 +5,8 @@ class FeedWorker
     started_at = Time.now.to_f
     failed = succeeded = not_modified = penalized = 0
 
+    # feeds = Feed.where(category: ["news", "feature", "maintenance_warnings"])
+
     # Process feeds in shuffled order in smaller chunks
     feeds.shuffle.each do |feed|
       succeded_feeds = []
