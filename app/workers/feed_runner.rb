@@ -1,13 +1,4 @@
-class FeedWorker
-
-  CATEGORIES = {
-    "news" => "nyheter",
-    "dialog" => "diskussioner",
-    "feature" => "tema",
-    "maintenance_warnings" => "driftsmeddelanden",
-    "my_own" => "användare"
-  }
-
+class FeedRunner
   # Called by a background job to update feeds
   # Most of the code are conditionals for counters for statistics
   def self.update(feeds, options = {})
@@ -48,7 +39,7 @@ class FeedWorker
         failed_feed.total_failures += 1
         failed_feed.save(validate: false)
       end
-      sleep options[:feed_pause] || 10
+      sleep options[:feed_pause] || 1
     end
 
     # Log stats

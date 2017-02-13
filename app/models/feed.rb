@@ -53,6 +53,9 @@ class Feed < ActiveRecord::Base
   # Create or update feed entries for the feed
   def fresh_feed_entries
     @parsed_feed.entries.map do |parsed_entry|
+      # Don't store enties that are more than max_age old
+      next if parsed_entry.published > APP_CONFIG['feed_worker']['max_age'].days.ago
+
       entry = FeedEntry.where(guid: parsed_entry.entry_id, feed_id: id).first_or_initialize
       entry.published      = parsed_entry.published
       entry.url            = parsed_entry.url
