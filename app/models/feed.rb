@@ -21,15 +21,23 @@ class Feed < ActiveRecord::Base
     # Fetch and parse feed, to get appropriate validation messages
     if fetch_and_parse
       map_feed_attributes
+      self.feed_entries << fresh_feed_entries
     end
   end
 
   after_update :delete_stale_feed_entries
 
+  # Remove feed entries for the feed not qualified:
+  #   1. isn't in the feed file anymore
+  #   2. is older than max_age
   def delete_stale_feed_entries
-    # Remove feed entries that isn't in the feed anymore
-    if APP_CONFIG['feed_worker']['purge_stale_entries']
-      FeedEntry.where(feed_id: id).where.not(id: fresh_feed_entries.map(&:id)).delete_all
+    begin
+      if APP_CONFIG['feed_worker']['purge_stale_entries'] && fresh_feed_entries.is_a?(Array)
+        FeedEntry.where(feed_id: id).where.not(id: fresh_feed_entries.map(&:id)).delete_all
+      end
+    rescue Exception => e
+      logger.info "Failed to delete_stale_feed_entries: #{e}. Feed id: #{id}, #{feed_url}"
+      logger.info e.backtrace.join("\n")
     end
   end
 
@@ -37,9 +45,9 @@ class Feed < ActiveRecord::Base
     fix_url
     begin
       @parsed_feed = Feedjira::Feed.fetch_and_parse(feed_url, http_options)
-      if @parsed_feed === 304
+      if @parsed_feed == 304
         false
-      elsif @parsed_feed.is_a?(Fixnum) || @parsed_feed.blank?
+      elsif @parsed_feed.is_a?(Integer) || @parsed_feed.blank?
         errors.add(:feed_url, "Flödet kunde inte hämtas eller var ogiltigt. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
         false
       else
@@ -48,27 +56,29 @@ class Feed < ActiveRecord::Base
     rescue Exception => e
       errors.add(:feed_url, "Flödet kunde inte hämtas eller var ogiltigt. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
       logger.info "Feedjira: #{e}. Feed id: #{id}, #{feed_url}"
+      logger.info e.backtrace.join("\n")
       false
     end
   end
 
   # Create or update feed entries for the feed
   def fresh_feed_entries
-    @parsed_feed.entries.map do |parsed_entry|
-      # Don't store enties that are more than max_age old
-      next if parsed_entry.published < APP_CONFIG['feed_worker']['max_age'].days.ago
+    @_fresh_feed_entries ||=
+      @parsed_feed.entries.map do |parsed_entry|
+        # Don't store enties that are more than max_age old
+        next if parsed_entry.published < APP_CONFIG['feed_worker']['max_age'].days.ago
 
-      entry = FeedEntry.where(guid: parsed_entry.entry_id, feed_id: id).first_or_initialize
-      entry.published      = parsed_entry.published
-      entry.url            = parsed_entry.url
-      entry.title          = parsed_entry.title.present? ? parsed_entry.title[0...191] : 'Utan titel'
-      entry.summary        = parsed_entry.summary
-      entry.count_comments = parsed_entry.count_comments
-      entry.image          = parsed_entry.image
-      entry.image_medium   = parsed_entry.image_medium
-      entry.image_large    = parsed_entry.image_large
-      entry
-    end.compact
+        entry = FeedEntry.where(guid: parsed_entry.entry_id, feed_id: id).first_or_initialize
+        entry.published      = parsed_entry.published
+        entry.url            = parsed_entry.url
+        entry.title          = parsed_entry.title.present? ? parsed_entry.title[0...191] : 'Utan titel'
+        entry.summary        = parsed_entry.summary
+        entry.count_comments = parsed_entry.count_comments
+        entry.image          = parsed_entry.image
+        entry.image_medium   = parsed_entry.image_medium
+        entry.image_large    = parsed_entry.image_large
+        entry
+      end.compact
   end
 
   def map_feed_attributes
@@ -79,7 +89,6 @@ class Feed < ActiveRecord::Base
     self.etag             = @parsed_feed.etag
     self.recent_skips     = 0
     self.recent_failures  = 0
-    self.feed_entries << fresh_feed_entries
   end
 
   # Delete feed_entries, fetch, parse and save
@@ -124,7 +133,7 @@ class Feed < ActiveRecord::Base
         ssl_verify_peer: false,
         ssl_verify_host: false
       }
-      options[:if_none_match] = etag if etag?
+      # options[:if_none_match] = etag if etag? # unreliable with apache+wordpress
       options[:if_modified_since] = last_modified if last_modified?
       options
     end
