@@ -27,8 +27,10 @@ class FeedWorker
           succeeded += 1
           feed.map_feed_attributes
           feed.feed_entries << feed.fresh_feed_entries
-          feed.map_feed_attributes
-          feed.save(validate: false)
+          unless feed.fresh_feed_entries.blank?
+            feed.map_feed_attributes
+            feed.save(validate: false)
+          end
         end
       rescue Exception => e
         Rails.logger.error "#{e}. Feed id: #{feed.id}, #{feed.feed_url}. Backtrace:"

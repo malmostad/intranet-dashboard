@@ -32,8 +32,10 @@ class Feed < ActiveRecord::Base
   #   2. is older than max_age
   def delete_stale_feed_entries
     begin
-      if APP_CONFIG['feed_worker']['purge_stale_entries'] && fresh_feed_entries.is_a?(Array)
-        FeedEntry.where(feed_id: id).where.not(id: fresh_feed_entries.map(&:id)).delete_all
+      if APP_CONFIG['feed_worker']['purge_stale_entries'] &&
+          feed_entries.is_a?(FeedEntry::ActiveRecord_Associations_CollectionProxy) &&
+          !feed_entries.size.zero?
+        FeedEntry.where(feed_id: id).where.not(id: feed_entries.map(&:id)).delete_all
       end
     rescue Exception => e
       logger.info "Failed to delete_stale_feed_entries: #{e}. Feed id: #{id}, #{feed_url}"
@@ -63,6 +65,7 @@ class Feed < ActiveRecord::Base
 
   # Create or update feed entries for the feed
   def fresh_feed_entries
+    return [] if @parsed_feed.blank?
     @_fresh_feed_entries ||=
       @parsed_feed.entries.map do |parsed_entry|
         # Don't store enties that are more than max_age old
