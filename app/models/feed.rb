@@ -28,17 +28,15 @@ class Feed < ActiveRecord::Base
   def fetch_and_parse
     fix_url
     response = fetch_feed
-    if response.present?
-      begin
-        @parsed_feed = Feedjira::Feed.parse(response)
-        true
-      rescue Exception => e
-        errors.add(:feed_url, "Flödet kunde inte tolkas. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
-        logger.info "Feedjira: #{e}. Feed id: #{id}, #{feed_url}"
-        logger.debug e.backtrace.join("\n")
-        false
-      end
-    else
+    return false unless response
+
+    begin
+      @parsed_feed = Feedjira::Feed.parse(response)
+      true
+    rescue Exception => e
+      errors.add(:feed_url, "Flödet kunde inte tolkas. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
+      logger.info "Feedjira: #{e}. Feed id: #{id}, #{feed_url}"
+      logger.debug e.backtrace.join("\n")
       false
     end
   end
@@ -141,8 +139,9 @@ class Feed < ActiveRecord::Base
           self.last_modified = response.env.response_headers[:last_modified]
           self.etag          = response.env.response_headers[:etag]
           return response.body
-        elsif !response.status =~ /^[23]/
+        elsif !(response.status.to_s =~ /^[23]/)
           errors.add(:feed_url, "Flödet kunde inte hämtas. Kontrollera att adressen är korrekt.")
+          logger.warn "Faraday response.status: #{response.status}"
           return false
         else
           return false
