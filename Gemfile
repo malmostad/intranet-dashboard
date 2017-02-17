@@ -11,7 +11,7 @@ gem 'coffee-rails', '4.2.1'
 gem 'uglifier', '3.0.4'
 
 gem 'nokogiri', '1.7.0.1'
-gem 'feedjira', '1.6.0' # 2.0 has breaking changes not documented
+gem 'feedjira', '2.1.0'
 gem 'savon', '2.11.1'
 gem 'siteseeker_normalizer', '0.1.6'
 

@@ -93,7 +93,6 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.4)
-    curb (0.9.3)
     daemons (1.2.4)
     daemons-rails (1.2.1)
       daemons
@@ -129,10 +128,13 @@ GEM
       railties (>= 3.0.0)
     faraday (0.11.0)
       multipart-post (>= 1.2, < 3)
-    feedjira (1.6.0)
-      curb (~> 0.8)
-      loofah (~> 2.0)
-      sax-machine (~> 1.0)
+    faraday_middleware (0.11.0.1)
+      faraday (>= 0.7.4, < 1.0)
+    feedjira (2.1.0)
+      faraday (>= 0.9)
+      faraday_middleware (>= 0.9)
+      loofah (>= 2.0)
+      sax-machine (>= 1.0)
     ffi (1.9.17)
     formatador (0.2.5)
     globalid (0.3.7)
@@ -379,7 +381,7 @@ DEPENDENCIES
   elasticsearch-rails (= 0.1.9)
   execjs
   factory_girl_rails
-  feedjira (= 1.6.0)
+  feedjira (= 2.1.0)
   guard-rspec
   haml (= 4.0.7)
   haml-rails
