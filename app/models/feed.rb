@@ -25,24 +25,6 @@ class Feed < ActiveRecord::Base
     end
   end
 
-  after_update :delete_stale_feed_entries
-
-  # Remove feed entries for the feed not qualified:
-  #   1. isn't in the feed file anymore
-  #   2. is older than max_age
-  def delete_stale_feed_entries
-    begin
-      if APP_CONFIG['feed_worker']['purge_stale_entries'] &&
-          feed_entries.is_a?(FeedEntry::ActiveRecord_Associations_CollectionProxy) &&
-          !feed_entries.size.zero?
-        FeedEntry.where(feed_id: id).where.not(id: feed_entries.map(&:id)).delete_all
-      end
-    rescue Exception => e
-      logger.info "Failed to delete_stale_feed_entries: #{e}. Feed id: #{id}, #{feed_url}"
-      logger.info e.backtrace.join("\n")
-    end
-  end
-
   def fetch_and_parse
     fix_url
     begin
@@ -101,6 +83,23 @@ class Feed < ActiveRecord::Base
     self.etag = nil
     self.last_modified = nil
     self.save
+  end
+
+  # Remove feed entries for the feed not qualified:
+  #   1. isn't in the feed file anymore
+  #   2. is older than max_age
+  def delete_stale_feed_entries
+    begin
+      if APP_CONFIG['feed_worker']['purge_stale_entries']
+        # feed_entries.is_a?(FeedEntry::ActiveRecord_Associations_CollectionProxy) &&
+        # !feed_entries.size.zero?
+        # FeedEntry.where(feed_id: id).where.not(id: feed_entries.map(&:id)).delete_all
+          FeedEntry.where(feed_id: id).where.not(id: fresh_feed_entries.map(&:id)).delete_all
+      end
+    rescue Exception => e
+      logger.info "Failed to delete_stale_feed_entries: #{e}. Feed id: #{id}, #{feed_url}"
+      logger.info e.backtrace.join("\n")
+    end
   end
 
   private
