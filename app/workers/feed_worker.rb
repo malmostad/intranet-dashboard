@@ -17,7 +17,8 @@ class FeedWorker
 
         feed.fetch_and_parse
 
-        if feed.response_status.blank?
+        # Treat everything except 2xx and 3xx as an error
+        if !(feed.response_status.to_s =~ /^[23]/)
           failed += 1
           feed.update_attribute(:recent_failures, feed.recent_failures + 1)
           feed.update_attribute(:total_failures, feed.total_failures + 1)

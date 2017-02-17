@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# News feeds
 class Feed < ActiveRecord::Base
   attr_accessible :title, :feed_url, :category, :role_ids
   attr_reader :response_status
@@ -85,9 +82,6 @@ class Feed < ActiveRecord::Base
   def delete_stale_feed_entries
     begin
       if APP_CONFIG['feed_worker']['purge_stale_entries']
-        # feed_entries.is_a?(FeedEntry::ActiveRecord_Associations_CollectionProxy) &&
-        # !feed_entries.size.zero?
-        # FeedEntry.where(feed_id: id).where.not(id: feed_entries.map(&:id)).delete_all
           FeedEntry.where(feed_id: id).where.not(id: fresh_feed_entries.map(&:id)).delete_all
       end
     rescue Exception => e
@@ -97,6 +91,39 @@ class Feed < ActiveRecord::Base
   end
 
   private
+    def fetch_feed
+      begin
+        faraday = Faraday.new do |connection|
+          connection.use FaradayMiddleware::FollowRedirects, limit: 5
+          connection.adapter :net_http
+          connection.options[:timeout] = 5
+          connection.ssl[:verify] = false
+          if last_modified.present?
+            connection.headers[:if_modified_since] = last_modified.httpdate
+          end
+        end
+        response = faraday.get(URI.encode(feed_url))
+        @response_status = response.status
+
+        if response.status == 200 && response.body.present?
+          self.last_modified = response.env.response_headers[:last_modified]
+          self.etag = response.env.response_headers[:etag]
+          return response.body
+        elsif !(response.status.to_s =~ /^[23]/)
+          errors.add(:feed_url, "Flödet kunde inte hämtas. Kontrollera att adressen är korrekt.")
+          logger.warn "Faraday response.status: #{response.status}"
+          return false
+        else
+          return false
+        end
+      rescue Exception => e
+        errors.add(:feed_url, "Flödet kunde inte hämtas. Kontrollera att adressen är korrekt.")
+        logger.warn "Faraday: #{e}. Feed id: #{id}, #{feed_url}"
+        logger.debug e.backtrace.join("\n")
+        false
+      end
+    end
+
     # Pre-parsing and fixing of a feed url, manipulate it for some special cases
     def fix_url
       # Remove Safari’s pseudo protocol
@@ -118,39 +145,6 @@ class Feed < ActiveRecord::Base
       # Add http:// if not there. Allow file:// for specs
       else
         self.feed_url = "http://#{feed_url}" unless feed_url.match(/^(https?|file):\/\//)
-      end
-    end
-
-    def fetch_feed
-      begin
-        faraday = Faraday.new do |connection|
-          connection.use FaradayMiddleware::FollowRedirects, limit: 5
-          connection.adapter :net_http
-          connection.options[:timeout] = 5
-          connection.ssl[:verify] = false
-          if last_modified.present?
-            connection.headers[:if_modified_since] = last_modified.to_s
-          end
-        end
-        response = faraday.get(feed_url)
-        @response_status = response.status
-
-        if response.status == 200 && response.body.present?
-          self.last_modified = response.env.response_headers[:last_modified]
-          self.etag          = response.env.response_headers[:etag]
-          return response.body
-        elsif !(response.status.to_s =~ /^[23]/)
-          errors.add(:feed_url, "Flödet kunde inte hämtas. Kontrollera att adressen är korrekt.")
-          logger.warn "Faraday response.status: #{response.status}"
-          return false
-        else
-          return false
-        end
-      rescue Exception => e
-        errors.add(:feed_url, "Flödet kunde inte hämtas. Kontrollera att adressen är korrekt.")
-        logger.warn "Faraday: #{e}. Feed id: #{id}, #{feed_url}"
-        logger.debug e.backtrace.join("\n")
-        false
       end
     end
 end
