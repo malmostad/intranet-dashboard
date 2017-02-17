@@ -7,8 +7,6 @@
     = f.text_field :feed_url, class: "form-control"
     - @feed.errors[:feed_url].each do |msg|
       .help-block.warning= "#{msg}"
-    - if @feed.errors.messages[:feed_entries].present?
-      .help-block.warning= "Flödet kunde inte tolkas."
 
     .help-block
       = 'Du kan lägga till följande typer:'
