@@ -17,13 +17,13 @@ class FeedWorker
 
         feed.fetch_and_parse
 
-        if feed.parsed_feed === 304
-          not_modified += 1
-        elsif feed.parsed_feed.is_a?(Integer) || feed.parsed_feed.blank?
+        if feed.response_status.blank?
           failed += 1
           feed.update_attribute(:recent_failures, feed.recent_failures + 1)
           feed.update_attribute(:total_failures, feed.total_failures + 1)
-        else
+        elsif feed.response_status == 304
+          not_modified += 1
+        elsif feed.response_status == 200
           succeeded += 1
           feed.map_feed_attributes
           feed.feed_entries << feed.fresh_feed_entries
@@ -32,7 +32,7 @@ class FeedWorker
         end
       rescue Exception => e
         Rails.logger.error "#{e}. Feed id: #{feed.id}, #{feed.feed_url}. Backtrace:"
-        Rails.logger.error e.backtrace.join("\n")
+        Rails.logger.debug e.backtrace.join("\n")
       end
 
       sleep options[:feed_pause] || 1

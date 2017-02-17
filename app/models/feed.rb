@@ -3,7 +3,7 @@
 # News feeds
 class Feed < ActiveRecord::Base
   attr_accessible :title, :feed_url, :category, :role_ids
-  attr_reader :parsed_feed
+  attr_reader :response_status
 
   CATEGORIES = {
     "news" => "nyheter",
@@ -27,20 +27,18 @@ class Feed < ActiveRecord::Base
 
   def fetch_and_parse
     fix_url
-    begin
-      @parsed_feed = Feedjira::Feed.fetch_and_parse(feed_url, http_options)
-      if @parsed_feed == 304
-        false
-      elsif @parsed_feed.is_a?(Integer) || @parsed_feed.blank?
-        errors.add(:feed_url, "Flödet kunde inte hämtas eller var ogiltigt. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
-        false
-      else
+    response = fetch_feed
+    if response.present?
+      begin
+        @parsed_feed = Feedjira::Feed.parse(response)
         true
+      rescue Exception => e
+        errors.add(:feed_url, "Flödet kunde inte tolkas. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
+        logger.info "Feedjira: #{e}. Feed id: #{id}, #{feed_url}"
+        logger.debug e.backtrace.join("\n")
+        false
       end
-    rescue Exception => e
-      errors.add(:feed_url, "Flödet kunde inte hämtas eller var ogiltigt. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
-      logger.info "Feedjira: #{e}. Feed id: #{id}, #{feed_url}"
-      logger.info e.backtrace.join("\n")
+    else
       false
     end
   end
@@ -70,8 +68,6 @@ class Feed < ActiveRecord::Base
     self.title            = @parsed_feed.title.present? ? @parsed_feed.title[0...191] : 'Utan titel'
     self.url              = @parsed_feed.url
     self.fetched_at       = Time.now
-    self.last_modified    = @parsed_feed.last_modified
-    self.etag             = @parsed_feed.etag
     self.recent_skips     = 0
     self.recent_failures  = 0
   end
@@ -98,7 +94,7 @@ class Feed < ActiveRecord::Base
       end
     rescue Exception => e
       logger.info "Failed to delete_stale_feed_entries: #{e}. Feed id: #{id}, #{feed_url}"
-      logger.info e.backtrace.join("\n")
+      logger.debug e.backtrace.join("\n")
     end
   end
 
@@ -127,16 +123,35 @@ class Feed < ActiveRecord::Base
       end
     end
 
-    def http_options
-      options = {
-        timeout: 5,
-        compress: true,
-        nosignal: true,
-        ssl_verify_peer: false,
-        ssl_verify_host: false
-      }
-      # options[:if_none_match] = etag if etag? # unreliable with apache+wordpress
-      options[:if_modified_since] = last_modified if last_modified?
-      options
+    def fetch_feed
+      begin
+        faraday = Faraday.new do |connection|
+          connection.use FaradayMiddleware::FollowRedirects, limit: 5
+          connection.adapter :net_http
+          connection.options[:timeout] = 5
+          connection.ssl[:verify] = false
+          if last_modified.present?
+            connection.headers[:if_modified_since] = last_modified.to_s
+          end
+        end
+        response = faraday.get(feed_url)
+        @response_status = response.status
+
+        if response.status == 200 && response.body.present?
+          self.last_modified = response.env.response_headers[:last_modified]
+          self.etag          = response.env.response_headers[:etag]
+          return response.body
+        elsif !response.status =~ /^[23]/
+          errors.add(:feed_url, "Flödet kunde inte hämtas. Kontrollera att adressen är korrekt.")
+          return false
+        else
+          return false
+        end
+      rescue Exception => e
+        errors.add(:feed_url, "Flödet kunde inte hämtas. Kontrollera att adressen är korrekt.")
+        logger.warn "Faraday: #{e}. Feed id: #{id}, #{feed_url}"
+        logger.debug e.backtrace.join("\n")
+        false
+      end
     end
 end
