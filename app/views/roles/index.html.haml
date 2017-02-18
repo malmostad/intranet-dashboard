@@ -14,7 +14,7 @@
           %td= link_to role.name, edit_role_path(role)
           %td.secondary= Role::CATEGORIES[role.category]
           %td.secondary= role.users.count
-          %td.delete= link_to "Radera", role, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-sm"
+          %td.delete= link_to "Radera", role, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
       %tr
         %td{ colspan: 3 }

@@ -24,7 +24,7 @@
               %td.secondary= Feed::CATEGORIES[feed.category]
             %td.secondary{ class: feed.recent_failures > 0 ? "error" : "success" }= feed.recent_failures
             %td.secondary= feed.total_failures
-            %td.delete= link_to "Radera", feed, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-sm"
+            %td.delete= link_to "Radera", feed, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
         %tr
           %td{ colspan: 3 }
