@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 namespace :users do
   desc "Update all user profiles from LDAP"
   task update_profiles: :environment do
