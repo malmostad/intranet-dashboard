@@ -1,3 +1,4 @@
+# A run once task
 desc "Migrate group contacts from MalmoAut export"
 task migrate_group_contacts: :environment do
 

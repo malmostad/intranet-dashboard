@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 namespace :phone_numbers do
   desc 'Check suspect formatting of phone numbers'
   task formatting: :environment do
