@@ -3,32 +3,40 @@ class Feed < ActiveRecord::Base
   attr_reader :response_status
 
   CATEGORIES = {
-    "news" => "nyheter",
-    "dialog" => "diskussioner",
-    "feature" => "tema",
-    "maintenance_warnings" => "driftsmeddelanden",
-    "my_own" => "användare"
-  }
+    'news' => 'nyheter',
+    'dialog' => 'diskussioner',
+    'feature' => 'tema',
+    'maintenance_warnings' => 'driftsmeddelanden',
+    'my_own' => 'användare'
+  }.freeze
 
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :users
   has_many :feed_entries, dependent: :destroy
 
+  # Auto-initiate the feed fetch and parsing process on create and update
+  #   to get appropriate validation messages
   before_validation do
-    # Fetch and parse feed, to get appropriate validation messages
     if fetch_and_parse
       map_feed_attributes
       self.feed_entries << fresh_feed_entries
     end
   end
 
+  # Fetch and parse a feed
+  # Returns boolean
   def fetch_and_parse
     fix_url
-    response = fetch_feed
+    response = fetch
     return false unless response
+    parse(response)
+  end
 
+  # Parse the fetched feed file
+  # Returns boolean and adds valdition errors
+  def parse(xml)
     begin
-      @parsed_feed = Feedjira::Feed.parse(response)
+      @parsed_feed = Feedjira::Feed.parse(xml)
       true
     rescue Exception => e
       errors.add(:feed_url, "Flödet kunde inte tolkas. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
@@ -67,22 +75,13 @@ class Feed < ActiveRecord::Base
     self.recent_failures  = 0
   end
 
-  # Delete feed_entries, fetch, parse and save
-  def refresh_entries
-    feed_entries.delete_all
-    self.fetched_at = nil
-    self.etag = nil
-    self.last_modified = nil
-    self.save
-  end
-
-  # Remove feed entries for the feed not qualified:
-  #   1. isn't in the feed file anymore
-  #   2. is older than max_age
+  # Remove feed entries from the feed when not qualified, either:
+  #   * isn't in the feed file anymore
+  #   * is older than max_age
   def delete_stale_feed_entries
     begin
       if APP_CONFIG['feed_worker']['purge_stale_entries']
-          FeedEntry.where(feed_id: id).where.not(id: fresh_feed_entries.map(&:id)).delete_all
+        FeedEntry.where(feed_id: id).where.not(id: fresh_feed_entries.map(&:id)).delete_all
       end
     rescue Exception => e
       logger.info "Failed to delete_stale_feed_entries: #{e}. Feed id: #{id}, #{feed_url}"
@@ -90,13 +89,29 @@ class Feed < ActiveRecord::Base
     end
   end
 
+  # Delete feed entries for a feed. Fetch, parse and reset HTTP metadata
+  def refresh_entries
+    feed_entries.delete_all
+    self.etag = nil
+    self.last_modified = nil
+    self.save
+  end
+
   private
-    def fetch_feed
+    # The HTTP fetching part for feeds.
+    # Use Faraday directelty to handle HTTP caching, timeout and redirection
+    #
+    # Adds a validation error if fetching goes wrong
+    #
+    # Returns the feed as a string or false if it wasn't changed or if something failed
+    # The HTTP response code is set in @response_status
+    def fetch
+      err_msg = 'Flödet kunde inte hämtas. Kontrollera att adressen är korrekt.'
       begin
         faraday = Faraday.new do |connection|
           connection.use FaradayMiddleware::FollowRedirects, limit: 5
           connection.adapter :net_http
-          connection.options[:timeout] = 5
+          connection.options[:timeout] = 10
           connection.ssl[:verify] = false
           if last_modified.present?
             connection.headers[:if_modified_since] = last_modified.httpdate
@@ -110,15 +125,15 @@ class Feed < ActiveRecord::Base
           self.etag = response.env.response_headers[:etag]
           return response.body
         elsif !(response.status.to_s =~ /^[23]/)
-          errors.add(:feed_url, "Flödet kunde inte hämtas. Kontrollera att adressen är korrekt.")
-          logger.warn "Faraday response.status: #{response.status}"
+          errors.add(:feed_url, err_msg)
+          logger.info "Faraday response.status: #{response.status}"
           return false
         else
           return false
         end
       rescue Exception => e
-        errors.add(:feed_url, "Flödet kunde inte hämtas. Kontrollera att adressen är korrekt.")
-        logger.warn "Faraday: #{e}. Feed id: #{id}, #{feed_url}"
+        errors.add(:feed_url, err_msg)
+        logger.info "Faraday: #{e}. Feed id: #{id}, #{feed_url}"
         logger.debug e.backtrace.join("\n")
         false
       end
