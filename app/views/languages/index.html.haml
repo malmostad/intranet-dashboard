@@ -12,7 +12,7 @@
         %tr
           %td= link_to language.name, edit_language_path(language)
           %td= link_to "Visa", users_tags_path(language: language.name)
-          %td.delete= link_to "Radera", language, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-sm"
+          %td.delete= link_to "Radera", language, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
       %tr
         %td{ colspan: 3 }

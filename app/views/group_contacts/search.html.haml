@@ -20,7 +20,7 @@
             %td= group_contact.email
             %td.delete
               - if admin?
-                = link_to "Radera", group_contact, :method => :delete, :data => { :confirm => 'Är du säker?' }, class: "btn btn-danger btn-sm"
+                = link_to "Radera", group_contact, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
         %tr
           %td{ colspan: 3 }
             .actions= link_to "Lägg till", new_group_contact_path, class: "btn btn-primary"

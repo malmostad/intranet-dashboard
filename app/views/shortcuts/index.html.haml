@@ -12,7 +12,7 @@
         %tr
           %td= link_to shortcut.name, edit_shortcut_path(shortcut)
           %td.secondary= Shortcut::CATEGORIES[shortcut.category]
-          %td.delete= link_to "Radera", shortcut, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-sm"
+          %td.delete= link_to "Radera", shortcut, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
       %tr
         %td{ colspan: 3 }

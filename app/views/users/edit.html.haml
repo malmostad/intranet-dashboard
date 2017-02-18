@@ -96,4 +96,4 @@
     .box-content.basic.form-data
       %section.misc
         %p= "Medarbetaren kommer att raderas permanent från Kontaktboken. Detta går inte att ångra."
-        .delete= link_to "Radera #{@user.first_name} #{@user.last_name} permanent", @user, data: { confirm: 'Är du säker på att du vill radera medarbetaren permanent?', method: :delete }, class: "btn btn-danger btn-default"
+        .delete= link_to "Radera #{@user.first_name} #{@user.last_name} permanent", @user, method: :delete, data: { confirm: 'Är du säker på att du vill radera medarbetaren permanent?' }, class: "btn btn-danger btn-default"
