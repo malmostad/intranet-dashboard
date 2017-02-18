@@ -19,7 +19,7 @@
           - status = feed.recent_failures > 0 ? "error" : "success"
           %td{ class: status }= feed.recent_failures
           %td= feed.total_failures
-          %td.delete= link_to "Radera", my_own_feed_path(feed), data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-sm"
+          %td.delete= link_to "Radera", my_own_feed_path(feed), method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
       %tr
         %td{ colspan: 5 }

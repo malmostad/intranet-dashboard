@@ -19,7 +19,7 @@
           %tr
             %td= link_to activity.name, edit_activity_path(activity)
             %td= link_to "Visa", users_tags_path(activity: activity.name)
-            %td.delete= link_to "Radera", activity, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger btn-sm"
+            %td.delete= link_to "Radera", activity, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger btn-sm"
 
         %tr
           %td{ colspan: 3 }

@@ -15,7 +15,7 @@
       .controls
         = f.submit t( 'actions.save' ), class: "btn btn-primary"
         - unless @skill.new_record?
-          = link_to "Radera", @skill, data: { confirm: 'Är du säker?', method: :delete }, class: "btn btn-danger"
+          = link_to "Radera", @skill, method: :delete, data: { confirm: 'Är du säker?' }, class: "btn btn-danger"
         = link_to t('actions.cancel'), skills_path, class: "btn btn-default"
     - unless @skill.new_record?
       .help-inline= link_to "Slå samman med ...", skills_edit_merge_path(@skill)
