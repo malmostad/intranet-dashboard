@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 namespace :stats do
   task all_users_roles: :environment do
     file = File.open('log/all_users_roles.xls', 'w')
