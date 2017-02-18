@@ -30,9 +30,10 @@ defaults: &defaults
     index: "FILL_IN"
   site_search_autocomplete_url: "http://ACCOUNT.appliance.siteseeker.se/qc/INDEX/qc"
   remember_me_days: 30
-  feed_worker_concurrency: 10
-  feed_worker_batch_pause: 1
-  feed_worker_cycle_pause: 10
+  feed_worker:
+    cycle_pause: 10
+    purge_stale_entries: true
+    max_age: 30 # days
   aastra_cwi:
     username: "FILL_IN"
     password: "FILL_IN"
