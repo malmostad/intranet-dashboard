@@ -25,7 +25,7 @@ class Ldap
     if bind_user.present? && bind_user.first.cn.first.downcase == username
       true
     else
-      Rails.logger.warn "LDAP: #{username} failed to log in. #{@client.get_operation_result}"
+      Rails.logger.info "LDAP: #{username} failed to log in. #{@client.get_operation_result}"
       false
     end
   end
