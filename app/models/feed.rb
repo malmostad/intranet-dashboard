@@ -43,7 +43,7 @@ class Feed < ActiveRecord::Base
       else
         true
       end
-    rescue Exception => e
+    rescue => e
       errors.add(:feed_url, "Flödet kunde inte hämtas eller var ogiltigt. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
       logger.info "Feedjira: #{e}. Feed id: #{id}, #{feed_url}"
       false

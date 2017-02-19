@@ -28,9 +28,9 @@ namespace :users do
             deactivated += 1
           end
         end
-      rescue Exception => e
+      rescue => e
         puts "Error updating user #{user.id}"
-        puts "Exception: #{e}"
+        puts "Error: #{e}"
       end
     end
 
