@@ -38,7 +38,7 @@ class Feed < ActiveRecord::Base
     begin
       @parsed_feed = Feedjira::Feed.parse(xml)
       true
-    rescue Exception => e
+    rescue => e
       errors.add(:feed_url, "Flödet kunde inte tolkas. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
       logger.info "Feedjira: #{e}. Feed id: #{id}, #{feed_url}"
       logger.debug e.backtrace.join("\n")
@@ -131,7 +131,7 @@ class Feed < ActiveRecord::Base
         else
           return false
         end
-      rescue Exception => e
+      rescue => e
         errors.add(:feed_url, err_msg)
         logger.info "Faraday: #{e}. Feed id: #{id}, #{feed_url}"
         logger.debug e.backtrace.join("\n")
