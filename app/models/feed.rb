@@ -96,7 +96,7 @@ class Feed < ActiveRecord::Base
         # FeedEntry.where(feed_id: id).where.not(id: feed_entries.map(&:id)).delete_all
           FeedEntry.where(feed_id: id).where.not(id: fresh_feed_entries.map(&:id)).delete_all
       end
-    rescue Exception => e
+    rescue => e
       logger.info "Failed to delete_stale_feed_entries: #{e}. Feed id: #{id}, #{feed_url}"
       logger.info e.backtrace.join("\n")
     end
