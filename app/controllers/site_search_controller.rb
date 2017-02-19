@@ -14,7 +14,7 @@ class SiteSearchController < ApplicationController
           client.fetch(params.except(:action, :controller))
         end
         @results = SiteseekerNormalizer::Parse.new(raw_results, encoding: "UTF-8")
-      rescue Exception => e
+      rescue => e
         logger.error "Siteseeker: #{e}"
         @error = e
       end
@@ -33,7 +33,7 @@ class SiteSearchController < ApplicationController
       results = Rails.cache.fetch(Digest::SHA1.hexdigest("search-autocomplete-#{params[:q]}"), expires_in: 12.hours) do
         open("#{APP_CONFIG['site_search_autocomplete_url']}?q=#{CGI.escape(params[:q])}&ilang=sv&callback=results", read_timeout: 1).first
       end
-    rescue Exception => e
+    rescue => e
       logger.error "Siteseeker autocomplete: #{e}"
       # Silent error
       results = 'results({})'

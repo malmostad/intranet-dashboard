@@ -83,7 +83,7 @@ class Feed < ActiveRecord::Base
       if APP_CONFIG['feed_worker']['purge_stale_entries']
         FeedEntry.where(feed_id: id).where.not(id: fresh_feed_entries.map(&:id)).delete_all
       end
-    rescue Exception => e
+    rescue => e
       logger.info "Failed to delete_stale_feed_entries: #{e}. Feed id: #{id}, #{feed_url}"
       logger.debug e.backtrace.join("\n")
     end

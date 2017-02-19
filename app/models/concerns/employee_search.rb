@@ -30,7 +30,7 @@ module EmployeeSearch
       # ES document might already be deleted, so we do not log errors unless debug
       begin
         __elasticsearch__.delete_document
-      rescue Exception => e
+      rescue => e
         logger.debug { "Document could not be deleted: #{e}" }
       end
     end
@@ -76,7 +76,7 @@ module EmployeeSearch
           total: response.results.total,
           took: response.took
         }
-      rescue Exception => e
+      rescue => e
         logger.error "Elasticsearch: #{e}"
         false
       end
@@ -86,7 +86,7 @@ module EmployeeSearch
       begin
         response = __elasticsearch__.search fuzzy_query(query, 0, 10)
         response.map(&:_source)
-      rescue Exception => e
+      rescue => e
         logger.error "Elasticsearch: #{e}"
         false
       end

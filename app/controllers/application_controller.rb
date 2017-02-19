@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
   end
 
   unless Rails.application.config.consider_all_requests_local
-    rescue_from Exception do |exception|
+    rescue_from StandardError do |exception|
       if exception.is_a?(ArgumentError) && exception.message == "invalid byte sequence in UTF-8"
         # Silent rescue from IE9 UTF-8 url hacking bug, strip query and redirect to requested resource
         logger.warn "<=IE9 UTF-8 bug rescued"
@@ -195,7 +195,7 @@ class ApplicationController < ActionController::Base
   end
 
   def log_response_error(response, exception = "")
-    logger.error "Exception: #{exception}"
+    logger.error "Error: #{exception}"
     logger.error "  Response code: #{response}"
     logger.error "  Full path: #{request.fullpath}"
     logger.error "  User id: #{session[:user_id] ? (session && session[:user_id]) : 'anonymous'}"

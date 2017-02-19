@@ -36,7 +36,7 @@ class FeedWorker
           feed.save(validate: false)
           feed.delete_stale_feed_entries
         end
-      rescue Exception => e
+      rescue => e
         Rails.logger.error "#{e}. Feed id: #{feed.id}, #{feed.feed_url}. Backtrace:"
         Rails.logger.debug e.backtrace.join("\n")
       end
