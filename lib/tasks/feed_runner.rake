@@ -3,7 +3,7 @@ Rails.logger.level = 'info'
 
 namespace :feed_runner do
   namespace :main do
-    desc 'Fetch feeds for the main categories'
+    desc 'Start fetching feeds for the main categories'
     task start: :environment do
       pid = start_runner('main')
 
@@ -14,7 +14,8 @@ namespace :feed_runner do
       end
     end
 
-    task stop: :environment do |t|
+    desc 'Stop fetching feeds for the main categories'
+    task stop: :environment do
       stop_runner('main')
     end
   end
