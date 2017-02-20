@@ -9,14 +9,14 @@ ENV['RAILS_ENV'] ||= "development"
 
 ENV["APP_ROOT"] = File.expand_path(File.dirname(File.dirname(File.dirname(__FILE__))))
 
-script = File.join(ENV["APP_ROOT"], "lib", "daemons", "feed_worker_users" )
+script = File.join(ENV["APP_ROOT"], "lib", "daemons", "feed_worker_users")
 config = {
   dir_mode: :normal,
   dir: "#{ENV["APP_ROOT"]}/log", # `daemons` put log and pid in same dir
   backtrace: true,
   log_output: true,
-  output_logfilename: "feed_worker_users.log",
-  logfilename: "feed_worker_users.log",
+  output_logfilename: "feed_worker_daemon.log",
+  logfilename: "feed_worker_daemon.log",
   monitor: false,
   ontop: false
 }

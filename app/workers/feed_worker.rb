@@ -1,7 +1,10 @@
 class FeedWorker
   # Used for a background job to update feeds
   # Most of the code are conditionals for statistics logging
-  def self.update(feeds = Feed.all, name = 'main', options = {})
+  def self.update(feeds = Feed.all, options = {})
+    worker_logger = Logger.new(File.join(Rails.root, 'log', 'feed_worker.log'))
+    worker_logger.level = Rails.logger.level
+
     started_at = Time.now.to_f
     failed = succeeded = not_modified = penalized = 0
 
@@ -16,10 +19,10 @@ class FeedWorker
         end
 
         # Do the job. HTTP response code is set in feed.response_status
-        feed.fetch_and_parse
+        fetch_and_parsed = feed.fetch_and_parse(worker_logger)
 
         # Treat everything except 2xx and 3xx as an error
-        if !(feed.response_status.to_s =~ /^[23]/)
+        if !fetch_and_parsed || !(feed.response_status.to_s =~ /^[23]/)
           failed += 1
           feed.update_attribute(:recent_failures, feed.recent_failures + 1)
           feed.update_attribute(:total_failures, feed.total_failures + 1)
@@ -37,8 +40,8 @@ class FeedWorker
           feed.delete_stale_feed_entries
         end
       rescue => e
-        Rails.logger.error "#{e}. Feed id: #{feed.id}, #{feed.feed_url}. Backtrace:"
-        Rails.logger.debug e.backtrace.join("\n")
+        worker_logger.error "#{e}. Feed id: #{feed.id}, #{feed.feed_url}"
+        worker_logger.debug e.backtrace.join("\n")
       end
 
       # Take a rest before the next feed is fetched
@@ -46,11 +49,11 @@ class FeedWorker
     end
 
     # Log stats
-    Rails.logger.info "FeedWorker updated feeds in #{(Time.now.to_f - started_at).ceil} seconds."
-    Rails.logger.info "  Updated:      #{succeeded}"
-    Rails.logger.info "  Not modified: #{not_modified}"
-    Rails.logger.info "  Failed:       #{failed}"
-    Rails.logger.info "  Penalized:    #{penalized}"
-    Rails.logger.info "  Total:        #{succeeded + not_modified + failed + penalized}"
+    worker_logger.info "FeedWorker updated feeds in #{(Time.now.to_f - started_at).ceil} seconds."
+    worker_logger.info "  Updated:      #{succeeded}"
+    worker_logger.info "  Not modified: #{not_modified}"
+    worker_logger.info "  Failed:       #{failed}"
+    worker_logger.info "  Penalized:    #{penalized}"
+    worker_logger.info "  Total:        #{succeeded + not_modified + failed + penalized}"
   end
 end

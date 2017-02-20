@@ -19,7 +19,7 @@ namespace :feed_runner do
 
     utils.start_runner
     while(utils.running?) do
-      FeedRunner.update(feeds, feed_pause: feed_pause)
+      FeedWorker.update(feeds, feed_pause: feed_pause)
       sleep 5
     end
   end

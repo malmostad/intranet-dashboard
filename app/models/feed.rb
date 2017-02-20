@@ -25,7 +25,11 @@ class Feed < ActiveRecord::Base
 
   # Fetch and parse a feed
   # Returns boolean
-  def fetch_and_parse
+  def fetch_and_parse(other_logger = false)
+    if other_logger
+      Rails.logger = other_logger
+    end
+
     fix_url
     response = fetch
     return false unless response
@@ -40,8 +44,8 @@ class Feed < ActiveRecord::Base
       true
     rescue => e
       errors.add(:feed_url, "Flödet kunde inte tolkas. Kontrollera att det är ett giltigt RSS- eller Atom-flöde.")
-      logger.info "Feedjira: #{e}. Feed id: #{id}, #{feed_url}"
-      logger.debug e.backtrace.join("\n")
+      Rails.logger.info "Feedjira: #{e}. Feed id: #{id}, #{feed_url}"
+      Rails.logger.debug e.backtrace.join("\n")
       false
     end
   end
@@ -84,8 +88,8 @@ class Feed < ActiveRecord::Base
         FeedEntry.where(feed_id: id).where.not(id: fresh_feed_entries.map(&:id)).delete_all
       end
     rescue => e
-      logger.info "Failed to delete_stale_feed_entries: #{e}. Feed id: #{id}, #{feed_url}"
-      logger.debug e.backtrace.join("\n")
+      Rails.logger.info "Failed to delete_stale_feed_entries: #{e}. Feed id: #{id}, #{feed_url}"
+      Rails.logger.debug e.backtrace.join("\n")
     end
   end
 
@@ -126,15 +130,15 @@ class Feed < ActiveRecord::Base
           return response.body
         elsif !(response.status.to_s =~ /^[23]/)
           errors.add(:feed_url, err_msg)
-          logger.info "Faraday response.status: #{response.status}"
+          Rails.logger.info "Faraday response.status: #{response.status}"
           return false
         else
           return false
         end
       rescue => e
         errors.add(:feed_url, err_msg)
-        logger.info "Faraday: #{e}. Feed id: #{id}, #{feed_url}"
-        logger.debug e.backtrace.join("\n")
+        Rails.logger.info "Faraday: #{e}. Feed id: #{id}, #{feed_url}"
+        Rails.logger.debug e.backtrace.join("\n")
         false
       end
     end
