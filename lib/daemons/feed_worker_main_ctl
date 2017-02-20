@@ -1,20 +1,22 @@
 #!/usr/bin/env ruby
 
 # Run with:
-# $ RAILS_ENV=<env> lib/daemons/feed_worker_ctl start
+# $ RAILS_ENV=<env> lib/daemons/feed_worker_main_ctl start
 
 require "daemons"
 
-ENV['RAILS_ENV'] ||= "production"
+ENV['RAILS_ENV'] ||= "development"
 
 ENV["APP_ROOT"] = File.expand_path(File.dirname(File.dirname(File.dirname(__FILE__))))
 
-script = File.join(ENV["APP_ROOT"], "lib", "daemons", "feed_worker" )
+script = File.join(ENV["APP_ROOT"], "lib", "daemons", "feed_worker_main" )
 config = {
   dir_mode: :normal,
   dir: "#{ENV["APP_ROOT"]}/log", # `daemons` put log and pid in same dir
-  multiple: false,
   backtrace: true,
+  log_output: true,
+  output_logfilename: "feed_worker_main.log",
+  logfilename: "feed_worker_main.log",
   monitor: false,
   ontop: false
 }
