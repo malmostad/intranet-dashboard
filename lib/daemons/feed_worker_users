@@ -6,6 +6,6 @@ Dir.chdir(root)
 require File.join(root, "config", "environment")
 
 loop do
-  FeedWorker.update.(Feed.where(category: 'my_own'), 'users', feed_pause: 5)
+  FeedWorker.update(Feed.where(category: 'my_own'), 'users', feed_pause: 5)
   sleep 5
 end
