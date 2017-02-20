@@ -1,7 +1,7 @@
 class FeedWorker
   # Used for a background job to update feeds
   # Most of the code are conditionals for statistics logging
-  def self.update(feeds = Feed.all, options = {})
+  def self.update(feeds = Feed.all, name = 'main', options = {})
     started_at = Time.now.to_f
     failed = succeeded = not_modified = penalized = 0
 
