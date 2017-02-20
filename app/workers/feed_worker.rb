@@ -2,8 +2,6 @@ class FeedWorker
   # Called by a background job to update feeds
   # Most of the code are conditionals for statistics logging
   def self.update(feeds = Feed.all, name = 'main', options = {})
-    flogger = Logger.new(File.join(Rails.root, 'log', "feed_worker_#{name}.log"))
-
     started_at = Time.now.to_f
     failed = succeeded = not_modified = penalized = 0
 
@@ -33,19 +31,19 @@ class FeedWorker
           feed.delete_stale_feed_entries
         end
       rescue => e
-        flogger.error "#{e}. Feed id: #{feed.id}, #{feed.feed_url}. Backtrace:"
-        flogger.error e.backtrace.join("\n")
+        Rails.logger.error "#{e}. Feed id: #{feed.id}, #{feed.feed_url}. Backtrace:"
+        Rails.logger.error e.backtrace.join("\n")
       end
 
       sleep options[:feed_pause] || 1
     end
 
     # Log stats
-    flogger.info "FeedWorker updated feeds in #{(Time.now.to_f - started_at).ceil} seconds."
-    flogger.info "  Updated:      #{succeeded}"
-    flogger.info "  Not modified: #{not_modified}"
-    flogger.info "  Failed:       #{failed}"
-    flogger.info "  Penalized:    #{penalized}"
-    flogger.info "  Total:        #{succeeded + not_modified + failed + penalized}"
+    Rails.logger.info "FeedWorker updated feeds in #{(Time.now.to_f - started_at).ceil} seconds."
+    Rails.logger.info "  Updated:      #{succeeded}"
+    Rails.logger.info "  Not modified: #{not_modified}"
+    Rails.logger.info "  Failed:       #{failed}"
+    Rails.logger.info "  Penalized:    #{penalized}"
+    Rails.logger.info "  Total:        #{succeeded + not_modified + failed + penalized}"
   end
 end
