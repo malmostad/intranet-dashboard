@@ -12,6 +12,6 @@ end
 
 # Run the FeedWorker
 while($running) do
-  FeedWorker.update
+  FeedWorker.update(Feed.where.not(category: 'my_own'), feed_pause: 1)
   sleep 5
 end
