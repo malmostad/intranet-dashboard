@@ -60,13 +60,6 @@ Dashboard::Application.routes.draw do
   get "/activities/merge/:id" => "activities#edit_merge", as: "activities_edit_merge"
   patch "/activities/merge/:id" => "activities#merge", as: "activities_merge"
 
-
-  # Search service is extracted into its own app
-  # get  "/search" => "site_search#index"
-  # get  "/search/autocomplete" => "site_search#autocomplete", as: "site_search_autocomplete"
-  get  "/search" => redirect("https://komin.malmo.se/sok")
-  get  "/search/autocomplete" => redirect("https://komin.malmo.se/sok"), as: "site_search_autocomplete"
-
   get 'saml/new'
   post 'saml/consume'
   get 'saml/metadata'

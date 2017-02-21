@@ -24,11 +24,6 @@ defaults: &defaults
     authn_context: "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
     username_key: "cn"
   allow_non_ssl_media: false
-  site_search_query_url: "http://ACCOUNT.appliance.siteseeker.se/search/INDEX/"
-  siteseeker:
-    account: "FILL_IN"
-    index: "FILL_IN"
-  site_search_autocomplete_url: "http://ACCOUNT.appliance.siteseeker.se/qc/INDEX/qc"
   remember_me_days: 30
   feed_worker_concurrency: 10
   feed_worker_batch_pause: 1

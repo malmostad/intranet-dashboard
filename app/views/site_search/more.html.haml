@@ -1,5 +1,0 @@
-- if @error.present?
-  .error= "Ett fel inträffade med Euroling Siteseeker (#{@error})"
-- else
-  - cache ["search-results-more", params], :expires_in => 12.hour do
-    = render "results"
