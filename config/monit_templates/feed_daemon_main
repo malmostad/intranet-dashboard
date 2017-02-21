@@ -1,0 +1,9 @@
+check process feed_daemon_main
+    with pidfile /vagrant/log/feed_worker_main.pid
+    start program "/home/vagrant/run_with_rbenv bundle exec ruby /vagrant/lib/daemons/feed_worker_main_ctl start" as uid vagrant and gid vagrant
+    stop program  "/home/vagrant/run_with_rbenv bundle exec ruby /vagrant/lib/daemons/feed_worker_main_ctl stop" as uid vagrant and gid vagrant with timeout 10 seconds
+    if cpu > 60% for 2 cycles then alert
+    if cpu > 80% for 5 cycles then restart
+    if memory usage > 70% for 5 cycles then restart
+    if changed pid 2 times within 60 cycles then alert
+ 

@@ -1,0 +1,9 @@
+check process delayed_job
+    with pidfile /vagrant/tmp/pids/delayed_job.pid
+    start program "/home/vagrant/run_with_rbenv ruby /vagrant/bin/delayed_job start" as uid vagrant and gid vagrant
+    stop program  "/home/vagrant/run_with_rbenv ruby /vagrant/bin/delayed_job stop" as uid vagrant and gid vagrant with timeout 120 seconds
+    if cpu > 60% for 2 cycles then alert
+    if cpu > 80% for 5 cycles then restart
+    if memory usage > 70% for 5 cycles then restart
+    if changed pid 2 times within 60 cycles then alert
+  

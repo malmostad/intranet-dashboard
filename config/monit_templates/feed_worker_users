@@ -1,0 +1,9 @@
+check process feed_worker_user_feeds
+    with pidfile /vagrant/tmp/pids/feed_worker_user_feeds.pid
+    start program "/home/vagrant/run_with_rbenv rake feed_worker:start[user_feeds]" as uid vagrant and gid vagrant
+    stop program  "/home/vagrant/run_with_rbenv rake feed_worker:stop[user_feeds]" as uid vagrant and gid vagrant with timeout 10 seconds
+    if cpu > 60% for 2 cycles then alert
+    if cpu > 80% for 5 cycles then restart
+    if memory usage > 70% for 5 cycles then restart
+    if changed pid 2 times within 60 cycles then alert
+  
