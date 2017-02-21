@@ -30,22 +30,17 @@ class FeedWorker
         # Do the job. HTTP response code is set in feed.response_status
         fetched_and_parsed = feed.fetch_and_parse(worker_logger)
 
-        puts "fetched_and_parsed: #{fetched_and_parsed}"
-        puts "feed.response_status: #{feed.response_status}"
-        puts feed.response_status.class
-        puts (feed.response_status.to_s =~ /^[23]/).class
-
-        # The feed hasn't changed since fetch
-        if feed.response_status == 304
-          not_modified += 1
-
         # The feed was parsed and has changed since last fetch
-        elsif fetched_and_parsed && feed.response_status == 200
+        if fetched_and_parsed && feed.response_status == 200
           succeeded += 1
           feed.map_feed_attributes
           feed.feed_entries << feed.fresh_feed_entries
           feed.save(validate: false)
           feed.delete_stale_feed_entries
+
+        # The feed hasn't changed since fetch
+        elsif feed.response_status == 304
+          not_modified += 1
 
         # The feed failed fetching or parsing
         else
