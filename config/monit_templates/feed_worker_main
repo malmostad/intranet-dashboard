@@ -1,9 +1,8 @@
 check process feed_worker_main_feeds
-    with pidfile /vagrant/tmp/pids/feed_worker_main_feeds.pid
-    start program "/home/vagrant/run_with_rbenv rake feed_worker:start[main_feeds]" as uid vagrant and gid vagrant
-    stop program  "/home/vagrant/run_with_rbenv rake feed_worker:stop[main_feeds" as uid vagrant and gid vagrant with timeout 10 seconds
+    with pidfile /home/app_runner/dashboard/shared/pids/feed_worker_main_feeds.pid
+    start program "/home/app_runner/run_with_rbenv bundle exec rake feed_worker:start[main_feeds]" as uid app_runner and gid app_runner
+    stop program  "/home/app_runner/run_with_rbenv bundle exec rake feed_worker:stop[main_feeds]" as uid app_runner and gid app_runner with timeout 60 seconds
     if cpu > 60% for 2 cycles then alert
     if cpu > 80% for 5 cycles then restart
     if memory usage > 70% for 5 cycles then restart
     if changed pid 2 times within 60 cycles then alert
- 
