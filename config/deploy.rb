@@ -48,10 +48,10 @@ namespace :deploy do
   task :restart_daemons do
     on roles(:all) do
       puts "Restarting daemons, this can take a while..."
-      ror_ruby = "cd #{release_path} && RAILS_ENV=#{fetch(:rails_env).to_s} #{fetch(:rbenv_prefix)} bundle exec ruby"
+      ror_ruby = "cd #{release_path} && RAILS_ENV=#{fetch(:rails_env).to_s} #{fetch(:rbenv_prefix)} bundle exec"
       execute "#{ror_ruby} rake feed_worker:restart[main_feeds]"
-      execute "#{ror_ruby} rake feed_worker:start[user_feeds]"
-      execute "#{ror_ruby} bin/delayed_job restart"
+      execute "#{ror_ruby} rake feed_worker:restart[user_feeds]"
+      execute "#{ror_ruby} ruby bin/delayed_job restart"
     end
   end
 
