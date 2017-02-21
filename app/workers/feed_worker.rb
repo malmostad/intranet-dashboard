@@ -1,12 +1,16 @@
 class FeedWorker
   # Used for a background job to update feeds
   # Most of the code are conditionals for statistics logging
-  def self.update(scope = 'main_feeds')
+  def self.update(scope = 'main_feeds', options = {})
     worker_logger = Logger.new(File.join(Rails.root, 'log', "feed_worker_#{scope}.log"))
     worker_logger.level = Rails.logger.level
 
-    feed_conf = APP_CONFIG['feed_worker']
-    feed_pause = scope == 'main_feeds' ? feed_conf['main_feeds_pause'] : feed_conf['user_feeds_pause']
+    if options[:feed_pause].present?
+      feed_pause = options[:feed_pause]
+    else
+      feed_conf = APP_CONFIG['feed_worker']
+      feed_pause = scope == 'main_feeds' ? feed_conf['main_feeds_pause'] : feed_conf['user_feeds_pause']
+    end
 
     started_at = Time.now.to_f
     failed = succeeded = not_modified = penalized = 0
@@ -24,25 +28,30 @@ class FeedWorker
         end
 
         # Do the job. HTTP response code is set in feed.response_status
-        fetch_and_parsed_succeeded = feed.fetch_and_parse(worker_logger)
+        fetched_and_parsed = feed.fetch_and_parse(worker_logger)
 
-        # Treat everything except 2xx and 3xx as an error
-        if !fetch_and_parsed_succeeded || !(feed.response_status.to_s =~ /^[23]/)
-          failed += 1
-          feed.update_attribute(:recent_failures, feed.recent_failures + 1)
-          feed.update_attribute(:total_failures, feed.total_failures + 1)
+        puts "fetched_and_parsed: #{fetched_and_parsed}"
+        puts "feed.response_status: #{feed.response_status}"
+        puts feed.response_status.class
+        puts (feed.response_status.to_s =~ /^[23]/).class
 
         # The feed hasn't changed since fetch
-        elsif feed.response_status == 304
+        if feed.response_status == 304
           not_modified += 1
 
-        # The feed has changed since fetch
-        elsif feed.response_status == 200
+        # The feed was parsed and has changed since last fetch
+        elsif fetched_and_parsed && feed.response_status == 200
           succeeded += 1
           feed.map_feed_attributes
           feed.feed_entries << feed.fresh_feed_entries
           feed.save(validate: false)
           feed.delete_stale_feed_entries
+
+        # The feed failed fetching or parsing
+        else
+          failed += 1
+          feed.update_attribute(:recent_failures, feed.recent_failures + 1)
+          feed.update_attribute(:total_failures, feed.total_failures + 1)
         end
       rescue => e
         worker_logger.error "#{e}. Feed id: #{feed.id}, #{feed.feed_url}"
