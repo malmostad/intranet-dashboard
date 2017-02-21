@@ -17,6 +17,15 @@ class FeedWorker
 
     feeds = Feed.public_send(scope)
 
+    # Reset the counter recent_failures if all feeds have recent_failures,
+    #   there are probably a network problem
+    if feeds.count == feeds.where.not(recent_failures: 0).count
+      feeds.each do |f|
+        f.update_attribute(:recent_failures, 0)
+      end
+      sleep 60
+    end
+
     # Process feeds in shuffled order
     feeds.shuffle.each do |feed|
       begin
