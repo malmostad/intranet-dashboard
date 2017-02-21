@@ -1,4 +1,4 @@
-class FeedRunnerUtils
+class FeedWorkerUtils
   def initialize(scope)
     @scope = scope
   end
@@ -40,7 +40,7 @@ class FeedRunnerUtils
   end
 
   def pid_file
-    File.join(Rails.root, 'tmp', 'pids', "feed_runner_#{@scope}.pid")
+    File.join(Rails.root, 'tmp', 'pids', "feed_worker_#{@scope}.pid")
   end
 
   def pid
