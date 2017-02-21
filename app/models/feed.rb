@@ -14,6 +14,12 @@ class Feed < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :feed_entries, dependent: :destroy
 
+  # Feeds belonging to users
+  scope :user_feeds, -> { where(category: 'my_own') }
+
+  # Administrated feeds
+  scope :main_feeds, -> { where.not(category: 'my_own') }
+
   # Auto-initiate the feed fetch and parsing process on create and update
   #   to get appropriate validation messages
   before_validation do

@@ -9,17 +9,9 @@ namespace :feed_worker do
   task :start, [:scope] => :environment do |t, args|
     scope, utils = init_scope(args)
 
-    if scope == 'main'
-      feeds = Feed.where.not(category: 'my_own')
-      feed_pause = 1
-    elsif scope == 'users'
-      feeds = Feed.where(category: 'my_own')
-      feed_pause = 5
-    end
-
     utils.start_runner
     while(utils.running?) do
-      FeedWorker.update(feeds, feed_pause: feed_pause)
+      FeedWorker.update(scope)
       sleep 5
     end
   end

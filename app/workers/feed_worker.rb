@@ -1,12 +1,17 @@
 class FeedWorker
   # Used for a background job to update feeds
   # Most of the code are conditionals for statistics logging
-  def self.update(feeds = Feed.all, options = {})
-    worker_logger = Logger.new(File.join(Rails.root, 'log', 'feed_worker.log'))
+  def self.update(scope = 'main_feeds')
+    worker_logger = Logger.new(File.join(Rails.root, 'log', "feed_worker_#{scope}.log"))
     worker_logger.level = Rails.logger.level
+
+    feed_conf = APP_CONFIG['feed_worker']
+    feed_pause = scope == 'main_feeds' ? feed_conf['main_feeds_pause'] : feed_conf['user_feeds_pause']
 
     started_at = Time.now.to_f
     failed = succeeded = not_modified = penalized = 0
+
+    feeds = Feed.public_send(scope)
 
     # Process feeds in shuffled order
     feeds.shuffle.each do |feed|
@@ -19,10 +24,10 @@ class FeedWorker
         end
 
         # Do the job. HTTP response code is set in feed.response_status
-        fetch_and_parsed = feed.fetch_and_parse(worker_logger)
+        fetch_and_parsed_succeeded = feed.fetch_and_parse(worker_logger)
 
         # Treat everything except 2xx and 3xx as an error
-        if !fetch_and_parsed || !(feed.response_status.to_s =~ /^[23]/)
+        if !fetch_and_parsed_succeeded || !(feed.response_status.to_s =~ /^[23]/)
           failed += 1
           feed.update_attribute(:recent_failures, feed.recent_failures + 1)
           feed.update_attribute(:total_failures, feed.total_failures + 1)
@@ -45,7 +50,7 @@ class FeedWorker
       end
 
       # Take a rest before the next feed is fetched
-      sleep options[:feed_pause] || 1
+      sleep feed_pause
     end
 
     # Log stats

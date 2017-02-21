@@ -3,9 +3,7 @@
 root = File.expand_path(File.dirname(File.dirname(File.dirname(__FILE__))))
 Dir.chdir(root)
 
-require File.join(root, "config", "environment")
-
 loop do
-  FeedWorker.update(Feed.where.not(category: 'my_own'), feed_pause: 1)
+  FeedWorker.update('main_feeds')
   sleep 5
 end
