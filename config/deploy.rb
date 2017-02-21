@@ -39,8 +39,7 @@ namespace :deploy do
   task :restart do
     on roles(:all), except: {no_release: true} do
       # restart/reload isn't enough
-      Rake::Task["deploy:stop"].invoke
-      Rake::Task["deploy:start"].invoke
+      execute "/etc/init.d/unicorn_#{fetch(:application)} stop && /etc/init.d/unicorn_#{fetch(:application)} start"
     end
   end
 
