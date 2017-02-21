@@ -39,7 +39,7 @@ namespace :deploy do
   task :restart do
     on roles(:all), except: {no_release: true} do
       # restart/reload isn't enough
-      execute "/etc/init.d/unicorn_#{fetch(:application)} stop && /etc/init.d/unicorn_#{fetch(:application)} start"
+      execute "/etc/init.d/unicorn_#{fetch(:application)} stop ; /etc/init.d/unicorn_#{fetch(:application)} start"
     end
   end
 
