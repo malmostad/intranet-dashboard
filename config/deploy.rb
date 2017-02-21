@@ -26,20 +26,12 @@ set :default_env, { path: '$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH' }
 set :keep_releases, 5
 
 namespace :deploy do
-  %w[stop start upgrade].each do |command|
+  %w[stop start upgrade restart].each do |command|
     desc "#{command} unicorn server"
     task command do
       on roles(:all), except: {no_release: true} do
         execute "/etc/init.d/unicorn_#{fetch(:application)} #{command}"
       end
-    end
-  end
-
-  desc "Restart of unicorn server"
-  task :restart do
-    on roles(:all), except: {no_release: true} do
-      # restart/reload isn't enough
-      execute "/etc/init.d/unicorn_#{fetch(:application)} stop ; /etc/init.d/unicorn_#{fetch(:application)} start"
     end
   end
 
