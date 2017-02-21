@@ -31,7 +31,8 @@ defaults: &defaults
   site_search_autocomplete_url: "http://ACCOUNT.appliance.siteseeker.se/qc/INDEX/qc"
   remember_me_days: 30
   feed_worker:
-    cycle_pause: 10
+    main_feeds_pause: 1
+    user_feeds_pause: 5
     purge_stale_entries: true
     max_age: 30 # days
   aastra_cwi:
