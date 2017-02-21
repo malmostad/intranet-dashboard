@@ -23,8 +23,8 @@ namespace :feed_worker do
 
   desc "Restart feed runner"
   task :restart, [:scope] => :environment do |t, args|
-    Rake::Task["feed_worker:stop[#{args[:scope]}]"].invoke
-    Rake::Task["feed_worker:start[#{args[:scope]}]"].invoke
+    Rake::Task["feed_worker:stop"].invoke(args[:scope])
+    Rake::Task["feed_worker:start"].invoke(args[:scope])
   end
 
   desc "Show status for the feed runner"
