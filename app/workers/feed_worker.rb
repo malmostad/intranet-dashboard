@@ -23,6 +23,7 @@ class FeedWorker
       feeds.each do |f|
         f.update_attribute(:recent_failures, 0)
       end
+      worker_logger.warn "All feeds had recent_failures. Resetting the value."
       sleep 60
     end
 
