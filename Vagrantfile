@@ -10,16 +10,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider :virtualbox do |v|
     v.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
-    v.memory = 1024
-    v.cpus = 1
+    v.memory = 1024 * 2
+    v.cpus = 2
   end
   config.vm.provider :vmware_fusion
   config.vm.provider :vmware_workstation
 
   config.vm.network 'forwarded_port', guest: 3000, host: 3031
 
-  # config.vm.provision :shell, path: 'https://raw.githubusercontent.com/malmostad/puppet-mcommons/master/bootstrap.sh'
-  config.vm.provision :shell, path: 'https://raw.githubusercontent.com/malmostad/puppet-mcommons/ubuntu-1604/bootstrap.sh'
+  config.vm.provision :shell, path: 'https://raw.githubusercontent.com/malmostad/puppet-mcommons/master/bootstrap.sh'
 
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = 'puppet'
