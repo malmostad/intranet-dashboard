@@ -41,7 +41,7 @@ namespace :users do
     axlsx.workbook.add_worksheet(name: "KB-Intra diff") do |sheet|
       sheet.add_row ["Namn", "Katalognamn", "Adress i kontaktboken", "Adress i Intra", "Kontaktkort"], style: heading
       address_diff.each do |diff|
-        diff << "http://webapps06.malmo.se/dashboard/users/#{diff[1]}"
+        diff << "https://minsida.malmo.se/users/#{diff[1]}"
         sheet.add_row diff, style: body
       end
       sheet.add_row ["Rapport genererad #{Time.now.localtime.to_s[0..18]}"], style: body

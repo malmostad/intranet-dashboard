@@ -56,7 +56,7 @@ class EmployeeSearchSuggestions
     employees.map { |employee|
       employee = employee["_source"]
       { username: employee["username"],
-        avatar_full_url: "http://webapps06.malmo.se/avatars/#{employee["username"]}/tiny_quadrat.jpg",
+        avatar_full_url: "https://profilbilder.malmo.se/#{employee["username"]}/tiny_quadrat.jpg",
         path: "/users/#{employee["username"]}",
         displayname: employee["displayname"],
         company_short: employee["company_short"] || "",
