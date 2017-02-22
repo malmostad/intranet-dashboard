@@ -60,7 +60,7 @@ $ bundle exec rake db:schema:load
 
 Point a browser on your host system to http://127.0.0.1:3031. Editing of the project files on your host system will be reflected when you hit reload in your browser.
 
-When you run the `vagrant up` command for the first time it creates an Ubuntu 14.04 based Vagrant box with a ready-to-use development environment for the application. This will take some time. Vagrant will launch fast after the first run.
+When you run the `vagrant up` command for the first time it creates an Ubuntu 16.04 based Vagrant box with a ready-to-use development environment for the application. This will take some time. Vagrant will launch fast after the first run.
 
 If you get port conflicts in your host system, change `forwarded_port` in the `Vagrantfile` You might also want to edit the value for `vm.hostname` and `puppet.facter` in the same file or do a mapping `localhost` mapping in your hosts `host` file to reflect that value.
 
