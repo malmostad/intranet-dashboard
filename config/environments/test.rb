@@ -19,7 +19,7 @@ Dashboard::Application.configure do
 
   config.active_support.deprecation = :log
 
-  config.action_mailer.default_url_options = { host: 'minasidortest.malmo.se' }
+  config.action_mailer.default_url_options = { host: 'minasidatest.malmo.se' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address              => "relay.malmo.se",
