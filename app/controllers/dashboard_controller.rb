@@ -44,13 +44,13 @@ private
   end
 
   def maintenance_news
-    Rails.cache.fetch("maintenance-entries", expires_in: 2.minute) do
-      feeds = Feed.where(category: "maintenance_warnings")
-      feed_entries = FeedEntry.from_feeds(feeds, limit: MAINTENANCE_FEED_ENTRIES_LIMIT)
-      if feeds.present? && feed_entries.present?
-        { entries: feed_entries,
-          first_feed_url: feeds.first.feed_url.gsub(/\/feed\/*$/, "") }
-      end
+    # Rails.cache.fetch("maintenance-entries", expires_in: 2.minute) do
+    feeds = Feed.where(category: "maintenance_warnings")
+    feed_entries = FeedEntry.from_feeds(feeds, limit: MAINTENANCE_FEED_ENTRIES_LIMIT)
+    if feeds.present? && feed_entries.present?
+      { entries: feed_entries,
+        first_feed_url: feeds.first.feed_url.gsub(/\/feed\/*$/, "") }
     end
+    # end
   end
 end
