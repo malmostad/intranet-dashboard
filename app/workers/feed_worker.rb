@@ -40,11 +40,7 @@ class FeedWorker
         # Do the job. HTTP response code is set in feed.response_status
         fetched_and_parsed = feed.fetch_and_parse(worker_logger)
 
-        # The feed was parsed and has changed since last fetch
-        #  or config is set to fetch all feeds
-        if fetched_and_parsed &&
-             feed.response_status == 200 ||
-             feed_worker_config['fetch_not_modified'] && feed.response_status == 304
+        if fetched_and_parsed
           updated += 1
           feed.map_feed_attributes
           feed.feed_entries << feed.fresh_feed_entries

@@ -133,7 +133,7 @@ class Feed < ActiveRecord::Base
         response = faraday.get(URI.encode(feed_url))
         @response_status = response.status
 
-        if response.body.present? && response.status == 200 || fetch_all && response.status == 304
+        if response.body.present? && response.status == 200
           self.last_modified = response.env.response_headers[:last_modified]
           self.etag = response.env.response_headers[:etag]
           return response.body
