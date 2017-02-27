@@ -61,8 +61,8 @@ class Feed < ActiveRecord::Base
     return [] if @parsed_feed.blank?
     @_fresh_feed_entries ||=
       @parsed_feed.entries.map do |parsed_entry|
-        # Don't store enties that are more than max_age old
-        next if parsed_entry.published < APP_CONFIG['feed_worker']['max_age'].days.ago
+        # Don't store enties that are more than max_age old, or is missing a published date
+        next if parsed_entry.published.blank? || parsed_entry.published < APP_CONFIG['feed_worker']['max_age'].days.ago
 
         entry = FeedEntry.where(guid: parsed_entry.entry_id, feed_id: id).first_or_initialize
         entry.published      = parsed_entry.published
