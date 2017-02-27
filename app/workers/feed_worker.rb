@@ -13,7 +13,7 @@ class FeedWorker
     end
 
     started_at = Time.now.to_f
-    failed = succeeded = not_modified = penalized = 0
+    failed = updated = not_modified = penalized = 0
 
     feeds = Feed.public_send(scope)
 
@@ -41,11 +41,11 @@ class FeedWorker
         fetched_and_parsed = feed.fetch_and_parse(worker_logger)
 
         # The feed was parsed and has changed since last fetch
+        #  or config is set to fetch all feeds
         if fetched_and_parsed &&
-             (feed.response_status == 200 ||
-              feed_worker_config['fetch_not_modified'] &&
-              feed.response_status == 304)
-          succeeded += 1
+             feed.response_status == 200 ||
+             feed_worker_config['fetch_not_modified'] && feed.response_status == 304
+          updated += 1
           feed.map_feed_attributes
           feed.feed_entries << feed.fresh_feed_entries
           feed.save(validate: false)
@@ -72,10 +72,10 @@ class FeedWorker
 
     # Log stats
     worker_logger.info "FeedWorker updated feeds in #{(Time.now.to_f - started_at).ceil} seconds."
-    worker_logger.info "  Updated:      #{succeeded}"
+    worker_logger.info "  Updated:      #{updated}"
     worker_logger.info "  Not modified: #{not_modified}"
     worker_logger.info "  Failed:       #{failed}"
     worker_logger.info "  Penalized:    #{penalized}"
-    worker_logger.info "  Total:        #{succeeded + not_modified + failed + penalized}"
+    worker_logger.info "  Total:        #{updated + not_modified + failed + penalized}"
   end
 end

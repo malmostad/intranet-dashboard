@@ -117,20 +117,23 @@ class Feed < ActiveRecord::Base
     # The HTTP response code is set in @response_status
     def fetch
       err_msg = 'Flödet kunde inte hämtas. Kontrollera att adressen är korrekt.'
+      fetch_all = APP_CONFIG['feed_worker']['fetch_not_modified']
       begin
         faraday = Faraday.new do |connection|
           connection.use FaradayMiddleware::FollowRedirects, limit: 5
           connection.adapter :net_http
           connection.options[:timeout] = 10
           connection.ssl[:verify] = false
-          if last_modified.present?
+          # Set if_modified_since header only if we have a stored date
+          #   and fetch_not_modified in config is set to false
+          if last_modified.present? && !fetch_all
             connection.headers[:if_modified_since] = last_modified.httpdate
           end
         end
         response = faraday.get(URI.encode(feed_url))
         @response_status = response.status
 
-        if response.status == 200 && response.body.present?
+        if response.body.present? && response.status == 200 || fetch_all && response.status == 304
           self.last_modified = response.env.response_headers[:last_modified]
           self.etag = response.env.response_headers[:etag]
           return response.body
