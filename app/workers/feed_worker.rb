@@ -4,12 +4,12 @@ class FeedWorker
   def self.update(scope = 'main_feeds', options = {})
     worker_logger = Logger.new(File.join(Rails.root, 'log', "feed_worker_#{scope}.log"))
     worker_logger.level = Rails.logger.level
+    feed_worker_config = APP_CONFIG['feed_worker']
 
     if options[:feed_pause].present?
       feed_pause = options[:feed_pause]
     else
-      feed_conf = APP_CONFIG['feed_worker']
-      feed_pause = scope == 'main_feeds' ? feed_conf['main_feeds_pause'] : feed_conf['user_feeds_pause']
+      feed_pause = scope == 'main_feeds' ? feed_worker_config['main_feeds_pause'] : feed_worker_config['user_feeds_pause']
     end
 
     started_at = Time.now.to_f
@@ -41,7 +41,10 @@ class FeedWorker
         fetched_and_parsed = feed.fetch_and_parse(worker_logger)
 
         # The feed was parsed and has changed since last fetch
-        if fetched_and_parsed && feed.response_status == 200
+        if fetched_and_parsed &&
+             (feed.response_status == 200 ||
+              feed_worker_config['fetch_not_modified'] &&
+              feed.response_status == 304)
           succeeded += 1
           feed.map_feed_attributes
           feed.feed_entries << feed.fresh_feed_entries

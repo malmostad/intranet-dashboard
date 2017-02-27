@@ -30,6 +30,7 @@ defaults: &defaults
     user_feeds_pause: 5
     purge_stale_entries: true
     max_age: 30 # days
+    fetch_not_modified: false
   aastra_cwi:
     username: "FILL_IN"
     password: "FILL_IN"
