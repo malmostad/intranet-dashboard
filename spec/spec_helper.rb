@@ -10,6 +10,12 @@ require 'yaml'
 
 AUTH_CREDENTIALS = YAML.load_file("#{Rails.root.to_s}/spec/auth_credentials.yml")
 
+SAMPLE_FEEDS = [
+  "http://feeds.feedburner.com/Techcrunch",
+  "http://feeds.feedburner.com/AmazonWebServicesBlog",
+  "https://www.theguardian.com/world/rss"
+]
+
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, window_size: [1400, 1000])
 end

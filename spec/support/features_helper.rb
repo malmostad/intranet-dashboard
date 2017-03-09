@@ -17,16 +17,12 @@ def login_ldap_user
 end
 
 def create_feeds_for_user(user)
-  feed_urls = Dir.glob(Rails.root.join("spec", "samples", "feeds") + "*.xml")
-
-  feed_urls.each_with_index do |feed_url, i|
-    f = build(:feed,
+  SAMPLE_FEEDS.each_with_index do |feed_url, i|
+    create(:feed,
       category: Feed::CATEGORIES.keys[i % Feed::CATEGORIES.size],
-      feed_url: "file://#{feed_url}"
+      feed_url: feed_url
     )
-    f.save
   end
 
   Feed.all.each { |f| f.role_ids = user.roles.each.map(&:id) }
-  user
 end
