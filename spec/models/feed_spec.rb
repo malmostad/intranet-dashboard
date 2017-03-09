@@ -61,8 +61,9 @@ describe Feed do
     end
 
     it "should have feed_entries after clear and reload feed" do
-      feed.refresh_entries
-      expect(feed.feed_entries.count).to be > 0
+      f = Feed.find(feed.id) # feed.reload do not work here
+      f.refresh_entries
+      expect(f.feed_entries.count).to be > 0
     end
 
     it "should change updated_at on clear and reload feed" do
