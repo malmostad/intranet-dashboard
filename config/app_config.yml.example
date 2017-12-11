@@ -1,5 +1,4 @@
 defaults: &defaults
-  secret_key_base: "FILL_IN" # rake secret
   ldap:
     enabled: true
     host: "ldap.example.org"
@@ -39,28 +38,21 @@ defaults: &defaults
     activity_service: "http://example.org/CMGActivityService/CMGActivityService.asmx?WSDL"
   switchboard_email: "televaxeln@example.org"
 
-development:
+development: &development
   <<: *defaults
   stub_auth: true
   title_suffix: "Dashboard (development)"
   # Full base system path to avatar storage
-  avatar_base_path: "~/workspaces/dashboard/public/system/avatars/"
+  avatar_base_path: "/vagrant/public/system/avatars/"
   # Full base url to avatar service, omit protocol
-  avatar_base_url: "//assets.example.org/avatars/"
+  avatar_base_url: "//profilbilder.malmo.se/"
   # Full url to default avatar service, omit protocol
-  avatar_default_url: "//assets.example.org/avatars/default.jpg"
-  assets_url_base: "//www.local.example.org:3001/assets/"
+  avatar_default_url: "//profilbilder.malmo.se/default.jpg"
+  assets_url_base: "//assets.malmo.se/internal/v4/"
 
 test:
-  <<: *defaults
+  <<: *development
   title_suffix: "Dashboard (test)"
-  # Full base system path to avatar storage
-  avatar_base_path: "~/workspaces/dashboard/public/system/avatars/"
-  # Full base url to avatar service, omit protocol
-  avatar_base_url: "//assets.example.org/avatars/"
-  # Full url to default avatar service, omit protocol
-  avatar_default_url: "//assets.example.org/avatars/default.jpg"
-  assets_url_base: "//www.local.example.org:3001/assets/"
   saml:
     enabled: true
     issuer: "http://www.local.example.org:3000/"
