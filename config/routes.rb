@@ -4,6 +4,7 @@ Dashboard::Application.routes.draw do
   resources :group_contacts
 
   root to: "dashboard#index"
+  match '/' => "dashboard#index", via: :options # Catch MS Office requests
 
   get "/more_feed_entries/:category/:before" => "dashboard#more_feed_entries", as: "more_feed_entries"
 
