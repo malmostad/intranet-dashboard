@@ -8,8 +8,6 @@ require 'capybara/poltergeist'
 require 'database_cleaner'
 require 'yaml'
 
-AUTH_CREDENTIALS = YAML.load_file("#{Rails.root.to_s}/spec/auth_credentials.yml")
-
 SAMPLE_FEEDS = [
   "http://feeds.feedburner.com/Techcrunch",
   "http://feeds.feedburner.com/AmazonWebServicesBlog",
