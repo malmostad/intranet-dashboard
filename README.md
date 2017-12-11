@@ -74,7 +74,7 @@ On a fresh server running a base install of Ubuntu 16.04:
 1. Add `app_runner` as a sudo user.
 2. Log on to the server as `app_runner` and download the two provisioning files needed:
 
-        $ wget https://raw.githubusercontent.com/malmostad/puppet-mcommons/master/bootstrap.sh
+        $ wget https://raw.githubusercontent.com/malmostad/dashboard/master/puppet/bootstrap.sh
         $ wget https://raw.githubusercontent.com/malmostad/dashboard/master/puppet/server.pp
 
 3. Run the provisioning:
@@ -107,7 +107,11 @@ $ bundle exec cap production deploy
 ```
 
 ## Testing
-Run tests before pushing code to the Git repository and before performing deployments. The application contains unit tests and high level integration/feature tests using RSpec, Capybara and PhantomJS. Run the test cases in the projects root directory in your Vagrant box:
+Run tests before pushing code to the Git repository and before performing deployments. The application contains unit tests and high level integration/feature tests using RSpec, Capybara and PhantomJS.
+
+Note that the test environment is named `local_test` due to some old Capistrano config issues.
+
+Run the test cases in the projects root directory in your Vagrant box:
 
 ```shell
 $ bundle exec rspec
