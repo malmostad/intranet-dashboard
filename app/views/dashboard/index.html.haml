@@ -8,8 +8,8 @@
     = render 'colleagues'
 
 .column.column-3
+  = render "support_links"
   - if current_user.early_adopter?
     = render "time_report"
-  = render "support_links"
   = render "shortcuts_tools_and_systems"
   = render "shortcuts_i_want"
