@@ -111,6 +111,15 @@ Run tests before pushing code to the Git repository and before performing deploy
 
 Note that the test environment is named `local_test` due to some old Capistrano config issues.
 
+For Ubuntu 16.04, you will need to install PhantomJS manually before running test cases:
+
+```shell
+$ wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
+$ tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2
+$ sudo cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/
+$ phantomjs -v
+```
+
 Run the test cases in the projects root directory in your Vagrant box:
 
 ```shell
