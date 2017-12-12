@@ -114,9 +114,11 @@ Note that the test environment is named `local_test` due to some old Capistrano 
 For Ubuntu 16.04, you will need to install PhantomJS manually before running test cases:
 
 ```shell
+$ cd ~/
 $ wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
 $ tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2
 $ sudo cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/
+$ rm -rf phantomjs-2.1.1-linux-x86_64*
 $ phantomjs -v
 ```
 
