@@ -231,7 +231,6 @@
       }
     }
 
-
     &.malmo-masthead-dashboard {
       padding: 0;
       margin-right: 0;
@@ -304,6 +303,19 @@
       }
       .more {
         clear: both;
+        margin-top: -.5em;
+      }
+    }
+
+    section.banner {
+      .crop {
+        @include columns(6);
+        max-width: 12em;
+        max-height: 12em;
+        overflow: visible;
+        margin-bottom: 0;
+        padding-right: emize(10, 12);
+        border: 0;
       }
     }
   }
@@ -327,6 +339,13 @@
     .employee-column-1,
     .employee-column-2 {
       @include columns(12);
+    }
+  }
+
+  section.banner {
+    @include columns(12);
+    margin: 0 1.2em 2em;
+    a .crop {
     }
   }
 }

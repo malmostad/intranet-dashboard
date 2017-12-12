@@ -16,13 +16,15 @@ section.box#shortcuts-support {
     position: relative;
     display: block;
     margin: .4em .4em .5em emize(12, 14);
-    a {
+    font-family: $sans-serif;
+
+    a,
+    &.no-link {
       display: block;
       margin-right: 1.4em;
       overflow: hidden;
       font-size: emize(14);
       line-height: 1.35;
-      font-family: $sans-serif;
     }
     a.remove {
       position: absolute;

@@ -1,6 +1,13 @@
-%section#feeds-feature.box.feeds
-  %ul.box-content
-    %li
-      %a{ href: 'https://komin.malmo.se/digitalarbetsplats', rel: "external" }
-        .crop
-          = image_tag( @feature[:entry].image_large, alt: 'Utforska din digitala arbetsplats')
+- if @feature.present? && @feature[:entry].present?
+  %section#feeds-feature.box.feeds
+    %h1.box-title Tema
+    %ul.box-content
+      %li
+        - if @feature[:entry].image.present?
+          %a{ href: @feature[:entry].url, rel: "external" }
+            .crop
+              = image_tag( @feature[:entry].image_large, alt: '' )
+        .text
+          %a{ href: @feature[:entry].url, rel: "external" }
+            %h2= sanitize( @feature[:entry].title )
+      %p.more= link_to "Fler temanyheter", @feature[:feed_url]
