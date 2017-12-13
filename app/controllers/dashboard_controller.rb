@@ -38,7 +38,7 @@ private
       feed = Feed.where(category: "feature").first
       if feed.present?
         { entry: feed.feed_entries.order("published desc").first,
-          feed_url: feed.feed_url.gsub(/\/feed\/*$/, "") }
+          feed_url: feed.feed_url.gsub(/\/rss|feed\/*$/, "") }
       end
     end
   end
