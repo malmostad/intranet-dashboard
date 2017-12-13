@@ -343,9 +343,10 @@
   }
 
   section.banner {
-    @include columns(12);
-    margin: 0 1.2em 2em;
-    a .crop {
+    @include clearfix();
+    .crop {
+      @include columns(6);
+      margin: 0 1.2em 2em;
     }
   }
 }
