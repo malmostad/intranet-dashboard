@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'protected_attributes', '1.1.3'
 
-gem 'rails', '4.2.7.1'
+gem 'rails', '4.2.10'
 gem 'jquery-rails', '4.2.2'
 gem 'haml', '4.0.7'
 
@@ -10,12 +10,12 @@ gem 'sass-rails', '5.0.6'
 gem 'coffee-rails', '4.2.1'
 gem 'uglifier', '3.0.4'
 
-gem 'nokogiri', '1.7.0.1'
+gem 'nokogiri', '1.8.2'
 gem 'feedjira', '2.1.0'
 gem 'savon', '2.11.1'
 gem 'siteseeker_normalizer', '0.1.6'
 
-gem 'net-ldap', '0.15.0' # '0.3.1' works, 0.5 and 0.6 (0.10.1?) have an encoding issue: https://github.com/ruby-ldap/ruby-net-ldap/pull/82
+gem 'net-ldap', '0.16.1' # '0.3.1' works, 0.5 and 0.6 (0.10.1?) have an encoding issue: https://github.com/ruby-ldap/ruby-net-ldap/pull/82
 gem 'ruby-saml', '1.4.2' # '0.7.0' works, 0.7.1/2 is broken
 gem 'bcrypt-ruby', '3.1.5'
 
