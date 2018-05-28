@@ -38,6 +38,7 @@ Dashboard::Application.routes.draw do
   get "/users/:username/(:style)" => "avatars#show", as: "avatar"
   get "/users/:id/avatar/edit" => "avatars#edit", as: "edit_avatar"
   patch "/users/:id/avatars" => "avatars#update", as: "update_avatar"
+  delete "/users/:id/avatars" => "avatars#destroy", as: "destroy_avatar"
 
   get "/colleagueships/search" => "colleagueships#search", as: "colleagueships_search"
   resources :colleagueships

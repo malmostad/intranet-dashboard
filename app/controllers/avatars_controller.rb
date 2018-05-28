@@ -39,4 +39,11 @@ class AvatarsController < ApplicationController
       render action: "edit"
     end
   end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.avatar = nil
+    @user.save
+    redirect_to user_path(@user.username), notice: "Profilbilden raderades"
+  end
 end

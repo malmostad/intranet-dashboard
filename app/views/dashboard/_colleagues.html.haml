@@ -13,7 +13,7 @@
       %li#my-status
         .img
           = link_to image_tag(current_user.avatar.url(:tiny_quadrat), alt: ""), edit_avatar_path(current_user.id)
-          = link_to "Byt bild", edit_avatar_path(current_user.id), class: "change-image"
+          = link_to "Hantera bild", edit_avatar_path(current_user.id), class: "change-image"
         .text
           %h2.name= link_to current_user.displayname, user_path(current_user.username)
           %p.status

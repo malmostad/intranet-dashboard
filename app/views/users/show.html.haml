@@ -7,8 +7,8 @@
       .photo
         = image_tag @user.avatar.url(:large), alt: "Profilbild"
         - if admin_or_contacts_editor_or_myself?
-          = link_to(raw("Redigera <span>profil</span>"), edit_user_path(@user), class: "edit btn btn-default btn-sm")
-          = link_to "Byt bild", edit_avatar_path(@user), class: " btn btn-default btn-sm"
+          = link_to "Hantera bild", edit_avatar_path(@user), class: " btn btn-default btn-sm"
+          = link_to(raw("Redigera profil"), edit_user_path(@user), class: "edit btn btn-default btn-sm")
 
       .main-card
         - unless myself?
