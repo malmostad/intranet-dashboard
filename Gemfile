@@ -25,7 +25,7 @@ gem 'elasticsearch-model', '0.1.9'
 gem 'elasticsearch-rails', '0.1.9'
 gem 'ansi'
 
-gem 'paperclip', '4.3.7'
+gem 'paperclip', '6.0.0'
 gem 'simple_form', '3.3.1'
 gem 'daemons', '1.2.4'
 gem 'daemons-rails', '1.2.1'
