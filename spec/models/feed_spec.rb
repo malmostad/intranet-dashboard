@@ -15,11 +15,11 @@ describe Feed do
   end
 
   it "should strip pseudo protocol" do
-    expect(build(:feed, feed_url: "feed://www.whitehouse.gov/feed/press")).to be_valid
+    expect(build(:feed, feed_url: "feed://malmo.se/4.27ce5c4514b780dcb815ad3/12.27ce5c4514b780dcb815d39.portlet?state=rss&sv.contenttype=text/xml;charset=UTF-8")).to be_valid
   end
 
   it "should be valid" do
-    expect(build(:feed, feed_url: "www.whitehouse.gov/feed/press")).to be_valid
+    expect(build(:feed, feed_url: "malmo.se/4.27ce5c4514b780dcb815ad3/12.27ce5c4514b780dcb815d39.portlet?state=rss&sv.contenttype=text/xml;charset=UTF-8")).to be_valid
   end
 
   it "should not be valid without a feed_url" do
