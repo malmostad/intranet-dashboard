@@ -25,7 +25,7 @@ gem 'elasticsearch-model', '0.1.9'
 gem 'elasticsearch-rails', '0.1.9'
 gem 'ansi'
 
-gem 'paperclip', '4.3.1'
+gem 'paperclip', '4.3.7'
 gem 'simple_form', '3.3.1'
 gem 'daemons', '1.2.4'
 gem 'daemons-rails', '1.2.1'
@@ -39,7 +39,7 @@ gem 'highline'
 gem 'execjs'
 
 gem 'jbuilder', '2.6.1'
-gem 'axlsx', '2.0.1'
+gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: '05f3412'
 gem 'vcardigan', '0.0.9'
 
 gem 'unicorn', group: [:test, :production]
@@ -56,13 +56,13 @@ group :development, :local_test do
 end
 
 group :local_test do
-  gem 'rspec-rails'
-  gem 'factory_girl_rails'
-  gem 'capybara'
-  gem 'rack-test'
-  gem 'poltergeist'
-  gem 'guard-rspec'
-  gem 'rb-fsevent'
-  gem 'launchy'
-  gem 'database_cleaner'
+  gem 'rspec-rails', '3.5.2'
+  gem 'factory_girl_rails', '4.8.0'
+  gem 'capybara', '2.12.1'
+  gem 'rack-test', '0.6.3'
+  gem 'poltergeist', '1.13.0'
+  gem 'guard-rspec', '4.7.3'
+  gem 'rb-fsevent', '0.9.8'
+  gem 'launchy', '2.4.3'
+  gem 'database_cleaner', '1.5.3'
 end
