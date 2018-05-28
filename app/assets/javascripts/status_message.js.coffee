@@ -51,11 +51,6 @@ $ ->
 
       $count.html(limit-length)
 
-      if chars.replace(/\s/g, "").length is 0 # Don't allow empty updates
-        $submit.attr('disabled', true)
-      else
-        $submit.attr('disabled', false)
-
       if limit - length < 0
         $count.addClass("error")
         $submit.attr('disabled', true)

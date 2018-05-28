@@ -7,7 +7,7 @@
         = label_tag :status_message, "Vad gör du idag?"
         = text_area_tag :status_message, nil, rows: 1, placeholder: "Vad gör du idag?", class: "form-control"
         .controls
-          = submit_tag "OK", { class: "btn btn-primary btn-sm", disabled: true }
+          = submit_tag "OK", { class: "btn btn-primary btn-sm" }
           %p.count.ok 70
     %ul.box-content
       %li#my-status
