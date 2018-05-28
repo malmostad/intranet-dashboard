@@ -15,3 +15,4 @@ public/assets
 /public/system/profilbilder/
 /config/secrets.yml
 /config/deploy.yml
+/public/system/avatars/
