@@ -6,7 +6,7 @@ class AastraCWI
     pretty_print_xml: true,
     open_timeout: 10,
     read_timeout: 10,
-    log_level: :debug,
+    log_level: :info,
     logger: Logger.new(File.join(Rails.root, 'log', 'aastra_cwi.log')), # Rails.logger
     log: true
   }
@@ -116,7 +116,7 @@ class AastraCWI
 
     # Fetch and cache the auth token required to
     def self.auth_token
-      # Rails.cache.fetch('aastra_auth_token', expires_in: 1.day) do
+      Rails.cache.fetch('aastra_auth_token', expires_in: 1.day) do
         auth_client = Savon.client({
           endpoint: APP_CONFIG['aastra_cwi']["auth_service"],
           namespace: 'urn:ws-netwise-se:AnA:AnAService:v1',
@@ -133,6 +133,6 @@ class AastraCWI
           }
         )
         auth.to_array(:get_sso_token_response).first[:get_sso_token_result]
-      #end
+      end
     end
 end
