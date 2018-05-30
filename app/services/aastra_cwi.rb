@@ -1,15 +1,11 @@
-# -*- coding: utf-8 -*-
-
 # Aastra CMG is the switchboard phone catalog and CWI is its SOAP API
 # We map employees in the dashboard to CMG records with #get_cmg_id and
 # use #activities to get the activities for an employee
-
 class AastraCWI
-
   CLIENT_SETTINGS = {
-    pretty_print_xml: Rails.env.development?,
-    open_timeout: 1,
-    read_timeout: 1,
+    pretty_print_xml: true,
+    open_timeout: 10,
+    read_timeout: 10,
     log_level: :debug,
     logger: Logger.new(File.join(Rails.root, 'log', 'aastra_cwi.log')), # Rails.logger
     log: true
@@ -120,16 +116,23 @@ class AastraCWI
 
     # Fetch and cache the auth token required to
     def self.auth_token
-      Rails.cache.fetch('aastra_auth_token', expires_in: 1.day) do
-        auth_client = Savon.client({ wsdl: APP_CONFIG['aastra_cwi']["auth_service"] }.merge(CLIENT_SETTINGS))
+      # Rails.cache.fetch('aastra_auth_token', expires_in: 1.day) do
+        auth_client = Savon.client({
+          endpoint: APP_CONFIG['aastra_cwi']["auth_service"],
+          namespace: 'urn:ws-netwise-se:AnA:AnAService:v1',
+          namespace_identifier: nil,
+          convert_request_keys_to: :camelcase
+        }.merge(CLIENT_SETTINGS))
 
-        auth = auth_client.call(:get_sso_token,
+        auth = auth_client.call(:get_s_s_o_token,
+          soap_action: "urn:ws-netwise-se:AnA:AnAService:v1/GetSSOToken",
           message: {
             "username" => APP_CONFIG['aastra_cwi']["username"],
-            "password" => APP_CONFIG['aastra_cwi']["password"]
+            "password" => APP_CONFIG['aastra_cwi']["password"],
+            "usernameDomain" => APP_CONFIG['aastra_cwi']["domain"]
           }
         )
         auth.to_array(:get_sso_token_response).first[:get_sso_token_result]
-      end
+      #end
     end
 end
