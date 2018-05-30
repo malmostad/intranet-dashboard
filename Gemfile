@@ -12,7 +12,7 @@ gem 'uglifier', '3.0.4'
 
 gem 'nokogiri', '1.8.2'
 gem 'feedjira', '2.1.0'
-gem 'savon', '2.11.1'
+gem 'savon', '2.12.0'
 gem 'siteseeker_normalizer', '0.1.6'
 
 gem 'net-ldap', '0.16.1' # '0.3.1' works, 0.5 and 0.6 (0.10.1?) have an encoding issue: https://github.com/ruby-ldap/ruby-net-ldap/pull/82
